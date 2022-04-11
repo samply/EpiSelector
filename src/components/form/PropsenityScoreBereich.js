@@ -3,15 +3,14 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 
 
-function Matchingtoleranz() {
+function PropensityScoreBereich() {
 
 
     return (
         <div className="Mainpage">
-            <h1>Matchingtoleranz wählen:</h1>
-
+            <h1>PropensityScore-Bereich wählen:</h1>
         </div>
     );
 }
 
-export default Matchingtoleranz;
+export default PropensityScoreBereich;

@@ -3,15 +3,14 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 
 
-function Matchingtoleranz() {
+function MethodeScoreBerechnung() {
 
 
     return (
         <div className="Mainpage">
-            <h1>Matchingtoleranz wählen:</h1>
-
+            <h1>MethodeScoreBerechnung</h1>
         </div>
     );
 }
 
-export default Matchingtoleranz;
+export default MethodeScoreBerechnung;

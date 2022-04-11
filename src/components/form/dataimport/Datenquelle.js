@@ -1,17 +1,17 @@
-import '../../App.css';
+import '../../../App.css';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 
 
 
-function Matchingtoleranz() {
+function Datenquelle() {
 
 
     return (
         <div className="Mainpage">
-            <h1>Matchingtoleranz wählen:</h1>
+            <h1>Datenquelle wählen:</h1>
 
         </div>
     );
 }
 
-export default Matchingtoleranz;
+export default Datenquelle;

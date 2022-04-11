@@ -99,125 +99,158 @@ export default function GmailTreeView() {
             defaultCollapseIcon={<ArrowDropDownIcon />}
             defaultExpandIcon={<ArrowRightIcon />}
             defaultEndIcon={<div style={{ width: 24 }} />}
-            sx={{ height: 730, flexGrow: 1, maxWidth: 400, overflowY: 'auto', border: 'solid' }}
+            sx={{ height: 730, flexGrow: 1, maxWidth: 290, overflowY: 'auto', border: 'solid', marginRight: 1}}
         >
-            <Link to='/mainpage'><StyledTreeItem nodeId="1" labelText="Startseite" labelIcon={CircleIcon} /></Link>
-            <Link to='/betapage'>
+            <Link to='/Startseite'><StyledTreeItem nodeId="1" labelText="Startseite" labelIcon={CircleIcon} /></Link>
                 <StyledTreeItem nodeId="2" labelText="Datenimport" labelIcon={CircleIcon}>
-                    <StyledTreeItem
+                    <Link to='/Datenquelle'>
+                        <StyledTreeItem
                         nodeId="19"
                         labelText="Datenquelle"
                         labelIcon={CircleOutlinedIcon}
                         labelInfo=""
                         color="#e3742f"
                         bgColor="#fcefe3"
-                    />
-                    <Link to='/uploadData'><StyledTreeItem
-                    nodeId="20"
-                    labelText="Datei hochladen"
-                    labelIcon={CircleOutlinedIcon}
-                    labelInfo=""
-                    color="#e3742f"
-                    bgColor="#fcefe3"
-                    /></Link>
+                        />
+                    </Link>
+                    <Link to='/Datei-hochladen'>
+                        <StyledTreeItem
+                        nodeId="20"
+                        labelText="Datei hochladen"
+                        labelIcon={CircleOutlinedIcon}
+                        labelInfo=""
+                        color="#e3742f"
+                        bgColor="#fcefe3"
+                        />
+                    </Link>
                 </StyledTreeItem>
-            </Link>
-            <StyledTreeItem nodeId="3" labelText="Matching Methode" labelIcon={CircleIcon} />
+            <Link to='/Matching-Methode'><StyledTreeItem nodeId="3" labelText="Matching Methode" labelIcon={CircleIcon} /></Link>
             <StyledTreeItem nodeId="4" labelText="Matching - nach Variablen" labelIcon={CircleIcon}>
-                <StyledTreeItem
+                <Link to='/Matching-Variablen'>
+                    <StyledTreeItem
                     nodeId="5"
                     labelText="Matchingvariablen"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#e3742f"
                     bgColor="#fcefe3"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Matchingtoleranz'>
+                    <StyledTreeItem
                     nodeId="6"
                     labelText="Matchingtoleranz"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#a250f5"
                     bgColor="#f3e8fd"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Variablen-Fälle-Kontrollen'>
+                    <StyledTreeItem
+                        nodeId="21"
+                        labelText="Variablen für Fälle und Kontrollen"
+                        labelIcon={CircleOutlinedIcon}
+                        labelInfo=""
+                        color="#a250f5"
+                        bgColor="#f3e8fd"
+                    /></Link>
+                <Link to='/Matching-Verhältnis'>
+                    <StyledTreeItem
                     nodeId="7"
                     labelText="Matching Verhältnis"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Matching-Algorithmus'>
+                    <StyledTreeItem
                     nodeId="8"
                     labelText="Matching Algorithmus"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Matching-Ergebnis'>
+                    <StyledTreeItem
                     nodeId="9"
                     labelText="Matching Ergebnis"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
+                /></Link>
             </StyledTreeItem>
             <StyledTreeItem nodeId="11" labelText="Matching - Propensity-Score" labelIcon={CircleIcon}>
                 <StyledTreeItem nodeId="12" labelText="Variablen auswählen" labelIcon={CircleIcon}>
-                    <StyledTreeItem
+                    <Link to='/Zielvariable'>
+                        <StyledTreeItem
                         nodeId="17"
                         labelText="Zielvariable"
                         labelIcon={CircleOutlinedIcon}
                         labelInfo=""
                         color="#e3742f"
                         bgColor="#fcefe3"
-                    />
-                    <StyledTreeItem
+                    /></Link>
+                    <Link to='/Kontrollvariablen'>
+                        <StyledTreeItem
                         nodeId="18"
                         labelText="Kontrollvariablen"
                         labelIcon={CircleOutlinedIcon}
                         labelInfo=""
                         color="#e3742f"
                         bgColor="#fcefe3"
-                    />
+                    /></Link>
                 </StyledTreeItem>
-                <StyledTreeItem
+                <Link to='/Bereich-der-Übereinstimmung-der-Propensity-Scores'>
+                    <StyledTreeItem
                     nodeId="13"
                     labelText="Bereich der Übereinstimmung der Propensity Scores"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#a250f5"
                     bgColor="#f3e8fd"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Matching-Verhältnis'>
+                    <StyledTreeItem
                     nodeId="14"
                     labelText="Matching Verhältnis"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Methode-der-Score-Berechnung'>
+                    <StyledTreeItem
+                        nodeId="15"
+                        labelText="Methode der Score Berechnung"
+                        labelIcon={CircleOutlinedIcon}
+                        labelInfo=""
+                        color="#3c8039"
+                        bgColor="#e6f4ea"
+                    /></Link>
+                <Link to='/Matching-Algorithmus'>
+                    <StyledTreeItem
                     nodeId="15"
                     labelText="Matching Algorithmus"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
-                <StyledTreeItem
+                /></Link>
+                <Link to='/Matching-Ergebnis'>
+                    <StyledTreeItem
                     nodeId="16"
                     labelText="Matching Ergebnis"
                     labelIcon={CircleOutlinedIcon}
                     labelInfo=""
                     color="#3c8039"
                     bgColor="#e6f4ea"
-                />
+                /></Link>
             </StyledTreeItem>
-            <StyledTreeItem nodeId="10" labelText="Datenexport" labelIcon={CircleIcon} />
+            <Link to='/Dataexport'>
+                <StyledTreeItem nodeId="10" labelText="Datenexport" labelIcon={CircleIcon} />
+            </Link>
         </TreeView>
     );
 }

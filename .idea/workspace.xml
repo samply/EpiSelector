@@ -2,15 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/form/PropsenityScoreBereich.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +67,7 @@
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components/form" />
+      <recent name="$PROJECT_DIR$/src/components/dataimport" />
       <recent name="$PROJECT_DIR$/src/components/Form" />
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src/pages" />
@@ -96,7 +107,7 @@
       <workItem from="1649331574523" duration="11174000" />
       <workItem from="1649412154081" duration="1380000" />
       <workItem from="1649418708196" duration="432000" />
-      <workItem from="1649419154293" duration="16470000" />
+      <workItem from="1649419154293" duration="22448000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -119,7 +130,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649678597749</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Created Form-Components in Form Directory">
+      <created>1649679985305</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1649679985308</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +169,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="First structure of Project" />
     <MESSAGE value="Structured Directory - Added Component Directory, Pages Directory and Form Directory" />
-    <option name="LAST_COMMIT_MESSAGE" value="Structured Directory - Added Component Directory, Pages Directory and Form Directory" />
+    <MESSAGE value="Created Form-Components in Form Directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Created Form-Components in Form Directory" />
   </component>
 </project>
