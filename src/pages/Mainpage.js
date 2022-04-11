@@ -1,5 +1,5 @@
-import './App.css';
-import MainpageNav from "./MainpageNav";
+import '../App.css';
+import MainpageNav from "../components/MainpageNav";
 import {Link} from 'react-router-dom';
 
 function Mainpage() {

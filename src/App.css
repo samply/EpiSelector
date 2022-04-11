@@ -21,12 +21,11 @@ NavBStyle{
   margin-right: 10px;
 }
 
-/* alte Version*/
-/*nav{
+nav{
   left: 20px;
   top: 20px;
   width: 270px;
-  height: 740px;
+  height: 730px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -35,16 +34,15 @@ NavBStyle{
   color: white;
   margin-right: 10px;
   margin-left: 10px;
-}*/
-/* alte Version */
-/*.nav-links{
+}
+.nav-links{
   width: 50%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style: none;
   flex-direction: column;
-}*/
+}
 
 .rightSideStructure{
   display: flex;
@@ -64,7 +62,7 @@ NavBStyle{
 /*InputProtokoll*/
 .InputProtokoll{
   width: 290px;
-  height: 450px;
+  height: 430px;
   display: flex;
   background-color: white;
   border: solid black;

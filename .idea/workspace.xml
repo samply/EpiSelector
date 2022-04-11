@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="First structure of Project">
-      <change afterPath="$PROJECT_DIR$/src/UploadData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Betapage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Betapage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/InputProtokoll.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InputProtokoll.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MainpageNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MainpageNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Nav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Nav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/TopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/UploadData.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,8 +57,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
-  <component name="RunManager" selected="npm.npm start">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/form" />
+      <recent name="$PROJECT_DIR$/src/components/Form" />
+      <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/pages" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Node.js.Mainpage.js">
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
+      <method v="2" />
+    </configuration>
+    <configuration name="Mainpage.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/src/pages/Mainpage.js" working-dir="$PROJECT_DIR$/src">
       <method v="2" />
     </configuration>
     <configuration name="npm start" type="js.build_tools.npm">
@@ -64,6 +82,11 @@
       <envs />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.Mainpage.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -76,7 +99,7 @@
       <workItem from="1649331574523" duration="11174000" />
       <workItem from="1649412154081" duration="1380000" />
       <workItem from="1649418708196" duration="432000" />
-      <workItem from="1649419154293" duration="12647000" />
+      <workItem from="1649419154293" duration="15316000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -85,7 +108,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649418443286</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="First structure of Project">
+      <created>1649672311480</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1649672311480</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,7 +126,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="basic-structure" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

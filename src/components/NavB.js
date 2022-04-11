@@ -99,7 +99,7 @@ export default function GmailTreeView() {
             defaultCollapseIcon={<ArrowDropDownIcon />}
             defaultExpandIcon={<ArrowRightIcon />}
             defaultEndIcon={<div style={{ width: 24 }} />}
-            sx={{ height: 700, flexGrow: 1, maxWidth: 400, overflowY: 'auto', border: 'solid' }}
+            sx={{ height: 730, flexGrow: 1, maxWidth: 400, overflowY: 'auto', border: 'solid' }}
         >
             <Link to='/mainpage'><StyledTreeItem nodeId="1" labelText="Startseite" labelIcon={CircleIcon} /></Link>
             <Link to='/betapage'>

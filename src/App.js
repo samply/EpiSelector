@@ -1,13 +1,13 @@
 import './App.css';
-import Nav from './Nav';
-import NavB from './NavB'
-import Mainpage from './Mainpage';
-import Betapage from './Betapage';
-import UploadData from './UploadData';
+import Nav from './components/Nav';
+import NavB from './components/NavB'
+import Mainpage from './pages/Mainpage';
+import Betapage from './pages/Betapage';
+import UploadData from './components/form/UploadData';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import InfoBox from "./InfoBox";
-import InputProtokoll from "./InputProtokoll";
-import TopNav from "./TopNav";
+import InfoBox from "./components/InfoBox";
+import InputProtokoll from "./components/InputProtokoll";
+import TopNav from "./components/TopNav";
 
 
 function App() {
