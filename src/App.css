@@ -7,15 +7,22 @@
 .TopNav{
   width: 100%;
   display: flex;
-  height: 80px;
-  background-color: green;
+  height: 5%;
+  background-color: white;
+  border: solid;
   margin-bottom: 10px;
 }
 
 /*NAVIGATION CSS*/
+NavBStyle{
+  width: 270px;
+  height: 800px;
+  background-color: purple;
+  margin-right: 10px;
+}
 
-nav{
-
+/* alte Version*/
+/*nav{
   left: 20px;
   top: 20px;
   width: 270px;
@@ -28,33 +35,29 @@ nav{
   color: white;
   margin-right: 10px;
   margin-left: 10px;
-}
-
-.nav-links{
+}*/
+/* alte Version */
+/*.nav-links{
   width: 50%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   list-style: none;
   flex-direction: column;
-}
-.rightSideBuild{
+}*/
+
+.rightSideStructure{
   display: flex;
   flex-direction: column;
-
 }
 
-.NavBStyle{
-  width: 50%;
-  background-color: blue;
-}
 /*INFOBOX CSS*/
 .InfoBox{
   width: 290px;
   height: 280px;
   display: flex;
-  background: rgb(73, 79, 82);
-  color: white;
+  background-color: white;
+  border: solid black;
   margin-left: 10px;
 }
 
@@ -63,8 +66,8 @@ nav{
   width: 290px;
   height: 450px;
   display: flex;
-  background: rgb(73, 79, 82);
-  color: white;
+  background-color: white;
+  border: solid black;
   margin-bottom: 10px;
   margin-left: 10px;
 }
@@ -75,15 +78,22 @@ nav{
   bottom:10px;
   height:40px;
   width:60%;
-  background-color: blue;
+  background-color: white;
+  border: solid;
 }
 .Mainpage{
-  background-color: red;
+  background-color: white;
+  border: solid;
   width: 60%;
 }
 
 .Betapage{
-  background-color: yellow;
+  background-color: white;
+  border: solid;
   width: 60%;
 }
 
+.UploadData{
+  background-color: saddlebrown;
+  width: 60%;
+}
