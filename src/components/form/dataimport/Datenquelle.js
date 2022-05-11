@@ -7,8 +7,8 @@ function Datenquelle() {
 
 
     return (
-        <div className="Mainpage">
-            <h1>Datenquelle wählen:</h1>
+        <div>
+            <p>Datenquelle wählen:</p>
 
         </div>
     );

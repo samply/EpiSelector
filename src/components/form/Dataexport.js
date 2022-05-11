@@ -8,7 +8,7 @@ function Dataexport() {
 
     return (
         <div className="Mainpage">
-            <h1>Datenexport:</h1>
+            <p>Datenexport:</p>
         </div>
     );
 }
