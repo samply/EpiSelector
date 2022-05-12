@@ -11,17 +11,14 @@ import Typography from '@mui/material/Typography';
 
 function Mainpage() {
     return (
-
-
         <React.Fragment className="Mainpage">
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching
                 </Typography>
-
             </CardContent>
             <CardActions>
-                <Link to='/betapage'>
+                <Link to='/Datenquelle'>
                     <button>Starte Beobachtungsassistent</button>
                 </Link>
             </CardActions>

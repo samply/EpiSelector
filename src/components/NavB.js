@@ -22,18 +22,31 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import {Link} from 'react-router-dom';
+import { withStyles } from '@mui/styles';
 
-function NavB(){
+const styles = {
+    transparentBar: {
+        backgroundColor: 'transparent !important',
+        boxShadow: 'none',
+        paddingTop: '25px',
+        color: '#FFFFFF'
+    }
+};
+
+
+function NavB(props){
+    const { classes } = props;
 
     return (
-        <Box>
+        <Box className={classes.transparentBar}>
             <Card variant="outlined" className="NavBStyle">
                 <React.Fragment>
                     <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Ablauf
                 </Typography>
-            <Timeline>
+            <Timeline classname="Timeline">
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>
@@ -46,21 +59,21 @@ function NavB(){
                         <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Datenquelle wählen</TimelineContent>
+                    <Link to='/Datenquelle'><TimelineContent>Datenquelle wählen</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><UploadFileIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Datei hochladen</TimelineContent>
+                    <Link to='/Datei-hochladen'> <TimelineContent>Datei hochladen</TimelineContent> </Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><JoinLeftIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matching-Methode</TimelineContent>
+                    <Link to='/Matching-Methode'> <TimelineContent>Matching-Methode</TimelineContent> </Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
@@ -74,41 +87,41 @@ function NavB(){
                         <TimelineDot><ListAltIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matchingvariablen</TimelineContent>
+                    <Link to='/Matching-Variablen'> <TimelineContent>Matchingvariablen</TimelineContent> </Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><SquareFootIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matchingtoleranz</TimelineContent>
+                    <Link to='/Matchingtoleranz'><TimelineContent>Matchingtoleranz</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><FeaturedPlayListIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Variablen für Fälle und Kontrollen definieren</TimelineContent>
+                    <Link to='/Variablen-Fälle-Kontrollen'><TimelineContent>Variablen für Fälle und Kontrollen definieren</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><AnalyticsIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matching Verhältnis</TimelineContent>
+                    <Link to='/Matching-Verhältnis'><TimelineContent>Matching Verhältnis</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matching Ergebnis</TimelineContent>
+                    <Link to='/Matching-Ergebnis'><TimelineContent>Matching Ergebnis</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><SimCardDownloadOutlinedIcon/></TimelineDot>
                     </TimelineSeparator>
-                    <TimelineContent>Datenexport</TimelineContent>
+                    <Link to='/Dataexport'><TimelineContent>Datenexport</TimelineContent></Link>
                 </TimelineItem>
             </Timeline>
                     </CardContent>

@@ -10,6 +10,7 @@ import Typography from '@mui/material/Typography';
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
+    height: '93%',
     border: `1px solid ${theme.palette.divider}`,
     '&:not(:last-child)': {
         borderBottom: 0,
@@ -35,12 +36,14 @@ const AccordionSummary = styled((props) => (
     },
     '& .MuiAccordionSummary-content': {
         marginLeft: theme.spacing(1),
+        overflow: 'auto',
     },
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     padding: theme.spacing(2),
     borderTop: '1px solid rgba(0, 0, 0, .125)',
+    overflow: 'auto',
 }));
 
 function InfoBox() {
@@ -62,6 +65,19 @@ function InfoBox() {
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
+
+                        <br/><br/>
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -75,6 +91,17 @@ function InfoBox() {
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
                     </Typography>
                 </AccordionDetails>
             </Accordion>
@@ -88,6 +115,18 @@ function InfoBox() {
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
+                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
+                        sit amet blandit leo lobortis eget.
+                        <br/><br/>
+
                     </Typography>
                 </AccordionDetails>
             </Accordion>

@@ -29,6 +29,8 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
+import {Link} from 'react-router-dom';
+
 
 
 
@@ -73,9 +75,9 @@ function App() {
                         </Box>
                         <DynamicResult/>
                     </div>
-                    {/*Eingabeprotokoll und Infobox in einem Container*/}
+                    {/*Infobox in einem Container*/}
                     <div className="RightContainer">
-                        <InputProtokoll/>
+                        {/*<InputProtokoll/>*/}
                         <InfoBox/>
                     </div>
                 </div>
