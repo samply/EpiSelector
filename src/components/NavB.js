@@ -23,23 +23,12 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import { withStyles } from '@mui/styles';
-
-const styles = {
-    transparentBar: {
-        backgroundColor: 'transparent !important',
-        boxShadow: 'none',
-        paddingTop: '25px',
-        color: '#FFFFFF'
-    }
-};
 
 
 function NavB(props){
-    const { classes } = props;
 
     return (
-        <Box className={classes.transparentBar}>
+        <Box>
             <Card variant="outlined" className="NavBStyle">
                 <React.Fragment>
                     <CardContent>
@@ -57,10 +46,11 @@ function NavB(props){
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                     <Link to='/Datenquelle'><TimelineContent>Datenquelle wählen</TimelineContent></Link>
                 </TimelineItem>
+
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><UploadFileIcon/></TimelineDot>

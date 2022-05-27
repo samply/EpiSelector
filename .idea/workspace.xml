@@ -2,28 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/assets/Medizinische-Fakultät-Mannheim_logo.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/Universitätsklinikum_Mannheim_Logo.svg.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/dkfz_logo.webp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Foot.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Foot.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/PropsenityScoreBereich.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/PropsenityScoreBereich.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,6 +48,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/assets" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
@@ -69,6 +56,9 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/assets" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components/form" />
       <recent name="$PROJECT_DIR$/src/components/dataimport" />
@@ -111,7 +101,8 @@
       <workItem from="1649331574523" duration="11174000" />
       <workItem from="1649412154081" duration="1380000" />
       <workItem from="1649418708196" duration="432000" />
-      <workItem from="1649419154293" duration="77579000" />
+      <workItem from="1649419154293" duration="83875000" />
+      <workItem from="1653480960043" duration="3203000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -155,7 +146,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652258279905</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed Height and Position of Accordion">
+      <created>1652363336984</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1652363336985</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,6 +188,7 @@
     <MESSAGE value="Created Form-Components in Form Directory" />
     <MESSAGE value="Build Paths in Navigation" />
     <MESSAGE value="Added Components Accordion, Timeline and Card from Material-UI" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Components Accordion, Timeline and Card from Material-UI" />
+    <MESSAGE value="Fixed Height and Position of Accordion" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Height and Position of Accordion" />
   </component>
 </project>

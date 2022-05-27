@@ -12,7 +12,6 @@ import {Link} from 'react-router-dom';
 
 function VariableFaelleKontrolle() {
 
-
     return (
         <React.Fragment className="Mainpage">
             <CardContent>
