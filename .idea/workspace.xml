@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/assets/Medizinische-Fakultät-Mannheim_logo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/Universitätsklinikum_Mannheim_Logo.svg.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/dkfz_logo.webp" afterDir="false" />
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Refactored: Components">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Foot.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Foot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +98,7 @@
       <workItem from="1649412154081" duration="1380000" />
       <workItem from="1649418708196" duration="432000" />
       <workItem from="1649419154293" duration="83875000" />
-      <workItem from="1653480960043" duration="3203000" />
+      <workItem from="1653480960043" duration="12357000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -153,7 +149,14 @@
       <option name="project" value="LOCAL" />
       <updated>1652363336985</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Refactored: Components">
+      <created>1653658579249</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1653658579249</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,6 +192,7 @@
     <MESSAGE value="Build Paths in Navigation" />
     <MESSAGE value="Added Components Accordion, Timeline and Card from Material-UI" />
     <MESSAGE value="Fixed Height and Position of Accordion" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Height and Position of Accordion" />
+    <MESSAGE value="Refactored: Components" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored: Components" />
   </component>
 </project>

@@ -34,6 +34,7 @@ import {Link} from 'react-router-dom';
 
 
 
+
 function App() {
 
     return (
@@ -83,7 +84,7 @@ function App() {
                 </div>
             </Router>
             {/*Fußzeile*/}
-            <Foot/>
+
         </div>
     );
 }

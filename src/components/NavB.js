@@ -25,10 +25,18 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 
 
-function NavB(props){
 
-    return (
-        <Box>
+class NavB extends React.Component {
+
+
+
+    render() {
+
+        const linkStyle={
+        textDecoration: "none",
+        color: 'black'
+    };
+        return (
             <Card variant="outlined" className="NavBStyle">
                 <React.Fragment>
                     <CardContent>
@@ -41,29 +49,21 @@ function NavB(props){
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Datenimport</TimelineContent>
+                    <Link to='/Datenquelle' style={linkStyle}><TimelineContent onClick="datenImportShow()">Datenimport</TimelineContent></Link>
                 </TimelineItem>
-                <TimelineItem>
-                    <TimelineSeparator>
-                        <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
-                        <TimelineConnector/>
-                    </TimelineSeparator>
-                    <Link to='/Datenquelle'><TimelineContent>Datenquelle wählen</TimelineContent></Link>
-                </TimelineItem>
-
-                <TimelineItem>
-                    <TimelineSeparator>
-                        <TimelineDot><UploadFileIcon/></TimelineDot>
-                        <TimelineConnector />
-                    </TimelineSeparator>
-                    <Link to='/Datei-hochladen'> <TimelineContent>Datei hochladen</TimelineContent> </Link>
-                </TimelineItem>
+                    <TimelineItem style={{display: 'none'}} id="myDIV">
+                        <TimelineSeparator>
+                            <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
+                            <TimelineConnector/>
+                        </TimelineSeparator>
+                        <Link to='/Datenquelle' style={linkStyle}><TimelineContent>Datenquelle wählen</TimelineContent></Link>
+                    </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><JoinLeftIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Methode'> <TimelineContent>Matching-Methode</TimelineContent> </Link>
+                    <Link to='/Matching-Methode' style={linkStyle}> <TimelineContent>Matching-Methode</TimelineContent> </Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
@@ -72,53 +72,62 @@ function NavB(props){
                     </TimelineSeparator>
                     <TimelineContent>Matching</TimelineContent>
                 </TimelineItem>
-                <TimelineItem>
+                <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
                         <TimelineDot><ListAltIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Variablen'> <TimelineContent>Matchingvariablen</TimelineContent> </Link>
+                    <Link to='/Matching-Variablen' style={linkStyle}> <TimelineContent>Matchingvariablen</TimelineContent> </Link>
                 </TimelineItem>
-                <TimelineItem>
+                <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
-                        <TimelineDot><SquareFootIcon/></TimelineDot>
+                        <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matchingtoleranz'><TimelineContent>Matchingtoleranz</TimelineContent></Link>
+                    <Link to='/Matchingtoleranz' style={linkStyle}><TimelineContent size="small">Matchingtoleranz</TimelineContent></Link>
                 </TimelineItem>
-                <TimelineItem>
+                <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
                         <TimelineDot><FeaturedPlayListIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Variablen-Fälle-Kontrollen'><TimelineContent>Variablen für Fälle und Kontrollen definieren</TimelineContent></Link>
+                    <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}><TimelineContent>Variablen für Fälle und Kontrollen definieren</TimelineContent></Link>
                 </TimelineItem>
-                <TimelineItem>
+                <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
                         <TimelineDot><AnalyticsIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Verhältnis'><TimelineContent>Matching Verhältnis</TimelineContent></Link>
+                    <Link to='/Matching-Verhältnis' style={linkStyle}><TimelineContent>Matching Verhältnis</TimelineContent></Link>
                 </TimelineItem>
-                <TimelineItem>
+                <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
                         <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Ergebnis'><TimelineContent>Matching Ergebnis</TimelineContent></Link>
+                    <Link to='/Matching-Ergebnis' style={linkStyle}><TimelineContent>Matching Ergebnis</TimelineContent></Link>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><SimCardDownloadOutlinedIcon/></TimelineDot>
                     </TimelineSeparator>
-                    <Link to='/Dataexport'><TimelineContent>Datenexport</TimelineContent></Link>
+                    <Link to='/Dataexport' style={linkStyle}><TimelineContent>Datenexport</TimelineContent></Link>
                 </TimelineItem>
             </Timeline>
                     </CardContent>
                 </React.Fragment>
             </Card>
-        </Box>
-    );
+        );
+    }
 }
-export default NavB;
 
+function datenImportShow() {
+    var x = document.getElementById("myDIV");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    } else {
+        x.style.display = "none";
+    }
+}
+
+export default NavB;

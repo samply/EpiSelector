@@ -26,15 +26,15 @@ html, body{
 }
 
 .Foot{
-    height: 9vh;
-    width: 25.5%;
+    height: 7vh;
+    width: 24%;
     background-color: #dfe5e8;
     padding-left: 20px;
 }
 
 .LeftContainer{
     display: flex;
-    background-color: green;
+    background-color: none;
     height: 100%;
     width: 25%;
     margin: 1.5%;
@@ -113,12 +113,16 @@ html, body{
 }
 
 .imgDKFZLogo{
-    height: 70px;
-    width: 80px;
+    height: 50px;
+    width: 60px;
 }
 
 .imgUMMLogo{
-    height: 55px;
-    width:150px;
+    height: 35px;
+    width:120px;
     margin-left: 40px;
+}
+
+Link{
+    text-decoration: none;
 }
