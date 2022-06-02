@@ -8,9 +8,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 function UploadData() {
 
+    const [value, setValue] = React.useState(0);
 
     return (
         <React.Fragment className="Mainpage">
@@ -18,6 +24,11 @@ function UploadData() {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Datei hochladen
                 </Typography>
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Datenquelle'/>
+                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Methode' />
+                </BottomNavigation>
             </CardContent>
         </React.Fragment>
     );

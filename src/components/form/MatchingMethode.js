@@ -8,9 +8,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import BottomNavigation from "@mui/material/BottomNavigation";
 
 function MatchingMethode() {
 
+    const [value, setValue] = React.useState(0);
 
     return (
         <React.Fragment className="Mainpage">
@@ -18,6 +24,12 @@ function MatchingMethode() {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching Methode
                 </Typography>
+
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Datei-hochladen'/>
+                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Variablen' />
+                </BottomNavigation>
             </CardContent>
         </React.Fragment>
     );

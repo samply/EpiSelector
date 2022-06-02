@@ -8,8 +8,17 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import BottomNavigation from "@mui/material/BottomNavigation";
 
 function Mainpage() {
+    const [value, setValue] = React.useState(0);
+
+
     return (
         <React.Fragment className="Mainpage">
             <CardContent>
@@ -18,9 +27,12 @@ function Mainpage() {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Link to='/Datenquelle'>
-                    <button>Starte Beobachtungsassistent</button>
-                </Link>
+
+
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+                    <BottomNavigationAction label="Starte Beobachtungsstudien-Assistents" icon={<PlayCircleFilledIcon />} component={Link} to='/Datenquelle' />
+                </BottomNavigation>
+
             </CardActions>
         </React.Fragment>
     );

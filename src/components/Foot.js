@@ -1,3 +1,4 @@
+import React from 'react'
 import '../App.css';
 import DKFZLogo from '../assets/dkfz_logo.webp';
 import UMMLogo from '../assets/Universitätsklinikum_Mannheim_Logo.svg.png'

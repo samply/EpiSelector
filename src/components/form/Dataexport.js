@@ -8,9 +8,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
+import BottomNavigation from "@mui/material/BottomNavigation";
+import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
 function Dataexport() {
+    const [value, setValue] = React.useState(0);
 
 
     return (
@@ -19,6 +25,12 @@ function Dataexport() {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Datenexport
                 </Typography>
+
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Ergebnis'/>
+                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+                    <BottomNavigationAction label="Beenden" icon={<DoneAllIcon />} component={Link} to='/Startseite' />
+                </BottomNavigation>
             </CardContent>
         </React.Fragment>
     );
