@@ -10,31 +10,84 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import {styled} from "@mui/material/styles";
 
 
 function Datenquelle() {
 
     const [value, setValue] = React.useState(0);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: blue;
+      };
+      float: right;
+    `);
 
     return (
         <React.Fragment className="Mainpage">
-            <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
+
+                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                     Datenquelle wählen:
                 </Typography>
 
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Startseite' />
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Datei-hochladen' />
-                </BottomNavigation>
+                <table style={{width: "100%", height: "100%"}}>
 
+                    <tr style={{
+                        height: "85%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                    }}>
+                        <Box sx={{
+                            display: "flex",
+                            width: "18rem",
+                            height: "9rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>Vom Gerät</Box>
+                        <Box sx={{
+                            fontSize:"large",
+                            display: "flex",
+                            width: "18rem",
+                            height: "9rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>DRE</Box>
+                    </tr>
+
+                    <tr style={{ height: "15%", display:"flex"}}>
+                        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }} sx={{
+                            display: "flex",
+                            flexFlow: "right",
+                            float: "right",
+                            width: "40%"
+                        }}>
+                            <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
+                                                    component={Link} to='/Startseite'/>
+                            <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
+                            <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
+                                                    component={Link} to='/Datei-hochladen'/>
+                        </BottomNavigation>
+                    </tr>
+                </table>
             </CardContent>
         </React.Fragment>
     );

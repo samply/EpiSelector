@@ -14,25 +14,32 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
-function UploadData() {
 
+
+function UploadData(){
     const [value, setValue] = React.useState(0);
 
-    return (
+        return(
         <React.Fragment className="Mainpage">
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                     Datei hochladen
                 </Typography>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Datenquelle'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Methode' />
+
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                    setValue(newValue);
+                }}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
+                                            to='/Datenquelle'/>
+                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
+                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
+                                            to='/Matching-Methode'/>
                 </BottomNavigation>
             </CardContent>
         </React.Fragment>
-    );
-}
+        )
+    }
+
 
 export default UploadData;
 

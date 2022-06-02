@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Refactored: Components">
-      <change afterPath="$PROJECT_DIR$/.idea/kontrollgruppenselektion.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP file upload">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,6 +105,7 @@
       <workItem from="1649418708196" duration="432000" />
       <workItem from="1649419154293" duration="83875000" />
       <workItem from="1653480960043" duration="12357000" />
+      <workItem from="1654592172591" duration="6803000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -169,7 +163,21 @@
       <option name="project" value="LOCAL" />
       <updated>1653658579249</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added Navigation Path in all formComponents">
+      <created>1654179704902</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1654179704902</updated>
+    </task>
+    <task id="LOCAL-00010" summary="WIP file upload">
+      <created>1654185329306</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1654185329306</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,6 +215,8 @@
     <MESSAGE value="Added Components Accordion, Timeline and Card from Material-UI" />
     <MESSAGE value="Fixed Height and Position of Accordion" />
     <MESSAGE value="Refactored: Components" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactored: Components" />
+    <MESSAGE value="Added Navigation Path in all formComponents" />
+    <MESSAGE value="WIP file upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP file upload" />
   </component>
 </project>

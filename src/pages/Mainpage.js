@@ -1,39 +1,72 @@
 import '../App.css';
-import MainpageNav from "../components/MainpageNav";
 import {Link} from 'react-router-dom';
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import DeleteIcon from "@mui/icons-material/Delete";
-import DoneAllIcon from "@mui/icons-material/DoneAll";
 import BottomNavigation from "@mui/material/BottomNavigation";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 function Mainpage() {
+
     const [value, setValue] = React.useState(0);
+    const [age, setAge] = React.useState('');
 
 
+    const handleChange = (event) => {
+        setAge(event.target.value);
+    };
     return (
         <React.Fragment className="Mainpage">
             <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching
                 </Typography>
-            </CardContent>
-            <CardActions>
+<br/><br/><br/>
+                <Typography variant="h4">
+                    Willkommen beim
+                    Beobachtungsstudien-Assistent
+                </Typography>
+<br/><br/>
+                <Typography variant="h6">
+                    Mithilfe des Beobachtungsstudien-Assistenten können Sie anhand verschiedener Methoden in Ihrer Patientenliste Patienten mit bestimmten Kritierien selektieren.
+                </Typography>
 
-
+                <br/><br/>
+                <Typography variant="body">
+                    Optional können Sie eine Maske anwenden:
+                </Typography>
+<br/><br/>
+                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                    <InputLabel id="demo-select-small">Maske</InputLabel>
+                    <Select
+                        labelId="demo-select-small"
+                        id="demo-select-small"
+                        value={age}
+                        label="Maske"
+                        onChange={handleChange}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        <MenuItem value={10}>Maske 1</MenuItem>
+                        <MenuItem value={20}>Maske 2</MenuItem>
+                        <MenuItem value={30}>Maske 3</MenuItem>
+                    </Select>
+                </FormControl>
+<br/> <br/><br/>
+                <div className="startButtonPosition">
                 <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
                     <BottomNavigationAction label="Starte Beobachtungsstudien-Assistents" icon={<PlayCircleFilledIcon />} component={Link} to='/Datenquelle' />
                 </BottomNavigation>
+                </div>
+        </CardContent>
 
-            </CardActions>
         </React.Fragment>
     );
 }

@@ -20,16 +20,72 @@ function MatchingMethode() {
 
     return (
         <React.Fragment className="Mainpage">
-            <CardContent>
+            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching Methode
                 </Typography>
+                <table style={{width: "100%", height: "100%"}}>
 
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Datei-hochladen'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Variablen' />
-                </BottomNavigation>
+                    <tr style={{
+                        height: "85%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                    }}>
+                        <Box sx={{
+                            display: "flex",
+                            width: "18rem",
+                            height: "9rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>Matching nach  <br/> ausgewählten Variablen</Box>
+                        <Box sx={{
+                            fontSize:"large",
+                            display: "flex",
+                            width: "18rem",
+                            height: "9rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>Propensityscore Matching</Box>
+                        <Box sx={{
+                            fontSize:"large",
+                            display: "flex",
+                            width: "18rem",
+                            height: "9rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>Zufallsprinzip</Box>
+                    </tr>
+
+                    <tr style={{ height: "15%", display:"flex"}}>
+                        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                            setValue(newValue);
+                        }} sx={{
+                            display: "flex",
+                            flexFlow: "right",
+                            float: "right",
+                            width: "40%"
+                        }}>
+                            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Datei-hochladen'/>
+                                <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+                                <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Variablen' />
+                            </BottomNavigation>
+                    </tr>
+                    </table>
             </CardContent>
         </React.Fragment>
     );
