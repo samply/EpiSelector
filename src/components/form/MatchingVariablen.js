@@ -54,7 +54,7 @@ function MatchingVariablen() {
 
     return (
         <React.Fragment className="Mainpage">
-            <CardContent>
+            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matchingvariablen
                 </Typography>
@@ -62,7 +62,7 @@ function MatchingVariablen() {
                 {/*-------------------------*/}
                 <br/>
 
-                    <div style={{display:"flex",  height: 400, width: '350%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
+                    <div style={{display:"flex",  height: 400, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
                         <DataGrid
                             rows={rows}
                             columns={columns}
@@ -74,8 +74,15 @@ function MatchingVariablen() {
 
                 {/*-------------------------*/}
 
-
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+<br/>
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                    setValue(newValue);
+                }} sx={{
+                    display: "flex",
+                    flexFlow: "right",
+                    float: "right",
+                    width: "40%"
+                }}>
                     <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Methode'/>
                     <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
                     <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matchingtoleranz' />

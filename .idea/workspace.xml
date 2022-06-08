@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP file upload">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Added Table in MatchingVariablen.js and SelectionBox in Datenquelle.js and MatchingMethode.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +103,7 @@
       <workItem from="1649418708196" duration="432000" />
       <workItem from="1649419154293" duration="83875000" />
       <workItem from="1653480960043" duration="12357000" />
-      <workItem from="1654592172591" duration="6803000" />
+      <workItem from="1654592172591" duration="7585000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -177,7 +175,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654185329306</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added Table in MatchingVariablen.js and SelectionBox in Datenquelle.js and MatchingMethode.js">
+      <created>1654696765137</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654696765138</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +222,7 @@
     <MESSAGE value="Refactored: Components" />
     <MESSAGE value="Added Navigation Path in all formComponents" />
     <MESSAGE value="WIP file upload" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP file upload" />
+    <MESSAGE value="Added Table in MatchingVariablen.js and SelectionBox in Datenquelle.js and MatchingMethode.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Table in MatchingVariablen.js and SelectionBox in Datenquelle.js and MatchingMethode.js" />
   </component>
 </project>
