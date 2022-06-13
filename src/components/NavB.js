@@ -43,7 +43,7 @@ class NavB extends React.Component {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Ablauf
                 </Typography>
-            <Timeline classname="Timeline">
+            <Timeline style={{position:"absolute", left:"-120px", top: "115px"}}>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>
@@ -89,28 +89,28 @@ class NavB extends React.Component {
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                    <TimelineContent size="small"> <Link to='/Matchingtoleranz' style={linkStyle}>Matchingtoleranz</Link></TimelineContent>
                 </TimelineItem>
-                <TimelineItem style={{display: 'none'}}>
+                <TimelineItem sx={{width:"200%", left:"-210px"}}>{/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><FeaturedPlayListIcon/></TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                    <TimelineContent> <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}>Variablen für Fälle und Kontrollen definieren</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><AnalyticsIcon/></TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                     <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>Matching Verhältnis</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
-                        <TimelineConnector />
+                        <TimelineConnector/>
                     </TimelineSeparator>
                     <TimelineContent><Link to='/Matching-Ergebnis' style={linkStyle}>Matching Ergebnis</Link></TimelineContent>
                 </TimelineItem>

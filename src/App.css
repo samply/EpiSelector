@@ -73,6 +73,14 @@ html, body{
     float:left;
     background-color: #dfe5e8;
     text-decoration: none;
+    padding-left: -5%;
+    margin-left: -5%;
+    justify-items:left;
+    justify-content: left;
+    align-content: flex-start;
+    align-items: flex-start;
+    position: fixed;
+    left:0;
 }
 
 .tmpNavB{
