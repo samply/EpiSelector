@@ -49,21 +49,28 @@ class NavB extends React.Component {
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Datenquelle' style={linkStyle}><TimelineContent onClick="datenImportShow()">Datenimport</TimelineContent></Link>
+                   <TimelineContent onClick="datenImportShow()"> <Link to='/Datenquelle' style={linkStyle}>Datenimport</Link></TimelineContent>
                 </TimelineItem>
-                    <TimelineItem style={{display: 'none'}} id="myDIV">
+                    <TimelineItem id="myDIV"> {/*style={{display: 'none'}}*/}
                         <TimelineSeparator>
                             <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
                             <TimelineConnector/>
                         </TimelineSeparator>
-                        <Link to='/Datenquelle' style={linkStyle}><TimelineContent>Datenquelle wählen</TimelineContent></Link>
+                        <TimelineContent><Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen</Link></TimelineContent>
                     </TimelineItem>
+                <TimelineItem> {/*style={{display: 'none'}}*/}
+                    <TimelineSeparator>
+                        <TimelineDot><UploadFileIcon/></TimelineDot>
+                        <TimelineConnector />
+                    </TimelineSeparator>
+                     <TimelineContent><Link to='/Datei-hochladen' style={linkStyle}>Datei hochladen</Link></TimelineContent>
+                </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><JoinLeftIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Methode' style={linkStyle}> <TimelineContent>Matching-Methode</TimelineContent> </Link>
+                     <TimelineContent><Link to='/Matching-Methode' style={linkStyle}>Matching-Methode </Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
@@ -72,46 +79,46 @@ class NavB extends React.Component {
                     </TimelineSeparator>
                     <TimelineContent>Matching</TimelineContent>
                 </TimelineItem>
-                <TimelineItem style={{display: 'none'}}>
+                <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><ListAltIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Variablen' style={linkStyle}> <TimelineContent>Matchingvariablen</TimelineContent> </Link>
+                    <TimelineContent> <Link to='/Matching-Variablen' style={linkStyle}>Matchingvariablen</Link></TimelineContent>
                 </TimelineItem>
-                <TimelineItem style={{display: 'none'}}>
+                <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matchingtoleranz' style={linkStyle}><TimelineContent size="small">Matchingtoleranz</TimelineContent></Link>
+                   <TimelineContent size="small"> <Link to='/Matchingtoleranz' style={linkStyle}>Matchingtoleranz</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem style={{display: 'none'}}>
                     <TimelineSeparator>
                         <TimelineDot><FeaturedPlayListIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}><TimelineContent>Variablen für Fälle und Kontrollen definieren</TimelineContent></Link>
+                   <TimelineContent> <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}>Variablen für Fälle und Kontrollen definieren</Link></TimelineContent>
                 </TimelineItem>
-                <TimelineItem style={{display: 'none'}}>
+                <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><AnalyticsIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Verhältnis' style={linkStyle}><TimelineContent>Matching Verhältnis</TimelineContent></Link>
+                    <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>Matching Verhältnis</Link></TimelineContent>
                 </TimelineItem>
-                <TimelineItem style={{display: 'none'}}>
+                <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <Link to='/Matching-Ergebnis' style={linkStyle}><TimelineContent>Matching Ergebnis</TimelineContent></Link>
+                    <TimelineContent><Link to='/Matching-Ergebnis' style={linkStyle}>Matching Ergebnis</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><SimCardDownloadOutlinedIcon/></TimelineDot>
                     </TimelineSeparator>
-                    <Link to='/Dataexport' style={linkStyle}><TimelineContent>Datenexport</TimelineContent></Link>
+                   <TimelineContent> <Link to='/Dataexport' style={linkStyle}>Datenexport</Link></TimelineContent>
                 </TimelineItem>
             </Timeline>
                     </CardContent>
