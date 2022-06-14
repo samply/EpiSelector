@@ -13,33 +13,173 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import {styled} from "@mui/material/styles";
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import PropTypes from 'prop-types';
+import Files from './Files';
+import axios from 'axios'
+
+const mimeTypeRegexp = /^(application|audio|example|image|message|model|multipart|text|video)\/[a-z0-9\.\+\*-]+$/;
+const extRegexp = /\.[a-zA-Z0-9]*$/;
 
 
-
-function UploadData(){
-    const [value, setValue] = React.useState(0);
-
-        return(
-        <React.Fragment className="Mainpage">
-            <CardContent>
-                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    Datei hochladen
-                </Typography>
-
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                    setValue(newValue);
-                }}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                            to='/Datenquelle'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                            to='/Matching-Methode'/>
-                </BottomNavigation>
-            </CardContent>
-        </React.Fragment>
-        )
+class UploadData extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            files: []
+        }
     }
 
+
+    onFilesChange = (files) => {
+        this.setState({
+            files
+        }, () => {
+            console.log(this.state.files)
+        })
+    }
+
+    onFilesError = (error, file) => {
+        console.log('error code ' + error.code + ': ' + error.message)
+    }
+
+    filesRemoveOne = (file) => {
+        this.refs.files.removeFile(file)
+    }
+
+    filesRemoveAll = () => {
+        this.refs.files.removeFiles()
+    }
+
+    filesUpload = () => {
+        const formData = new FormData()
+        Object.keys(this.state.files).forEach((key) => {
+            const file = this.state.files[key]
+            formData.append(key, new Blob([file], { type: file.type }), file.name || 'file')
+        })
+
+        axios.post(`/files`, formData)
+            .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
+            .catch(err => window.alert('Error uploading files :('))
+    }
+
+    render() {
+
+
+/*
+        const [value, setValue] = React.useState(2);
+*/
+        const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+          color: grey;
+          &.Mui-selected {
+            color: #1d4189;
+          };
+        `);
+
+        return (
+            <React.Fragment className="Mainpage">
+                <CardContent>
+                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                        Datei hochladen
+                    </Typography>
+                    <div>
+                        <div>
+                            <h1>Example 1 - List</h1>
+                            <Files
+                                ref='files'
+                                className='files-dropzone-list'
+                                style={{ height: '100px' }}
+                                onChange={this.onFilesChange}
+                                onError={this.onFilesError}
+                                multiple
+                                maxFiles={10}
+                                maxFileSize={10000000}
+                                minFileSize={0}
+                                clickable
+                            >
+                                Drop files here or click to upload
+                            </Files>
+                            <button onClick={this.filesRemoveAll}>Remove All Files</button>
+                            <button onClick={this.filesUpload}>Upload</button>
+                            {
+                                this.state.files.length > 0
+                                    ? <div className='files-list'>
+                                        <ul>{this.state.files.map((file) =>
+                                            <li className='files-list-item' key={file.id}>
+                                                <div className='files-list-item-preview'>
+                                                    {file.preview.type === 'image'
+                                                        ? <img className='files-list-item-preview-image' src={file.preview.url} />
+                                                        : <div className='files-list-item-preview-extension'>{file.extension}</div>}
+                                                </div>
+                                                <div className='files-list-item-content'>
+                                                    <div className='files-list-item-content-item files-list-item-content-item-1'>{file.name}</div>
+                                                    <div className='files-list-item-content-item files-list-item-content-item-2'>{file.sizeReadable}</div>
+                                                </div>
+                                                <div
+                                                    id={file.id}
+                                                    className='files-list-item-remove'
+                                                    onClick={this.filesRemoveOne.bind(this, file)} // eslint-disable-line
+                                                />
+                                            </li>
+                                        )}</ul>
+                                    </div>
+                                    : null
+                            }
+                        </div>
+                    </div>
+               {/*     <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                        setValue(newValue);
+                    }}>
+                        <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
+                                                to='/Datenquelle'/>
+                        <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
+                        <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
+                                                to='/Matching-Methode'/>
+                    </BottomNavigation>*/}
+                </CardContent>
+            </React.Fragment>
+        )
+    }
+}
+
+
+UploadData.propTypes = {
+    children: PropTypes.oneOfType([
+        PropTypes.arrayOf(PropTypes.node),
+        PropTypes.node
+    ]),
+    className: PropTypes.string.isRequired,
+    dropActiveClassName: PropTypes.string,
+    onChange: PropTypes.func,
+    onError: PropTypes.func,
+    accepts: PropTypes.array,
+    multiple: PropTypes.bool,
+    maxFiles: PropTypes.number,
+    maxFileSize: PropTypes.number,
+    minFileSize: PropTypes.number,
+    clickable: PropTypes.bool,
+    name: PropTypes.string,
+    style: PropTypes.object
+}
+
+UploadData.defaultProps = {
+    onChange: function (files) {
+        console.log(files)
+    },
+    onError: function (error, file) {
+        console.log('error code ' + error.code + ': ' + error.message)
+    },
+    className: 'files-dropzone',
+    dropActiveClassName: 'files-dropzone-active',
+    accepts: null,
+    multiple: true,
+    maxFiles: Infinity,
+    maxFileSize: Infinity,
+    minFileSize: 0,
+    name: 'file',
+    clickable: true
+}
 
 export default UploadData;
 

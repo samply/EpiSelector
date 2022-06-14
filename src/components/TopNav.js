@@ -4,7 +4,7 @@ import '../App.css';
 function TopNav() {
     return (
         <div className="TopNav">
-            <p>Beobachtungsstudien-Assistent</p>
+            <h2 style={{fontFamily:"Verdana light"}}>Beobachtungsstudien-Assistent</h2>
         </div>
     );
 }

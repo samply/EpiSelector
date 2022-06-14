@@ -19,13 +19,12 @@ import {styled} from "@mui/material/styles";
 
 function Datenquelle() {
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
     const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
       color: grey;
       &.Mui-selected {
-        color: blue;
+        color: #1d4189;
       };
-      float: right;
     `);
 
     return (
@@ -47,39 +46,30 @@ function Datenquelle() {
                     }}>
                         <Box sx={{
                             display: "flex",
-                            width: "18rem",
-                            height: "9rem",
+                            width: "15rem",
+                            height: "8rem",
                             alignItems:"center",
                             justifyContent: "space-evenly",
-                            border: "solid lightgrey",
                             fontSize:"large",
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
-                            color: 'white',
+                            color: "#666666",
                         }}>Vom Gerät</Box>
                         <Box sx={{
                             fontSize:"large",
                             display: "flex",
-                            width: "18rem",
-                            height: "9rem",
+                            width: "15rem",
+                            height: "8rem",
                             alignItems:"center",
                             justifyContent: "space-evenly",
-                            border: "solid lightgrey",
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
-                            color: 'white',
+                            color: '#666666',
                         }}>DRE</Box>
                     </tr>
 
-                    <tr style={{ height: "15%", display:"flex"}}>
-                        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }} sx={{
-                            display: "flex",
-                            flexFlow: "right",
-                            float: "right",
-                            width: "40%"
-                        }}>
+                    <tr style={{ height: "15%", display:"flex", float:"right"}}>
+                        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
                             <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
                                                     component={Link} to='/Startseite'/>
                             <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>

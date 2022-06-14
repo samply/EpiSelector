@@ -11,10 +11,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Button from '@mui/material/Button';
+
 
 function Mainpage() {
 
-    const [value, setValue] = React.useState(0);
     const [age, setAge] = React.useState('');
 
 
@@ -59,11 +60,13 @@ function Mainpage() {
                         <MenuItem value={30}>Maske 3</MenuItem>
                     </Select>
                 </FormControl>
-<br/> <br/><br/>
-                <div className="startButtonPosition">
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Starte Beobachtungsstudien-Assistents" icon={<PlayCircleFilledIcon />} component={Link} to='/Datenquelle' />
-                </BottomNavigation>
+
+                <br/>
+                <div style={{width:"100%", height:"30%"}}>
+                    <Link to ='Datenquelle'><Button style={{float:"right", marginRight:"5%", backgroundColor:"#4B92DB", color:"white", border:"none"}} variant="outlined" startIcon={<PlayCircleFilledIcon />}>
+                        Start
+                    </Button>
+                    </Link>
                 </div>
         </CardContent>
 
