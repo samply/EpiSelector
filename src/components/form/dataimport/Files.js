@@ -218,7 +218,7 @@ class Files extends React.Component {
         }
 
         return (
-            <div>
+            <div style={{border:"dashed lightgrey", width:"300%"}}>
                 <input
                     {...inputAttributes}
                 />

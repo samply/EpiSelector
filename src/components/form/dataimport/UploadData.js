@@ -24,11 +24,14 @@ const extRegexp = /\.[a-zA-Z0-9]*$/;
 
 
 class UploadData extends React.Component {
+
     constructor (props) {
+
         super(props)
         this.state = {
             files: []
         }
+
     }
 
 
@@ -66,10 +69,6 @@ class UploadData extends React.Component {
 
     render() {
 
-
-/*
-        const [value, setValue] = React.useState(2);
-*/
         const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
           color: grey;
           &.Mui-selected {
@@ -83,9 +82,9 @@ class UploadData extends React.Component {
                     <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
                         Datei hochladen
                     </Typography>
-                    <div>
-                        <div>
-                            <h1>Example 1 - List</h1>
+                    <table style={{height:"100%"}}>
+                        <tr>
+                            <h3>Datei hochladen</h3>
                             <Files
                                 ref='files'
                                 className='files-dropzone-list'
@@ -100,8 +99,11 @@ class UploadData extends React.Component {
                             >
                                 Drop files here or click to upload
                             </Files>
-                            <button onClick={this.filesRemoveAll}>Remove All Files</button>
-                            <button onClick={this.filesUpload}>Upload</button>
+                            <br/>
+                            <div style={{display:"flex", gap:"5%", width:"300%"}}>
+                            <Button variant="outlined" onClick={this.filesRemoveAll}>Remove All Files</Button>
+                            <Button variant="outlined" onClick={this.filesUpload}>Upload</Button>
+                            </div>
                             {
                                 this.state.files.length > 0
                                     ? <div className='files-list'>
@@ -126,17 +128,19 @@ class UploadData extends React.Component {
                                     </div>
                                     : null
                             }
-                        </div>
-                    </div>
-               {/*     <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}>
-                        <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                                to='/Datenquelle'/>
-                        <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                        <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                                to='/Matching-Methode'/>
-                    </BottomNavigation>*/}
+                        </tr>
+                        <tr style={{ width:"320%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
+                        <br/><br/>
+                            <BottomNavigation showLabels>
+                            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
+                                                    to='/Datenquelle'/>
+                            <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
+                            <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
+                                                    to='/Matching-Methode'/>
+                        </BottomNavigation>
+                    </tr>
+                    </table>
+
                 </CardContent>
             </React.Fragment>
         )
