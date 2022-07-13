@@ -18,6 +18,9 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import PropTypes from 'prop-types';
 import Files from './Files';
 import axios from 'axios'
+import Papa from 'papaparse';
+import { useState } from "react";
+
 
 const mimeTypeRegexp = /^(application|audio|example|image|message|model|multipart|text|video)\/[a-z0-9\.\+\*-]+$/;
 const extRegexp = /\.[a-zA-Z0-9]*$/;
@@ -31,9 +34,7 @@ class UploadData extends React.Component {
         this.state = {
             files: []
         }
-
     }
-
 
     onFilesChange = (files) => {
         this.setState({
@@ -67,6 +68,7 @@ class UploadData extends React.Component {
             .catch(err => window.alert('Error uploading files :('))
     }
 
+
     render() {
 
         const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
@@ -75,6 +77,35 @@ class UploadData extends React.Component {
             color: #1d4189;
           };
         `);
+
+       /* // State to store parsed data
+        const [parsedData, setParsedData] = useState([]);
+
+        //State to store table Column name
+        const [tableRows, setTableRows] = useState([]);
+
+        //State to store the values
+        const [values, setValues] = useState([]);*/
+
+        const changeHandler = (event) => {
+            // Passing file data (event.target.files[0]) to parse using Papa.parse
+            Papa.parse(event.target.files[0], {
+                header: true,
+                skipEmptyLines: true,
+                complete: function (results) {
+                    const rowsArray = [];
+                    const valuesArray = [];
+
+                    // Iterating data to get column name and their values
+                    results.data.map((d) => {
+                        console.log(results);
+                        rowsArray.push(Object.keys(d));
+                        valuesArray.push(Object.values(d));
+                    });
+
+                },
+            });
+        };
 
         return (
             <React.Fragment className="Mainpage">
@@ -102,7 +133,8 @@ class UploadData extends React.Component {
                             <br/>
                             <div style={{display:"flex", gap:"5%", width:"300%"}}>
                             <Button variant="outlined" onClick={this.filesRemoveAll}>Remove All Files</Button>
-                            <Button variant="outlined" onClick={this.filesUpload}>Upload</Button>
+                            {/*<Button variant="outlined" onClick={this.filesUpload}>Upload</Button>*/}
+                                <Button variant="outlined" onClick={changeHandler}>Upload</Button>
                             </div>
                             {
                                 this.state.files.length > 0
@@ -128,8 +160,9 @@ class UploadData extends React.Component {
                                     </div>
                                     : null
                             }
+
                         </tr>
-                        <tr style={{ width:"320%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
+                        <tr style={{ width:"300%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
                         <br/><br/>
                             <BottomNavigation showLabels>
                             <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}

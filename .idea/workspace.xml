@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Added Import File Functioanlity">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Refactored FormInputs">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Files.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Files.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/File.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Form.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,17 +79,6 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -115,7 +116,16 @@
       <workItem from="1653480960043" duration="12357000" />
       <workItem from="1654592172591" duration="9377000" />
       <workItem from="1655119518768" duration="5661000" />
-      <workItem from="1655201652907" duration="10255000" />
+      <workItem from="1655201652907" duration="10461000" />
+      <workItem from="1655293793829" duration="1190000" />
+      <workItem from="1655801356504" duration="608000" />
+      <workItem from="1655888882437" duration="12468000" />
+      <workItem from="1656321818803" duration="4053000" />
+      <workItem from="1656580368303" duration="1216000" />
+      <workItem from="1656672439151" duration="2697000" />
+      <workItem from="1656928884553" duration="1785000" />
+      <workItem from="1657533998820" duration="2297000" />
+      <workItem from="1657622328825" duration="598000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -222,7 +232,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655213051875</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Refactored FormInputs">
+      <created>1655216042432</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1655216042432</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +284,7 @@
     <MESSAGE value="Added Links to NavB.js for the Rest of TreeItems" />
     <MESSAGE value="Fixed Positioning in NavB.js" />
     <MESSAGE value="Added Import File Functioanlity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Import File Functioanlity" />
+    <MESSAGE value="Refactored FormInputs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactored FormInputs" />
   </component>
 </project>

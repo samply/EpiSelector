@@ -218,8 +218,8 @@ class Files extends React.Component {
         }
 
         return (
-            <div style={{border:"dashed lightgrey", width:"300%"}}>
-                <input
+            <div style={{border:"dashed lightgrey", width:"250%", justifyContent:"space-evenly"}}>
+                <input sx={{justifyContent:"space-evenly"}}
                     {...inputAttributes}
                 />
                 <div

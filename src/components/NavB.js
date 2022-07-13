@@ -43,7 +43,7 @@ class NavB extends React.Component {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Ablauf
                 </Typography>
-            <Timeline style={{position:"absolute", left:"-120px", top: "115px"}}>
+            <Timeline style={{position:"absolute", left:"-120px", top: "150px"}}>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>

@@ -13,10 +13,18 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import BottomNavigation from "@mui/material/BottomNavigation";
+import {styled} from "@mui/material/styles";
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 function MatchingMethode() {
 
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: #1d4189;
+      };
+    `);
 
     return (
         <React.Fragment className="Mainpage">

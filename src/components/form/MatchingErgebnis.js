@@ -15,21 +15,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 function MatchingErgebnis() {
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
 
 
     return (
         <React.Fragment className="Mainpage">
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <table>
+                <tr><Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching Ergebnis
                 </Typography>
+                </tr>
+    <tr sx={{width:"200%", height:"80%", backgroundColor:"red"}}>
+        hier kommen die Ergebnisse
+    </tr>
+    <tr>
+        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
+            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Verhältnis'/>
+            <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+            <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Dataexport' />
+        </BottomNavigation>
 
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Verhältnis'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Dataexport' />
-                </BottomNavigation>
+    </tr>
+</table>
 
             </CardContent>
         </React.Fragment>

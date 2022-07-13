@@ -94,16 +94,7 @@ function InfoBox() {
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                         <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/>
+
 
 
                         <br/><br/>
@@ -126,6 +117,7 @@ function InfoBox() {
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                         <br/><br/>
+
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
@@ -141,20 +133,7 @@ function InfoBox() {
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                         <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
+
                         <br/>
                     </Typography>
                 </AccordionDetails>
@@ -190,21 +169,7 @@ function InfoBox() {
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
                         sit amet blandit leo lobortis eget.
                         <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/><br/>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                        malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                        sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                        sit amet blandit leo lobortis eget.
-                        <br/>
+
                     </Typography>
                 </AccordionDetails>
             </Accordion>

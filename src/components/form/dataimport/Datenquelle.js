@@ -15,6 +15,8 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {styled} from "@mui/material/styles";
+import Checkbox from '@mui/material/Checkbox';
+import {FormControlLabel, FormGroup} from "@material-ui/core";
 
 
 function Datenquelle() {
@@ -44,6 +46,7 @@ function Datenquelle() {
                         flexDirection: "row",
                         justifyContent: "space-evenly",
                     }}>
+                        <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box sx={{
                             display: "flex",
                             width: "15rem",
@@ -53,8 +56,9 @@ function Datenquelle() {
                             fontSize:"large",
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
-                            color: "#666666",
-                        }}>Vom Gerät</Box>
+                            color: "#666666"}}
+                        >  <FormControlLabel control={<Checkbox defaultChecked />} label="Vom Gerät" />
+                        </Box>
                         <Box sx={{
                             fontSize:"large",
                             display: "flex",
@@ -65,7 +69,9 @@ function Datenquelle() {
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
                             color: '#666666',
-                        }}>DRE</Box>
+                        }}><FormControlLabel control={<Checkbox/>} label="DRE" />
+                        </Box>
+                        </FormGroup>
                     </tr>
 
                     <tr style={{ height: "15%", display:"flex", float:"right"}}>

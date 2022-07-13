@@ -16,7 +16,7 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 
 
 function MatchingVerhältnis() {
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
 
 
     return (
@@ -29,7 +29,7 @@ function MatchingVerhältnis() {
                 <table style={{width: "100%", height: "100%"}}>
 
                     <tr style={{
-                        height: "85%",
+                        height: "25%",
                         display: "flex",
                         alignItems: "center",
                         flexDirection: "row",
@@ -37,8 +37,8 @@ function MatchingVerhältnis() {
                     }}>
                         <Box sx={{
                             display: "flex",
-                            width: "18rem",
-                            height: "9rem",
+                            width: "4rem",
+                            height: "4rem",
                             alignItems:"center",
                             justifyContent: "space-evenly",
                             border: "solid lightgrey",
@@ -46,22 +46,87 @@ function MatchingVerhältnis() {
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
                             color: 'white',
-                        }}>Vom Gerät</Box>
+                        }}>1:1</Box>
                         <Box sx={{
                             fontSize:"large",
                             display: "flex",
-                            width: "18rem",
-                            height: "9rem",
+                            width: "4rem",
+                            height: "4rem",
                             alignItems:"center",
                             justifyContent: "space-evenly",
                             border: "solid lightgrey",
                             borderRadius: "15px",
                             backgroundColor: 'rgba(211,211,211, 0.8)',
                             color: 'white',
-                        }}>DRE</Box>
+                        }}>1:2</Box>
                     </tr>
+                    <tr style={{
+                        height: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                    }}>
+                        <Box sx={{
+                            display: "flex",
+                            width: "4rem",
+                            height: "4rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>1:3</Box>
+                        <Box sx={{
+                            display: "flex",
+                            width: "4rem",
+                            height: "4rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>1:4</Box>
+                    </tr>
+                    <tr style={{
+                        height: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        justifyContent: "space-evenly",
+                        paddingBottom:'5%'
+                    }}>
+                        <Box sx={{
+                            display: "flex",
+                            width: "4rem",
+                            height: "4rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>1:10</Box>
+                        <Box sx={{
+                            display: "flex",
+                            width: "4rem",
+                            height: "4rem",
+                            alignItems:"center",
+                            justifyContent: "space-evenly",
+                            border: "solid lightgrey",
+                            fontSize:"large",
+                            borderRadius: "15px",
+                            backgroundColor: 'rgba(211,211,211, 0.8)',
+                            color: 'white',
+                        }}>1:___</Box>
 
-                    <tr style={{ height: "15%", display:"flex"}}>
+                    </tr>
+                    <tr style={{ width:"100%",height:"20%", display:"flex", justifyContent:"flex-end", alignSelf:"flex-end"}}>
                         <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
                             setValue(newValue);
                         }} sx={{
@@ -70,10 +135,10 @@ function MatchingVerhältnis() {
                             float: "right",
                             width: "40%"
                         }}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Variablen-Fälle-Kontrollen'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Ergebnis' />
-                </BottomNavigation>
+                            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Variablen-Fälle-Kontrollen'/>
+                            <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+                            <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Ergebnis' />
+                        </BottomNavigation>
                     </tr></table>
             </CardContent>
         </React.Fragment>
