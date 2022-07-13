@@ -59,7 +59,7 @@ function VariableFaelleKontrolle() {
                     Variable Fälle und Kontrolle
                 </Typography>
                 <br/>
-                <div style={{display:"flex",  height: 400, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
+                <div style={{display:"flex",  height: 330, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}

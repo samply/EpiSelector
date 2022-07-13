@@ -18,171 +18,112 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import PropTypes from 'prop-types';
 import Files from './Files';
 import axios from 'axios'
-
-const mimeTypeRegexp = /^(application|audio|example|image|message|model|multipart|text|video)\/[a-z0-9\.\+\*-]+$/;
-const extRegexp = /\.[a-zA-Z0-9]*$/;
-
-
-class UploadData extends React.Component {
-
-    constructor (props) {
-
-        super(props)
-        this.state = {
-            files: []
-        }
-
-    }
+import Papa from 'papaparse';
+import { useState } from "react";
 
 
-    onFilesChange = (files) => {
-        this.setState({
-            files
-        }, () => {
-            console.log(this.state.files)
-        })
-    }
+function UploadData(props) {
 
-    onFilesError = (error, file) => {
-        console.log('error code ' + error.code + ': ' + error.message)
-    }
+    const [value, setValue] = React.useState(2);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: #1d4189;
+      };
+    `);
 
-    filesRemoveOne = (file) => {
-        this.refs.files.removeFile(file)
-    }
+    // State to store parsed data
+    const [parsedData, setParsedData] = useState([]);
 
-    filesRemoveAll = () => {
-        this.refs.files.removeFiles()
-    }
+    //State to store table Column name
+    const [tableRows, setTableRows] = useState([]);
 
-    filesUpload = () => {
-        const formData = new FormData()
-        Object.keys(this.state.files).forEach((key) => {
-            const file = this.state.files[key]
-            formData.append(key, new Blob([file], { type: file.type }), file.name || 'file')
-        })
+    //State to store the values
+    const [values, setValues] = useState([]);
 
-        axios.post(`/files`, formData)
-            .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
-            .catch(err => window.alert('Error uploading files :('))
-    }
 
-    render() {
+    const changeHandler = (event) => {
+        // Passing file data (event.target.files[0]) to parse using Papa.parse
+        Papa.parse(event.target.files[0],{
+            header: true,
+            skipEmptyLines: true,
+            complete: function (results) {
+                const rowsArray = [];
+                const valuesArray = [];
 
-        const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-          color: grey;
-          &.Mui-selected {
-            color: #1d4189;
-          };
-        `);
+                // Iterating data to get column name and their values
+                results.data.map((d) => {
+                    rowsArray.push(Object.keys(d));
+                    valuesArray.push(Object.values(d));
+                });
 
-        return (
-            <React.Fragment className="Mainpage">
-                <CardContent>
-                    <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                        Datei hochladen
-                    </Typography>
-                    <table style={{height:"100%"}}>
-                        <tr>
-                            <h3>Datei hochladen</h3>
-                            <Files
-                                ref='files'
-                                className='files-dropzone-list'
-                                style={{ height: '100px' }}
-                                onChange={this.onFilesChange}
-                                onError={this.onFilesError}
-                                multiple
-                                maxFiles={10}
-                                maxFileSize={10000000}
-                                minFileSize={0}
-                                clickable
-                            >
-                                Drop files here or click to upload
-                            </Files>
-                            <br/>
-                            <div style={{display:"flex", gap:"5%", width:"300%"}}>
-                            <Button variant="outlined" onClick={this.filesRemoveAll}>Remove All Files</Button>
-                            <Button variant="outlined" onClick={this.filesUpload}>Upload</Button>
-                            </div>
-                            {
-                                this.state.files.length > 0
-                                    ? <div className='files-list'>
-                                        <ul>{this.state.files.map((file) =>
-                                            <li className='files-list-item' key={file.id}>
-                                                <div className='files-list-item-preview'>
-                                                    {file.preview.type === 'image'
-                                                        ? <img className='files-list-item-preview-image' src={file.preview.url} />
-                                                        : <div className='files-list-item-preview-extension'>{file.extension}</div>}
-                                                </div>
-                                                <div className='files-list-item-content'>
-                                                    <div className='files-list-item-content-item files-list-item-content-item-1'>{file.name}</div>
-                                                    <div className='files-list-item-content-item files-list-item-content-item-2'>{file.sizeReadable}</div>
-                                                </div>
-                                                <div
-                                                    id={file.id}
-                                                    className='files-list-item-remove'
-                                                    onClick={this.filesRemoveOne.bind(this, file)} // eslint-disable-line
-                                                />
-                                            </li>
-                                        )}</ul>
-                                    </div>
-                                    : null
-                            }
+                // Parsed Data Response in array format
+                setParsedData(results.data);
+
+                // Filtered Column Names
+                setTableRows(rowsArray[0]);
+
+                // Filtered Values
+                setValues(valuesArray);
+
+            },
+        });
+    };
+
+    return (
+        <React.Fragment className="Mainpage">
+            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
+
+                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                    Datei hochladen:
+                </Typography>            {/* File Uploader */}
+                <table style={{width: "100%", height: "100%"}}>
+                    <tr>
+
+            <input
+                type="file"
+                name="file"
+                onChange={changeHandler}
+                accept=".csv"
+                style={{marginTop:"5%", marginLeft: "5%", padding:"10%", border:"dashed lightgrey", width:"65%", justifyContent:"space-evenly"}}
+            />
+            <br />
+            <br />
+          {/*   Table
+            <table>
+                <thead>
+                <tr>
+                    {tableRows.map((rows, index) => {
+                        return <th key={index}>{rows}</th>;
+                    })}
+                </tr>
+                </thead>
+                <tbody>
+                {values.map((value, index) => {
+                    return (
+                        <tr key={index}>
+                            {value.map((val, i) => {
+                                return <td key={i}>{val}</td>;
+                            })}
                         </tr>
-                        <tr style={{ width:"320%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
-                        <br/><br/>
-                            <BottomNavigation showLabels>
-                            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                                    to='/Datenquelle'/>
-                            <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                            <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                                    to='/Matching-Methode'/>
-                        </BottomNavigation>
+                    );
+                })}
+                </tbody>
+            </table>*/}
                     </tr>
-                    </table>
-
-                </CardContent>
-            </React.Fragment>
-        )
-    }
-}
-
-
-UploadData.propTypes = {
-    children: PropTypes.oneOfType([
-        PropTypes.arrayOf(PropTypes.node),
-        PropTypes.node
-    ]),
-    className: PropTypes.string.isRequired,
-    dropActiveClassName: PropTypes.string,
-    onChange: PropTypes.func,
-    onError: PropTypes.func,
-    accepts: PropTypes.array,
-    multiple: PropTypes.bool,
-    maxFiles: PropTypes.number,
-    maxFileSize: PropTypes.number,
-    minFileSize: PropTypes.number,
-    clickable: PropTypes.bool,
-    name: PropTypes.string,
-    style: PropTypes.object
-}
-
-UploadData.defaultProps = {
-    onChange: function (files) {
-        console.log(files)
-    },
-    onError: function (error, file) {
-        console.log('error code ' + error.code + ': ' + error.message)
-    },
-    className: 'files-dropzone',
-    dropActiveClassName: 'files-dropzone-active',
-    accepts: null,
-    multiple: true,
-    maxFiles: Infinity,
-    maxFileSize: Infinity,
-    minFileSize: 0,
-    name: 'file',
-    clickable: true
+                <tr style={{ height: "15%", display:"flex", float:"right"}}>
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
+                    <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
+                                            component={Link} to='/Datenquelle'/>
+                    <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
+                    <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
+                                            component={Link} to='/Matching-Methode'/>
+                </BottomNavigation>
+                </tr>
+                </table>
+            </CardContent>
+        </React.Fragment>
+    );
 }
 
 export default UploadData;

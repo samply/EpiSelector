@@ -58,7 +58,7 @@ function Matchingtoleranz() {
                 </Typography>
 
                 <br/>
-                <div style={{display:"flex",  height: 400, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
+                <div style={{display:"flex",  height: 330, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
                     <DataGrid
                         rows={rows}
                         columns={columns}
@@ -76,7 +76,8 @@ function Matchingtoleranz() {
                     flexFlow: "right",
                     float: "right",
                     width: "40%"
-                }}>                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Variablen'/>
+                }}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Variablen'/>
                     <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
                     <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Variablen-Fälle-Kontrollen' />
                 </BottomNavigation>

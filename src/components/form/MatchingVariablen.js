@@ -14,6 +14,14 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import { DataGrid } from '@mui/x-data-grid';
+import {styled} from "@mui/material/styles";
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import UploadData from "./dataimport/UploadData";
+
+
+/*
+const rows= UploadData.getTableRows();
+*/
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 70 },
@@ -48,9 +56,14 @@ const rows = [
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
-function MatchingVariablen() {
-    const [value, setValue] = React.useState(0);
-
+function MatchingVariablen(){
+    const [value, setValue] = React.useState(2);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: #1d4189;
+      };
+    `);
 
     return (
         <React.Fragment className="Mainpage">
@@ -62,7 +75,7 @@ function MatchingVariablen() {
                 {/*-------------------------*/}
                 <br/>
 
-                    <div style={{display:"flex",  height: 400, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
+                    <div style={{display:"flex",  height: 330, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
                         <DataGrid
                             rows={rows}
                             columns={columns}
@@ -74,19 +87,17 @@ function MatchingVariablen() {
 
                 {/*-------------------------*/}
 
-<br/>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                    setValue(newValue);
-                }} sx={{
-                    display: "flex",
-                    flexFlow: "right",
-                    float: "right",
-                    width: "40%"
-                }}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Methode'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matchingtoleranz' />
-                </BottomNavigation>
+                <br/>
+                <div style={{ width:"100%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
+                    <br/><br/>
+                    <BottomNavigation showLabels>
+                        <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
+                                                to='/Datenquelle'/>
+                        <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
+                        <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
+                                                to='/Matchingtoleranz'/>
+                    </BottomNavigation>
+                </div>
             </CardContent>
         </React.Fragment>
     );
