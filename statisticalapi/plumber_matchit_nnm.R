@@ -16,7 +16,7 @@ library(rjson)
 
 ##################################################################################################
 
-#* Nearest neighbor matching
+#* matching
 #* @param groupindicator Name der Zielvariable, die Kontrollen und Fälle unterscheidet
 #* @param controllvariables Kontrollvariablen als json-Array
 #* @param mmethod Methode des Matching-Algorithmus
@@ -25,7 +25,7 @@ library(rjson)
 #* @param mcaliper Matching innerhalb einer spezifizierten Caliper-Weite
 #* @param mratio Verhältnis k:1 von Kontrollen zu Fällen
 #* @post /nnmarguments
-function(req,groupindicator,controllvariables, mdistance, mmethod, mreplace, mcaliper, mratio) {
+function(req,res,groupindicator,controllvariables, mdistance, mmethod, mreplace, mcaliper, mratio) {
   # body wird hier ausgelesen
   body = req$body 
   
@@ -69,9 +69,30 @@ function(req,groupindicator,controllvariables, mdistance, mmethod, mreplace, mca
                                distance = "distance",
                                weights = "weights",
                                subclass = "subclass",
-                               data = NULL,
+                               data = body,
                                include.s.weights = TRUE,
                                drop.unmatched = TRUE)
+  
+  
+  # Spaltennamen ausgeben lassen wegen _row (entspricht der ID?, wird durch Json für jede Zeile gebildet)
+  # str(result_dataset)
+  # names(result_dataset)
+  
+  
+  # dataframe nach row sortieren
+  # df <-result_dataset[order(result_dataset$row),]
+  
+  # Konvertieren des df nach Json (serialisiertes Format)
+  back_to_JSON <- jsonlite::toJSON(result_dataset, rownames = FALSE)
+  
+  print(back_to_JSON)
+  
+  # markiert den Rückgabewert
+  # return(back_to_JSON)
+  res$body <- back_to_JSON
+  res
 }
+
+
 
 
