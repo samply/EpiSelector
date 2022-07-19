@@ -10,6 +10,7 @@
 library(plumber)
 library ("MatchIt")
 library(rjson)
+library("jsonlite")
 library("ggplot2")
 library("cobalt")
 library("lmtest") #coeftest
@@ -125,6 +126,14 @@ function(req,res,groupindicator,controllvariables, mdistance, mmethod, mreplace,
            type = "histogram", mirror = TRUE)
   
   # grouped boxplots
+  
+  boxplot(controllvariables ~ groupindicator, data = body(),
+          col = c("#1C4189", "#B11B18", "#DFE5E9"))
+  
+  boxplot(controllvariables ~ groupindicator, data = result_dataset,
+          col = c("#1C4189", "#B11B18", "#DFE5E9"))
+  
+  
   # 
   # #eQQ plot
   # plot(m.out1, type = "qq", which.xs = c(controllvariables[3]))
@@ -135,6 +144,8 @@ function(req,res,groupindicator,controllvariables, mdistance, mmethod, mreplace,
   #  #            re74 + re75, data = result_dataset, weights = weights)
   # 
   # #coeftest(fit1, vcov. = vcovCL, cluster = ~subclass)
+  
+  
 }
 
 
