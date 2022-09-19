@@ -23,6 +23,15 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
+import {isDisabled} from "@testing-library/user-event/dist/utils";
+import Form from '../model/Form';
+
+
+function dropDatenimportSteps(){
+    if(false){
+
+    }
+}
 
 
 
@@ -36,6 +45,10 @@ class NavB extends React.Component {
         textDecoration: "none",
         color: 'black'
     };
+
+        const chipContent = "chipInhalt"
+        const chip = <div style={{paddingLeft:"20%", left:"60px", backgroundColor:"#B11B18", width:"150px", height:"35px", borderRadius:"15px", color:"white", justifyContent:"baseline" }}></div>
+
         return (
             <Card variant="outlined" className="NavBStyle">
                 <React.Fragment>
@@ -49,76 +62,79 @@ class NavB extends React.Component {
                         <TimelineDot><ArchiveOutlinedIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                   <TimelineContent onClick="datenImportShow()"> <Link to='/Datenquelle' style={linkStyle}>Datenimport</Link></TimelineContent>
+                   <TimelineContent onClick="dropDatenimportSteps()"> <Link to='/Datenquelle' style={linkStyle}>Datenimport
+                       <div style={{paddingLeft:"20%", left:"60px", backgroundColor:"#B11B18", width:"150px", height:"35px", borderRadius:"15px", color:"white", justifyContent:"baseline" }}></div>
+                   </Link></TimelineContent>
                 </TimelineItem>
-                    <TimelineItem id="myDIV"> {/*style={{display: 'none'}}*/}
+                    <TimelineItem> {/*style={{display: 'none'}}*/}
+
                         <TimelineSeparator>
                             <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
-                            <TimelineConnector/>
+                             <TimelineConnector/>
                         </TimelineSeparator>
-                        <TimelineContent><Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen</Link></TimelineContent>
+                        <TimelineContent><Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen {chip}</Link></TimelineContent>
                     </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><UploadFileIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                     <TimelineContent><Link to='/Datei-hochladen' style={linkStyle}>Datei hochladen</Link></TimelineContent>
+                     <TimelineContent><Link to='/Datei-hochladen' style={linkStyle}>Datei hochladen {chip}</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><JoinLeftIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                     <TimelineContent><Link to='/Matching-Methode' style={linkStyle}>Matching-Methode </Link></TimelineContent>
+                     <TimelineContent><Link to='/Matching-Methode' style={linkStyle}>Matching-Methode {chip}</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><PeopleAltIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent>Matching</TimelineContent>
+                    <TimelineContent>Matching {chip}</TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><ListAltIcon/></TimelineDot>
                         <TimelineConnector />
                     </TimelineSeparator>
-                    <TimelineContent> <Link to='/Matching-Variablen' style={linkStyle}>Matchingvariablen</Link></TimelineContent>
+                    <TimelineContent> <Link to='/Matching-Variablen' style={linkStyle}>Matchingvariablen {chip}</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
                         <TimelineConnector/>
                     </TimelineSeparator>
-                   <TimelineContent size="small"> <Link to='/Matchingtoleranz' style={linkStyle}>Matchingtoleranz</Link></TimelineContent>
+                   <TimelineContent size="small"> <Link to='/Matchingtoleranz' style={linkStyle}>Matchingtoleranz {chip}</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem sx={{width:"200%", left:"-210px"}}>{/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><FeaturedPlayListIcon/></TimelineDot>
                         <TimelineConnector/>
                     </TimelineSeparator>
-                   <TimelineContent> <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}>Variablen für Fälle und Kontrollen definieren</Link></TimelineContent>
+                   <TimelineContent> <Link to='/Variablen-Fälle-Kontrollen' style={linkStyle}>Variablen für Fälle und Kontrollen definieren {chip} </Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><AnalyticsIcon/></TimelineDot>
                         <TimelineConnector/>
                     </TimelineSeparator>
-                    <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>Matching Verhältnis</Link></TimelineContent>
+                    <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>Matching Verhältnis {chip} </Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem> {/*style={{display: 'none'}}*/}
                     <TimelineSeparator>
                         <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
                         <TimelineConnector/>
                     </TimelineSeparator>
-                    <TimelineContent><Link to='/Matching-Ergebnis' style={linkStyle}>Matching Ergebnis</Link></TimelineContent>
+                    <TimelineContent><Link to='/Matching-Ergebnis' style={linkStyle}>Matching Ergebnis {chip}</Link></TimelineContent>
                 </TimelineItem>
                 <TimelineItem>
                     <TimelineSeparator>
                         <TimelineDot><SimCardDownloadOutlinedIcon/></TimelineDot>
                     </TimelineSeparator>
-                   <TimelineContent> <Link to='/Dataexport' style={linkStyle}>Datenexport</Link></TimelineContent>
+                   <TimelineContent> <Link to='/Dataexport' style={linkStyle}>Datenexport {chip}</Link></TimelineContent>
                 </TimelineItem>
             </Timeline>
                     </CardContent>

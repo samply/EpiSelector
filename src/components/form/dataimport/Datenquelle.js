@@ -18,7 +18,7 @@ import {styled} from "@mui/material/styles";
 import Checkbox from '@mui/material/Checkbox';
 import {FormControlLabel, FormGroup} from "@material-ui/core";
 import {useState} from 'react';
-
+import Form from '../../../model/Form'
 
 function Datenquelle() {
     const [isActiveDRE, setIsActiveDRE] = useState(false);
@@ -29,6 +29,7 @@ function Datenquelle() {
         if(!isActiveDRE){
             setIsActiveGeraet(current => !current);
         }
+        Form.state.datenquelle = "vom Gerät";
         // 👇️ or set to true
         // setIsActive(true);
     };
@@ -37,6 +38,8 @@ function Datenquelle() {
         if(!isActiveGeraet){
             setIsActiveDRE(current => !current);
         }
+        Form.state.datenquelle = "DRE";
+
         // 👇️ or set to true
         // setIsActive(true);
     };

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Added Functionality to all Selectboxes And Added Read CSV-File-Function">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP Refactoring Tables in Form-Components">
+      <change afterPath="$PROJECT_DIR$/src/assets/infotext.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/DataInput" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/model/Workflow.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/InputProtokoll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/model/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Form.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +36,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="basic-structure" />
+        <entry key="$PROJECT_DIR$" value="feature/FormInputs" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -47,7 +61,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../lens-develop" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
@@ -86,6 +100,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Node.js.Mainpage.js" />
+        <item itemvalue="Node.js.Mainpage.js" />
+        <item itemvalue="Node.js.Mainpage.js" />
       </list>
     </recent_temporary>
   </component>
@@ -115,7 +131,23 @@
       <workItem from="1657533998820" duration="2297000" />
       <workItem from="1657622328825" duration="598000" />
       <workItem from="1657704147650" duration="14532000" />
-      <workItem from="1657795414734" duration="5694000" />
+      <workItem from="1657795414734" duration="6726000" />
+      <workItem from="1658144816262" duration="5537000" />
+      <workItem from="1658399465093" duration="8498000" />
+      <workItem from="1658488751088" duration="593000" />
+      <workItem from="1658759658006" duration="466000" />
+      <workItem from="1659951470893" duration="298000" />
+      <workItem from="1660050294157" duration="603000" />
+      <workItem from="1660122397231" duration="2480000" />
+      <workItem from="1660308318481" duration="608000" />
+      <workItem from="1661942616729" duration="3575000" />
+      <workItem from="1662114468381" duration="1057000" />
+      <workItem from="1662376408215" duration="4767000" />
+      <workItem from="1662540632984" duration="116000" />
+      <workItem from="1663066550813" duration="4742000" />
+      <workItem from="1663161156141" duration="2930000" />
+      <workItem from="1663325011336" duration="613000" />
+      <workItem from="1663586484147" duration="1299000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -250,7 +282,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657723851205</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="WIP Refactoring Tables in Form-Components">
+      <created>1657803935112</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1657803935113</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -297,6 +336,7 @@
     <MESSAGE value="Refactored FormInputs" />
     <MESSAGE value="WIP" />
     <MESSAGE value="Added Functionality to all Selectboxes And Added Read CSV-File-Function" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Functionality to all Selectboxes And Added Read CSV-File-Function" />
+    <MESSAGE value="WIP Refactoring Tables in Form-Components" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP Refactoring Tables in Form-Components" />
   </component>
 </project>

@@ -6,7 +6,6 @@ import Betapage from './pages/Betapage';
 import UploadData from './components/form/dataimport/UploadData';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import InfoBox from "./components/InfoBox";
-import InputProtokoll from "./components/InputProtokoll";
 import MatchingVerhältnis from "./components/form/MatchingVerhältnis";
 import MatchingMethode from "./components/form/MatchingMethode";
 import Matchingtoleranz from "./components/form/Matchingtoleranz";

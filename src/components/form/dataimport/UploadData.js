@@ -20,6 +20,8 @@ import Files from './Files';
 import axios from 'axios'
 import Papa from 'papaparse';
 import { useState } from "react";
+import Datainput from "../../../model/DataInput";
+import Form from '../../../model/Form';
 
 
 function UploadData(props) {
@@ -57,6 +59,8 @@ function UploadData(props) {
                     valuesArray.push(Object.values(d));
                 });
 
+
+
                 // Parsed Data Response in array format
                 setParsedData(results.data);
 
@@ -66,6 +70,10 @@ function UploadData(props) {
                 // Filtered Values
                 setValues(valuesArray);
 
+                Datainput  = new Datainput(rowsArray, valuesArray);
+
+                Form.state.datei = Datainput.toString();
+                console.log(Form.state.datei);
             },
         });
     };

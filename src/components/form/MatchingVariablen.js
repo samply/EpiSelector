@@ -25,8 +25,6 @@ const rows= UploadData.getTableRows();
 
 const columns = [
     { field: 'variable', headerName: 'Variable', width: 400 },
-
-
 ];
 
 const rows = [
@@ -75,7 +73,7 @@ function MatchingVariablen(){
                 <br/>
                 <div style={{ width:"100%",height:"100%", display:"flex", justifyContent:"flex-end"}}>
                     <br/><br/>
-                    <BottomNavigation showLabels>
+                    <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
                         <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
                                                 to='/Datenquelle'/>
                         <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>

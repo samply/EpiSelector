@@ -1,11 +1,10 @@
-import '../../App.css';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import { styled } from '@mui/material/styles';
+import TableCell from '@mui/material/TableCell';
+import { AutoSizer, Column, Table } from 'react-virtualized';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import BottomNavigation from "@mui/material/BottomNavigation";
@@ -13,104 +12,226 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import {DataGrid} from "@mui/x-data-grid";
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
+const classes = {
+    flexContainer: 'ReactVirtualizedDemo-flexContainer',
+    tableRow: 'ReactVirtualizedDemo-tableRow',
+    tableRowHover: 'ReactVirtualizedDemo-tableRowHover',
+    tableCell: 'ReactVirtualizedDemo-tableCell',
+    noClick: 'ReactVirtualizedDemo-noClick',
+};
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+const styles = ({ theme }) => ({
+    // temporary right-to-left patch, waiting for
+    // https://github.com/bvaughn/react-virtualized/issues/454
+    '& .ReactVirtualized__Table__headerRow': {
+        ...(theme.direction === 'rtl' && {
+            paddingLeft: '0 !important',
+        }),
+        ...(theme.direction !== 'rtl' && {
+            paddingRight: undefined,
+        }),
     },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
+    [`& .${classes.flexContainer}`]: {
+        display: 'flex',
+        alignItems: 'center',
+        boxSizing: 'border-box',
     },
-}));
+    [`& .${classes.tableRow}`]: {
+        cursor: 'pointer',
+    },
+    [`& .${classes.tableRowHover}`]: {
+        '&:hover': {
+            backgroundColor: theme.palette.grey[200],
+        },
+    },
+    [`& .${classes.tableCell}`]: {
+        flex: 1,
+    },
+    [`& .${classes.noClick}`]: {
+        cursor: 'initial',
+    },
+});
 
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
+class MuiVirtualizedTable extends React.PureComponent {
+    static defaultProps = {
+        headerHeight: 48,
+        rowHeight: 48,
+    };
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
+    getRowClassName = ({ index }) => {
+        const { onRowClick } = this.props;
+
+        return clsx(classes.tableRow, classes.flexContainer, {
+            [classes.tableRowHover]: index !== -1 && onRowClick != null,
+        });
+    };
+
+    cellRenderer = ({ cellData, columnIndex }) => {
+        const { columns, rowHeight, onRowClick } = this.props;
+        return (
+            <TableCell
+                component="div"
+                className={clsx(classes.tableCell, classes.flexContainer, {
+                    [classes.noClick]: onRowClick == null,
+                })}
+                variant="body"
+                style={{ height: rowHeight }}
+                align={
+                    (columnIndex != null && columns[columnIndex].numeric) || false
+                        ? 'right'
+                        : 'left'
+                }
+            >
+                {cellData}
+            </TableCell>
+        );
+    };
+
+    headerRenderer = ({ label, columnIndex }) => {
+        const { headerHeight, columns } = this.props;
+
+        return (
+            <TableCell
+                component="div"
+                className={clsx(classes.tableCell, classes.flexContainer, classes.noClick)}
+                variant="head"
+                style={{ height: headerHeight }}
+                align={columns[columnIndex].numeric || false ? 'right' : 'left'}
+            >
+                <span>{label}</span>
+            </TableCell>
+        );
+    };
+
+    render() {
+        const { columns, rowHeight, headerHeight, ...tableProps } = this.props;
+        return (
+            <AutoSizer>
+                {({ height, width }) => (
+                    <Table
+                        height={height}
+                        width={width}
+                        rowHeight={rowHeight}
+                        gridStyle={{
+                            direction: 'inherit',
+                        }}
+                        headerHeight={headerHeight}
+                        {...tableProps}
+                        rowClassName={this.getRowClassName}
+                    >
+                        {columns.map(({ dataKey, ...other }, index) => {
+                            return (
+                                <Column
+                                    key={dataKey}
+                                    headerRenderer={(headerProps) =>
+                                        this.headerRenderer({
+                                            ...headerProps,
+                                            columnIndex: index,
+                                        })
+                                    }
+                                    className={classes.flexContainer}
+                                    cellRenderer={this.cellRenderer}
+                                    dataKey={dataKey}
+                                    {...other}
+                                />
+                            );
+                        })}
+                    </Table>
+                )}
+            </AutoSizer>
+        );
+    }
 }
 
+MuiVirtualizedTable.propTypes = {
+    columns: PropTypes.arrayOf(
+        PropTypes.shape({
+            dataKey: PropTypes.string.isRequired,
+            label: PropTypes.string.isRequired,
+            numeric: PropTypes.bool,
+            width: PropTypes.number.isRequired,
+        }),
+    ).isRequired,
+    headerHeight: PropTypes.number,
+    onRowClick: PropTypes.func,
+    rowHeight: PropTypes.number,
+};
 
-function VariableFaelleKontrolle() {
+const VirtualizedTable = styled(MuiVirtualizedTable)(styles);
 
-    const [value, setValue] = React.useState(0);
+// ---
+
+const sample = [
+    ['Frozen yoghurt', 159, 6.0],
+    ['Ice cream sandwich', 237, 9.0],
+    ['Eclair', 262, 16.0],
+    ['Cupcake', 305, 3.7],
+    ['Gingerbread', 356, 16.0],
+];
+
+function createData(id, variablen, gruppenindikator, fallID) {
+    return { id, variablen, gruppenindikator, fallID};
+}
+
+const rows = [];
+
+for (let i = 0; i < 200; i += 1) {
+    const randomSelection = sample[Math.floor(Math.random() * sample.length)];
+    rows.push(createData(i, ...randomSelection));
+}
+
+export default function VariableFaelleKontrolle() {
+
+    const [value, setValue] = React.useState(2);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: #1d4189;
+      };
+    `);
 
     return (
         <React.Fragment className="Mainpage">
-            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
+            <CardContent sx={{backgroundColor: "white", width: "100%"}}>
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Variable Fälle und Kontrolle
                 </Typography>
                 <br/>
-                <div style={{display:"flex",  height: 330, width: '60%', paddingLeft:"20%", alignItems:"center", justifyItems:"center", justifyContent:"space-evenly", alignSelf:"center", alignContent:"center" }}>
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                            <TableHead>
-                                <TableRow>
-                                    <StyledTableCell>Dessert (100g serving)</StyledTableCell>
-                                    <StyledTableCell align="right">Calories</StyledTableCell>
-                                    <StyledTableCell align="right">Fat&nbsp;(g)</StyledTableCell>
-                                    <StyledTableCell align="right">Carbs&nbsp;(g)</StyledTableCell>
-                                    <StyledTableCell align="right">Protein&nbsp;(g)</StyledTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows.map((row) => (
-                                    <StyledTableRow key={row.name}>
-                                        <StyledTableCell component="th" scope="row">
-                                            {row.name}
-                                        </StyledTableCell>
-                                        <StyledTableCell align="right">{row.calories}</StyledTableCell>
-                                        <StyledTableCell align="right">{row.fat}</StyledTableCell>
-                                        <StyledTableCell align="right">{row.carbs}</StyledTableCell>
-                                        <StyledTableCell align="right">{row.protein}</StyledTableCell>
-                                    </StyledTableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                <div style={{display:"flex",  height: 330, width: '60%', paddingLeft:"20%" }}>
+            <VirtualizedTable
+                rowCount={rows.length}
+                rowGetter={({ index }) => rows[index]}
+                columns={[
+                    {
+                        width: 200,
+                        label: 'Variablen',
+                        dataKey: 'variablen',
+                    },
+                    {
+                        width: 200,
+                        label: 'Gruppenindikator',
+                        dataKey: '<checkbox/>',
+                        numeric: true,
+                    },
+                    {
+                        width: 200,
+                        label: 'Fall-ID',
+                        dataKey: '<checkbox/>',
+                        numeric: true,
+                    }
+
+                ]}
+            />
                 </div>
                 <br/>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                    setValue(newValue);
-                }} sx={{
-                    display: "flex",
-                    flexFlow: "right",
-                    float: "right",
-                    width: "40%"
-                }}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matchingtoleranz'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Verhältnis' />
-                </BottomNavigation>
+    <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
+        <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matchingtoleranz'/>
+        <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
+        <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Matching-Verhältnis' />
+    </BottomNavigation>
             </CardContent>
         </React.Fragment>
-    );
+);
 }
-
-export default VariableFaelleKontrolle;

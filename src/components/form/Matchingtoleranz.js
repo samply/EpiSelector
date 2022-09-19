@@ -9,6 +9,8 @@ import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import {DataGrid} from "@mui/x-data-grid";
+import {styled} from "@mui/material/styles";
+import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 
 const columns = [
@@ -16,6 +18,7 @@ const columns = [
     { field: 'toleranzwert', headerName: 'Toleranzwert', width: 200 },
 
 ];
+
 
 const rows = [
     { id: 1, variable: 'Variable XYZ', toleranzwert: ''},
@@ -31,8 +34,13 @@ const rows = [
 
 
 function Matchingtoleranz() {
-
-    const [value, setValue] = React.useState(0);
+    const [value, setValue] = React.useState(2);
+    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
+      color: grey;
+      &.Mui-selected {
+        color: #1d4189;
+      };
+    `);
 
 
     return (
@@ -54,14 +62,8 @@ function Matchingtoleranz() {
                 </div>
 
                 <br/>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                    setValue(newValue);
-                }} sx={{
-                    display: "flex",
-                    flexFlow: "right",
-                    float: "right",
-                    width: "40%"
-                }}>
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
+
                     <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Variablen'/>
                     <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
                     <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon />} component={Link} to='/Variablen-Fälle-Kontrollen' />

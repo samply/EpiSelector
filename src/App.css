@@ -21,16 +21,16 @@ html, body{
     display: flex;
     flex-flow: row;
     width: 100%;
-    height: 84vh;
+    height: 88vh;
     background-color: #dfe5e8;
 }
 
-.Foot{
+/*.Foot{
     height: 7vh;
     width: 24%;
     background-color: #dfe5e8;
     padding-left: 20px;
-}
+}*/
 
 .LeftContainer{
     display: flex;
@@ -114,7 +114,7 @@ html, body{
 .InfoBox{
     display: flex;
     flex-flow: column;
-    height:97%;
+    height:78vh;
     width: 100%;
     background-color: #dfe5e8;
 }
