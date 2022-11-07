@@ -1,9 +1,5 @@
 import '../../App.css';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
@@ -21,35 +17,44 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 function Dataexport() {
     const [value, setValue] = React.useState(2);
 
-
     return (
-        <React.Fragment className="Mainpage">
-            <CardContent sx={{width:"200%"}}>
-                <table sx={{width:"300%"}}>
-                <div sx ={{height:"20%"}}><Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Datenexport
-                </Typography></div>
-                <div sx={{display:"flex", flexFlow:"row", width:"300%", height:"80%", border:"bold solid"}}>
-                   <Button>
-                       <SimCardDownloadIcon sx={{fontSize:"xxx-large"}}/> Matchingprotokoll <br/>herunterladen
-                   </Button>
-                    <Button>
-                        <CollectionsBookmarkIcon sx={{fontSize:"xxx-large"}}/> Daten in DRE speichern
-                    </Button>
-                    <Button>
-                        <DashboardIcon sx={{fontSize:"xxx-large"}}/>Maske speichern
-                    </Button>
-                </div>
-                <div sx ={{height:"20%"}}><br/>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon />} component={Link} to='/Matching-Ergebnis'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon />} />
-                    <BottomNavigationAction label="Beenden" icon={<DoneAllIcon />} component={Link} to='/Startseite' />
+        <CardContent sx={{width: "200%"}}>
+            <table sx={{width: "300%"}}>
+                <tbody>
+                <tr>
+                    <td>
+                        <div sx={{height: "20%"}}>
+                            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                              Datenexport
+                            </Typography></div>
+                        <div
+                            sx={{display: "flex", flexFlow: "row", width: "300%", height: "80%", border: "bold solid"}}>
+                            <Button>
+                                <SimCardDownloadIcon sx={{fontSize: "xxx-large"}}/> Matchingprotokoll <br/>herunterladen
+                            </Button>
+                            <Button>
+                                <CollectionsBookmarkIcon sx={{fontSize: "xxx-large"}}/> Daten in DRE speichern
+                            </Button>
+                            <Button>
+                                <DashboardIcon sx={{fontSize: "xxx-large"}}/>Maske speichern
+                            </Button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div sx={{height: "20%"}}><br/>
+                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
+                    setValue(newValue);
+                }}>
+                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
+                                            to='/Matching-Ergebnis'/>
+                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
+                    <BottomNavigationAction label="Beenden" icon={<DoneAllIcon/>} component={Link} to='/Startseite'/>
                 </BottomNavigation>
-                </div>
-                </table>
-            </CardContent>
-        </React.Fragment>
+            </div>
+        </CardContent>
     );
 }
 

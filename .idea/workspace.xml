@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP Refactoring Tables in Form-Components">
-      <change afterPath="$PROJECT_DIR$/src/assets/infotext.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/DataInput" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/model/Workflow.js" afterDir="false" />
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP">
+      <change afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/InputProtokoll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DynamicResults.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DynamicResults.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Nav.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVariablen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Matchingtoleranz.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/PropsenityScoreBereich.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/VariableFaelleKontrolle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/model/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/model/Form.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +66,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../../lens-develop" />
+    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/testreact" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path" value="node" />
@@ -81,6 +86,17 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -147,7 +163,27 @@
       <workItem from="1663066550813" duration="4742000" />
       <workItem from="1663161156141" duration="2930000" />
       <workItem from="1663325011336" duration="613000" />
-      <workItem from="1663586484147" duration="1299000" />
+      <workItem from="1663586484147" duration="5798000" />
+      <workItem from="1663674297794" duration="5237000" />
+      <workItem from="1663848279707" duration="5655000" />
+      <workItem from="1663930521399" duration="1203000" />
+      <workItem from="1664185759067" duration="577000" />
+      <workItem from="1664977636097" duration="1322000" />
+      <workItem from="1665053050546" duration="3478000" />
+      <workItem from="1665395466012" duration="7844000" />
+      <workItem from="1665492425079" duration="1226000" />
+      <workItem from="1665563032245" duration="4366000" />
+      <workItem from="1665660258448" duration="3547000" />
+      <workItem from="1665669006744" duration="6827000" />
+      <workItem from="1666003939529" duration="6992000" />
+      <workItem from="1666092314718" duration="1210000" />
+      <workItem from="1666265823172" duration="1827000" />
+      <workItem from="1666784047362" duration="1018000" />
+      <workItem from="1666864267956" duration="421000" />
+      <workItem from="1667224338100" duration="1779000" />
+      <workItem from="1667470725419" duration="2289000" />
+      <workItem from="1667565756568" duration="595000" />
+      <workItem from="1667818963342" duration="13551000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -289,7 +325,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657803935113</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="WIP">
+      <created>1663591059269</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1663591059269</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -306,7 +349,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="basic-structure" />
+                        <option value="develop" />
                       </list>
                     </value>
                   </entry>
@@ -334,9 +377,9 @@
     <MESSAGE value="Fixed Positioning in NavB.js" />
     <MESSAGE value="Added Import File Functioanlity" />
     <MESSAGE value="Refactored FormInputs" />
-    <MESSAGE value="WIP" />
     <MESSAGE value="Added Functionality to all Selectboxes And Added Read CSV-File-Function" />
     <MESSAGE value="WIP Refactoring Tables in Form-Components" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP Refactoring Tables in Form-Components" />
+    <MESSAGE value="WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="WIP" />
   </component>
 </project>

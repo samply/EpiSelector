@@ -2,39 +2,36 @@ import './App.css';
 import TopNav from "./components/TopNav";
 import NavB from './components/NavB'
 import Mainpage from './pages/Mainpage';
-import Betapage from './pages/Betapage';
 import UploadData from './components/form/dataimport/UploadData';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import InfoBox from "./components/InfoBox";
 import MatchingVerhältnis from "./components/form/MatchingVerhältnis";
 import MatchingMethode from "./components/form/MatchingMethode";
-import Matchingtoleranz from "./components/form/Matchingtoleranz";
+import MethodeScoreBerechnung from "./components/form/MethodeScoreBerechnung";
+import MatchingAlgorithmus from "./components/form/MatchingAlgorithmus";
 import Zielvariable from "./components/form/Zielvariable";
 import Kontrollvariablen from "./components/form/Kontrollvariablen";
-import MatchingAlgorithmus from "./components/form/MatchingAlgorithmus";
-import MatchingVariablen from "./components/form/MatchingVariablen";
-import PropensityScoreBereich from "./components/form/PropsenityScoreBereich";
 import Datenquelle from "./components/form/dataimport/Datenquelle";
-import MethodeScoreBerechnung from "./components/form/MethodeScoreBerechnung";
+import ÜbereinstimmungPropensityScore from "./components/form/ÜbereinstimmungPropensityScore";
 import Dataexport from "./components/form/Dataexport";
-import VariableFaelleKontrolle from "./components/form/VariableFaelleKontrolle";
 import MatchingErgebnis from "./components/form/MatchingErgebnis";
 import DynamicResult from "./components/DynamicResults";
-import Foot from "./components/Foot";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import {Link} from 'react-router-dom';
-
-
-
+import {useState} from "react";
 
 
 function App() {
+
+    const [isDatenquelle, setDatenquelle] = useState('defaultQuelle');
+    const [isDatei, setDatei] = useState('defaultDatei');
+    const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
+    const [isVerhältnis, setVerhältnis] = useState('defaultVerhältnis');
+    const [isScoreMethode, setScoreMethode] = useState('defaultScoreMethode');
+    const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgorithmus');
+    const [isÜbereinstimmung, setÜbereinstimmung] = useState('defaultÜbereinstimmung');
+
 
     return (
         //Gesamte Ansicht
@@ -46,31 +43,28 @@ function App() {
                 <div className="Main">
                     {/*Navigations-Container*/}
                     <div className="LeftContainer">
-                        <NavB/>
+                        <NavB isDatenquelle={isDatenquelle} isDatei={isDatei} isMatchingMethode={isMatchingMethode} isVerhältnis={isVerhältnis} isScoreMethode={isScoreMethode} isAlgorithmus={isAlgorithmus} isÜbereinstimmung={isÜbereinstimmung} />
                     </div>
                     {/*Fragebogen und Graphische-Ergebnisse*/}
                     <div className="MiddleContainer">
 
                         <Box sx={{ minWidth: 275 }}>
                             <Card variant="outlined" className="FormContainer">
-                                <Switch>
-                        <Route path='/' exact component={Mainpage}/>
-                        <Route path="/Startseite" component={Mainpage}/>
-                        <Route path="/Datei-hochladen" component={UploadData}/>
-                        <Route path="/Matching-Methode" component={MatchingMethode}/>
-                          <Route path="/Matching-Verhältnis" component={MatchingVerhältnis}/>
-                          <Route path="/Matchingtoleranz" component={Matchingtoleranz}/>
-                            <Route path="/Matching-Variablen" component={MatchingVariablen}/>
-                            <Route path="/Matching-Ergebnis" component={MatchingErgebnis}/>
-                          <Route path="/Zielvariable" component={Zielvariable}/>
-                          <Route path="/Kontrollvariablen" component={Kontrollvariablen}/>
-                          <Route path="/Dataexport" component={Dataexport}/>
-                          <Route path="/Datenquelle" component={Datenquelle}/>
-                          <Route path="/Matching-Algorithmus" component={MatchingAlgorithmus}/>
-                          <Route path="/Bereich-der-Übereinstimmung-der-Propensity-Scores" component={PropensityScoreBereich}/>
-                          <Route path="/Variablen-Fälle-Kontrollen" component={VariableFaelleKontrolle}/>
-                        <Route path="/Methode-der-Score-Berechnung" component={MethodeScoreBerechnung}/>
-                      </Switch>
+                                <Routes>
+                                    <Route path='/' exact element={<Mainpage/>}/>
+                                    <Route path="/Startseite" element={<Mainpage/>}/>
+                                    <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
+                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei}/>} />
+                                    <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
+                                    <Route path="/Zielvariable" element={<Zielvariable/>}/>
+                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen/>}/>
+                                    <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
+                                    <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
+                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus}/>}/>
+                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmung={setÜbereinstimmung}/>}/>
+                                    <Route path="/Matching-Ergebnis" element={<MatchingErgebnis/>}/>
+                                    <Route path="/Dataexport" element={<Dataexport/>}/>
+                            </Routes>
                             </Card>
                         </Box>
                         <DynamicResult/>
@@ -89,3 +83,4 @@ function App() {
 }
 
 export default App;
+
