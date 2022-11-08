@@ -29,8 +29,11 @@ function App() {
     const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
     const [isVerhältnis, setVerhältnis] = useState('defaultVerhältnis');
     const [isScoreMethode, setScoreMethode] = useState('defaultScoreMethode');
-    const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgorithmus');
-    const [isÜbereinstimmung, setÜbereinstimmung] = useState('defaultÜbereinstimmung');
+    const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgo');
+    const [isÜbereinstimmungswert, setÜbereinstimmungswert] = useState('defaultÜbereinstimmungswert');
+    const [isZielvariable, setZielvariable] = useState('defaultZielvariable');
+    const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
+    const [isErsetzung, setErsetzung] = useState('defaultErsetz');
 
 
     return (
@@ -43,7 +46,7 @@ function App() {
                 <div className="Main">
                     {/*Navigations-Container*/}
                     <div className="LeftContainer">
-                        <NavB isDatenquelle={isDatenquelle} isDatei={isDatei} isMatchingMethode={isMatchingMethode} isVerhältnis={isVerhältnis} isScoreMethode={isScoreMethode} isAlgorithmus={isAlgorithmus} isÜbereinstimmung={isÜbereinstimmung} />
+                        <NavB isDatenquelle={isDatenquelle} isDatei={isDatei} isMatchingMethode={isMatchingMethode} isZielvariable={isZielvariable} isKontrollvariablen={isKontrollvariablen} isVerhältnis={isVerhältnis} isScoreMethode={isScoreMethode} isAlgorithmus={isAlgorithmus} isErsetzung={isErsetzung} isÜbereinstimmungswert={isÜbereinstimmungswert} />
                     </div>
                     {/*Fragebogen und Graphische-Ergebnisse*/}
                     <div className="MiddleContainer">
@@ -56,12 +59,12 @@ function App() {
                                     <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
                                     <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei}/>} />
                                     <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
-                                    <Route path="/Zielvariable" element={<Zielvariable/>}/>
-                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen/>}/>
+                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable}/>}/>
+                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
-                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus}/>}/>
-                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmung={setÜbereinstimmung}/>}/>
+                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung}/>}/>
+                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
                                     <Route path="/Matching-Ergebnis" element={<MatchingErgebnis/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>

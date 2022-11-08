@@ -16,6 +16,7 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 
 function MatchingVerhältnis({setVerhältnis}) {
     const [value, setValue] = React.useState(2);
+
     const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
       color: grey;
       &.Mui-selected {
@@ -90,9 +91,12 @@ function MatchingVerhältnis({setVerhältnis}) {
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
                 <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                    Matching
+                </Typography>
+                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}}>
                     Matching Verhältnis
                 </Typography>
-                <br/><br/>
+                <br/>
 <div style={{paddingLeft:"35%", align:"center"}}>
               <div style={{display:"flex", flexFlow:"row", gap:"100px", paddingBottom:"5%"}}>
 
@@ -211,22 +215,17 @@ function MatchingVerhältnis({setVerhältnis}) {
                             </Box>
                 </div>
 </div>
-                <br/><br/><br/>
-                            <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                                setValue(newValue);
-                            }} sx={{
-                                display: "flex",
-                                flexFlow: "right",
-                                float: "right",
-                                width: "40%"
-                            }}>
-                                <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                                        to='/Variablen-Fälle-Kontrollen'/>
-                                <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                                <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                                        to='/MethodeScoreBerechnung'/>
-                            </BottomNavigation>
+                <br/>
 
+                <div style={{ height: "15%", display:"flex", float:"right"}}>
+                    <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
+                        <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
+                                                component={Link} to='/Kontrollvariablen'/>
+                        <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
+                        <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
+                                                component={Link} to='/MethodeScoreBerechnung'/>
+                    </BottomNavigation>
+                </div>
             </CardContent>
     );
 }

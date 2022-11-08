@@ -21,30 +21,36 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import Datenquelle from "./form/dataimport/Datenquelle";
+import {useEffect} from "react";
 
 
 
 
-function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmung}) {
+function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
         color: 'black'
     };
 
-       const chip = <div style={{
-            display: "flex",
-            paddingLeft: "20%",
-            left: "60px",
-            backgroundColor: "#B11B18",
-            width: "180px",
-            height: "65%",
-            borderRadius: "15px",
-            color: "white",
-            justifyContent: "baseline"
-        }}></div>
+    const chipStyle = {
+        display: "flex",
+        paddingLeft: "10%",
+        paddingRight: "10%",
+        left: "60px",
+        backgroundColor: "#B11B18",
+        width: "auto",
+        height: "42%",
+        borderRadius: "15px",
+        color: "white",
+        justifyContent: "baseline",
+        paddingTop:"1%",
+    };
 
-        return (
+
+
+
+    return (
             <Card variant="outlined" className="NavBStyle">
                     <CardContent>
                         <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
@@ -65,19 +71,23 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen
-                                   <br/> <div style={{
-                                        display: "flex",
-                                        paddingLeft: "10%",
-                                        paddingRight: "10%",
-                                        left: "60px",
-                                        backgroundColor: "#B11B18",
-                                        width: "min-content",
-                                        height: "45%",
-                                        borderRadius: "15px",
-                                        color: "white",
-                                        justifyContent: "baseline"
-                                    }}>{isDatenquelle}</div></Link></TimelineContent>
+                                <TimelineContent>
+                                    <Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen
+                                       <br/><div style={{  display: "flex",
+                                            paddingLeft: "10%",
+                                            paddingRight: "10%",
+                                            left: "60px",
+                                            backgroundColor: "#B11B18",
+                                            width: "auto",
+                                            height: "42%",
+                                            borderRadius: "15px",
+                                            color: "white",
+                                            justifyContent: "baseline",
+                                            paddingTop:"1%",
+                                            visibility: isDatenquelle == "defaultQuelle" ? "hidden" : "visible" ,
+                                       }} >{isDatenquelle}</div>
+                                    </Link>
+                                </TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
@@ -86,18 +96,20 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent><Link to='/Datei-hochladen' style={linkStyle}>
-                                    Datei hochladen<br/><div style={{
-                                        display: "flex",
-                                        paddingLeft: "10%",
-                                        paddingRight: "10%",
-                                        left: "60px",
-                                        backgroundColor: "#B11B18",
-                                        width: "min-content",
-                                        height: "45%",
-                                        borderRadius: "15px",
-                                        color: "white",
-                                        justifyContent: "baseline"
-                                    }}> {isDatei}</div></Link></TimelineContent>
+                                    Datei hochladen<br/><div
+                                    style={{  display: "flex",
+                                    paddingLeft: "10%",
+                                    paddingRight: "10%",
+                                    left: "60px",
+                                    backgroundColor: "#B11B18",
+                                    width: "auto",
+                                    height: "42%",
+                                    borderRadius: "15px",
+                                    color: "white",
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isDatei == "defaultDatei" ? "hidden" : "visible" ,
+                                }}> {isDatei}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
@@ -106,17 +118,18 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent><Link to='/Matching-Methode'
-                                                       style={linkStyle}>Matching-Methode <br/><div style={{
-                                    display: "flex",
+                                                       style={linkStyle}>Matching-Methode <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isMatchingMethode == "defaultMethode" ? "hidden" : "visible" ,
                                 }}> {isMatchingMethode}</div></Link></TimelineContent>
                             </TimelineItem>
 
@@ -126,18 +139,19 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent> <Link to='/Zielvariable'
-                                                        style={linkStyle}>Zielvariable <br/><div style={{
-                                    display: "flex",
+                                                        style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
-                                }}> </div></Link></TimelineContent>
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isZielvariable == "defaultZielvariable" ? "hidden" : "visible" ,
+                                }}> {isZielvariable}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
@@ -146,18 +160,19 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent> <Link to='/Kontrollvariablen'
-                                                        style={linkStyle}>Kontrollvariable <br/><div style={{
-                                    display: "flex",
+                                                        style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
-                                }}> </div></Link></TimelineContent>
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isKontrollvariablen == "defaultKontrollvariablen" ? "hidden" : "visible" ,
+                                }}>{isKontrollvariablen} </div></Link></TimelineContent>
                             </TimelineItem>
 
 
@@ -168,17 +183,18 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>
-                                    Matching Verhältnis  <br/><div style={{
-                                    display: "flex",
+                                    Matching Verhältnis  <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isVerhältnis == "defaultVerhältnis" ? "hidden" : "visible" ,
                                 }}> {isVerhältnis}</div></Link></TimelineContent>
                             </TimelineItem>
 
@@ -188,17 +204,18 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung'
-                                                                     style={linkStyle}>Methode der Score-Berechnung<br/><div style={{
-                                    display: "flex",
+                                                                     style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isScoreMethode == "defaultScoreMethode" ? "hidden" : "visible" ,
                                 }}> {isScoreMethode}</div></Link></TimelineContent>
                             </TimelineItem>
 
@@ -207,19 +224,20 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung'
-                                                                     style={linkStyle}>Matching-Algorithmus<br/><div style={{
-                                    display: "flex",
+                                <TimelineContent size="small"> <Link to='/MatchingAlgorithmus'
+                                                                     style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "auto",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
-                                }}> {isAlgorithmus}</div></Link></TimelineContent>
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isAlgorithmus == "defaultAlgo" ? "hidden" : "visible" ,
+                                }}>{isAlgorithmus}-{isErsetzung}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
@@ -227,19 +245,20 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isVerhältnis, isScore
                                     <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung'
-                                                                     style={linkStyle}>Bereich der Übereinstimmung des Prop.-Scores <br/><div style={{
-                                    display: "flex",
+                                <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore'
+                                                                     style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
                                     backgroundColor: "#B11B18",
-                                    width: "min-content",
-                                    height: "45%",
+                                    width: "auto",
+                                    height: "42%",
                                     borderRadius: "15px",
                                     color: "white",
-                                    justifyContent: "baseline"
-                                }}> {isÜbereinstimmung}</div></Link></TimelineContent>
+                                    justifyContent: "baseline",
+                                    paddingTop:"1%",
+                                    visibility: isÜbereinstimmungswert == "defaultÜbereinstimmungswert" ? "hidden" : "visible" ,
+                                }}> ±{isÜbereinstimmungswert}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>

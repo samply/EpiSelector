@@ -50,10 +50,13 @@ function MethodeScoreBerechnung({setScoreMethode}) {
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
 
             <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+                Matching
+            </Typography>
+            <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}}>
                 Methode der Score-Berechnung
             </Typography>
 
-            <table style={{width: "100%", height: "100%"}}>
+            <table style={{width: "100%", height: "86%"}}>
                 <tbody>
                 <tr style={{
                     height: "85%",

@@ -47,17 +47,20 @@ function Datenquelle({setDatenquelle}) {
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
 
                 <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    Datenquelle wählen:
+                    Matching
                 </Typography>
-
-                <table style={{width: "100%", height: "100%"}}>
+                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}} >
+                    Datenquelle wählen
+                </Typography>
+                <table style={{width: "100%", height: "85%"}}>
 <tbody>
                     <tr style={{
-                        height: "85%",
+                        height: "70%",
                         display: "flex",
                         alignItems: "center",
                         flexDirection: "row",
                         justifyContent: "space-evenly",
+                        paddingBottom:"7%"
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}

@@ -61,9 +61,10 @@ function Mainpage() {
                     </Select>
                 </FormControl>
 
-                <br/>
+                <br/><br/><br/>
                 <div style={{width:"100%", height:"30%"}}>
-                    <Link to ='Datenquelle'><Button style={{float:"right", marginRight:"5%", backgroundColor:"#4B92DB", color:"white", border:"none"}} variant="outlined" startIcon={<PlayCircleFilledIcon />}>
+                    <Link to ='/Datenquelle'>
+                        <Button style={{float:"right", marginRight:"5%", backgroundColor:"#4B92DB", color:"white", border:"none"}} variant="outlined" startIcon={<PlayCircleFilledIcon />}>
                         Start
                     </Button>
                     </Link>

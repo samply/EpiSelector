@@ -13,7 +13,7 @@ function DynamicResults() {
         <Card variant="outlined" className="dynamicResults">
                 <CardContent>
                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                        Matching-Daten
+                        Matching-Ergebnisse
                     </Typography>
                 </CardContent>
         </Card>

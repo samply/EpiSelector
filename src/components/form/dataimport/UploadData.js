@@ -74,9 +74,12 @@ export default function UploadData({setDatei}) {
     return (
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
                 <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    Datei hochladen:
-                </Typography> {/* File Uploader */}
-                <table style={{width: "100%", height: "50%"}}>
+                    Matching
+                </Typography>
+                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"5%"}} >
+                    Datei hochladen
+                </Typography>{/* File Uploader */}
+                <table style={{width: "100%", height: "45%"}}>
                     <tbody>
                     <tr>
                         <td>
@@ -88,9 +91,9 @@ export default function UploadData({setDatei}) {
                                 style={{
                                     marginTop: "5%",
                                     marginLeft: "5%",
-                                    padding: "10%",
+                                    padding: "5%",
                                     border: "dashed lightgrey",
-                                    width: "65%",
+                                    width: "80%",
                                     justifyContent: "space-evenly"
                                 }}
                             />
@@ -99,7 +102,7 @@ export default function UploadData({setDatei}) {
                     </tbody>
                 </table>
                 <br/><br/><br/><br/><br/><br/>
-                <div style={{height: "15%", display: "flex", float: "right"}}>
+                <div style={{height: "10%", display: "flex", float: "right"}}>
                     <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
                         setValue(newValue);
                     }}>

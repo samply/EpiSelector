@@ -26,12 +26,14 @@ function MatchingErgebnis() {
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
 
                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            Matching Ergebnis
+                            Matching
                         </Typography>
+<div style={{width:"100%", height:"85%"}}>
+
+</div>
 
 
-                            hier kommen die Ergebnisse
-<br/><br/><br/>
+
                 <div style={{ height: "15%", display:"flex", float:"right"}}>
                             <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
                                 setValue(newValue);

@@ -58,17 +58,21 @@ function MatchingMethode({setMatchingMethode}) {
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
 
             <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                Matching Methode
+                Matching
             </Typography>
+                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}} >
+                    Matching Methode
+                </Typography>
 
-            <table style={{width: "100%", height: "100%"}}>
+            <table style={{width: "100%", height: "90%"}}>
                 <tbody>
                 <tr style={{
-                    height: "85%",
+                    height: "70%",
                     display: "flex",
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
+                    paddingBottom:"5%"
                 }}>
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"25px"}}>
                         <Box
