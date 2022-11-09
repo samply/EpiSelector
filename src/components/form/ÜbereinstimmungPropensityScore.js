@@ -14,19 +14,11 @@ import {styled} from "@mui/material/styles";
 import {FormGroup, TextField} from "@material-ui/core";
 import { useState} from 'react';
 import {visitedSite} from "../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
-
-    const [isValue, setValue] = React.useState(2);
-
-
-
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
 
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -48,16 +40,13 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
                <TextField id="outlined-basic" label="0.2" variant="outlined" onChange={(event) => {setÜbereinstimmungswert(event.target.value);}} />
            </div>
 
+            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
-            <div style={{ height: "15%", display:"flex", float:"right"}}>
-                    <BottomNavigation showLabels value={isValue} onChange={(event, newValue) => {setValue(newValue);}} >
-                        <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
-                                                component={Link} to='/MatchingAlgorithmus'/>
-                        <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
-                        <BottomNavigationAction variant="fill" label="Ergebnisse" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}/>
-                    </BottomNavigation>
-                </div>
+            </div>
+
         </CardContent>
     );
 

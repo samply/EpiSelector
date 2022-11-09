@@ -14,17 +14,13 @@ import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import {styled} from "@mui/material/styles";
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import {visitedSite} from "../NavB";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 
 function Dataexport() {
-    const [value, setValue] = React.useState(2);
 
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
             <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
@@ -45,14 +41,14 @@ function Dataexport() {
                         </div>
     </div>
 
-            <div style={{ height: "5%", display:"flex", float:"right"}}>
-                <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
-                    <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                            to='/Matching-Ergebnis'/>
-                    <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                    <BottomNavigationAction label="Beenden" icon={<DoneAllIcon/>} component={Link} to='/Startseite' />
-                </BottomNavigation>
+            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%"}}>
+                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                <Link style={{textDecoration: "none"}} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
+
             </div>
+
+
         </CardContent>
     );
 }

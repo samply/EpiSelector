@@ -18,16 +18,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {visitedSite} from "../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function MatchingErgebnis() {
-
-    const [value, setValue] = React.useState(2);
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
 
     function createDataTable1(variable, einheit) {
         return { variable, einheit };
@@ -149,13 +144,15 @@ function MatchingErgebnis() {
                         </Typography>
                     </div>
                 </div>
-                <div style={{ height: "15%", display:"flex", float:"right"}}>
-                            <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}}>
-                                <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link} to='/ÜbereinstimmungPropensityScore'/>
-                                <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                                <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link} to='/Dataexport' onClick={()=>visitedSite("datenexport")} />
-                            </BottomNavigation>
+
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                    <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+
                 </div>
+
+
 
             </CardContent>
     );

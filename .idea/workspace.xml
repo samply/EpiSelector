@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Finished Navigation and Inputs and Matchingprozess">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Added Function Status for Navigation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
@@ -14,7 +14,6 @@
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +163,7 @@
       <workItem from="1667565756568" duration="595000" />
       <workItem from="1667818963342" duration="13642000" />
       <workItem from="1667905138337" duration="17554000" />
-      <workItem from="1667986441992" duration="9181000" />
+      <workItem from="1667986441992" duration="13416000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -327,7 +326,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667923746826</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Added Function Status for Navigation">
+      <created>1668001661967</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1668001661967</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -377,6 +383,7 @@
     <MESSAGE value="WIP" />
     <MESSAGE value="Big Progress&#10;Navigation and Inputs fixed &#10;Added Components and deleted some Componenets" />
     <MESSAGE value="Finished Navigation and Inputs and Matchingprozess" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished Navigation and Inputs and Matchingprozess" />
+    <MESSAGE value="Added Function Status for Navigation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Function Status for Navigation" />
   </component>
 </project>

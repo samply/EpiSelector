@@ -15,17 +15,12 @@ import {useState} from "react";
 import Datainput from "../../../model/DataInput";
 import Form from '../../../model/Form';
 import {visitedSite} from "../../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 
 export default function UploadData({setDatei}) {
-
-    const [value, setValue] = React.useState(2);
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
@@ -80,7 +75,7 @@ export default function UploadData({setDatei}) {
                 <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"5%"}} >
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <table style={{width: "100%", height: "45%"}}>
+                <table style={{width: "100%", height: "46%"}}>
                     <tbody>
                     <tr>
                         <td>
@@ -103,17 +98,14 @@ export default function UploadData({setDatei}) {
                     </tbody>
                 </table>
                 <br/><br/><br/><br/><br/><br/>
-                <div style={{height: "10%", display: "flex", float: "right"}}>
-                    <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                        setValue(newValue);
-                    }}>
-                        <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
-                                                component={Link} to='/Datenquelle'/>
-                        <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
-                        <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}/>
-                    </BottomNavigation>
+
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                    <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+
                 </div>
+
             </CardContent>
     );
 }

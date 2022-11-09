@@ -14,16 +14,11 @@ import {useState} from "react";
 import {styled} from "@mui/material/styles";
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {visitedSite} from "../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 function MatchingVerhältnis({setVerhältnis}) {
-    const [value, setValue] = React.useState(2);
-
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -218,15 +213,13 @@ function MatchingVerhältnis({setVerhältnis}) {
 </div>
                 <br/>
 
-                <div style={{ height: "15%", display:"flex", float:"right"}}>
-                    <BottomNavigation showLabels value={value} onChange={(event, newValue) => {setValue(newValue);}} >
-                        <BottomNavigationAction variant="outlined" label="Zurück" icon={<ArrowCircleLeftIcon/>}
-                                                component={Link} to='/Kontrollvariablen'/>
-                        <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
-                        <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")} />
-                    </BottomNavigation>
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                    <Link style={{textDecoration: "none"}} to='/Kontrollvariablen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+
                 </div>
+
             </CardContent>
     );
 }

@@ -15,6 +15,9 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {useState} from "react";
 import {FormGroup} from "@material-ui/core";
 import {visitedSite} from "../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 
 function MatchingMethode({setMatchingMethode}) {
@@ -47,14 +50,6 @@ function MatchingMethode({setMatchingMethode}) {
 
     };
 
-    const [value, setValue] = React.useState(2);
-    const BottomNavigationAction = styled(MuiBottomNavigationAction)(`
-      color: grey;
-      &.Mui-selected {
-        color: #1d4189;
-      };
-    `);
-
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
 
@@ -65,10 +60,10 @@ function MatchingMethode({setMatchingMethode}) {
                     Matching Methode
                 </Typography>
 
-            <table style={{width: "100%", height: "90%"}}>
+            <table style={{width: "100%", height: "75%"}}>
                 <tbody>
                 <tr style={{
-                    height: "70%",
+                    height: "80%",
                     display: "flex",
                     alignItems: "center",
                     flexDirection: "row",
@@ -128,21 +123,16 @@ function MatchingMethode({setMatchingMethode}) {
                         </Box>
                     </FormGroup>
                 </tr>
+                </tbody>
+            </table>
 
-                <tr style={{ height: "15%", display:"flex", float:"right"}}>
-                        <BottomNavigation showLabels value={value} onChange={(event, newValue) => {
-                            setValue(newValue);
-                        }}>
-                            <BottomNavigationAction label="Zurück" icon={<ArrowCircleLeftIcon/>} component={Link}
-                                                    to='/Datei-hochladen'/>
-                            <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
-                            <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                                    to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}/>
-                        </BottomNavigation>
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                    <Link style={{textDecoration: "none"}} to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}} to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
-                </tr>
-            </tbody>
-        </table>
+                </div>
+
         </CardContent>
     );
 }
