@@ -35,6 +35,21 @@ function App() {
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
     const [isErsetzung, setErsetzung] = useState('defaultErsetz');
 
+    let proj ={
+        datenquelle : {isDatenquelle},
+        datei : {isDatei},
+        matchingMethode : {isMatchingMethode},
+        verhältnis : {isVerhältnis},
+        scoremethode : {isScoreMethode},
+        algorithmus : {isAlgorithmus},
+        übereinstimmungswert : {isÜbereinstimmungswert},
+        zielvariable : {isZielvariable},
+        kontrollvariablen : {isKontrollvariablen},
+        ersetzung : {isErsetzung}
+    }
+
+    let json = JSON.stringify(proj);
+
 
     return (
         //Gesamte Ansicht
