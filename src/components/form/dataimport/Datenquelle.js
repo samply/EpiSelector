@@ -13,6 +13,7 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {styled} from "@mui/material/styles";
 import {FormGroup} from "@material-ui/core";
 import { useState} from 'react';
+import {visitedSite} from '../../NavB';
 
 function Datenquelle({setDatenquelle}) {
 
@@ -103,7 +104,7 @@ function Datenquelle({setDatenquelle}) {
                                                     component={Link} to='/Startseite'/>
                             <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                             <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                    component={Link} to='/Datei-hochladen'/>
+                                                    component={Link} to='/Datei-hochladen' onClick={()=>visitedSite("dateihochladen")}/>
                         </BottomNavigation>
                     </tr>
                 </tbody></table>

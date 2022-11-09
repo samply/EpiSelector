@@ -14,6 +14,7 @@ import Papa from 'papaparse';
 import {useState} from "react";
 import Datainput from "../../../model/DataInput";
 import Form from '../../../model/Form';
+import {visitedSite} from "../../NavB";
 
 
 export default function UploadData({setDatei}) {
@@ -110,7 +111,7 @@ export default function UploadData({setDatei}) {
                                                 component={Link} to='/Datenquelle'/>
                         <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                         <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/Matching-Methode'/>
+                                                component={Link} to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}/>
                     </BottomNavigation>
                 </div>
             </CardContent>

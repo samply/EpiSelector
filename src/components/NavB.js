@@ -7,30 +7,33 @@ import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineDot from '@mui/lab/TimelineDot';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import JoinLeftIcon from '@mui/icons-material/JoinLeft';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import ListAltIcon from '@mui/icons-material/ListAlt';
 import SquareFootIcon from '@mui/icons-material/SquareFoot';
 import AnalyticsIcon from '@mui/icons-material/Analytics';
-import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList';
 import SimCardDownloadOutlinedIcon from '@mui/icons-material/SimCardDownloadOutlined';
 import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
-import ArchiveOutlinedIcon from '@mui/icons-material/ArchiveOutlined';
 import BlurCircularOutlinedIcon from '@mui/icons-material/BlurCircularOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import Datenquelle from "./form/dataimport/Datenquelle";
-import {useEffect} from "react";
+import CalculateIcon from '@mui/icons-material/Calculate';
+import BlurOnIcon from '@mui/icons-material/BlurOn';
+import TollIcon from '@mui/icons-material/Toll';
 
 
+export function visitedSite(icon){
+    const elem = document.getElementById(icon);
+    elem.style.backgroundColor="#1d4189";
+}
 
 
 function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
-        color: 'black'
+        color: 'black',
+
     };
 
     const chipStyle = {
@@ -68,11 +71,11 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                             <TimelineItem>
 
                                 <TimelineSeparator>
-                                    <TimelineDot><BlurCircularOutlinedIcon/></TimelineDot>
+                                    <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent>
-                                    <Link to='/Datenquelle' style={linkStyle}>Datenquelle wählen
+                                    <Link  to='/Datenquelle' style={linkStyle} onClick={()=>visitedSite("datenquelle")}>Datenquelle wählen
                                        <br/><div style={{  display: "flex",
                                             paddingLeft: "10%",
                                             paddingRight: "10%",
@@ -92,10 +95,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><UploadFileIcon/></TimelineDot>
+                                    <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Datei-hochladen' style={linkStyle}>
+                                <TimelineContent><Link to='/Datei-hochladen' onClick={()=>visitedSite("dateihochladen")} style={linkStyle}>
                                     Datei hochladen<br/><div
                                     style={{  display: "flex",
                                     paddingLeft: "10%",
@@ -114,10 +117,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><JoinLeftIcon/></TimelineDot>
+                                    <TimelineDot id="matchingmethode"><JoinLeftIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Methode'
+                                <TimelineContent><Link to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}
                                                        style={linkStyle}>Matching-Methode <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -135,10 +138,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><ListAltIcon/></TimelineDot>
+                                    <TimelineDot id="zielvariable"><TollIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent> <Link to='/Zielvariable'
+                                <TimelineContent> <Link to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}
                                                         style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -156,10 +159,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><ListAltIcon/></TimelineDot>
+                                    <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent> <Link to='/Kontrollvariablen'
+                                <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=>visitedSite("kontrollvariablen")}
                                                         style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -179,10 +182,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem> {/*style={{display: 'none'}}*/}
                                 <TimelineSeparator>
-                                    <TimelineDot><AnalyticsIcon/></TimelineDot>
+                                    <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Verhältnis' style={linkStyle}>
+                                <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
                                     Matching Verhältnis  <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -200,10 +203,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
+                                    <TimelineDot id="scoremethode" size="small"><CalculateIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung'
+                                <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}
                                                                      style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -221,10 +224,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
+                                    <TimelineDot id="algorithmus" size="small"><BlurOnIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MatchingAlgorithmus'
+                                <TimelineContent size="small"> <Link to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}
                                                                      style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -242,10 +245,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot size="small"><SquareFootIcon/></TimelineDot>
+                                    <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore'
+                                <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
                                                                      style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -263,17 +266,17 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><FactCheckOutlinedIcon/></TimelineDot>
+                                    <TimelineDot id="ergebnisse"><FactCheckOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Ergebnis' style={linkStyle}>Matching
+                                <TimelineContent><Link to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")} style={linkStyle}>Matching
                                     Ergebnis </Link></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
                                 <TimelineSeparator>
-                                    <TimelineDot><SimCardDownloadOutlinedIcon/></TimelineDot>
+                                    <TimelineDot id="datenexport"><SimCardDownloadOutlinedIcon/></TimelineDot>
                                 </TimelineSeparator>
-                                <TimelineContent> <Link to='/Dataexport'
+                                <TimelineContent> <Link to='/Dataexport' onClick={()=>visitedSite("datenexport")}
                                                         style={linkStyle}>Datenexport </Link></TimelineContent>
                             </TimelineItem>
                         </Timeline>

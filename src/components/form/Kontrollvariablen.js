@@ -12,6 +12,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { DataGrid } from '@mui/x-data-grid';
 import {styled} from "@mui/material/styles";
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import {visitedSite} from "../NavB";
 
 
 function Kontrollvariablen({setKontrollvariablen}) {
@@ -77,7 +78,7 @@ function Kontrollvariablen({setKontrollvariablen}) {
                                             component={Link} to='/Zielvariable'/>
                     <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                     <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                            component={Link} to='/Matching-Verhältnis'/>
+                                            component={Link} to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")}/>
                 </BottomNavigation>
             </div>
 

@@ -13,6 +13,7 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {styled} from "@mui/material/styles";
 import {FormGroup, TextField} from "@material-ui/core";
 import { useState} from 'react';
+import {visitedSite} from "../NavB";
 
 function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
 
@@ -54,7 +55,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
                                                 component={Link} to='/MatchingAlgorithmus'/>
                         <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                         <BottomNavigationAction variant="fill" label="Ergebnisse" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/Matching-Ergebnis'/>
+                                                component={Link} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}/>
                     </BottomNavigation>
                 </div>
         </CardContent>

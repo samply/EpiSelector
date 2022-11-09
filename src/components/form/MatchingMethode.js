@@ -14,6 +14,7 @@ import {styled} from "@mui/material/styles";
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {useState} from "react";
 import {FormGroup} from "@material-ui/core";
+import {visitedSite} from "../NavB";
 
 
 function MatchingMethode({setMatchingMethode}) {
@@ -136,7 +137,7 @@ function MatchingMethode({setMatchingMethode}) {
                                                     to='/Datei-hochladen'/>
                             <BottomNavigationAction label="Löschen" icon={<DeleteIcon/>}/>
                             <BottomNavigationAction label="Weiter" icon={<ArrowCircleRightIcon/>} component={Link}
-                                                    to='/Zielvariable'/>
+                                                    to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}/>
                         </BottomNavigation>
 
                 </tr>

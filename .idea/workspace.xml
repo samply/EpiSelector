@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Big Progress&#10;Navigation and Inputs fixed &#10;Added Components and deleted some Componenets">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Finished Navigation and Inputs and Matchingprozess">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/DynamicResults.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DynamicResults.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/MainpageNav.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
@@ -168,7 +163,8 @@
       <workItem from="1667470725419" duration="2289000" />
       <workItem from="1667565756568" duration="595000" />
       <workItem from="1667818963342" duration="13642000" />
-      <workItem from="1667905138337" duration="17073000" />
+      <workItem from="1667905138337" duration="17554000" />
+      <workItem from="1667986441992" duration="9181000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -324,7 +320,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667837077578</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Finished Navigation and Inputs and Matchingprozess">
+      <created>1667923746826</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1667923746826</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -373,6 +376,7 @@
     <MESSAGE value="WIP Refactoring Tables in Form-Components" />
     <MESSAGE value="WIP" />
     <MESSAGE value="Big Progress&#10;Navigation and Inputs fixed &#10;Added Components and deleted some Componenets" />
-    <option name="LAST_COMMIT_MESSAGE" value="Big Progress&#10;Navigation and Inputs fixed &#10;Added Components and deleted some Componenets" />
+    <MESSAGE value="Finished Navigation and Inputs and Matchingprozess" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Navigation and Inputs and Matchingprozess" />
   </component>
 </project>

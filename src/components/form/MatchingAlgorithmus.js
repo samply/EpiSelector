@@ -15,6 +15,7 @@ import Card from "@mui/material/Card";
 import {useState} from "react";
 import {FormControlLabel, FormGroup, Radio, RadioGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
+import {visitedSite} from "../NavB";
 
 
 function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
@@ -120,7 +121,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                                                 component={Link} to='/MethodeScoreBerechnung'/>
                         <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                         <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/ÜbereinstimmungPropensityScore'/>
+                                                component={Link} to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}/>
                     </BottomNavigation>
                 </tr>
                 </tbody></table>

@@ -15,6 +15,7 @@ import Card from "@mui/material/Card";
 import {useState} from "react";
 import {FormGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
+import {visitedSite} from "../NavB";
 
 
 function MethodeScoreBerechnung({setScoreMethode}) {
@@ -106,7 +107,7 @@ function MethodeScoreBerechnung({setScoreMethode}) {
                                                 component={Link} to='/Matching-Verhältnis'/>
                         <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                         <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/MatchingAlgorithmus'/>
+                                                component={Link} to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}/>
                     </BottomNavigation>
                 </tr>
                 </tbody></table>

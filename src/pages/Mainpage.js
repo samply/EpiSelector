@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
+import {visitedSite} from "../components/NavB";
 
 
 function Mainpage() {
@@ -63,7 +64,7 @@ function Mainpage() {
 
                 <br/><br/><br/>
                 <div style={{width:"100%", height:"30%"}}>
-                    <Link to ='/Datenquelle'>
+                    <Link to ='/Datenquelle' onClick={()=>visitedSite("datenquelle")}>
                         <Button style={{float:"right", marginRight:"5%", backgroundColor:"#4B92DB", color:"white", border:"none"}} variant="outlined" startIcon={<PlayCircleFilledIcon />}>
                         Start
                     </Button>

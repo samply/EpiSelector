@@ -13,6 +13,7 @@ import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import {useState} from "react";
 import {styled} from "@mui/material/styles";
 import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
+import {visitedSite} from "../NavB";
 
 function MatchingVerhältnis({setVerhältnis}) {
     const [value, setValue] = React.useState(2);
@@ -223,7 +224,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                                                 component={Link} to='/Kontrollvariablen'/>
                         <BottomNavigationAction variant="outlined" label="Löschen" icon={<DeleteIcon/>}/>
                         <BottomNavigationAction variant="fill" label="Weiter" icon={<ArrowCircleRightIcon/>}
-                                                component={Link} to='/MethodeScoreBerechnung'/>
+                                                component={Link} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")} />
                     </BottomNavigation>
                 </div>
             </CardContent>
