@@ -57,7 +57,7 @@ function displayCurrentText(){
 };
 
 function InfoBox() {
-    const [expanded, setExpanded] = React.useState('panel1');
+    const [expanded, setExpanded] = React.useState('panel2');
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
@@ -65,7 +65,7 @@ function InfoBox() {
 
     return (
         <div className="InfoBox">
-            <Accordion defaultExpanded={true} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                     <Typography>Worum geht es hier</Typography>
                 </AccordionSummary>
@@ -101,28 +101,35 @@ function InfoBox() {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion noWrap={true} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
                     <Typography>Fachbegriffe</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
-                        Exposition: Faktor, dem eine Gruppe von Menschen ausgesetzt ist.
-<br/><br/>
-                        Fall: Person, bei der das Risikoereignis eintrat
-                        <br/><br/>
-                        Kohortenstudie:  Ziel, einen Zusammenhang zwischen einer oder mehreren Expositionen und dem Auftreten einer Krankheit aufzudecken. Dabei wird eine Gruppe exponierter und eine Gruppe nicht exponierter Personen über einen bestimmten Zeitraum hinsichtlich des Auftretens oder der Sterblichkeit bestimmter Krankheiten beobachtet.
-                        <br/><br/>
-                        Kontrolle: Person, bei der das Risikoereignis nicht eintrat
-                        <br/><br/>
-                        Nested case-control study: Fälle einer Krankheit, die in einer definierten Kohorte innerhalb einer schon gelaufenen oder noch laufenden Kohortenstudie auftreten, werden identifiziert. Für jeden Fall wird eine bestimmte Anzahl von angepassten Kontrollen aus der Kohorte ausgewählt, die die Krankheit zum Zeitpunkt des Auftretens der Krankheit im Fall nicht entwickelt haben.
-                        <br/><br/>
-                        Score matching: Matching-Verfahren für Kontrollgruppenselektion um den Selektionsbias zu reduzieren. Bisherige, verzerrte Gruppenzuteilung wird aufgelöst indem für jedes Sample ein Propensity Score (= Wahrscheinlichkeit in der Versuchsgruppe zu landen auf Basis von zuvor erhobenen Hintergrunddaten, meist als Ergebnis einer logistischen Regression) berechnet wird und auf Basis dieser Werte ähnliche Samples zu einer Kontroll-Versuchspaargruppe zusammengefasst werden, die keine Verzerrung mehr enthalten.
-                        <br/><br/>
+
+                       <Typography style={{ fontWeight: "bold" }}> Exposition: </Typography>
+                        <Typography>Faktor, dem eine Gruppe von Menschen ausgesetzt ist.</Typography>
+<br/>
+                    <Typography style={{ fontWeight: "bold" }}>Fall:</Typography>
+                   <Typography>Person, bei der das Risikoereignis eintrat</Typography>
+                        <br/>
+                    <Typography style={{ fontWeight: "bold" }}> Kohortenstudie: </Typography>
+                    <Typography>Ziel, einen Zusammenhang zwischen einer oder mehreren Expositionen und dem Auftreten einer Krankheit aufzudecken. Dabei wird eine Gruppe exponierter und eine Gruppe nicht exponierter Personen über einen bestimmten Zeitraum hinsichtlich des Auftretens oder der Sterblichkeit bestimmter Krankheiten beobachtet.</Typography>
+                    <br/>
+                       <Typography style={{ fontWeight: "bold" }}> Kontrolle:</Typography>
+                    <Typography>Person, bei der das Risikoereignis nicht eintrat</Typography>
+                        <br/>
+                       <Typography style={{ fontWeight: "bold" }}> Nested case-control study:</Typography>
+                    <Typography>Fälle einer Krankheit, die in einer definierten Kohorte innerhalb einer schon gelaufenen oder noch laufenden Kohortenstudie auftreten, werden identifiziert. Für jeden Fall wird eine bestimmte Anzahl von angepassten Kontrollen aus der Kohorte ausgewählt, die die Krankheit zum Zeitpunkt des Auftretens der Krankheit im Fall nicht entwickelt haben.</Typography>
+                    <br/>
+                    <Typography style={{ fontWeight: "bold" }}>Score matching:</Typography>
+                    <Typography>Matching-Verfahren für Kontrollgruppenselektion um den Selektionsbias zu reduzieren. Bisherige, verzerrte Gruppenzuteilung wird aufgelöst indem für jedes Sample ein Propensity Score (= Wahrscheinlichkeit in der Versuchsgruppe zu landen auf Basis von zuvor erhobenen Hintergrunddaten, meist als Ergebnis einer logistischen Regression) berechnet wird und auf Basis dieser Werte ähnliche Samples zu einer Kontroll-Versuchspaargruppe zusammengefasst werden, die keine Verzerrung mehr enthalten.
+                    </Typography>
+                    <br/>
 
 
                         <br/>
-                    </Typography>
+
                 </AccordionDetails>
             </Accordion>
             <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
