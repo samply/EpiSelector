@@ -1,24 +1,21 @@
 import '../../App.css';
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
-import {styled} from "@mui/material/styles";
-import {FormGroup, TextField} from "@material-ui/core";
-import { useState} from 'react';
+import {TextField} from "@material-ui/core";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {useState} from "react";
+
 
 function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
+
+    const [isWert, setWert] = useState(0);
+
 
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -37,7 +34,11 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
 
            <div style={{display:"flex", flexFlow:"row", gap:"1%", justifyContent:"center", paddingTop:"3%", paddingBottom:"20%"}}>
                <Typography sx={{fontSize: 25}}>±</Typography>
-               <TextField id="outlined-basic" label="0.2" variant="outlined" onChange={(event) => {setÜbereinstimmungswert(event.target.value);}} />
+               <TextField defaultValue="0.2" label="Übereinstimmungswert" variant="outlined" onChange={(event) => {if(event.target.value <= 1 && event.target.value >=0){setÜbereinstimmungswert(event.target.value);} setWert(event.target.value);  }}
+                          error={isWert>1 || isWert <0}
+                          required="true"
+               />
+
            </div>
 
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"46%"}}>

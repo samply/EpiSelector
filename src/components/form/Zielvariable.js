@@ -1,42 +1,40 @@
 import '../../App.css';
 import * as React from 'react';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import {Link} from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { DataGrid } from '@mui/x-data-grid';
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {useState} from "react";
 
 
 function Zielvariable({setZielvariable}) {
 
+    const [selectionModel, setSelectionModel] = useState('');
+
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70 },
+        { field: 'id', headerName: 'ID', width: 70, hide: true},
         { field: 'variable', headerName: 'Variable', width: 130 },
-        { field: 'variableFullname', headerName: 'Bedeutung', width: 200 },
 
     ];
 
     const rows = [
-        { id: 1, variable: 'encid', variableFullname: 'encounter-ID' },
-        { id: 2, variable: '_intime', variableFullname: 'Aufnahmedatum' },
-        { id: 3, variable: '_outtime', variableFullname: 'Entlassdatum'},
-        { id: 4, variable: 'sepsis_jn', variableFullname: 'Sepsis JN' },
-        { id: 5, variable: 'sepsistime', variableFullname: 'Sepsis Zeit' },
-        { id: 6, variable: 'gender', variableFullname: 'Geschlecht'},
-        { id: 7, variable: 'age', variableFullname: 'Alter' },
-        { id: 8, variable: 'height', variableFullname: 'Größe' },
-        { id: 9, variable: 'weight', variableFullname: 'Gewicht' },
+        { id: 1, variable: 'encid' },
+        { id: 2, variable: 'start' },
+        { id: 3, variable: 'end'},
+        { id: 4, variable: 'duration_h' },
+        { id: 5, variable: 'icu_mort' },
+        { id: 6, variable: 'sex'},
+        { id: 7, variable: 'age' },
+        { id: 8, variable: 'charlScore' },
+        { id: 9, variable: 'adm_tiss' },
+        { id: 10, variable: 'adm_sapsmod' },
+
     ];
 
     const onRowsSelectionHandler = (ids) => {
@@ -55,16 +53,27 @@ function Zielvariable({setZielvariable}) {
                     Zielvariable
                 </Typography>
 <br/>
-                <DataGrid
-                    sx={{display:"flex", width:"55%",height:"60%", alignSelf:"center", marginLeft:"23%", marginBottom:"2%"}}
+                <DataGrid density="compact"
+                          SelectionMode="Single"
+                          checkboxSelection={true}
+                          maxSelected={1}
+                          disableMultipleSelection="true"
+                          disableSelectionOnClick="true"
+                          sx={{display:"flex", width:"55%",height:"61%", alignSelf:"center", marginLeft:"23%", marginBottom:"2%"}}
                     rows={rows}
                     columns={columns}
-                    pageSize={4}
-                    rowsPerPageOptions={[4]}
-                    checkboxSelection
+                    pageSize={6}
+                    rowsPerPageOptions={[6]}
                     onSelectionModelChange={(ids) => onRowsSelectionHandler(ids)}
                     hideColumnsHeader
                     headerHeight={0}
+                          onSelectionModelChange={(newSelectionModel) => {
+                              setSelectionModel((prevModel) =>
+                                  newSelectionModel.filter((newId) => !prevModel.includes(newId))
+                              );
+                          }
+                          }
+                          selectionModel={selectionModel}
 
                 />
 <br/>

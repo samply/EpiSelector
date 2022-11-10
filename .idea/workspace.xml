@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="fixed Infobox">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="selected information parsed into JSON">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -153,7 +155,9 @@
       <workItem from="1667565756568" duration="595000" />
       <workItem from="1667818963342" duration="13642000" />
       <workItem from="1667905138337" duration="17554000" />
-      <workItem from="1667986441992" duration="16607000" />
+      <workItem from="1667986441992" duration="16809000" />
+      <workItem from="1668067596847" duration="2552000" />
+      <workItem from="1668086924863" duration="5859000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -344,7 +348,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668007982608</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="selected information parsed into JSON">
+      <created>1668009376474</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1668009376474</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -398,6 +409,7 @@
     <MESSAGE value="changed style of buttons for navigation" />
     <MESSAGE value="fixed Infobox Size and added Content in Fachbegriffe" />
     <MESSAGE value="fixed Infobox" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed Infobox" />
+    <MESSAGE value="selected information parsed into JSON" />
+    <option name="LAST_COMMIT_MESSAGE" value="selected information parsed into JSON" />
   </component>
 </project>
