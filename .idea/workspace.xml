@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="selected information parsed into JSON">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="error handling in ÜbereinstimmungPropensityScore.js und Zielvariable.js und Kontrollvariablen.js">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,6 +75,17 @@
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -157,7 +176,9 @@
       <workItem from="1667905138337" duration="17554000" />
       <workItem from="1667986441992" duration="16809000" />
       <workItem from="1668067596847" duration="2552000" />
-      <workItem from="1668086924863" duration="5859000" />
+      <workItem from="1668086924863" duration="8633000" />
+      <workItem from="1668163612749" duration="5233000" />
+      <workItem from="1668429519827" duration="20724000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -355,7 +376,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668009376474</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="error handling in ÜbereinstimmungPropensityScore.js und Zielvariable.js und Kontrollvariablen.js">
+      <created>1668093980448</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1668093980448</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -410,6 +438,7 @@
     <MESSAGE value="fixed Infobox Size and added Content in Fachbegriffe" />
     <MESSAGE value="fixed Infobox" />
     <MESSAGE value="selected information parsed into JSON" />
-    <option name="LAST_COMMIT_MESSAGE" value="selected information parsed into JSON" />
+    <MESSAGE value="error handling in ÜbereinstimmungPropensityScore.js und Zielvariable.js und Kontrollvariablen.js" />
+    <option name="LAST_COMMIT_MESSAGE" value="error handling in ÜbereinstimmungPropensityScore.js und Zielvariable.js und Kontrollvariablen.js" />
   </component>
 </project>

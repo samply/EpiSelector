@@ -32,17 +32,22 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
             setIsActiveNNM(current => !current);
             setAlgorithmus("NearestNeighbour");
         }
-
     }
 
     function handleClickOptionOM () {
         if(!isActiveNNM){
             setIsActiveOM(current => !current);
             setAlgorithmus("OptimalMatching");}
-
-
     }
 
+    function löschen(){
+        setAlgorithmus('defaultAlgo');
+        setIsActiveNNM(false);
+        setIsActiveOM(false);
+        setErsetzung('defaultErsetz');
+        // document.getElementById("radioButtonMitErsetzung").checked.removeAttribute('checked');
+        // document.getElementById("radioButtonOhneErsetzung").checked = false;
+    }
 
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -106,15 +111,15 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
         name="radio-buttons-group"
         onChange={(event)=>{setErsetzung(event.target.value);}}
     >
-        <FormControlLabel value="ohneErsetz" control={<Radio />} label="Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen" />
-        <FormControlLabel value="mitErsetz" control={<Radio />} label="Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen" />
+        <FormControlLabel id="radioButtonMitErsetzung" value="ohneErsetz" control={<Radio />} label="Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen" />
+        <FormControlLabel id="radioButtonOhneErsetzung" value="mitErsetz" control={<Radio />} label="Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen" />
     </RadioGroup>
 
 </tr>
                 </tbody></table>
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>

@@ -35,6 +35,8 @@ function App() {
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
     const [isErsetzung, setErsetzung] = useState('defaultErsetz');
 
+    const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
+
     let proj ={
         datenquelle : {isDatenquelle},
         datei : {isDatei},
@@ -75,12 +77,12 @@ function App() {
                                     <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei}/>} />
                                     <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
                                     <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable}/>}/>
-                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}/>}/>
+                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
                                     <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung}/>}/>
                                     <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
-                                    <Route path="/Matching-Ergebnis" element={<MatchingErgebnis/>}/>
+                                    <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>
                             </Card>

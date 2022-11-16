@@ -21,10 +21,22 @@ import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {TableFooter, TablePagination} from "@material-ui/core";
+import TablePaginationActions from "@material-ui/core/TablePagination/TablePaginationActions";
+import PropTypes from "prop-types";
 
-function MatchingErgebnis() {
+function MatchingErgebnis({isAllKontrollvariablen}) {
+    TablePaginationActions.propTypes = {
+        count: PropTypes.number.isRequired,
+        onPageChange: PropTypes.func.isRequired,
+        page: PropTypes.number.isRequired,
+        rowsPerPage: PropTypes.number.isRequired,
+    };
 
-    function createDataTable1(variable, einheit) {
+    const [page, setPage] = React.useState(2);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+    /*function createDataTable1(variable, einheit) {
         return { variable, einheit };
     }
 
@@ -38,18 +50,29 @@ function MatchingErgebnis() {
         createDataTable1('age', "num"),
         createDataTable1('height', "num"),
         createDataTable1('weight', "num"),
-    ];
+    ];*/
 
     function createDataTable2(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat ) {
         return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
     }
+    const x = isAllKontrollvariablen;
+
 
     const rowsTable2 = [
-        createDataTable2('encid', 0,0,0,0,0,0,"check"),
-        createDataTable2('_intime', 0,0,0,0,0,0,"check"),
-        createDataTable2('_outtime', 0,0,0,0,0,0,"check"),
+        createDataTable2(x[0].var, 0,0,0,0,0,0,"check"),
+        createDataTable2(x[1].var, 0,0,0,0,0,0,"check"),
+
+
     ];
 
+    const handleChangePage = (event, newPage) => {
+        setPage(newPage);
+    };
+
+    const handleChangeRowsPerPage = (event) => {
+        setRowsPerPage(parseInt(event.target.value, 10));
+        setPage(0);
+    };
 
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -58,7 +81,7 @@ function MatchingErgebnis() {
                             Matching
                 </Typography>
                 <div style={{display:"flex", flexFlow:"row"}}>
-                    <div style={{display:"flex", flexFlow:"column", width:"22%", height:"83%", paddingTop:"2%"}}>
+                    {/*<div style={{display:"flex", flexFlow:"column", width:"22%", height:"83%", paddingTop:"2%"}}>
                         <Typography sx={{fontSize: 14, paddingBottom:"1%", fontWeight:"bold"}} >
                             Datensatzbeschreibung
                         </Typography>
@@ -83,14 +106,15 @@ function MatchingErgebnis() {
                             Variablen: X <br/>
                             Beobachtungen: X
                         </Typography>
-                    </div>
+                    </div>*/}
 
-                    <div style={{display:"flex", flexFlow:"column", paddingTop:"2%", paddingLeft:"1%", width:"78%"}}>
+                    <div style={{display:"flex", flexFlow:"column", paddingTop:"2%", paddingLeft:"1%", width:"98%"}}>
                         <Typography sx={{fontSize: 14, paddingBottom:"1%", fontWeight:"bold"}} >
                             Vergleich Fälle - Kontrollen
                         </Typography>
                         <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 210}} size="small" aria-label="a dense table">
+                            <Table sx={{ minWidth: 210}}   pageSize={6}
+                                   rowsPerPageOptions={[6]} size="small" aria-label="a dense table">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell sx={{backgroundColor:"#1d4189"}}></TableCell>
@@ -135,9 +159,21 @@ function MatchingErgebnis() {
 
                                     ))}
                                 </TableBody>
+                                <TableFooter style={{width:"100%"}}>
+                                    <TableRow style={{width:"100%"}}>
+                                        <TablePagination
+                                            component="div"
+                                            count={100}
+                                            page={page}
+                                            onPageChange={handleChangePage}
+                                            rowsPerPage={rowsPerPage}
+                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                        />
+                                    </TableRow>
+                                </TableFooter>
                             </Table>
                         </TableContainer>
-                        <Typography sx={{fontSize: 11, paddingTop:"2%"}} >
+                        <Typography style={{fontSize: "10px", paddingTop:"2%", paddingBottom:"1%"}} >
                             stetige Variablen: Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD) <br/>
                             kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen <br/>
                             *** 0.05, balanciert

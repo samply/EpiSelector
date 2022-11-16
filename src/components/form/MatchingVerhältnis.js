@@ -1,18 +1,11 @@
 import '../../App.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
 import {useState} from "react";
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -83,6 +76,16 @@ function MatchingVerhältnis({setVerhältnis}) {
         // setIsActive(true);
     };
 
+
+    function löschen(){
+        setIsActive11(false);
+        setIsActive12(false);
+        setIsActive13(false);
+        setIsActive14(false);
+        setIsActive110(false);
+        setIsActive1Edit(false);
+        setVerhältnis("defaultVerhältnis");
+    }
 
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -215,7 +218,7 @@ function MatchingVerhältnis({setVerhältnis}) {
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                     <Link style={{textDecoration: "none"}} to='/Kontrollvariablen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>

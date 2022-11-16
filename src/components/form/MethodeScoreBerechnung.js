@@ -3,15 +3,7 @@ import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import {DataGrid} from "@mui/x-data-grid";
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
-import Card from "@mui/material/Card";
 import {useState} from "react";
 import {FormGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
@@ -42,6 +34,11 @@ function MethodeScoreBerechnung({setScoreMethode}) {
 
     }
 
+    function löschen(){
+        setIsActiveLR(false);
+        setIsActiveML(false);
+        setScoreMethode('defaultScoreMethode');
+    }
 
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -100,7 +97,7 @@ function MethodeScoreBerechnung({setScoreMethode}) {
 
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                 <Link style={{textDecoration: "none"}} to='/Matching-Verhältnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
                 <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
             </div>

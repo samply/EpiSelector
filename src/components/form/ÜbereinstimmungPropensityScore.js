@@ -15,7 +15,13 @@ import {useState} from "react";
 function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
 
     const [isWert, setWert] = useState(0);
+    const [value, setValue] = useState('');
 
+    function löschen(){
+        setÜbereinstimmungswert('defaultÜbereinstimmungswert');
+        setWert(0);
+        setValue('');
+    }
 
     return (
         <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -34,18 +40,18 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
 
            <div style={{display:"flex", flexFlow:"row", gap:"1%", justifyContent:"center", paddingTop:"3%", paddingBottom:"20%"}}>
                <Typography sx={{fontSize: 25}}>±</Typography>
-               <TextField defaultValue="0.2" label="Übereinstimmungswert" variant="outlined" onChange={(event) => {if(event.target.value <= 1 && event.target.value >=0){setÜbereinstimmungswert(event.target.value);} setWert(event.target.value);  }}
+               <TextField  label="Übereinstimmungswert" variant="outlined" defaultValue={value}
+                           value={value}
+                           onChange={(newValue) => {setValue(newValue.target.value); if(newValue.target.value <= 1 && newValue.target.value >=0){ setÜbereinstimmungswert(newValue.target.value);} setWert(newValue.target.value);  }}
                           error={isWert>1 || isWert <0}
                           required="true"
                />
-
            </div>
 
-            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"46%"}}>
+            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"40%"}}>
                 <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Ergebnisse <ArrowForwardIcon/></Button></Link>
-
+                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
+                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Fertig <ArrowForwardIcon/></Button></Link>
             </div>
 
         </CardContent>
