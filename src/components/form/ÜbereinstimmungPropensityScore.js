@@ -12,7 +12,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {useState} from "react";
 
 
-function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert}) {
+function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackage}) {
 
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState('');

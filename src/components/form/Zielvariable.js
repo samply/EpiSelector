@@ -11,17 +11,19 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {useState} from "react";
 
-
-function Zielvariable({setZielvariable}) {
+function Zielvariable({setZielvariable, isDateiSpaltenname}) {
 
     const [selectionModel, setSelectionModel] = useState('');
-
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true},
         { field: 'variable', headerName: 'Variable', width: 130 },
-
     ];
+
+    const rows2 = {isDateiSpaltenname};
+    const rows1 = Array.from({isDateiSpaltenname}, ([id, variable]) => {
+        return{[id]: variable};
+    });
 
     const rows = [
         { id: 1, variable: 'encid' },
@@ -46,9 +48,7 @@ function Zielvariable({setZielvariable}) {
         setZielvariable('defaultZielvariable');
         setSelectionModel('');
         onRowsSelectionHandler([]);
-
     }
-
 
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -58,7 +58,7 @@ function Zielvariable({setZielvariable}) {
                 <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}}>
                     Zielvariable
                 </Typography>
-<br/>
+                <br/>
                 <DataGrid sx={{display:"flex", width:"55%",height:"60%", alignSelf:"center", marginLeft:"23%", marginBottom:"2%"}}
                           rows={rows}
                           columns={columns}
@@ -74,8 +74,6 @@ function Zielvariable({setZielvariable}) {
                             newSelectionModel.filter((newId) =>!prevModel.includes(newId))
                           );}}
                           selectionModel={selectionModel}
-
-
                 />
 <br/>
 

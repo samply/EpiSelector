@@ -20,7 +20,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 
-export default function UploadData({setDatei}) {
+export default function UploadData({setDatei, setDateiSpaltennamen, setVollständigeDatei}) {
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
@@ -58,6 +58,8 @@ export default function UploadData({setDatei}) {
                 setValues(valuesArray);
 
                 setDatei(event.target.files[0].name);
+                setDateiSpaltennamen(rowsArray[0]);
+                setVollständigeDatei(event.target.files[0]);
 
                 Datainput = new Datainput(rowsArray, valuesArray);
 

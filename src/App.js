@@ -34,24 +34,27 @@ function App() {
     const [isZielvariable, setZielvariable] = useState('defaultZielvariable');
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
     const [isErsetzung, setErsetzung] = useState('defaultErsetz');
+    const [isDateiSpaltennamen, setDateiSpaltennamen] = useState('');
+    const [isVollständigeDatei, setVollständigeDatei] = useState('');
+    const [isJsonPackage, setJsonPackage] = useState('');
 
     const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
 
-    let proj ={
-        datenquelle : {isDatenquelle},
-        datei : {isDatei},
+    let packageToBackend = {
+        datei : {isVollständigeDatei},
         matchingMethode : {isMatchingMethode},
-        verhältnis : {isVerhältnis},
-        scoremethode : {isScoreMethode},
-        algorithmus : {isAlgorithmus},
+        matchingVerhältnis : {isVerhältnis},
+        scoreMethode : {isScoreMethode},
+        matchingAlgorithmus : {isAlgorithmus},
         übereinstimmungswert : {isÜbereinstimmungswert},
         zielvariable : {isZielvariable},
-        kontrollvariablen : {isKontrollvariablen},
+        kontrollvariablen : {isAllKontrollvariablen},
         ersetzung : {isErsetzung}
     }
 
-    let json = JSON.stringify(proj);
-
+    let jsonPackage = JSON.stringify(packageToBackend);
+    setJsonPackage(jsonPackage);
+    console.log(jsonPackage);
 
     return (
         //Gesamte Ansicht
@@ -74,14 +77,14 @@ function App() {
                                     <Route path='/' exact element={<Mainpage/>}/>
                                     <Route path="/Startseite" element={<Mainpage/>}/>
                                     <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
-                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei}/>} />
+                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltennamen={setDateiSpaltennamen} setVollständigeDatei={setVollständigeDatei()}/>} />
                                     <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
-                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable}/>}/>
+                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenname={isDateiSpaltennamen}/>}/>
                                     <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
                                     <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung}/>}/>
-                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
+                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert} isJsonPackage={isJsonPackage}/>}/>
                                     <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>
