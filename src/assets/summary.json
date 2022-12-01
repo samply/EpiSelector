@@ -1,0 +1,35 @@
+[
+	{
+		"row_names": "age",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "sex_w",
+		"unadjusted_means_treated": 0.4419,
+		"unadjusted_means_control": 0.3628,
+		"unadjusted_mean_diff": -0.079,
+		"adjusted_means_treated": 0.3649,
+		"adjusted_means_control": 0.3694,
+		"adjusted_mean_diff": 0.0045,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "duration_h",
+		"unadjusted_means_treated": 348.9122,
+		"unadjusted_means_control": 367.6069,
+		"unadjusted_mean_diff": 0.0496,
+		"adjusted_means_treated": 354.6788,
+		"adjusted_means_control": 370.7222,
+		"adjusted_mean_diff": 0.0425,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	}
+]

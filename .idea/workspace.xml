@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="WIP added kontrollvariablen to matching-ergebnis dynamically">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="created finished JsonPackage for Backend with all neccessary Data and the uploaded File">
+      <change afterPath="$PROJECT_DIR$/src/assets/summary.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,27 +72,14 @@
       <recent name="$PROJECT_DIR$/src/assets" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\n651i\Documents\GitHub\kontrollgruppenselektion\src\assets" />
       <recent name="$PROJECT_DIR$/src/components/form" />
       <recent name="$PROJECT_DIR$/src/components/dataimport" />
       <recent name="$PROJECT_DIR$/src/components/Form" />
       <recent name="$PROJECT_DIR$/src/components" />
-      <recent name="$PROJECT_DIR$/src/pages" />
     </key>
   </component>
   <component name="RunManager" selected="npm.npm start">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:3000">
       <method v="2" />
     </configuration>
@@ -174,7 +173,15 @@
       <workItem from="1668086924863" duration="8633000" />
       <workItem from="1668163612749" duration="5233000" />
       <workItem from="1668429519827" duration="20724000" />
-      <workItem from="1668692473236" duration="9112000" />
+      <workItem from="1668692473236" duration="9979000" />
+      <workItem from="1668771386687" duration="9806000" />
+      <workItem from="1669040873871" duration="1412000" />
+      <workItem from="1669212364407" duration="7518000" />
+      <workItem from="1669382177131" duration="1697000" />
+      <workItem from="1669634196082" duration="2694000" />
+      <workItem from="1669646818006" duration="1409000" />
+      <workItem from="1669722095982" duration="3070000" />
+      <workItem from="1669895062717" duration="3801000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -386,7 +393,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668698397946</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="created finished JsonPackage for Backend with all neccessary Data and the uploaded File">
+      <created>1668701734293</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1668701734293</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -417,7 +431,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Structured Directory - Added Component Directory, Pages Directory and Form Directory" />
     <MESSAGE value="Created Form-Components in Form Directory" />
     <MESSAGE value="Build Paths in Navigation" />
     <MESSAGE value="Added Components Accordion, Timeline and Card from Material-UI" />
@@ -442,6 +455,7 @@
     <MESSAGE value="selected information parsed into JSON" />
     <MESSAGE value="error handling in ÜbereinstimmungPropensityScore.js und Zielvariable.js und Kontrollvariablen.js" />
     <MESSAGE value="WIP added kontrollvariablen to matching-ergebnis dynamically" />
-    <option name="LAST_COMMIT_MESSAGE" value="WIP added kontrollvariablen to matching-ergebnis dynamically" />
+    <MESSAGE value="created finished JsonPackage for Backend with all neccessary Data and the uploaded File" />
+    <option name="LAST_COMMIT_MESSAGE" value="created finished JsonPackage for Backend with all neccessary Data and the uploaded File" />
   </component>
 </project>

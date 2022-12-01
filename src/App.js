@@ -22,6 +22,7 @@ import * as React from 'react';
 import {useState} from "react";
 
 
+
 function App() {
 
     const [isDatenquelle, setDatenquelle] = useState('defaultQuelle');
@@ -36,25 +37,32 @@ function App() {
     const [isErsetzung, setErsetzung] = useState('defaultErsetz');
     const [isDateiSpaltennamen, setDateiSpaltennamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
-    const [isJsonPackage, setJsonPackage] = useState('');
-
+    const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
     const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
 
-    let packageToBackend = {
-        datei : {isVollständigeDatei},
-        matchingMethode : {isMatchingMethode},
-        matchingVerhältnis : {isVerhältnis},
-        scoreMethode : {isScoreMethode},
-        matchingAlgorithmus : {isAlgorithmus},
-        übereinstimmungswert : {isÜbereinstimmungswert},
-        zielvariable : {isZielvariable},
-        kontrollvariablen : {isAllKontrollvariablen},
-        ersetzung : {isErsetzung}
-    }
+  /*  if(window.location.pathname === '/uebereinstimmungPropensityScore' && isÜbereinstimmungswert != 'defaultÜbereinstimmungswert') {
+        const packageToBackend = {
+            datei: {isVollständigeDatei},
+            matchingMethode: {isMatchingMethode},
+            matchingVerhältnis: {isVerhältnis},
+            scoreMethode: {isScoreMethode},
+            matchingAlgorithmus: {isAlgorithmus},
+            übereinstimmungswert: {isÜbereinstimmungswert},
+            zielvariable: {isZielvariable},
+            kontrollvariablen: {isAllKontrollvariablen},
+            ersetzung: {isErsetzung}
+        }
+        console.log(packageToBackend);
+        setJsonPackage(packageToBackend);
 
-    let jsonPackage = JSON.stringify(packageToBackend);
-    setJsonPackage(jsonPackage);
-    console.log(jsonPackage);
+
+
+    }*/
+
+    console.log(window.location.pathname );
+
+
+
 
     return (
         //Gesamte Ansicht
@@ -77,14 +85,14 @@ function App() {
                                     <Route path='/' exact element={<Mainpage/>}/>
                                     <Route path="/Startseite" element={<Mainpage/>}/>
                                     <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
-                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltennamen={setDateiSpaltennamen} setVollständigeDatei={setVollständigeDatei()}/>} />
+                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltennamen={setDateiSpaltennamen} setVollständigeDatei={setVollständigeDatei}/>} />
                                     <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
                                     <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenname={isDateiSpaltennamen}/>}/>
                                     <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
                                     <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung}/>}/>
-                                    <Route path="/ÜbereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert} isJsonPackage={isJsonPackage}/>}/>
+                                    <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
                                     <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>

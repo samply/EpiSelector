@@ -248,7 +248,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
+                                <TimelineContent size="small"> <Link to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
                                                                      style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",

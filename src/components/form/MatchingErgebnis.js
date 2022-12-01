@@ -15,7 +15,7 @@ import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-
+import '../../assets/summary.json';
 
 function MatchingErgebnis({isAllKontrollvariablen}) {
 
@@ -30,6 +30,14 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
         createDataTable2(isAllKontrollvariablen[0].var, 0,0,0,0,0,0,"check"),
         createDataTable2(isAllKontrollvariablen[1].var, 0,0,0,0,0,0,"check"),
     ];*/
+
+    let Summary=[];
+
+    fetch('../../assets/summary.json')
+        .then((res) => res.json())
+        .then((resJson) => {
+             Summary = JSON.parse(resJson)
+        })
 
     return (
             <CardContent sx={{backgroundColor: "white", width: "200%"}}>
@@ -58,15 +66,10 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                                 </TableHead>
                                 <TableHead>
                                     <TableRow>
-                                        <TableCell sx={{backgroundColor:"lightgrey"}}>Variable</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">icu_mort<br/>=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">icu_mort<br/>=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">Dif</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">icu_mort<br/>=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">icu_mort<br/>=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">Dif</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey"}} align="right">balance<br/>PostMat</TableCell>
-                                    </TableRow>
+                                        {Summary.map((row, index) => {
+                                            return  <TableCell  key={index} sx={{backgroundColor:"lightgrey"}} align="right">{row.row_names}</TableCell>
+                                        })}
+                                       </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {isAllKontrollvariablen.map((row) => (
@@ -98,7 +101,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                 </div>
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
-                    <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
