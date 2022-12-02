@@ -1,6 +1,8 @@
 import React from 'react'
 import {Link} from 'react-router-dom';
 import '../App.css';
+import Typography from '@mui/material/Typography';
+
 
 function TopNav({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}) {
 
@@ -24,7 +26,7 @@ function TopNav({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, 
 
     return (
         <div className="TopNav">
-            <h2 style={{fontFamily:"Verdana light"}}><Link to='/Startseite' onClick="deleteAllData" style={linkStyle}>Beobachtungsstudien-Assistent</Link></h2>
+            <Typography variant="h4" sx={{paddingTop:"1%"}}><Link to='/Startseite' onClick="deleteAllData" style={linkStyle}>Beobachtungsstudien-Assistent</Link></Typography>
         </div>
     );
 }

@@ -214,9 +214,9 @@ function MatchingVerhältnis({setVerhältnis}) {
                             </Box>
                 </div>
 </div>
-                <br/> <br/> <br/> <br/> <br/> <br/> <br/>
+                <br/>
 
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"35%"}}>
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                     <Link style={{textDecoration: "none"}} to='/Kontrollvariablen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>

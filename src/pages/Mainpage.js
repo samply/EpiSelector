@@ -76,7 +76,7 @@ function Mainpage() {
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                     Matching
                 </Typography>
-                <br/><br/><br/>
+                <br/><br/>
                 <Typography variant="h4">
                     Willkommen beim
                     Beobachtungsstudien-Assistent
@@ -87,7 +87,7 @@ function Mainpage() {
                 </Typography>
 
                 <br/><div>
-                <br/><br/><br/><br/><br/><br/><br/><br/>
+                <br/>
                 <BootstrapDialog
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
