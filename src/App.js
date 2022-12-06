@@ -20,6 +20,7 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import * as React from 'react';
 import {useState} from "react";
+import Foot from "./components/Foot";
 
 
 
@@ -79,7 +80,7 @@ function App() {
                     {/*Fragebogen und Graphische-Ergebnisse*/}
                     <div className="MiddleContainer">
 
-                        <Box sx={{ minWidth: 275 }}>
+                        <Box style={{ minWidth: 275 }}>
                             <Card variant="outlined" className="FormContainer">
                                 <Routes>
                                     <Route path='/' exact element={<Mainpage/>}/>
@@ -104,6 +105,7 @@ function App() {
                     <div className="RightContainer">
                         {/*<InputProtokoll/>*/}
                         <InfoBox/>
+                        <Foot/>
                     </div>
                 </div>
             </Router>

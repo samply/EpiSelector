@@ -1,17 +1,10 @@
 import '../../App.css';
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import BottomNavigation from "@mui/material/BottomNavigation";
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import {useState} from "react";
 import {FormGroup} from "@material-ui/core";
 import {visitedSite} from "../NavB";
@@ -66,9 +59,8 @@ function MatchingMethode({setMatchingMethode}) {
                     Matching Methode
                 </Typography>
 
-            <table style={{width: "100%", height: "75%"}}>
-                <tbody>
-                <tr style={{
+            <div style={{width: "100%", height: "75%"}}>
+                <div style={{
                     height: "80%",
                     display: "flex",
                     alignItems: "center",
@@ -128,9 +120,8 @@ function MatchingMethode({setMatchingMethode}) {
                         > Zufallsprinzip
                         </Box>
                     </FormGroup>
-                </tr>
-                </tbody>
-            </table>
+                </div>
+            </div>
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                     <Link style={{textDecoration: "none"}} to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>

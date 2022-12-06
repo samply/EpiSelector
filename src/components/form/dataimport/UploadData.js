@@ -3,13 +3,7 @@ import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Papa from 'papaparse';
 import {useState} from "react";
 import Datainput from "../../../model/DataInput";
@@ -77,10 +71,8 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
                 <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"5%"}} >
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <table style={{width: "100%", height: "46%"}}>
-                    <tbody>
-                    <tr>
-                        <td>
+                <div style={{width: "100%", height: "46%"}}>
+
                             <input
                                 type="file"
                                 name="file"
@@ -95,10 +87,8 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
                                     justifyContent: "space-evenly"
                                 }}
                             />
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+
+                </div>
                 <br/><br/><br/><br/><br/><br/>
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>

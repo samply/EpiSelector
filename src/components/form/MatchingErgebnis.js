@@ -31,7 +31,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                             Matching
                 </Typography>
                     <div style={{display:"flex", flexFlow:"column", paddingTop:"2%", paddingLeft:"1%", width:"98%"}}>
-                        <Typography sx={{fontSize: 14, paddingBottom:"1%", fontWeight:"bold"}} >
+                        <Typography sx={{fontSize: 14, paddingBottom:"1%"}} >
                             Vergleich Fälle - Kontrollen
                         </Typography>
 
@@ -40,9 +40,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                                 <TableBody>
                                     <TableRow>
                                         <TableCell align={"center"} colSpan={4} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"small"}}>PreMatching</TableCell>
-
                                         <TableCell align={"center"}  colSpan={5} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"small", borderLeft:"solid 1px white"}}>PostMatching</TableCell>
-
                                     </TableRow>
                                     <TableRow>
                                         <TableCell sx={{backgroundColor:"lightgrey", fontSize:"small"}}>Variable</TableCell>

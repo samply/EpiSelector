@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useState} from "react";
-import {FormControlLabel, FormGroup, Radio, RadioGroup} from "@material-ui/core";
+import {FormControlLabel, FormGroup, makeStyles, Radio, RadioGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
@@ -17,6 +17,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
+
 
     function handleClickOptionNNM(){
         if(!isActiveOM){
@@ -91,7 +92,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                     </FormGroup>
                 </div>
 <div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column"}}>
-    <Typography sx={{fontSize: 18, fontWeight:"normal"}} >
+    <Typography style={{fontSize: 18, fontWeight:"normal"}} >
         Selektion der Kontrollen:
     </Typography>
 
@@ -109,7 +110,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
              </div>
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}}><Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button></Link>
                     <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>

@@ -97,20 +97,26 @@ function Mainpage() {
                         Disclaimer
                     </BootstrapDialogTitle>
                     <DialogContent dividers>
-                        <Typography gutterBottom>
-                            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                            consectetur ac, vestibulum at eros.
+                        <Typography textAlign={"justify"} >
+                            Die kostenlosen und frei zugänglichen Inhalte und Matchingprozesse dieses Beobachtungsstudienassistenten wurden mit größtmöglicher Sorgfalt erstellt.
+
+                            Der Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und Aktualität der bereitgestellten kostenlosen und frei zugänglichen Matching-Prozeduren und dazugehörige Informationen.
+
+                            Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt nicht die Konsultation eines Statistikers / Epidemiologen.
+                            <br/><br/>
+                            Das Matching wurde mit dem „MatchIt“-Paket (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt, alle in R (R Core Team, 2022).
                         </Typography>
-                        <Typography gutterBottom>
-                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-                            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+                        <br/>
+                        <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>
+                            Daniel E. Ho, Kosuke Imai, Gary King, Elizabeth A. Stuart (2011). MatchIt: Nonparametric Preprocessing for Parametric   Causal Inference. Journal of Statistical Software, Vol. 42, No. 8, pp. 1-28.
+                            <Link href={"https://doi.org/10.18637/jss.v042.i08"}>https://doi.org/10.18637/jss.v042.i08</Link>
                         </Typography>
-                        <Typography gutterBottom>
-                            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-                            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-                            ullamcorper nulla non metus auctor fringilla.
-                        </Typography>
+                        <Typography textAlign={"justify"} fontSize={"x-small"}>Greifer N (2022). _cobalt: Covariate Balance Tables and Plots_. R package version 4.4.0,
+                            <Link href={"https://CRAN.R-project.org/package=cobalt"}>https://CRAN.R-project.org/package=cobalt</Link></Typography>
+                        <Typography textAlign={"justify"} fontSize={"x-small"}> H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
+                            <Link href={"https://ggplot2.tidyverse.org/"}>https://ggplot2.tidyverse.org/</Link></Typography>
+                        <Typography textAlign={"justify"} fontSize={"x-small"}> R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
+                            <Link href={"https://www.R-project.org/"}>https://www.R-project.org/</Link></Typography>
                     </DialogContent>
                     <DialogActions>
                         <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" autoFocus onClick={handleClose}>

@@ -29,6 +29,7 @@ const AccordionSummary = styled((props) => (
         {...props}
     />
 ))(({ theme }) => ({
+paddingBottom:'10px',
     backgroundColor:
         theme.palette.mode === 'dark'
             ? 'rgba(255, 255, 255, .05)'
@@ -36,6 +37,7 @@ const AccordionSummary = styled((props) => (
     flexDirection: 'row-reverse',
     '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
         transform: 'rotate(90deg)',
+
     },
     '& .MuiAccordionSummary-content': {
         marginLeft: theme.spacing(1),
@@ -70,7 +72,7 @@ function InfoBox() {
                     <Typography>Worum geht es hier</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography content={displayCurrentText}>
+                    <Typography>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,

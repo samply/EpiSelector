@@ -4,20 +4,13 @@ import Box from '@mui/material/Box';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import DeleteIcon from '@mui/icons-material/Delete';
-import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
-import {styled} from "@mui/material/styles";
 import {FormGroup} from "@material-ui/core";
 import { useState} from 'react';
 import {visitedSite} from '../../NavB';
 import Button from "@mui/material/Button";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import {hover} from "@testing-library/user-event/dist/hover";
 
 function Datenquelle({setDatenquelle}) {
 

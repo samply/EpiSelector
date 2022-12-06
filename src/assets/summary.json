@@ -11,7 +11,7 @@
 		"balance_thresholds_post_matching": "<0.1"
 	},
 	{
-		"row_names": "sex_w",
+		"row_names": "sex",
 		"unadjusted_means_treated": 0.4419,
 		"unadjusted_means_control": 0.3628,
 		"unadjusted_mean_diff": -0.079,
