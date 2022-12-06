@@ -5,12 +5,14 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useState} from "react";
-import {FormControlLabel, FormGroup, makeStyles, Radio, RadioGroup} from "@material-ui/core";
+import {FormControlLabel, FormGroup, Radio, RadioGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {CardHeader} from "@mui/material";
+import Card from "@mui/material/Card";
 
 
 function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
@@ -41,12 +43,14 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
         // document.getElementById("radioButtonOhneErsetzung").checked = false;
     }
     return (
-        <CardContent sx={{backgroundColor: "white", width: "200%"}}>
+        <Card sx={{width:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
-            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                Matching
-            </Typography>
-            <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}}  >
+            <CardContent sx={{backgroundColor: "white", width: "100%"}}>
+            <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%",  paddingLeft:"3%"}}  >
                 Matching-Algorithmus
             </Typography>
             <div style={{width: "100%", height: "75%"}}>
@@ -56,8 +60,10 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
+                    paddingBottom:"3%"
+
                 }}>
-                    <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingBottom:"5%", paddingTop:"4%"}}>
+                    <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingTop:"2%"}}>
                         <Box onClick={handleClickOptionNNM}
                              style={{
                                  backgroundColor: isActiveNNM? "#1d4189":'rgba(211,211,211, 0.8)',
@@ -91,7 +97,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                         </Box>
                     </FormGroup>
                 </div>
-<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column"}}>
+<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
     <Typography style={{fontSize: 18, fontWeight:"normal"}} >
         Selektion der Kontrollen:
     </Typography>
@@ -108,13 +114,14 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
 
 </div>
              </div>
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Link style={{textDecoration: "none"}}><Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button></Link>
                     <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
         </CardContent>
+        </Card>
     );
 
 }

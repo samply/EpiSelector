@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Finished MatchingErgebnis Tabelle">
-      <change afterPath="$PROJECT_DIR$/src/assets/medizinische-fakultät-logo-removebg-preview.png" afterDir="false" />
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="added Footer and changed TopNav &#10;fixed Infobox">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/assets/summary.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/summary.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Foot.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Foot.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DynamicResults.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DynamicResults.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/NavB.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/NavB.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TopNav.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TopNav.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Dataexport.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Dataexport.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Mainpage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Mainpage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -194,7 +197,7 @@
       <workItem from="1669895062717" duration="9599000" />
       <workItem from="1669977117354" duration="9714000" />
       <workItem from="1670243371420" duration="5581000" />
-      <workItem from="1670327254360" duration="4598000" />
+      <workItem from="1670327254360" duration="15260000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -427,7 +430,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669991081671</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="added Footer and changed TopNav &#10;fixed Infobox">
+      <created>1670331960872</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1670331960872</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -458,7 +468,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Components Accordion, Timeline and Card from Material-UI" />
     <MESSAGE value="Fixed Height and Position of Accordion" />
     <MESSAGE value="Refactored: Components" />
     <MESSAGE value="Added Navigation Path in all formComponents" />
@@ -483,6 +492,7 @@
     <MESSAGE value="created finished JsonPackage for Backend with all neccessary Data and the uploaded File" />
     <MESSAGE value="Added Disclaimer at the Start &#10;fixed CSS and Tablesizes" />
     <MESSAGE value="Finished MatchingErgebnis Tabelle" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished MatchingErgebnis Tabelle" />
+    <MESSAGE value="added Footer and changed TopNav &#10;fixed Infobox" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Footer and changed TopNav &#10;fixed Infobox" />
   </component>
 </project>

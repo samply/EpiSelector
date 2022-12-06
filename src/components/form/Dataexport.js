@@ -17,16 +17,25 @@ import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {visitedSite} from "../NavB";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import {CardHeader} from "@mui/material";
+import Card from "@mui/material/Card";
 
 
 function Dataexport() {
 
     return (
-        <CardContent sx={{backgroundColor: "white", width: "200%"}}>
-            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
+        <Card sx={{width:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+            <CardContent sx={{backgroundColor: "white", width: "100%"}}>
+
+                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"4%", paddingLeft:"3%"}} >
                 Datenexport
             </Typography>
-    <div style={{display:"flex", justifyContent:"center", paddingTop:"10%", paddingBottom:"21%"}}>
+
+                <div style={{display:"flex", justifyContent:"center", paddingTop:"5%", paddingBottom:"15%"}}>
 
                         <div sx={{display: "flex", flexFlow: "row", width: "100%", height: "80%", border: "bold solid", justifyContent:"space-evenly"}}>
                             <Button style={{flexFlow:"column"}}>
@@ -39,9 +48,9 @@ function Dataexport() {
                                 <DashboardIcon sx={{fontSize: "xxx-large"}}/>Maske speichern
                             </Button>
                         </div>
-    </div>
+                </div>
 
-            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%"}}>
+            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%", marginRight:"3%"}}>
                 <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
                 <Link style={{textDecoration: "none"}} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
@@ -50,6 +59,7 @@ function Dataexport() {
 
 
         </CardContent>
+        </Card>
     );
 }
 

@@ -9,9 +9,10 @@ import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import {TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import {CardHeader, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
 import summary from '../../assets/summary.json';
 import {Paper, Table, TableBody} from "@material-ui/core";
+import Card from "@mui/material/Card";
 
 
 function MatchingErgebnis({isAllKontrollvariablen}) {
@@ -26,11 +27,14 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
     console.log(tableXY);
 
     return (
-            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
-                <Typography sx={{fontSize: 14, width:"100%"}} color="text.secondary" gutterBottom>
-                            Matching
-                </Typography>
-                    <div style={{display:"flex", flexFlow:"column", paddingTop:"2%", paddingLeft:"1%", width:"98%"}}>
+        <Card sx={{width:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+
+            <CardContent sx={{backgroundColor: "white", width: "100%"}}>
+                    <div style={{display:"flex", flexFlow:"column", paddingTop:"1%", paddingLeft:"1%", width:"95%"}}>
                         <Typography sx={{fontSize: 14, paddingBottom:"1%"}} >
                             Vergleich Fälle - Kontrollen
                         </Typography>
@@ -66,14 +70,14 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                         </TableContainer>
 
                     </div>
-                        <Typography style={{fontSize: "10px", paddingTop:"2%", paddingBottom:"1%"}} >
+                        <Typography style={{fontSize: "10px", paddingTop:"1%", paddingBottom:"1%", paddingLeft:"2%"}} >
                             stetige Variablen: Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD) <br/>
                             kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen <br/>
                             *** 0.05, balanciert
                         </Typography>
 
 
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
@@ -83,6 +87,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
 
 
             </CardContent>
+        </Card>
     );
 }
 

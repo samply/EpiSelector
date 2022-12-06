@@ -52,11 +52,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 }));
 
-function displayCurrentText(){
-    if(Workflow.status === "Statseite"){
-        <Typography> testversuch Startseite wird angezeigt</Typography>
-    }
-};
+
 
 function InfoBox() {
     const [expanded, setExpanded] = React.useState('panel2');

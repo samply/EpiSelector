@@ -12,6 +12,8 @@ import {visitedSite} from "../../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import Card from "@mui/material/Card";
+import {CardHeader} from "@mui/material";
 
 
 export default function UploadData({setDatei, setDateiSpaltennamen, setVollständigeDatei}) {
@@ -64,14 +66,18 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
     };
 
     return (
+        <Card  sx={{width:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
-                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    Matching
-                </Typography>
-                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"5%"}} >
+
+                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%", paddingLeft:"3%"}} >
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <div style={{width: "100%", height: "46%"}}>
+                <div style={{width: "100%", height: "80%", paddingBottom:"17%"}}>
 
                             <input
                                 type="file"
@@ -80,7 +86,7 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
                                 accept=".csv"
                                 style={{
                                     marginTop: "5%",
-                                    marginLeft: "5%",
+                                    marginLeft: "3%",
                                     padding: "5%",
                                     border: "dashed lightgrey",
                                     width: "80%",
@@ -89,9 +95,9 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
                             />
 
                 </div>
-                <br/><br/><br/><br/><br/><br/>
 
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+
+                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
@@ -99,6 +105,7 @@ export default function UploadData({setDatei, setDateiSpaltennamen, setVollstän
                 </div>
 
             </CardContent>
+        </Card>
     );
 }
 

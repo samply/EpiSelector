@@ -20,6 +20,8 @@ import {Link} from 'react-router-dom';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
 import TollIcon from '@mui/icons-material/Toll';
+import {CardHeader} from "@mui/material";
+import {TimelineOppositeContent} from "@mui/lab";
 
 
 export function visitedSite(icon){
@@ -36,40 +38,20 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
     };
 
-    const chipStyle = {
-        display: "flex",
-        paddingLeft: "10%",
-        paddingRight: "10%",
-        left: "60px",
-        backgroundColor: "#B11B18",
-        width: "auto",
-        height: "42%",
-        borderRadius: "15px",
-        color: "white",
-        justifyContent: "baseline",
-        paddingTop:"1%",
-    };
-
-
-
 
     return (
             <Card variant="outlined" className="NavBStyle">
+                <CardHeader
+                    title="Ablauf"
+                    titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                    sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+
                     <CardContent>
-                        <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                            Ablauf
-                        </Typography>
-                        <Timeline
-                            sx={{
-                                "& .MuiTimelineItem-root:before": {
-                                    flex: 0,
-                                },
-                                fontSize:"10",
-                            }}
-                        >
-
+                        <Timeline position="right" sx={{align:"left", flex:0.1, marginTop:"-7px", marginLeft:"-20px"}}>
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -87,13 +69,16 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                             color: "white",
                                             justifyContent: "baseline",
                                             paddingTop:"1%",
-                                            visibility: isDatenquelle == "defaultQuelle" ? "hidden" : "visible" ,
+                                            visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible" ,
                                        }} >{isDatenquelle}</div>
                                     </Link>
                                 </TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -111,11 +96,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isDatei == "defaultDatei" ? "hidden" : "visible" ,
+                                    visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
                                 }}> {isDatei}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="matchingmethode"><JoinLeftIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -132,11 +120,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isMatchingMethode == "defaultMethode" ? "hidden" : "visible" ,
+                                    visibility: isMatchingMethode === "defaultMethode" ? "hidden" : "visible" ,
                                 }}> {isMatchingMethode}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="zielvariable"><TollIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -153,11 +144,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isZielvariable == "defaultZielvariable" ? "hidden" : "visible" ,
+                                    visibility: isZielvariable === "defaultZielvariable" ? "hidden" : "visible" ,
                                 }}> {isZielvariable}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -174,13 +168,16 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isKontrollvariablen == "defaultKontrollvariablen" ? "hidden" : "visible" ,
+                                    visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hidden" : "visible" ,
                                 }}>{isKontrollvariablen} </div></Link></TimelineContent>
                             </TimelineItem>
 
 
 
                             <TimelineItem> {/*style={{display: 'none'}}*/}
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -197,11 +194,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isVerhältnis == "defaultVerhältnis" ? "hidden" : "visible" ,
+                                    visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
                                 }}> {isVerhältnis}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="scoremethode" size="small"><CalculateIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -218,11 +218,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isScoreMethode == "defaultScoreMethode" ? "hidden" : "visible" ,
+                                    visibility: isScoreMethode === "defaultScoreMethode" ? "hidden" : "visible" ,
                                 }}> {isScoreMethode}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="algorithmus" size="small"><BlurOnIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -239,11 +242,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isAlgorithmus == "defaultAlgo" ? "hidden" : "visible" ,
+                                    visibility: isAlgorithmus === "defaultAlgo" ? "hidden" : "visible" ,
                                 }}>{isAlgorithmus}-{isErsetzung}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -260,11 +266,14 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isÜbereinstimmungswert == "defaultÜbereinstimmungswert" ? "hidden" : "visible" ,
+                                    visibility: isÜbereinstimmungswert === "defaultÜbereinstimmungswert" ? "hidden" : "visible" ,
                                 }}> ±{isÜbereinstimmungswert}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="ergebnisse"><FactCheckOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
@@ -273,6 +282,9 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     Ergebnis </Link></TimelineContent>
                             </TimelineItem>
                             <TimelineItem>
+                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="datenexport"><SimCardDownloadOutlinedIcon/></TimelineDot>
                                 </TimelineSeparator>

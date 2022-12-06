@@ -10,6 +10,8 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {useState} from "react";
+import Card from "@mui/material/Card";
+import {CardHeader} from "@mui/material";
 
 function Zielvariable({setZielvariable, isDateiSpaltenname}) {
 
@@ -53,15 +55,18 @@ function Zielvariable({setZielvariable, isDateiSpaltenname}) {
     }
 
     return (
-            <CardContent sx={{backgroundColor: "white", width: "200%"}}>
-                <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                    Matching
-                </Typography>
-                <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}}>
+        <Card sx={{width:"100%", height:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+
+            <CardContent sx={{backgroundColor: "white", width: "100%", height:"56%"}}>
+                <Typography sx={{fontSize: 18, paddingTop:"1%", paddingLeft:"3%"}}>
                     Zielvariable
                 </Typography>
-                <br/>
-                <DataGrid sx={{display:"flex", width:"55%",height:"61%", alignSelf:"center", marginLeft:"23%", marginBottom:"2%"}}
+             <br/>
+                <DataGrid sx={{display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1.5%"}}
                           rows={rows}
                           columns={columns}
                           pageSize={6}
@@ -79,13 +84,14 @@ function Zielvariable({setZielvariable, isDateiSpaltenname}) {
                 />
 <br/>
 
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+                <div style={{ height: "13%", display:"flex", float:"right", gap:"3%", width:"42%" ,marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/Matching-Methode'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/Kontrollvariablen' onClick={()=>visitedSite("kontrollvariablen")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
                 </div>
 
             </CardContent>
+        </Card>
     );
 }
 

@@ -10,6 +10,8 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {useState} from "react";
+import {CardHeader} from "@mui/material";
+import Card from "@mui/material/Card";
 
 
 function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackage}) {
@@ -30,13 +32,15 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
     global.aktuellerStatus='übereinstimmungswert';
 
     return (
-        <CardContent sx={{backgroundColor: "white", width: "200%"}}>
+        <Card sx={{width:"100%"}}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
-            <Typography sx={{fontSize: 14}} color="text.secondary" gutterBottom>
-                Matching
-            </Typography>
+            <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-            <Typography sx={{fontSize: 18, paddingTop:"3%", paddingLeft:"3%"}} >
+            <Typography sx={{fontSize: 18, paddingTop:"1%", paddingLeft:"3%"}} >
                 Bereich der Übereinstimmung der Propensity-Scores (Caliper)
             </Typography>
 
@@ -44,7 +48,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
                 Geben Sie einen Wert zwischen 0 und 1 an:
             </Typography>
 
-           <div style={{display:"flex", flexFlow:"row", gap:"1%", justifyContent:"center", paddingTop:"3%", paddingBottom:"20%"}}>
+           <div style={{display:"flex", flexFlow:"row", gap:"1%", justifyContent:"center", paddingTop:"3%", paddingBottom:"17.5%"}}>
                <Typography sx={{fontSize: 25}}>±</Typography>
                <TextField  label="Übereinstimmungswert" variant="outlined" defaultValue={value}
                            value={value}
@@ -54,13 +58,14 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
                />
            </div>
 <br/>
-            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%"}}>
+            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                 <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
                 <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Fertig <ArrowForwardIcon/></Button></Link>
             </div>
 
         </CardContent>
+        </Card>
     );
 
 }

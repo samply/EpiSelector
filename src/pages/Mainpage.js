@@ -18,6 +18,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import {CardHeader} from "@mui/material";
+import Card from "@mui/material/Card";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -71,11 +73,14 @@ function Mainpage() {
     const handleClose = () => {
         setOpen(false);
     };
-    return (
+    return (<Card>
+        <CardHeader
+            title="Matching"
+            titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+            sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+
             <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-                    Matching
-                </Typography>
+
                 <br/><br/>
                 <Typography variant="h4">
                     Willkommen beim
@@ -156,7 +161,7 @@ function Mainpage() {
                     </Link>
                 </div>
         </CardContent>
-
+</Card>
     );
 }
 

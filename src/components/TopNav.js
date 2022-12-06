@@ -22,11 +22,11 @@ function TopNav({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, 
         setAlgorithmus("defaultAlgo");
         setErsetzung("defaultErsetz");
         setÜbereinstimmungswert("defaultÜberinstimmungswert");
-    }
+    };
 
     return (
         <div className="TopNav">
-            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingBottom:"0.5%", paddingLeft:"2%"}}><Link to='/Startseite' onClick="deleteAllData" style={linkStyle}>Beobachtungsstudien-Assistent</Link></Typography>
+            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingBottom:"0.5%", paddingLeft:"2%"}}><Link to='/Startseite' onClick={deleteAllData} style={linkStyle}>Beobachtungsstudien-Assistent</Link></Typography>
         </div>
     );
 }
