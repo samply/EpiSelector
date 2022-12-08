@@ -9,8 +9,7 @@ import Card from "@mui/material/Card";
 function DynamicResults() {
 
     return (
-<div className="dynamicResults">
-        <Card sx={{width:"100%", minHeight:"100%"}}>
+        <Card sx={{width:"100%", minHeight:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -22,7 +21,7 @@ function DynamicResults() {
                     </Typography>
                 </CardContent>
         </Card>
-</div>
+
     );
 }
 

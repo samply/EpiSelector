@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 import {useState} from "react";
-import {FormControlLabel, FormGroup, Radio, RadioGroup} from "@material-ui/core";
+import {FormControlLabel, FormGroup, FormLabel, Radio, RadioGroup} from "@material-ui/core";
 import Box from "@mui/material/Box";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
@@ -13,9 +13,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
+import FormControl from "@mui/material/FormControl";
 
 
-function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
+function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
@@ -39,11 +40,10 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
         setIsActiveNNM(false);
         setIsActiveOM(false);
         setErsetzung('defaultErsetz');
-        // document.getElementById("radioButtonMitErsetzung").checked.removeAttribute('checked');
-        // document.getElementById("radioButtonOhneErsetzung").checked = false;
+
     }
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -66,7 +66,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingTop:"2%"}}>
                         <Box onClick={handleClickOptionNNM}
                              style={{
-                                 backgroundColor: isActiveNNM? "#1d4189":'rgba(211,211,211, 0.8)',
+                                 backgroundColor: isActiveNNM? "#1d4189":'#E8E9EB',
                                  color: isActiveNNM? "white":"#666666",
                                  fontSize:"large",
                                  display: "flex",
@@ -81,7 +81,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveOM? "#1d4189":'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActiveOM? "#1d4189":'#E8E9EB',
                                 color: isActiveOM? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
@@ -98,19 +98,16 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung}) {
                     </FormGroup>
                 </div>
 <div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
-    <Typography style={{fontSize: 18, fontWeight:"normal"}} >
+   <Typography style={{fontSize: 18, fontWeight:"normal"}} >
         Selektion der Kontrollen:
     </Typography>
+    <div style={{display:"flex", flexFlow:"row"}}><input type="radio" id="mc" name="Zahlmethode" value="Mastercard" onClick={(event) => {setErsetzung("OhneErsetz")}}/>    <label>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
+    </div>
+    <div style={{display:"flex", flexFlow:"row"}}>
+    <input type="radio" id="mc" name="Zahlmethode" value="Mastercard" onClick={(event) => {setErsetzung("MitErsetz")}}/>    <label>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
+</div>
+    {/**/}
 
-    <RadioGroup
-        aria-labelledby="demo-radio-buttons-group-label"
-        defaultValue="ohnErsetz"
-        name="radio-buttons-group"
-        onChange={(event)=>{setErsetzung(event.target.value);}}
-    >
-        <FormControlLabel id="radioButtonMitErsetzung" value="ohneErsetz" control={<Radio />} label="Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen" />
-        <FormControlLabel id="radioButtonOhneErsetzung" value="mitErsetz" control={<Radio />} label="Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen" />
-    </RadioGroup>
 
 </div>
              </div>

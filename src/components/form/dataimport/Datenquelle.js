@@ -40,7 +40,7 @@ function Datenquelle({setDatenquelle}) {
     }
 
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
         <CardHeader
             title="Matching"
             titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -49,7 +49,7 @@ function Datenquelle({setDatenquelle}) {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"4%", paddingLeft:"3%"}} >
+                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}} >
                     Datenquelle wählen
                 </Typography>
                     <div style={{
@@ -58,12 +58,12 @@ function Datenquelle({setDatenquelle}) {
                         alignItems: "center",
                         flexDirection: "row",
                         justifyContent: "space-evenly",
-                        paddingBottom:"18%"
+                        paddingBottom:"14%"
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
                             style={{
-                                backgroundColor: isActiveGeraet? "#1d4189":'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActiveGeraet? "#1d4189":'#E8E9EB',
                                 color: isActiveGeraet? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
@@ -78,7 +78,7 @@ function Datenquelle({setDatenquelle}) {
                         </Box>
                             <Box
                                style={{
-                                    backgroundColor: isActiveDRE? "#1d4189":'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActiveDRE? "#1d4189":'#E8E9EB',
                                     color: isActiveDRE? "white":"#666666",
                                     fontSize:"large",
                                     display: "flex",

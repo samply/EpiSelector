@@ -27,7 +27,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
     console.log(tableXY);
 
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -47,14 +47,14 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                                         <TableCell align={"center"}  colSpan={5} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"small", borderLeft:"solid 1px white"}}>PostMatching</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell sx={{backgroundColor:"lightgrey", fontSize:"small"}}>Variable</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">icu_mort=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">Differenz</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">icu_mort=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">Differenz</TableCell>
-                                        <TableCell  colSpan={2} sx={{backgroundColor:"lightgrey", fontSize:"small"}} align="center">balance</TableCell>
+                                        <TableCell sx={{backgroundColor:"#E8E9EB", fontSize:"small"}}>Variable</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=0</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">Differenz</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=0</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">Differenz</TableCell>
+                                        <TableCell  colSpan={2} sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">balance</TableCell>
                                     </TableRow>
 
                                     {tableXY.map((item) => (
@@ -80,7 +80,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
 
                 </div>
 

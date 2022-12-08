@@ -52,14 +52,14 @@ function MatchingMethode({setMatchingMethode}) {
         setIsActiveZufallsP(false);
     }
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
                 sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"4%", paddingLeft:"3%"}} >
+                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}} >
                     Matching Methode
                 </Typography>
 
@@ -69,12 +69,12 @@ function MatchingMethode({setMatchingMethode}) {
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
-                    paddingBottom:"18%"
+                    paddingBottom:"14%"
                 }}>
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"25px"}}>
                         <Box
                             style={{
-                                backgroundColor: isActiveAusgVar ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActiveAusgVar ? "#1d4189" : '#E8E9EB',
                                 color: isActiveAusgVar ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
@@ -91,7 +91,7 @@ function MatchingMethode({setMatchingMethode}) {
 
                         <Box
                             style={{
-                                backgroundColor: isActivePropS ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActivePropS ? "#1d4189" : '#E8E9EB',
                                 color: isActivePropS ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
@@ -108,7 +108,7 @@ function MatchingMethode({setMatchingMethode}) {
 
                         <Box
                             style={{
-                                backgroundColor: isActiveZufallsP ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActiveZufallsP ? "#1d4189" : '#E8E9EB',
                                 color: isActiveZufallsP ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",

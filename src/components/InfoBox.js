@@ -6,21 +6,19 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import Workflow from '../model/Workflow';
+import Box from "@mui/material/Box";
 
 
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
+    backgroundColor:'#E9F0FF',
     _minHeight: '100%',
-    border: `1px solid ${theme.palette.divider}`,
-    '&:not(:last-child)': {
-        borderBottom: 0,
-    },
-    '&:before': {
-        display: 'none',
-    },
-    overflow:'auto',
+    marginBottom:'4px',
+    borderRadius: '10px 10px 10px 10px',
+   "&.Mui-expanded":{
+        overflow:'auto',
+   }
 }));
 
 const AccordionSummary = styled((props) => (
@@ -46,6 +44,8 @@ paddingBottom:'10px',
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
+    fontsize:'small',
+    backgroundColor:'white',
     padding: theme.spacing(2),
     borderTop: '1px solid rgba(0, 0, 0, .125)',
 
@@ -62,13 +62,13 @@ function InfoBox() {
     };
 
     return (
-        <div className="InfoBox">
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <Box className="InfoBox"  >
+            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{boxShadow: 1}}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                     <Typography>Worum geht es hier</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
+                    <Typography fontSize={"medium"}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
@@ -99,28 +99,28 @@ function InfoBox() {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+            <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')} sx={{boxShadow: 1}}>
                 <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-                    <Typography>Fachbegriffe</Typography>
+                    <Typography fontSize={"medium"}>Fachbegriffe</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
 
-                       <Typography style={{ fontWeight: "bold" }}> Exposition: </Typography>
+                       <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Exposition: </Typography>
                         <Typography>Faktor, dem eine Gruppe von Menschen ausgesetzt ist.</Typography>
 <br/>
-                    <Typography style={{ fontWeight: "bold" }}>Fall:</Typography>
+                    <Typography style={{ fontWeight: "bold", fontSize:"medium" }}>Fall:</Typography>
                    <Typography>Person, bei der das Risikoereignis eintrat</Typography>
                         <br/>
-                    <Typography style={{ fontWeight: "bold" }}> Kohortenstudie: </Typography>
+                    <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Kohortenstudie: </Typography>
                     <Typography>Ziel, einen Zusammenhang zwischen einer oder mehreren Expositionen und dem Auftreten einer Krankheit aufzudecken. Dabei wird eine Gruppe exponierter und eine Gruppe nicht exponierter Personen über einen bestimmten Zeitraum hinsichtlich des Auftretens oder der Sterblichkeit bestimmter Krankheiten beobachtet.</Typography>
                     <br/>
-                       <Typography style={{ fontWeight: "bold" }}> Kontrolle:</Typography>
+                       <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Kontrolle:</Typography>
                     <Typography>Person, bei der das Risikoereignis nicht eintrat</Typography>
                         <br/>
-                       <Typography style={{ fontWeight: "bold" }}> Nested case-control study:</Typography>
+                       <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Nested case-control study:</Typography>
                     <Typography>Fälle einer Krankheit, die in einer definierten Kohorte innerhalb einer schon gelaufenen oder noch laufenden Kohortenstudie auftreten, werden identifiziert. Für jeden Fall wird eine bestimmte Anzahl von angepassten Kontrollen aus der Kohorte ausgewählt, die die Krankheit zum Zeitpunkt des Auftretens der Krankheit im Fall nicht entwickelt haben.</Typography>
                     <br/>
-                    <Typography style={{ fontWeight: "bold" }}>Score matching:</Typography>
+                    <Typography style={{ fontWeight: "bold", fontSize:"medium" }}>Score matching:</Typography>
                     <Typography>Matching-Verfahren für Kontrollgruppenselektion um den Selektionsbias zu reduzieren. Bisherige, verzerrte Gruppenzuteilung wird aufgelöst indem für jedes Sample ein Propensity Score (= Wahrscheinlichkeit in der Versuchsgruppe zu landen auf Basis von zuvor erhobenen Hintergrunddaten, meist als Ergebnis einer logistischen Regression) berechnet wird und auf Basis dieser Werte ähnliche Samples zu einer Kontroll-Versuchspaargruppe zusammengefasst werden, die keine Verzerrung mehr enthalten.
                     </Typography>
                     <br/>
@@ -130,12 +130,12 @@ function InfoBox() {
 
                 </AccordionDetails>
             </Accordion>
-            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+            <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} sx={{boxShadow: 1}}>
                 <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
                     <Typography>Tipss zur Eingabe</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
+                    <Typography fontSize={"medium"}>
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
                         malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
                         sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
@@ -165,7 +165,7 @@ function InfoBox() {
                     </Typography>
                 </AccordionDetails>
             </Accordion>
-        </div>
+        </Box>
 
     );
 }

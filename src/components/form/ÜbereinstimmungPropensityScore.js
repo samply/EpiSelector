@@ -19,7 +19,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState('');
 
-    if( isJsonPackage != 'defaultPackage'){
+    if( isJsonPackage !== 'defaultPackage'){
         console.log(isJsonPackage);
     }
 
@@ -32,7 +32,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
     global.aktuellerStatus='übereinstimmungswert';
 
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}

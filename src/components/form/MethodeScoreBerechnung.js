@@ -43,7 +43,7 @@ function MethodeScoreBerechnung({setScoreMethode}) {
     }
 
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -51,7 +51,7 @@ function MethodeScoreBerechnung({setScoreMethode}) {
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-            <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"4%", paddingLeft:"3%"}}>
+            <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}}>
                 Methode der Score-Berechnung
             </Typography>
 
@@ -62,13 +62,13 @@ function MethodeScoreBerechnung({setScoreMethode}) {
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
-                    paddingBottom:"18%"
+                    paddingBottom:"14%"
 
                 }}>
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionLR}
                              style={{
-                                 backgroundColor: isActiveLR? "#1d4189":'rgba(211,211,211, 0.8)',
+                                 backgroundColor: isActiveLR? "#1d4189":'#E8E9EB',
                                  color: isActiveLR? "white":"#666666",
                                  fontSize:"large",
                                  display: "flex",
@@ -83,7 +83,7 @@ function MethodeScoreBerechnung({setScoreMethode}) {
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveML? "#1d4189":'rgba(211,211,211, 0.8)',
+                                backgroundColor: isActiveML? "#1d4189":'#E8E9EB',
                                 color: isActiveML? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",

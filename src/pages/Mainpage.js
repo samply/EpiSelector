@@ -73,7 +73,7 @@ function Mainpage() {
     const handleClose = () => {
         setOpen(false);
     };
-    return (<Card>
+    return (<Card sx={{borderRadius: '10px 10px 10px 10px'}}>
         <CardHeader
             title="Matching"
             titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -81,7 +81,7 @@ function Mainpage() {
 
             <CardContent>
 
-                <br/><br/>
+                <br/>
                 <Typography variant="h4">
                     Willkommen beim
                     Beobachtungsstudien-Assistent
@@ -103,13 +103,9 @@ function Mainpage() {
                     </BootstrapDialogTitle>
                     <DialogContent dividers>
                         <Typography textAlign={"justify"} >
-                            Die kostenlosen und frei zugänglichen Inhalte und Matchingprozesse dieses Beobachtungsstudienassistenten wurden mit größtmöglicher Sorgfalt erstellt.
-
-                            Der Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und Aktualität der bereitgestellten kostenlosen und frei zugänglichen Matching-Prozeduren und dazugehörige Informationen.
-
-                            Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt nicht die Konsultation eines Statistikers / Epidemiologen.
+                            Dieser Beobachtungsstudienassistent wurde mit größtmöglicher Sorgfalt erstellt. Der Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und Aktualität der bereitgestellten Matching-Prozeduren und dazugehörigen Inhalte und Informationen. Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt nicht die Konsultation einer Statistikerin/eines Statistikers bzw. einer Epidemiologin/eines Epidemiologen.
                             <br/><br/>
-                            Das Matching wurde mit dem „MatchIt“-Paket (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt, alle in R (R Core Team, 2022).
+                            Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
                         </Typography>
                         <br/>
                         <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>

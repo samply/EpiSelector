@@ -50,7 +50,7 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen}) {
     }
 
     return (
-        <Card sx={{width:"100%", height:"100%"}}>
+        <Card sx={{width:"100%", height:"100%",borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}

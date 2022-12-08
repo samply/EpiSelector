@@ -80,9 +80,8 @@ function App() {
                     {/*Fragebogen und Graphische-Ergebnisse*/}
                     <div className="MiddleContainer">
 
-                        <Box style={{ minWidth: 275 }}>
-                            <Card variant="outlined" className="FormContainer">
-                                <Routes>
+                            <div className="FormContainer">
+                                <Routes sx={{borderRadius: '10px 10px 10px 10px'}}>
                                     <Route path='/' exact element={<Mainpage/>}/>
                                     <Route path="/Startseite" element={<Mainpage/>}/>
                                     <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
@@ -92,14 +91,15 @@ function App() {
                                     <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
-                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung}/>}/>
+                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung}/>}/>
                                     <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
                                     <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>
-                            </Card>
-                        </Box>
+                            </div>
+                        <div className="dynamicResults">
                         <DynamicResult/>
+                        </div>
                     </div>
                     {/*Infobox in einem Container*/}
                     <div className="RightContainer">

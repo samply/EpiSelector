@@ -40,7 +40,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
 
     return (
-            <Card variant="outlined" className="NavBStyle">
+            <Card variant="outlined" className="NavBStyle" sx={{borderRadius: '10px 10px 10px 10px', boxShadow: '1' }}>
                 <CardHeader
                     title="Ablauf"
                     titleTypographyProps={{fontSize:14, color:"text.secondary"}}

@@ -90,7 +90,7 @@ function MatchingVerhältnis({setVerhältnis}) {
     }
 
     return (
-        <Card sx={{width:"100%"}}>
+        <Card sx={{width:"100%",borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
@@ -108,7 +108,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive11 ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive11 ? "#1d4189" : '#E8E9EB',
                                     color: isActive11 ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
@@ -126,7 +126,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive12 ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive12 ? "#1d4189" : '#E8E9EB',
                                     color: isActive12 ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
@@ -147,7 +147,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive13 ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive13 ? "#1d4189" : '#E8E9EB',
                                     color: isActive13 ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
@@ -165,7 +165,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive14 ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive14 ? "#1d4189" : '#E8E9EB',
                                     color: isActive14 ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
@@ -186,7 +186,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive110 ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive110 ? "#1d4189" : '#E8E9EB',
                                     color: isActive110 ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
@@ -204,7 +204,7 @@ function MatchingVerhältnis({setVerhältnis}) {
                             <Box
                                 style={{
 
-                                    backgroundColor: isActive1Edit ? "#1d4189" : 'rgba(211,211,211, 0.8)',
+                                    backgroundColor: isActive1Edit ? "#1d4189" : '#E8E9EB',
                                     color: isActive1Edit ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
