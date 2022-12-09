@@ -35,7 +35,7 @@ function App() {
     const [isÜbereinstimmungswert, setÜbereinstimmungswert] = useState('defaultÜbereinstimmungswert');
     const [isZielvariable, setZielvariable] = useState('defaultZielvariable');
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
-    const [isErsetzung, setErsetzung] = useState('defaultErsetz');
+    const [isErsetzung, setErsetzung] = useState('Ohne Ersetzung');
     const [isDateiSpaltennamen, setDateiSpaltennamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
     const [isJsonPackage, setJsonPackage] = useState('defaultPackage');

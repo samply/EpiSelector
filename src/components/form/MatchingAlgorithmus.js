@@ -13,26 +13,29 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
-import FormControl from "@mui/material/FormControl";
+
 
 
 function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
-
+    const [isChecked, setChecked] = useState(true);
+    const [isChecked1, setChecked1] = useState(false);
 
     function handleClickOptionNNM(){
-        if(!isActiveOM){
-            setIsActiveNNM(current => !current);
-            setAlgorithmus("NearestNeighbour");
+        if(!isActiveNNM){
+            setIsActiveNNM(true);
+            setAlgorithmus("Nearest Neighbour");
+            setIsActiveOM(false);
         }
     }
 
     function handleClickOptionOM () {
-        if(!isActiveNNM){
-            setIsActiveOM(current => !current);
-            setAlgorithmus("OptimalMatching");}
+        if(!isActiveOM){
+            setIsActiveOM(true);
+            setAlgorithmus("Optimal Matching");}
+        setIsActiveNNM(false);
     }
 
     function löschen(){
@@ -50,7 +53,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
                 sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
-            <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%",  paddingLeft:"3%"}}  >
+            <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"3%",  paddingLeft:"3%"}}  >
                 Matching-Algorithmus
             </Typography>
             <div style={{width: "100%", height: "75%"}}>
@@ -60,7 +63,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
-                    paddingBottom:"3%"
+                    paddingBottom:"5%"
 
                 }}>
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingTop:"2%"}}>
@@ -101,12 +104,15 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
    <Typography style={{fontSize: 18, fontWeight:"normal"}} >
         Selektion der Kontrollen:
     </Typography>
-    <div style={{display:"flex", flexFlow:"row"}}><input type="radio" id="mc" name="Zahlmethode" value="Mastercard" onClick={(event) => {setErsetzung("OhneErsetz")}}/>    <label>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
+
+
+    <div style={{display:"flex", flexFlow:"row"}}>
+        <input type="radio" value="OhneErsetzung"  checked={isChecked} onClick={(event) => {if(isChecked1===true || isErsetzung==='defaultErsetzung'){setChecked(true); setChecked1(false); setErsetzung("Ohne Ersetzung");}else{}}}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
     </div>
     <div style={{display:"flex", flexFlow:"row"}}>
-    <input type="radio" id="mc" name="Zahlmethode" value="Mastercard" onClick={(event) => {setErsetzung("MitErsetz")}}/>    <label>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
-</div>
-    {/**/}
+        <input type="radio" value="MitErsetzung"  checked={isChecked1} onClick={(event) => {if(isChecked===true || isErsetzung==='defaultErsetzung'){setChecked(false); setErsetzung("Mit Ersetzung"); setChecked1(true); }  }}/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
+    </div>
+
 
 
 </div>

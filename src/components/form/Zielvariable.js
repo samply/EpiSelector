@@ -61,7 +61,7 @@ function Zielvariable({setZielvariable, isDateiSpaltenname}) {
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
                 sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
-            <CardContent sx={{backgroundColor: "white", width: "100%", height:"56%"}}>
+            <CardContent sx={{backgroundColor: "white", width: "100%", height:"57%"}}>
                 <Typography sx={{fontSize: 18, paddingTop:"1%", paddingLeft:"3%"}}>
                     Zielvariable
                 </Typography>

@@ -56,9 +56,9 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen}) {
                 titleTypographyProps={{fontSize:14, color:"text.secondary"}}
                 sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
-            <CardContent sx={{backgroundColor: "white", width: "100%", height:"57%"}}>
+            <CardContent sx={{backgroundColor: "white", width: "100%", height:"57.5%"}}>
 
-            <Typography sx={{fontSize: 18, paddingTop:"1%", paddingLeft:"3%"}}>
+            <Typography sx={{fontSize: 18, paddingTop:"1%", paddingLeft:"2%"}}>
                 Kontrollvariablen
             </Typography>
 <br/>

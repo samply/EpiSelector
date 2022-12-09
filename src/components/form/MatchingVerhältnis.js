@@ -24,8 +24,13 @@ function MatchingVerhältnis({setVerhältnis}) {
 
     const handleClickOption11 = () => {
         // 👇️ toggle
-        if (!isActive12 && !isActive13 && !isActive14 && !isActive110 && !isActive1Edit) {
-            setIsActive11(current => !current);
+        if (!isActive11) {
+            setIsActive11(true);
+            setIsActive12(false);
+            setIsActive13(false);
+            setIsActive14(false);
+            setIsActive110(false);
+            setIsActive1Edit(false);
             setVerhältnis("1:1");
         }
 
@@ -34,45 +39,71 @@ function MatchingVerhältnis({setVerhältnis}) {
     };
     const handleClickOption12 = () => {
         // 👇️ toggle
-        if (!isActive11 && !isActive13 && !isActive14 && !isActive110 && !isActive1Edit) {
-            setIsActive12(current => !current);
+        if (!isActive12) {
+            setIsActive12(true);
+            setIsActive11(false);
+            setIsActive13(false);
+            setIsActive14(false);
+            setIsActive110(false);
+            setIsActive1Edit(false);
             setVerhältnis("1:2");
+
         }
         // 👇️ or set to true
         // setIsActive(true);
     };
     const handleClickOption13 = () => {
         // 👇️ toggle
-        if (!isActive11 && !isActive12 && !isActive14 && !isActive110 && !isActive1Edit) {
-            setIsActive13(current => !current);
+        if (!isActive13) {
+            setIsActive13(true);
             setVerhältnis("1:3");
+            setIsActive12(false);
+            setIsActive11(false);
+            setIsActive14(false);
+            setIsActive110(false);
+            setIsActive1Edit(false);
         }
         // 👇️ or set to true
         // setIsActive(true);
     };
     const handleClickOption14 = () => {
         // 👇️ toggle
-        if (!isActive11 && !isActive12 && !isActive13 && !isActive110 && !isActive1Edit) {
-            setIsActive14(current => !current);
+        if (!isActive14) {
+            setIsActive14(true);
             setVerhältnis("1:4");
+            setIsActive12(false);
+            setIsActive13(false);
+            setIsActive11(false);
+            setIsActive110(false);
+            setIsActive1Edit(false);
         }
         // 👇️ or set to true
         // setIsActive(true);
     };
     const handleClickOption110 = () => {
         // 👇️ toggle
-        if (!isActive11 && !isActive12 && !isActive13 && !isActive14 && !isActive1Edit) {
-            setIsActive110(current => !current);
+        if (!isActive110) {
+            setIsActive110(true);
             setVerhältnis("1:10");
+            setIsActive12(false);
+            setIsActive13(false);
+            setIsActive14(false);
+            setIsActive11(false);
+            setIsActive1Edit(false);
         }
         // 👇️ or set to true
         // setIsActive(true);
     };
     const handleClickOption1Edit = () => {
         // 👇️ toggle
-        if (!isActive11 && !isActive12 && !isActive13 && !isActive14 && !isActive110) {
-            setIsActive1Edit(current => !current);
+        if (!isActive1Edit) {
+            setIsActive1Edit(true);
             setVerhältnis("1:X");
+            setIsActive12(false);
+            setIsActive13(false);
+            setIsActive14(false);
+            setIsActive110(false);
+            setIsActive11(false);
         }
         // 👇️ or set to true
         // setIsActive(true);

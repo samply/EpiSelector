@@ -22,25 +22,31 @@ function MatchingMethode({setMatchingMethode}) {
     const [isActiveZufallsP, setIsActiveZufallsP] = useState(false);
 
     const handleClickOptionAusgVar = () => {
-        if (!isActivePropS && !isActiveZufallsP) {
-            setIsActiveAusgVar(current => !current);
+        if (!isActiveAusgVar) {
+            setIsActiveAusgVar(true);
             setMatchingMethode('Exaktes Matching');
+            setIsActiveZufallsP(false);
+            setIsActivePropS(false);
         }
 
     };
 
     const handleClickOptionPropS = () => {
-        if (!isActiveAusgVar && !isActiveZufallsP) {
-            setIsActivePropS(current => !current);
+        if (!isActivePropS) {
+            setIsActivePropS(true);
             setMatchingMethode('Propensity Score');
+            setIsActiveZufallsP(false);
+            setIsActiveAusgVar(false);
         }
 
     };
 
     const handleClickOptionZufallsP = () => {
-        if (!isActiveAusgVar && !isActivePropS) {
-            setIsActiveZufallsP(current => !current);
+        if (!isActiveZufallsP) {
+            setIsActiveZufallsP(true);
             setMatchingMethode('Zufallsprinzip');
+            setIsActivePropS(false);
+            setIsActiveAusgVar(false);
         }
 
     };

@@ -20,17 +20,19 @@ function Datenquelle({setDatenquelle}) {
     const [isActiveGeraet, setIsActiveGeraet] = useState(false);
 
     function handleClickOptionGeraet(){
-        if(!isActiveDRE){
-            setIsActiveGeraet(current => !current);
+        if(!isActiveGeraet){
+            setIsActiveGeraet(true);
             setDatenquelle("Gerät");
+            setIsActiveDRE(false);
         }
 
     }
 
     function handleClickOptionDRE () {
-        if(!isActiveGeraet){
-        setIsActiveDRE(current => !current);
+        if(!isActiveDRE){
+        setIsActiveDRE(true);
         setDatenquelle("DRE");}
+        setIsActiveGeraet(false);
     }
 
     function löschen(){

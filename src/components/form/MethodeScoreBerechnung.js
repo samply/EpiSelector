@@ -21,17 +21,21 @@ function MethodeScoreBerechnung({setScoreMethode}) {
     const [isActiveLR, setIsActiveLR] = useState(false);
 
     function handleClickOptionLR(){
-        if(!isActiveML){
-            setIsActiveLR(current => !current);
-            setScoreMethode("logistischeRegression");
+        if(!isActiveLR){
+            setIsActiveLR(true);
+            setScoreMethode("Logistische Regression");
+            setIsActiveML(false);
         }
 
     }
 
     function handleClickOptionML () {
-        if(!isActiveLR){
-            setIsActiveML(current => !current);
-            setScoreMethode("MatchingLearningMethode");}
+        if(!isActiveML){
+            setIsActiveML(true);
+            setScoreMethode("Matching Learning Methode");
+        setIsActiveLR(false);
+        }
+
 
 
     }

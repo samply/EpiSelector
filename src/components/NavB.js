@@ -243,7 +243,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
                                     visibility: isAlgorithmus === "defaultAlgo" ? "hidden" : "visible" ,
-                                }}>{isAlgorithmus}-{isErsetzung}</div></Link></TimelineContent>
+                                }}>{isAlgorithmus} <br/> {isErsetzung}</div></Link></TimelineContent>
                             </TimelineItem>
 
                             <TimelineItem>
