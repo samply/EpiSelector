@@ -132,7 +132,7 @@ function InfoBox() {
             </Accordion>
             <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')} sx={{boxShadow: 1}}>
                 <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-                    <Typography>Tipss zur Eingabe</Typography>
+                    <Typography>Tipps zur Eingabe</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <Typography fontSize={"medium"}>

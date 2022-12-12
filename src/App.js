@@ -36,7 +36,7 @@ function App() {
     const [isZielvariable, setZielvariable] = useState('defaultZielvariable');
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
     const [isErsetzung, setErsetzung] = useState('Ohne Ersetzung');
-    const [isDateiSpaltennamen, setDateiSpaltennamen] = useState('');
+    const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
     const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
     const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
@@ -85,10 +85,10 @@ function App() {
                                     <Route path='/' exact element={<Mainpage/>}/>
                                     <Route path="/Startseite" element={<Mainpage/>}/>
                                     <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
-                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltennamen={setDateiSpaltennamen} setVollständigeDatei={setVollständigeDatei}/>} />
+                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltenNamen={setDateiSpaltenNamen} setVollständigeDatei={setVollständigeDatei}/>} />
                                     <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
-                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenname={isDateiSpaltennamen}/>}/>
-                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen}/>}/>
+                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenNamen={isDateiSpaltenNamen}/>}/>
+                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen} isDateiSpaltenNamen={isDateiSpaltenNamen}/>}/>
                                     <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
                                     <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
                                     <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung}/>}/>

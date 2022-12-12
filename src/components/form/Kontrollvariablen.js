@@ -14,9 +14,34 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen}) {
+function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen}) {
+
 
     const [selectionModel, setSelectionModel] = useState('');
+
+
+    console.log(isDateiSpaltenNamen);
+    console.log(isDateiSpaltenNamen.length);
+
+    /*  let obj = {
+          "1": "data1",
+          "5": "data2",
+          "6": "data3"
+      };*/
+
+    let resultArray = [];
+
+    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+        const tempObj = {
+            id: i,
+            var: isDateiSpaltenNamen[i]
+        };
+
+        resultArray.push(tempObj);
+    }
+
+
+    console.log(resultArray);
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true },
@@ -40,7 +65,7 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen}) {
         const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
         console.log(selectedRowsData);
         setAllKontrollvariablen(selectedRowsData);
-        if(selectedRowsData.length != []){setKontrollvariablen(selectedRowsData.length +"Kontrollvariablen");}
+        if(selectedRowsData.length != []){setKontrollvariablen(selectedRowsData.length +" Kontrollvariablen");}
     };
 
     function löschen(){
@@ -63,11 +88,11 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen}) {
             </Typography>
 <br/>
             <DataGrid id="datagrid" density="compact"
-                sx={{display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1%"}}
-                rows={rows}
+                sx={{overflow:'auto', display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1%"}}
+                rows={resultArray}
                 columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
+                hideFooterPagination={true}
+                hideFooter={true}
                 checkboxSelection
                 onSelectionModelChange={(newSelectionModel)=>{
                 onRowsSelectionHandler(newSelectionModel);

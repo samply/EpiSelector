@@ -73,7 +73,6 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
                         <Typography style={{fontSize: "10px", paddingTop:"1%", paddingBottom:"1%", paddingLeft:"2%"}} >
                             stetige Variablen: Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD) <br/>
                             kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen <br/>
-                            *** 0.05, balanciert
                         </Typography>
 
 

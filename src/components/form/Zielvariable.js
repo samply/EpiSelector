@@ -13,10 +13,33 @@ import {useState} from "react";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
-function Zielvariable({setZielvariable, isDateiSpaltenname}) {
+function Zielvariable({setZielvariable, isDateiSpaltenNamen}) {
 
     const [selectionModel, setSelectionModel] = useState('');
 
+
+    console.log(isDateiSpaltenNamen);
+    console.log(isDateiSpaltenNamen.length);
+
+  /*  let obj = {
+        "1": "data1",
+        "5": "data2",
+        "6": "data3"
+    };*/
+
+    let resultArray = [];
+
+    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+        const tempObj = {
+            id: i,
+            variable: isDateiSpaltenNamen[i]
+        };
+
+        resultArray.push(tempObj);
+    }
+
+
+    console.log(resultArray);
 
 
     const columns = [
@@ -24,8 +47,8 @@ function Zielvariable({setZielvariable, isDateiSpaltenname}) {
         { field: 'variable', headerName: 'Variable', width: 130 },
     ];
 
-    const rows2 = {isDateiSpaltenname};
-    const rows1 = Array.from({isDateiSpaltenname}, ([id, variable]) => {
+    const rows2 = {isDateiSpaltenNamen};
+    const rows1 = Array.from({isDateiSpaltenNamen}, ([id, variable]) => {
         return{[id]: variable};
     });
 
@@ -66,11 +89,11 @@ function Zielvariable({setZielvariable, isDateiSpaltenname}) {
                     Zielvariable
                 </Typography>
              <br/>
-                <DataGrid sx={{display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1.5%"}}
-                          rows={rows}
+                <DataGrid sx={{ overflow:'auto', display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1.5%"}}
+                          rows={resultArray}
                           columns={columns}
-                          pageSize={6}
-                          rowsPerPageOptions={[6]}
+                            hideFooterPagination={true}
+                            hideFooter={true}
                           checkboxSelection
                           hideColumnsHeader
                           headerHeight={0}
