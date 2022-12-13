@@ -115,3 +115,18 @@ radioButton{
     fontsize: 3px;
     border: 3px solid red;
 }
+
+.flexbox-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flexbox-container-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.verticalLine {
+    border-left: thin solid #e6e6e6;
+    height: 260px;
+}
