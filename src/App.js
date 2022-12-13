@@ -84,15 +84,15 @@ function App() {
                                 <Routes sx={{borderRadius: '10px 10px 10px 10px'}}>
                                     <Route path='/' exact element={<Mainpage/>}/>
                                     <Route path="/Startseite" element={<Mainpage/>}/>
-                                    <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle}/>}/>
-                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltenNamen={setDateiSpaltenNamen} setVollständigeDatei={setVollständigeDatei}/>} />
-                                    <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} />}/>
-                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenNamen={isDateiSpaltenNamen}/>}/>
-                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen} isDateiSpaltenNamen={isDateiSpaltenNamen}/>}/>
-                                    <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis}/>}/>
-                                    <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}/>}/>
-                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung}/>}/>
-                                    <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert}/>}/>
+                                    <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle} isDatenquelle={isDatenquelle}/>}/>
+                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltenNamen={setDateiSpaltenNamen} setVollständigeDatei={setVollständigeDatei} isDatei={isDatei}/>} />
+                                    <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} isMatchingMethode={isMatchingMethode} />}/>
+                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenNamen={isDateiSpaltenNamen} isZielvariable={isZielvariable}/>}/>
+                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen} isDateiSpaltenNamen={isDateiSpaltenNamen} isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
+                                    <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis} isVerhältnis={isVerhältnis}/>}/>
+                                    <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode} isScoreMethode={isScoreMethode}/>}/>
+                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung} isAlgorithmus={isAlgorithmus}/>}/>
+                                    <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert} isÜbereinstimmungswert={isÜbereinstimmungswert}/>}/>
                                     <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
                                     <Route path="/Dataexport" element={<Dataexport/>}/>
                             </Routes>

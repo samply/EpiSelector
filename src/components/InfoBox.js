@@ -15,7 +15,7 @@ const Accordion = styled((props) => (
     backgroundColor:'#E9F0FF',
     _minHeight: '100%',
     marginBottom:'4px',
-    borderRadius: '10px 10px 10px 10px',
+    borderRadius: '3px 3px 3px 3px',
    "&.Mui-expanded":{
         overflow:'auto',
    }

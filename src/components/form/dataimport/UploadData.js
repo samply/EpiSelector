@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
 
-export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei}) {
+export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei}) {
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);

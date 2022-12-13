@@ -16,12 +16,23 @@ import Card from "@mui/material/Card";
 
 
 
-function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
+function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgorithmus}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
-    const [isChecked, setChecked] = useState(true);
-    const [isChecked1, setChecked1] = useState(false);
+
+    const [isChecked, setChecked] = useState(() => {
+        if(isErsetzung ==="Ohne Ersetzung"){
+       return true;
+        }
+
+    });
+
+    const [isChecked1, setChecked1] = useState(() => {
+        if(isErsetzung ==="Mit Ersetzung"){
+            return true;
+        }
+    });
 
     function handleClickOptionNNM(){
         if(!isActiveNNM){
@@ -45,6 +56,22 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
         setErsetzung('defaultErsetz');
 
     }
+
+    function defaultValueOE(){
+        if(isErsetzung === "Ohne Ersetzung"){
+            return true;
+        }else{
+            return false;
+        }
+    };
+    function defaultValueME(){
+        if(isErsetzung === "Mit Ersetzung"){
+            return true;
+        }else{
+            return false;
+        }
+    };
+
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
@@ -69,8 +96,8 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingTop:"2%"}}>
                         <Box onClick={handleClickOptionNNM}
                              style={{
-                                 backgroundColor: isActiveNNM? "#1d4189":'#E8E9EB',
-                                 color: isActiveNNM? "white":"#666666",
+                                 backgroundColor: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "#1d4189":'#E8E9EB',
+                                 color: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "white":"#666666",
                                  fontSize:"large",
                                  display: "flex",
                                  width: "15rem",
@@ -78,14 +105,14 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
                                  alignItems:"center",
                                  justifyContent: "space-evenly",
                                  borderRadius: "15px",
-                                 boxShadow: isActiveNNM? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                 boxShadow: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                              }}
                         > Nearest Neighbour <br/>Matching (NNM)
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveOM? "#1d4189":'#E8E9EB',
-                                color: isActiveOM? "white":"#666666",
+                                backgroundColor: isActiveOM || isAlgorithmus === "Optimal Matching" ? "#1d4189":'#E8E9EB',
+                                color: isActiveOM || isAlgorithmus === "Optimal Matching" ? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
                                 width: "15rem",
@@ -93,7 +120,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
                                 alignItems:"center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveOM ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveOM || isAlgorithmus === "Optimal Matching" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionOM}
                         > Optimal Matching (OM)
@@ -107,10 +134,22 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung}) {
 
 
     <div style={{display:"flex", flexFlow:"row"}}>
-        <input type="radio" value="OhneErsetzung"  checked={isChecked} onClick={(event) => {if(isChecked1===true || isErsetzung==='defaultErsetzung'){setChecked(true); setChecked1(false); setErsetzung("Ohne Ersetzung");}else{}}}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
+        <input type="radio" value="OhneErsetzung" checked={isChecked} onClick={
+            (event) => {
+                if(isChecked1===true || isErsetzung==='defaultErsetzung'){
+                    setChecked(true); setChecked1(false);
+                    setErsetzung("Ohne Ersetzung");
+                }
+            }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
     </div>
     <div style={{display:"flex", flexFlow:"row"}}>
-        <input type="radio" value="MitErsetzung"  checked={isChecked1} onClick={(event) => {if(isChecked===true || isErsetzung==='defaultErsetzung'){setChecked(false); setErsetzung("Mit Ersetzung"); setChecked1(true); }  }}/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
+        <input type="radio" value="MitErsetzung" checked={isChecked1} onClick={
+            (event) => {
+                if(isChecked===true || isErsetzung==='defaultErsetzung'){
+                    setChecked(false); setErsetzung("Mit Ersetzung"); setChecked1(true);
+                }
+            }
+        }/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
     </div>
 
 

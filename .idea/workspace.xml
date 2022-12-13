@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="fixed CSS of SelectionBoxes and fixed RadioButtons">
+    <list default="true" id="e416cb3d-495a-48ce-9f73-3583abca5bc5" name="Changes" comment="Fixed Datainput From Import in Zielvariable And Kontrollvariablen">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/InfoBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/InfoBox.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Kontrollvariablen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingErgebnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingAlgorithmus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingMethode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MatchingVerhältnis.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/MethodeScoreBerechnung.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/Zielvariable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/Zielvariable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/Datenquelle.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/dataimport/UploadData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/form/ÜbereinstimmungPropensityScore.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +35,14 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -178,7 +191,7 @@
       <workItem from="1670327254360" duration="15311000" />
       <workItem from="1670499882129" duration="10039000" />
       <workItem from="1670586046413" duration="10407000" />
-      <workItem from="1670834606704" duration="5539000" />
+      <workItem from="1670834606704" duration="18864000" />
     </task>
     <task id="LOCAL-00001" summary="First structure of Project">
       <created>1649418443285</created>
@@ -439,7 +452,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670600758471</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Fixed Datainput From Import in Zielvariable And Kontrollvariablen">
+      <created>1670849042258</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1670849042258</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -470,7 +490,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="WIP file upload" />
     <MESSAGE value="Added Table in MatchingVariablen.js and SelectionBox in Datenquelle.js and MatchingMethode.js" />
     <MESSAGE value="Added Links to NavB.js for the Rest of TreeItems" />
     <MESSAGE value="Fixed Positioning in NavB.js" />
@@ -495,6 +514,7 @@
     <MESSAGE value="changed CardHeaders" />
     <MESSAGE value="fixed CSS Damage in RadioButtons" />
     <MESSAGE value="fixed CSS of SelectionBoxes and fixed RadioButtons" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed CSS of SelectionBoxes and fixed RadioButtons" />
+    <MESSAGE value="Fixed Datainput From Import in Zielvariable And Kontrollvariablen" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Datainput From Import in Zielvariable And Kontrollvariablen" />
   </component>
 </project>

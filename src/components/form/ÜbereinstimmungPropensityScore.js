@@ -14,10 +14,10 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackage}) {
+function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackage, isÜbereinstimmungswert}) {
 
     const [isWert, setWert] = useState(0);
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState(() =>{if(isÜbereinstimmungswert !== "defaultÜbereinstimmungswert"){return isÜbereinstimmungswert}else{return ''}});
 
     if( isJsonPackage !== 'defaultPackage'){
         console.log(isJsonPackage);
@@ -55,6 +55,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
                            onChange={(newValue) => {setValue(newValue.target.value); if(newValue.target.value <= 1 && newValue.target.value >=0){ setÜbereinstimmungswert(newValue.target.value);} setWert(newValue.target.value);  }}
                           error={isWert>1 || isWert <0}
                           required="true"
+
                />
            </div>
 <br/>

@@ -14,65 +14,48 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen}) {
-
-
-    const [selectionModel, setSelectionModel] = useState('');
-
+function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen, isAllKontrollvariablen}) {
 
     console.log(isDateiSpaltenNamen);
     console.log(isDateiSpaltenNamen.length);
 
-    /*  let obj = {
-          "1": "data1",
-          "5": "data2",
-          "6": "data3"
-      };*/
-
     let resultArray = [];
 
-    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 1; i < isDateiSpaltenNamen.length; i++) {
         const tempObj = {
             id: i,
             var: isDateiSpaltenNamen[i]
         };
-
         resultArray.push(tempObj);
     }
-
-
     console.log(resultArray);
+    let kVarray = [];
+
+    const onRowsSelectionHandler = (ids) => {
+        const selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
+        console.log('selectedRowsData' +selectedRowsData);
+        selectedRowsData.forEach((row)=> kVarray.push(row.name));
+        setAllKontrollvariablen(kVarray);
+        if(selectedRowsData.length != []){setKontrollvariablen(selectedRowsData.length +" Kontrollvariablen");}
+    };
+
+    // let a = resultArray.filter((r) => r.var === )
+console.log(isAllKontrollvariablen);
+console.log(kVarray);
+    const [selectionModel, setSelectionModel] = useState('');
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true },
         { field: 'var', headerName: 'Variable', width: 130 },
     ];
 
-    const rows = [
-        { id: 1, var: 'encid' },
-        { id: 2, var: 'start' },
-        { id: 3, var: 'end'},
-        { id: 4, var: 'duration_h' },
-        { id: 5, var: 'icu_mort' },
-        { id: 6, var: 'sex'},
-        { id: 7, var: 'age' },
-        { id: 8, var: 'charlScore' },
-        { id: 9, var: 'adm_tiss' },
-        { id: 10, var: 'adm_sapsmod' },
-    ];
-
-    const onRowsSelectionHandler = (ids) => {
-        const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
-        console.log(selectedRowsData);
-        setAllKontrollvariablen(selectedRowsData);
-        if(selectedRowsData.length != []){setKontrollvariablen(selectedRowsData.length +" Kontrollvariablen");}
-    };
 
     function löschen(){
         setKontrollvariablen('defaultKontrollvariablen');
         onRowsSelectionHandler([]);
         setSelectionModel('');
     }
+
 
     return (
         <Card sx={{width:"100%", height:"100%",borderRadius: '10px 10px 10px 10px'}}>
@@ -96,9 +79,10 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen, isDat
                 checkboxSelection
                 onSelectionModelChange={(newSelectionModel)=>{
                 onRowsSelectionHandler(newSelectionModel);
-                setSelectionModel(newSelectionModel)}
+                setSelectionModel(newSelectionModel);
+                setAllKontrollvariablen(newSelectionModel)}
                 }
-                      selectionModel={selectionModel}
+                selectionModel={selectionModel}
             />
             <br/>
 

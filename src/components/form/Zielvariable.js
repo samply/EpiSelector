@@ -13,23 +13,17 @@ import {useState} from "react";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
-function Zielvariable({setZielvariable, isDateiSpaltenNamen}) {
+function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable}) {
 
-    const [selectionModel, setSelectionModel] = useState('');
+
 
 
     console.log(isDateiSpaltenNamen);
     console.log(isDateiSpaltenNamen.length);
 
-  /*  let obj = {
-        "1": "data1",
-        "5": "data2",
-        "6": "data3"
-    };*/
-
     let resultArray = [];
 
-    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 1; i < isDateiSpaltenNamen.length; i++) {
         const tempObj = {
             id: i,
             variable: isDateiSpaltenNamen[i]
@@ -38,38 +32,26 @@ function Zielvariable({setZielvariable, isDateiSpaltenNamen}) {
         resultArray.push(tempObj);
     }
 
-
     console.log(resultArray);
 
+    const [selectionModel, setSelectionModel] = useState(() =>
+        resultArray.filter((r) => r.variable === isZielvariable).map((r) => r.id),
+    );
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true},
         { field: 'variable', headerName: 'Variable', width: 130 },
     ];
 
-    const rows2 = {isDateiSpaltenNamen};
-    const rows1 = Array.from({isDateiSpaltenNamen}, ([id, variable]) => {
-        return{[id]: variable};
-    });
-
-    const rows = [
-        { id: 1, variable: 'encid' },
-        { id: 2, variable: 'start' },
-        { id: 3, variable: 'end'},
-        { id: 4, variable: 'duration_h' },
-        { id: 5, variable: 'icu_mort' },
-        { id: 6, variable: 'sex'},
-        { id: 7, variable: 'age' },
-        { id: 8, variable: 'charlScore' },
-        { id: 9, variable: 'adm_tiss' },
-        { id: 10, variable: 'adm_sapsmod' },
-    ];
-
     const onRowsSelectionHandler = (ids) => {
-        const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
+        const selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
         console.log(selectedRowsData);
         selectedRowsData.forEach((row)=>{console.log(row.variable); setZielvariable(row.variable);});
     };
+console.log("zielvariable" + isZielvariable);
+    function funcselectionModel(){
+        if(!isZielvariable==="defaultZielvariable"){setSelectionModel(Zielvariable); return selectionModel}else{return selectionModel}
+    }
 
     function löschen(){
         setZielvariable('defaultZielvariable');

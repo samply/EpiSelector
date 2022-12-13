@@ -15,7 +15,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function MatchingMethode({setMatchingMethode}) {
+function MatchingMethode({setMatchingMethode, isMatchingMethode}) {
 
     const [isActiveAusgVar, setIsActiveAusgVar] = useState(false);
     const [isActivePropS, setIsActivePropS] = useState(false);
@@ -80,8 +80,8 @@ function MatchingMethode({setMatchingMethode}) {
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"25px"}}>
                         <Box
                             style={{
-                                backgroundColor: isActiveAusgVar ? "#1d4189" : '#E8E9EB',
-                                color: isActiveAusgVar ? "white" : "#666666",
+                                backgroundColor: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "#1d4189" : '#E8E9EB',
+                                color: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -89,7 +89,7 @@ function MatchingMethode({setMatchingMethode}) {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveAusgVar ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
                         > Matching nach <br/> ausgewählten Variablen
@@ -97,8 +97,8 @@ function MatchingMethode({setMatchingMethode}) {
 
                         <Box
                             style={{
-                                backgroundColor: isActivePropS ? "#1d4189" : '#E8E9EB',
-                                color: isActivePropS ? "white" : "#666666",
+                                backgroundColor: isActivePropS || isMatchingMethode ==="Propensity Score" ? "#1d4189" : '#E8E9EB',
+                                color: isActivePropS || isMatchingMethode ==="Propensity Score" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -106,7 +106,7 @@ function MatchingMethode({setMatchingMethode}) {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActivePropS ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActivePropS || isMatchingMethode ==="Propensity Score" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionPropS}
                         > Propensityscore Matching
@@ -114,8 +114,8 @@ function MatchingMethode({setMatchingMethode}) {
 
                         <Box
                             style={{
-                                backgroundColor: isActiveZufallsP ? "#1d4189" : '#E8E9EB',
-                                color: isActiveZufallsP ? "white" : "#666666",
+                                backgroundColor: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189" : '#E8E9EB',
+                                color: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -123,7 +123,7 @@ function MatchingMethode({setMatchingMethode}) {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveZufallsP ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionZufallsP}
                         > Zufallsprinzip

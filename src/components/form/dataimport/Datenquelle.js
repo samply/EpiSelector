@@ -14,13 +14,16 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
-function Datenquelle({setDatenquelle}) {
+
+function Datenquelle({setDatenquelle, isDatenquelle}) {
 
     const [isActiveDRE, setIsActiveDRE] = useState(false);
     const [isActiveGeraet, setIsActiveGeraet] = useState(false);
 
+    const [isAuswahl, setAuswahl] = useState('');
+
     function handleClickOptionGeraet(){
-        if(!isActiveGeraet){
+        if(!isActiveGeraet ){
             setIsActiveGeraet(true);
             setDatenquelle("Gerät");
             setIsActiveDRE(false);
@@ -50,7 +53,6 @@ function Datenquelle({setDatenquelle}) {
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-
                 <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}} >
                     Datenquelle wählen
                 </Typography>
@@ -65,8 +67,8 @@ function Datenquelle({setDatenquelle}) {
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
                             style={{
-                                backgroundColor: isActiveGeraet? "#1d4189":'#E8E9EB',
-                                color: isActiveGeraet? "white":"#666666",
+                                backgroundColor: isActiveGeraet || isDatenquelle==="Gerät" ? "#1d4189":'#E8E9EB',
+                                color: isActiveGeraet || isDatenquelle==="Gerät" ? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
                                 width: "15rem",
@@ -74,14 +76,14 @@ function Datenquelle({setDatenquelle}) {
                                 alignItems:"center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveGeraet ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveGeraet || isDatenquelle==="Gerät" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                         > Vom Gerät
                         </Box>
                             <Box
                                style={{
-                                    backgroundColor: isActiveDRE? "#1d4189":'#E8E9EB',
-                                    color: isActiveDRE? "white":"#666666",
+                                    backgroundColor: isActiveDRE || isDatenquelle==="DRE"? "#1d4189":'#E8E9EB',
+                                    color: isActiveDRE || isDatenquelle==="DRE"? "white":"#666666",
                                     fontSize:"large",
                                     display: "flex",
                                     width: "15rem",
@@ -89,7 +91,7 @@ function Datenquelle({setDatenquelle}) {
                                     alignItems:"center",
                                     justifyContent: "space-evenly",
                                     borderRadius: "15px",
-                                    boxShadow: isActiveDRE ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                    boxShadow: isActiveDRE || isDatenquelle==="DRE" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                                 }}
                                 onClick={handleClickOptionDRE}
                             > DRE
