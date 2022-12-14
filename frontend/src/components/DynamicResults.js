@@ -123,7 +123,7 @@ function clearPieChart() {
 
 
 
-function DynamicResults() {
+function DynamicResults({isPackageB}) {
 
     // data
 
@@ -646,7 +646,22 @@ function DynamicResults() {
     };
 
     let updateDiagrams = () => {
+        fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(isPackageB.datei)
+        }).then((response) => response.json())
+            .then((data) => {
+                setHistoSelector(data)
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
 
+        // ------------------------
         // set histoselector with boolean variables from dataset
         fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
             method: 'POST',

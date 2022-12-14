@@ -40,8 +40,9 @@ function App() {
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
     const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
     const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
+    const [isPackageB, setPackageB] = useState('');
 
-  /*  if(window.location.pathname === '/uebereinstimmungPropensityScore' && isÜbereinstimmungswert != 'defaultÜbereinstimmungswert') {
+   if(window.location.pathname === '/uebereinstimmungPropensityScore' && isÜbereinstimmungswert != 'defaultÜbereinstimmungswert') {
         const packageToBackend = {
             datei: {isVollständigeDatei},
             matchingMethode: {isMatchingMethode},
@@ -53,12 +54,15 @@ function App() {
             kontrollvariablen: {isAllKontrollvariablen},
             ersetzung: {isErsetzung}
         }
+
+        setPackageB(packageToBackend);
+
         console.log(packageToBackend);
         setJsonPackage(packageToBackend);
 
 
 
-    }*/
+    }
 
     console.log(window.location.pathname );
 
@@ -98,7 +102,7 @@ function App() {
                             </Routes>
                             </div>
                         <div className="dynamicResults">
-                        <DynamicResult/>
+                        <DynamicResult isPackageB={isPackageB}/>
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}
