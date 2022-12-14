@@ -30,25 +30,26 @@ function Kontrollvariablen({setKontrollvariablen, setAllKontrollvariablen, isDat
     }
     console.log(resultArray);
     let kVarray = [];
-
+    let selectedRowsData;
     const onRowsSelectionHandler = (ids) => {
-        const selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
+        selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
         console.log('selectedRowsData' +selectedRowsData);
-        selectedRowsData.forEach((row)=> kVarray.push(row.name));
+        selectedRowsData.forEach((row)=> {console.log(row.var); kVarray.push(row);});
+        console.log(kVarray);
+
         setAllKontrollvariablen(kVarray);
+
         if(selectedRowsData.length != []){setKontrollvariablen(selectedRowsData.length +" Kontrollvariablen");}
     };
 
-    // let a = resultArray.filter((r) => r.var === )
-console.log(isAllKontrollvariablen);
-console.log(kVarray);
-    const [selectionModel, setSelectionModel] = useState('');
+    console.log(isAllKontrollvariablen);
+
+    const [selectionModel, setSelectionModel] = useState( '');
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true },
         { field: 'var', headerName: 'Variable', width: 130 },
     ];
-
 
     function löschen(){
         setKontrollvariablen('defaultKontrollvariablen');
@@ -71,18 +72,18 @@ console.log(kVarray);
             </Typography>
 <br/>
             <DataGrid id="datagrid" density="compact"
-                sx={{overflow:'auto', display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1%"}}
-                rows={resultArray}
-                columns={columns}
-                hideFooterPagination={true}
-                hideFooter={true}
-                checkboxSelection
-                onSelectionModelChange={(newSelectionModel)=>{
-                onRowsSelectionHandler(newSelectionModel);
-                setSelectionModel(newSelectionModel);
-                setAllKontrollvariablen(newSelectionModel)}
-                }
-                selectionModel={selectionModel}
+                      sx={{overflow:'auto', display:"flex", width:"55%",height:"100%", alignSelf:"center", marginLeft:"23%", marginBottom:"1%"}}
+                      rows={resultArray}
+                      columns={columns}
+                      hideFooterPagination={true}
+                      hideFooter={true}
+                      checkboxSelection
+                      onSelectionModelChange={(newSelectionModel)=>{
+                          onRowsSelectionHandler(newSelectionModel);
+                          setSelectionModel(newSelectionModel);
+                      }
+                      }
+                      selectionModel={selectionModel}
             />
             <br/>
 

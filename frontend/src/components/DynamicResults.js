@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from 'react';
 import { Panorama } from '@mui/icons-material';
+import {CardHeader} from "@mui/material";
 HighchartsMore(Highcharts);
 
 
@@ -740,24 +741,23 @@ function DynamicResults() {
 
 
     return (
+                <Card sx={{width:"100%", minHeight:"100%", borderRadius: '10px 10px 10px 10px'}}>
+                    <CardHeader
+                        title="Matching-Ergebnisse"
+                        titleTypographyProps={{fontSize:14, color:"text.secondary"}}
+                        sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}
+                    />
 
-        <>
-            <Box>
-                <Card variant="outlined" className="dynamicResults">
-
-
-                    <Grid container>
-
-                        <Grid sx={{ background: "#f7f7f7" }} item xs={12}>
-                            {/* <Typography sx={{ fontSize: 14, pt: 2, pl: 2, pb: 1 }} color="text.secondary" gutterBottom>
-                                Matching-Ergebnisse
-                            </Typography> */}
+                    <div>
+                        <div sx={{ display:"flex", background: "white", justifyItems:"flex-end" }} item xs={12}>
 
                             <button onClick={clearDiagrams}>Clear</button>
                             <button onClick={updateDiagrams}>Load</button>
 
+                        </div>
+                        <div   style={{display: "flex", flexFlow: "row"}}>
 
-                        </Grid>
+
 
                         <Grid sx={{ background: "white" }} item xs={4.5}>
 
@@ -879,37 +879,16 @@ function DynamicResults() {
 
                                                     <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
                                                     <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced, &gt; 0.05</Typography></div>
-
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
-
-
-
                                 </div>
-
-
-
                             </div>
                         </Grid>
-                    </Grid>
-
-
-
-
-
-
-
-
+                    </div>
+                    </div>
                 </Card>
-            </Box>
-
-        </>
-
-
     );
 }
 

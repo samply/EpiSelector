@@ -63,7 +63,7 @@ html, body{
 
 
 .FormContainer{
-    height: 55vh;
+    height: 60%;
     width: 100%;
     display: flex;
     margin-top: 3%;
@@ -73,7 +73,7 @@ border-radius: 10px 10px 10px 10px;
 
 .dynamicResults{
     display: flex;
-    height: 40vh;
+    height: 40%;
     width:100%;
     color: white;
     align-self: flex-end;
@@ -128,5 +128,5 @@ radioButton{
 
 .verticalLine {
     border-left: thin solid #e6e6e6;
-    height: 260px;
+    height: 250px;
 }
