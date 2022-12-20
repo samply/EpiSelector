@@ -3,7 +3,7 @@ import TopNav from "./components/TopNav";
 import NavB from './components/NavB'
 import Mainpage from './pages/Mainpage';
 import UploadData from './components/form/dataimport/UploadData';
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import InfoBox from "./components/InfoBox";
 import MatchingVerhältnis from "./components/form/MatchingVerhältnis";
 import MatchingMethode from "./components/form/MatchingMethode";
@@ -19,12 +19,14 @@ import DynamicResult from "./components/DynamicResults";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import * as React from 'react';
-import {useState} from "react";
+import { useState } from "react";
 import Foot from "./components/Foot";
 
 
 
+
 function App() {
+
 
     const [isDatenquelle, setDatenquelle] = useState('defaultQuelle');
     const [isDatei, setDatei] = useState('defaultDatei');
@@ -39,33 +41,23 @@ function App() {
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
     const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
-    const[isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
+    const [isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
     const [isPackageB, setPackageB] = useState('');
-
-   if(window.location.pathname === '/uebereinstimmungPropensityScore' && isÜbereinstimmungswert != 'defaultÜbereinstimmungswert') {
-        const packageToBackend = {
-            datei: {isVollständigeDatei},
-            matchingMethode: {isMatchingMethode},
-            matchingVerhältnis: {isVerhältnis},
-            scoreMethode: {isScoreMethode},
-            matchingAlgorithmus: {isAlgorithmus},
-            übereinstimmungswert: {isÜbereinstimmungswert},
-            zielvariable: {isZielvariable},
-            kontrollvariablen: {isAllKontrollvariablen},
-            ersetzung: {isErsetzung}
-        }
-
-        setPackageB(packageToBackend);
-
-        console.log(packageToBackend);
-        setJsonPackage(packageToBackend);
+    const [isX, setX] = useState({})
 
 
-
-    }
-
-    console.log(window.location.pathname );
-
+      
+    // isX = {
+    //         datei: { isVollständigeDatei },
+    //         matchingMethode: { isMatchingMethode },
+    //         matchingVerhältnis: { isVerhältnis },
+    //         scoreMethode: { isScoreMethode },
+    //         matchingAlgorithmus: { isAlgorithmus },
+    //         übereinstimmungswert: { isÜbereinstimmungswert },
+    //         zielvariable: { isZielvariable },
+    //         kontrollvariablen: { isAllKontrollvariablen },
+    //         ersetzung: { isErsetzung }
+    // }
 
 
 
@@ -74,7 +66,7 @@ function App() {
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}
-                <TopNav/>
+                <TopNav />
                 {/*alles unter der Kopfzeile*/}
                 <div className="Main">
                     {/*Navigations-Container*/}
@@ -84,32 +76,32 @@ function App() {
                     {/*Fragebogen und Graphische-Ergebnisse*/}
                     <div className="MiddleContainer">
 
-                            <div className="FormContainer">
-                                <Routes sx={{borderRadius: '10px 10px 10px 10px'}}>
-                                    <Route path='/' exact element={<Mainpage/>}/>
-                                    <Route path="/Startseite" element={<Mainpage/>}/>
-                                    <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle} isDatenquelle={isDatenquelle}/>}/>
-                                    <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltenNamen={setDateiSpaltenNamen} setVollständigeDatei={setVollständigeDatei} isDatei={isDatei}/>} />
-                                    <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} isMatchingMethode={isMatchingMethode} />}/>
-                                    <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenNamen={isDateiSpaltenNamen} isZielvariable={isZielvariable}/>}/>
-                                    <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen} isDateiSpaltenNamen={isDateiSpaltenNamen} isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
-                                    <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis} isVerhältnis={isVerhältnis}/>}/>
-                                    <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode} isScoreMethode={isScoreMethode}/>}/>
-                                    <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung} isAlgorithmus={isAlgorithmus}/>}/>
-                                    <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore setÜbereinstimmungswert={setÜbereinstimmungswert} isÜbereinstimmungswert={isÜbereinstimmungswert}/>}/>
-                                    <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen}/>}/>
-                                    <Route path="/Dataexport" element={<Dataexport/>}/>
+                        <div className="FormContainer">
+                            <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
+                                <Route path='/' exact element={<Mainpage />} />
+                                <Route path="/Startseite" element={<Mainpage />} />
+                                <Route path="/Datenquelle" element={<Datenquelle setDatenquelle={setDatenquelle} isDatenquelle={isDatenquelle} />} />
+                                <Route path="/Datei-hochladen" element={<UploadData setDatei={setDatei} setDateiSpaltenNamen={setDateiSpaltenNamen} setVollständigeDatei={setVollständigeDatei} isVollständigeDatei={isVollständigeDatei} isDatei={isDatei} />} />
+                                <Route path="/Matching-Methode" element={<MatchingMethode setMatchingMethode={setMatchingMethode} isMatchingMethode={isMatchingMethode} />} />
+                                <Route path="/Zielvariable" element={<Zielvariable setZielvariable={setZielvariable} isDateiSpaltenNamen={isDateiSpaltenNamen} isZielvariable={isZielvariable} isMatchingMethode={isMatchingMethode}/>} />
+                                <Route path="/Kontrollvariablen" element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen} setAllKontrollvariablen={setAllKontrollvariablen} isDateiSpaltenNamen={isDateiSpaltenNamen} isAllKontrollvariablen={isAllKontrollvariablen} />} />
+                                <Route path="/Matching-Verhältnis" element={<MatchingVerhältnis setVerhältnis={setVerhältnis} isVerhältnis={isVerhältnis} />} />
+                                <Route path="/MethodeScoreBerechnung" element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode} isScoreMethode={isScoreMethode} />} />
+                                <Route path="/MatchingAlgorithmus" element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus} setErsetzung={setErsetzung} isErsetzung={isErsetzung} isAlgorithmus={isAlgorithmus} />} />
+                                <Route path="/uebereinstimmungPropensityScore" element={<ÜbereinstimmungPropensityScore isAlgorithmus={isAlgorithmus} isAllKontrollvariablen={isAllKontrollvariablen} isVerhältnis={isVerhältnis} isErsetzung={isErsetzung} isZielvariable={isZielvariable} isMatchingMethode={isMatchingMethode} isVollständigeDatei={isVollständigeDatei} isScoreMethode={isScoreMethode} setÜbereinstimmungswert={setÜbereinstimmungswert} isÜbereinstimmungswert={isÜbereinstimmungswert} />} />
+                                <Route path="/Matching-Ergebnis" element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen} />} />
+                                <Route path="/Dataexport" element={<Dataexport />} />
                             </Routes>
-                            </div>
+                        </div>
                         <div className="dynamicResults">
-                        <DynamicResult isPackageB={isPackageB}/>
+                            <DynamicResult isPackageB={isPackageB} />
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}
                     <div className="RightContainer">
                         {/*<InputProtokoll/>*/}
-                        <InfoBox/>
-                        <Foot/>
+                        <InfoBox />
+                        <Foot />
                     </div>
                 </div>
             </Router>

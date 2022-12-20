@@ -14,10 +14,23 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackage, isÜbereinstimmungswert}) {
+function ÜbereinstimmungPropensityScore({isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigedatei, isVerhältnis, setÜbereinstimmungswert, isJsonPackage, isÜbereinstimmungswert}) {
 
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState(() =>{if(isÜbereinstimmungswert !== "defaultÜbereinstimmungswert"){return isÜbereinstimmungswert}else{return ''}});
+
+    let logsomething = () => {
+        console.log("Log über Fertig-Button");
+        console.log(isAlgorithmus)
+        console.log(isErsetzung)
+        console.log(isZielvariable)
+        console.log(isAllKontrollvariablen)
+        console.log(isScoreMethode)
+        console.log(isMatchingMethode)
+        console.log(isVollständigedatei)
+        console.log(isVerhältnis)
+        
+    }
 
     if( isJsonPackage !== 'defaultPackage'){
         console.log(isJsonPackage);
@@ -62,7 +75,7 @@ function ÜbereinstimmungPropensityScore({setÜbereinstimmungswert, isJsonPackag
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                 <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Fertig <ArrowForwardIcon/></Button></Link>
+                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={()=>{logsomething(); visitedSite("ergebnisse")}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Fertig <ArrowForwardIcon/></Button></Link>
             </div>
 
         </CardContent>

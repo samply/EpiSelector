@@ -17,7 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from 'react';
 import { Panorama } from '@mui/icons-material';
-import {CardHeader} from "@mui/material";
+import { CardHeader } from "@mui/material";
 HighchartsMore(Highcharts);
 
 
@@ -123,7 +123,7 @@ function clearPieChart() {
 
 
 
-function DynamicResults({isPackageB}) {
+function DynamicResults({ isPackageB }) {
 
     // data
 
@@ -645,7 +645,33 @@ function DynamicResults({isPackageB}) {
         }
     };
 
+
+
     let updateDiagrams = () => {
+
+        console.log("datei")
+        console.log(isPackageB.datei)
+        console.log("matchingMethode")
+        console.log(isPackageB.matchingMethode)
+        console.log("matchingVerhältnis")
+        console.log(isPackageB.matchingVerhältnis)
+        console.log("scoreMethode")
+        console.log(isPackageB.scoreMethode)
+        console.log("matchingAlgorithmus")
+        console.log(isPackageB.matchingAlgorithmus)
+        console.log("übereinstimmungswert")
+        console.log(isPackageB.übereinstimmungswert)
+        console.log("zielvariable")
+        console.log(isPackageB.zielvariable)
+        console.log("kontrollvariable")
+        console.log(isPackageB.kontrollvariable)
+        console.log("ersetzung")
+        console.log(isPackageB.ersetzung)
+
+
+
+
+        // set histoselector with boolean variables from dataset
         fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
             method: 'POST',
             headers: {
@@ -655,13 +681,17 @@ function DynamicResults({isPackageB}) {
             body: JSON.stringify(isPackageB.datei)
         }).then((response) => response.json())
             .then((data) => {
-                setHistoSelector(data)
+                console.log(data)
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
 
-        // ------------------------
+    }
+
+
+    let updateDiagrams2 = () => {
+
         // set histoselector with boolean variables from dataset
         fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
             method: 'POST',
@@ -669,7 +699,7 @@ function DynamicResults({isPackageB}) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isPackageB.datei)
         }).then((response) => response.json())
             .then((data) => {
                 setHistoSelector(data)
@@ -756,154 +786,154 @@ function DynamicResults({isPackageB}) {
 
 
     return (
-                <Card sx={{width:"100%", minHeight:"100%", borderRadius: '10px 10px 10px 10px'}}>
-                    <CardHeader
-                        title="Matching-Ergebnisse"
-                        titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                        sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}
-                    />
+        <Card sx={{ width: "100%", minHeight: "100%", borderRadius: '10px 10px 10px 10px' }}>
+            <CardHeader
+                title="Matching-Ergebnisse"
+                titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
+                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }}
+            />
 
-                    <div>
-                        <div sx={{ display:"flex", background: "white", justifyItems:"flex-end" }} item xs={12}>
+            <div>
+                <div sx={{ display: "flex", background: "white", justifyItems: "flex-end" }} item xs={12}>
 
-                            <button onClick={clearDiagrams}>Clear</button>
-                            <button onClick={updateDiagrams}>Load</button>
+                    <button onClick={clearDiagrams}>Clear</button>
+                    <button onClick={updateDiagrams}>Load</button>
 
+                </div>
+                <div style={{ display: "flex", flexFlow: "row" }}>
+
+
+
+                    <Grid sx={{ background: "white" }} item xs={4.5}>
+
+                        <Box pl={2} pr={2} pt={1}>
+                            <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
+                                <Select
+                                    sx={{ width: "100%", height: 25, fontSize: 15 }}
+                                    isDisabled={true}
+                                    displayEmpty
+                                    renderValue={variableA !== "" ? undefined : () => "-"}
+                                    value={variableA}
+                                    onChange={selectVariableA}
+                                    MenuProps={MenuProps}
+                                >
+                                    {variable_histo.map((variableB) => (
+                                        <MenuItem key={variableB} value={variableB}>
+                                            {variableB}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                        </Box>
+
+                        <div style={{
+                            marginTop: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            <div class="flexbox-container">
+                                <div id="container_a"></div>
+                                <div id="container_b"></div>
+                            </div>
                         </div>
-                        <div   style={{display: "flex", flexFlow: "row"}}>
 
-
-
-                        <Grid sx={{ background: "white" }} item xs={4.5}>
-
-                            <Box pl={2} pr={2} pt={1}>
-                                <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
-                                    <Select
-                                        sx={{ width: "100%", height: 25, fontSize: 15 }}
-                                        isDisabled={true}
-                                        displayEmpty
-                                        renderValue={variableA !== "" ? undefined : () => "-"}
-                                        value={variableA}
-                                        onChange={selectVariableA}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {variable_histo.map((variableB) => (
-                                            <MenuItem key={variableB} value={variableB}>
-                                                {variableB}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-
-                            </Box>
-
-                            <div style={{
-                                marginTop: 1,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
-                                <div class="flexbox-container">
-                                    <div id="container_a"></div>
-                                    <div id="container_b"></div>
-                                </div>
+                        <div style={{
+                            marginTop: 5,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            <div class="flexbox-container">
+                                <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
+                                <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Zielvariable = 0</Typography></div>
+                                <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
+                                <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Zielvariable = 1</Typography></div>
                             </div>
+                        </div>
 
-                            <div style={{
-                                marginTop: 5,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
-                                <div class="flexbox-container">
-                                    <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                    <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Zielvariable = 0</Typography></div>
-                                    <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                    <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Zielvariable = 1</Typography></div>
-                                </div>
+
+
+
+
+                    </Grid>
+                    <Grid sx={{ background: "white" }} item xs={4.5}>
+                        <Box pl={2} pr={2} pt={1}>
+
+                            <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
+                                <Select
+                                    sx={{ width: "100%", height: 25, fontSize: 15 }}
+                                    displayEmpty
+                                    renderValue={variableB !== "" ? undefined : () => "-"}
+                                    value={variableB}
+                                    onChange={selectVariableB}
+                                    MenuProps={MenuProps}
+                                >
+                                    {variable_boxplot.map((variableB) => (
+                                        <MenuItem key={variableB} value={variableB}>
+                                            {variableB}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                        </Box>
+
+                        <div style={{
+                            marginTop: 1,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            <div class="flexbox-container">
+                                <div id="container_c"></div>
+                                <div id="container_d"></div>
                             </div>
+                        </div>
 
+                    </Grid>
+                    <Grid sx={{ background: "white" }} item xs={3}>
 
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: '100%'
+                        }}>
+                            <div class="flexbox-container">
+                                <div class="verticalLine" > </div>
+                                <div class="flexbox-container-column">
+                                    <div id="container_e" style={{ marginTop: 0 }}></div>
 
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        marginTop: 2
+                                    }}>
+                                        <div class="flexbox-container-column">
+                                            <div class="flexbox-container">
 
+                                                <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced, &lt; 0.05</Typography></div>
 
-                        </Grid>
-                        <Grid sx={{ background: "white" }} item xs={4.5}>
-                            <Box pl={2} pr={2} pt={1}>
+                                            </div>
 
-                                <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
-                                    <Select
-                                        sx={{ width: "100%", height: 25, fontSize: 15 }}
-                                        displayEmpty
-                                        renderValue={variableB !== "" ? undefined : () => "-"}
-                                        value={variableB}
-                                        onChange={selectVariableB}
-                                        MenuProps={MenuProps}
-                                    >
-                                        {variable_boxplot.map((variableB) => (
-                                            <MenuItem key={variableB} value={variableB}>
-                                                {variableB}
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
+                                            <div class="flexbox-container">
 
-                            </Box>
-
-                            <div style={{
-                                marginTop: 1,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                            }}>
-                                <div class="flexbox-container">
-                                    <div id="container_c"></div>
-                                    <div id="container_d"></div>
-                                </div>
-                            </div>
-
-                        </Grid>
-                        <Grid sx={{ background: "white" }} item xs={3}>
-
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                height: '100%'
-                            }}>
-                                <div class="flexbox-container">
-                                    <div class="verticalLine" > </div>
-                                    <div class="flexbox-container-column">
-                                        <div id="container_e" style={{ marginTop: 0 }}></div>
-
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            marginTop: 2
-                                        }}>
-                                            <div class="flexbox-container-column">
-                                                <div class="flexbox-container">
-
-                                                    <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                                    <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced, &lt; 0.05</Typography></div>
-
-                                                </div>
-
-                                                <div class="flexbox-container">
-
-                                                    <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                                    <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced, &gt; 0.05</Typography></div>
-                                                </div>
+                                                <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced, &gt; 0.05</Typography></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </Grid>
-                    </div>
-                    </div>
-                </Card>
+                        </div>
+                    </Grid>
+                </div>
+            </div>
+        </Card>
     );
 }
 

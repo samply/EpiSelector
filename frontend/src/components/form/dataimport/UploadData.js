@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
 
-export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei}) {
+export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei}) {
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
@@ -55,7 +55,10 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
 
                 setDatei(event.target.files[0].name);
                 setDateiSpaltenNamen(rowsArray[0]);
-                setVollständigeDatei(event.target.files[0]);
+                setVollständigeDatei("Dies ist ein Test");
+
+                console.log(results.data)
+                console.log(isVollständigeDatei);
 
                 Datainput = new Datainput(rowsArray, valuesArray);
 

@@ -15,7 +15,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function MatchingMethode({setMatchingMethode, isMatchingMethode}) {
+function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
 
     const [isActiveAusgVar, setIsActiveAusgVar] = useState(false);
     const [isActivePropS, setIsActivePropS] = useState(false);
@@ -50,6 +50,7 @@ function MatchingMethode({setMatchingMethode, isMatchingMethode}) {
         }
 
     };
+
 
     function löschen(){
         setMatchingMethode('defaultMethode');

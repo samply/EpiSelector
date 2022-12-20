@@ -13,13 +13,14 @@ import {useState} from "react";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
-function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable}) {
+function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isMatchingMethode}) {
 
 
 
 
     console.log(isDateiSpaltenNamen);
     console.log(isDateiSpaltenNamen.length);
+    console.log(isMatchingMethode)
 
     let resultArray = [];
 
