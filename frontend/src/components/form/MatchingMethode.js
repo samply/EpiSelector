@@ -41,7 +41,7 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
 
     };
 
-    const handleClickOptionZufallsP = () => {
+   /* const handleClickOptionZufallsP = () => {
         if (!isActiveZufallsP) {
             setIsActiveZufallsP(true);
             setMatchingMethode('Zufallsprinzip');
@@ -49,8 +49,18 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
             setIsActiveAusgVar(false);
         }
 
-    };
+    };*/
 
+    let toFunction = () => {
+        if(isMatchingMethode==="Exaktes Matching"){
+            return "/Matchingvariablen";
+        }
+        if(isMatchingMethode==="Propensity Score"){
+            return "/Zielvariable";
+        }
+
+
+    };
 
     function löschen(){
         setMatchingMethode('defaultMethode');
@@ -115,8 +125,10 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
 
                         <Box
                             style={{
-                                backgroundColor: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189" : '#E8E9EB',
-                                color: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "white" : "#666666",
+                                // backgroundColor: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189" : '#E8E9EB',
+                                // color: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "white" : "#666666",
+                                backgroundColor: '#E8E9EB',
+                                color: "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -124,9 +136,9 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                // boxShadow: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
-                            onClick={handleClickOptionZufallsP}
+                            // onClick={handleClickOptionZufallsP}
                         > Zufallsprinzip
                         </Box>
                     </FormGroup>
@@ -135,7 +147,9 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                 <div style={{ display:"flex", height: "8%", float:"right", gap:"3%", width:"42%",marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
+                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen")}else{visitedSite("zielvariable")}
+                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
 

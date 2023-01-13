@@ -15,7 +15,7 @@ import {Paper, Table, TableBody} from "@material-ui/core";
 import Card from "@mui/material/Card";
 
 
-function MatchingErgebnis({isAllKontrollvariablen}) {
+function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode}) {
 
     const fertigeTabelle=[];
 
@@ -25,6 +25,14 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
 
     const tableXY= summary;
     console.log(tableXY);
+
+    let backFunction = () => {
+        if(isMatchingMethode==="Exaktes Matching"){
+            return "/Matching-Verhältnis";
+        }else{
+            return "/ÜbereinstimmungPropensityScore";
+        }
+    };
 
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
@@ -77,7 +85,7 @@ function MatchingErgebnis({isAllKontrollvariablen}) {
 
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to='/uebereinstimmungPropensityScore'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
 

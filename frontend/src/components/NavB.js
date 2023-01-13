@@ -30,13 +30,32 @@ export function visitedSite(icon){
 }
 
 
-function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isFälleKontrollenGruppenindikator, isFälleKontrollenFallID, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
         color: 'black',
 
     };
+
+    let openNavigation = false;
+
+    if(isMatchingMethode === "defaultMethode"){
+        openNavigation = false;
+    }else{
+        openNavigation=true;
+    }
+
+
+    let isDefaultMethode = false;
+
+    if(isMatchingMethode==="Exaktes Matching"){
+        isDefaultMethode = false;
+    }else{
+        if(isMatchingMethode==="Propensity Score"){
+            isDefaultMethode = true;
+        }
+    }
 
 
     return (
@@ -124,152 +143,269 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                 }}> {isMatchingMethode}</div></Link></TimelineContent>
                             </TimelineItem>
 
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+                             {
+                                 openNavigation ? (
 
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="zielvariable"><TollIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent> <Link to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}
-                                                        style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isZielvariable === "defaultZielvariable" ? "hidden" : "visible" ,
-                                }}> {isZielvariable}</div></Link></TimelineContent>
-                            </TimelineItem>
+                                 isDefaultMethode ? (
+                                     <div>
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="zielvariable"><TollIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent> <Link to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}
+                                                                     style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isZielvariable === "defaultZielvariable" ? "hidden" : "visible" ,
+                                             }}> {isZielvariable}</div></Link></TimelineContent>
+                                         </TimelineItem>
 
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=>visitedSite("kontrollvariablen")}
-                                                        style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hidden" : "visible" ,
-                                }}>{isKontrollvariablen} </div></Link></TimelineContent>
-                            </TimelineItem>
+                                     <TimelineItem>
+                                         <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                         </TimelineOppositeContent>
+                                         <TimelineSeparator>
+                                             <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
+                                             <TimelineConnector/>
+                                         </TimelineSeparator>
+                                         <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=>visitedSite("kontrollvariablen")}
+                                                                 style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
+                                             paddingLeft: "10%",
+                                             paddingRight: "10%",
+                                             left: "60px",
+                                             backgroundColor: "#B11B18",
+                                             width: "auto",
+                                             height: "42%",
+                                             borderRadius: "15px",
+                                             color: "white",
+                                             justifyContent: "baseline",
+                                             paddingTop:"1%",
+                                             visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hidden" : "visible" ,
+                                         }}>{isKontrollvariablen} </div></Link></TimelineContent>
+                                     </TimelineItem>
+                                         <TimelineItem> {/*style={{display: 'none'}}*/}
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
+                                                 Matching Verhältnis  <br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
+                                             }}> {isVerhältnis}</div></Link></TimelineContent>
+                                         </TimelineItem>
+
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="scoremethode" size="small"><CalculateIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}
+                                                                                  style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isScoreMethode === "defaultScoreMethode" ? "hidden" : "visible" ,
+                                             }}> {isScoreMethode}</div></Link></TimelineContent>
+                                         </TimelineItem>
+
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="algorithmus" size="small"><BlurOnIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent size="small"> <Link to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}
+                                                                                  style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "auto",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isAlgorithmus === "defaultAlgo" ? "hidden" : "visible" ,
+                                             }}>{isAlgorithmus} <br/> {isErsetzung}</div></Link></TimelineContent>
+                                         </TimelineItem>
+
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent size="small"> <Link to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
+                                                                                  style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isÜbereinstimmungswert === "defaultÜbereinstimmungswert" ? "hidden" : "visible" ,
+                                             }}> ±{isÜbereinstimmungswert}</div></Link></TimelineContent>
+                                         </TimelineItem>
+                                     </div>
+
+                                 ) : ( <div>
+                                     <TimelineItem>
+                                         <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                         </TimelineOppositeContent>
+                                         <TimelineSeparator>
+                                             <TimelineDot id="matchingvariablen"><ListAltIcon/></TimelineDot>
+                                             <TimelineConnector/>
+                                         </TimelineSeparator>
+                                         <TimelineContent> <Link to='/Matchingvariablen' onClick={()=>visitedSite("matchingvariablen")}
+                                                                 style={linkStyle}>Matchingvariablen <br/><div style={{  display: "flex",
+                                             paddingLeft: "10%",
+                                             paddingRight: "10%",
+                                             left: "60px",
+                                             backgroundColor: "#B11B18",
+                                             width: "auto",
+                                             height: "42%",
+                                             borderRadius: "15px",
+                                             color: "white",
+                                             justifyContent: "baseline",
+                                             paddingTop:"1%",
+                                             visibility: isMatchingvariablen === "defaultMatchingvariablen" ? "hidden" : "visible" ,
+                                         }}>{isMatchingvariablen} </div></Link></TimelineContent>
+                                     </TimelineItem>
+
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="matchingtoleranz"><ListAltIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent> <Link to='/Matchingtoleranz' onClick={()=>visitedSite("matchingtoleranz")}
+                                                                     style={linkStyle}>Matchingtoleranz <br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isMatchingtoleranz === "defaultMatchingtoleranz" ? "hidden" : "visible" ,
+                                             }}>{isMatchingtoleranz} </div></Link></TimelineContent>
+                                         </TimelineItem>
+
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="fällekontrollen"><ListAltIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent> <Link to='/FälleKontrollen' onClick={()=>visitedSite("fällekontrollen")}
+                                                                     style={linkStyle}>Variablen für Fälle und Kontrollen definieren<br/><div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "42%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 visibility: isFälleKontrollenGruppenindikator === "defaultFälleKontrollenGruppenindikator" ? "hidden" : "visible" ,
+                                             }}>{isFälleKontrollenGruppenindikator}</div></Link></TimelineContent>
+                                         </TimelineItem>
 
 
+                                 <TimelineItem> {/*style={{display: 'none'}}*/}
+                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+                                 </TimelineOppositeContent>
+                                 <TimelineSeparator>
+                                 <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
+                                 <TimelineConnector/>
+                                 </TimelineSeparator>
+                                 <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
+                                 Matching Verhältnis  <br/><div style={{  display: "flex",
+                                 paddingLeft: "10%",
+                                 paddingRight: "10%",
+                                 left: "60px",
+                                 backgroundColor: "#B11B18",
+                                 width: "auto",
+                                 height: "42%",
+                                 borderRadius: "15px",
+                                 color: "white",
+                                 justifyContent: "baseline",
+                                 paddingTop:"1%",
+                                 visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
+                             }}> {isVerhältnis}</div></Link></TimelineContent>
+                                 </TimelineItem>
 
-                            <TimelineItem> {/*style={{display: 'none'}}*/}
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+                                     </div>
+                                 )): (
+                                     <div>
+                                         <TimelineItem>
+                                             <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
-                                    Matching Verhältnis  <br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
-                                }}> {isVerhältnis}</div></Link></TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="scoremethode" size="small"><CalculateIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}
-                                                                     style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isScoreMethode === "defaultScoreMethode" ? "hidden" : "visible" ,
-                                }}> {isScoreMethode}</div></Link></TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="algorithmus" size="small"><BlurOnIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}
-                                                                     style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "auto",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isAlgorithmus === "defaultAlgo" ? "hidden" : "visible" ,
-                                }}>{isAlgorithmus} <br/> {isErsetzung}</div></Link></TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent size="small"> <Link to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
-                                                                     style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isÜbereinstimmungswert === "defaultÜbereinstimmungswert" ? "hidden" : "visible" ,
-                                }}> ±{isÜbereinstimmungswert}</div></Link></TimelineContent>
-                            </TimelineItem>
-
+                                             </TimelineOppositeContent>
+                                             <TimelineSeparator>
+                                                 <TimelineDot id="ergebnisse"><FactCheckOutlinedIcon/></TimelineDot>
+                                                 <TimelineConnector/>
+                                             </TimelineSeparator>
+                                             <TimelineContent><Link style={linkStyle}>Matching
+                                                  </Link></TimelineContent>
+                                         </TimelineItem>
+                                 </div>
+                                 )
+                             }
                             <TimelineItem>
                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
@@ -281,6 +417,8 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                 <TimelineContent><Link to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")} style={linkStyle}>Matching
                                     Ergebnis </Link></TimelineContent>
                             </TimelineItem>
+
+
                             <TimelineItem>
                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
@@ -292,6 +430,8 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                                         style={linkStyle}>Datenexport </Link></TimelineContent>
                             </TimelineItem>
                         </Timeline>
+
+
                     </CardContent>
             </Card>
         );

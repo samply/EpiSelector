@@ -12,8 +12,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
+import MatchingMethode from "./MatchingMethode";
 
-function MatchingVerhältnis({setVerhältnis, isVerhältnis}) {
+function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode}) {
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -107,6 +108,22 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis}) {
         }
         // 👇️ or set to true
         // setIsActive(true);
+    };
+
+    let toFunction = () => {
+        if(isMatchingMethode==="Exaktes Matching"){
+            return "/Matching-Ergebnis";
+        }else{
+            return "/MethodeScoreBerechnung";
+        }
+    };
+
+    let backFunction = () => {
+        if(isMatchingMethode==="Exaktes Matching"){
+            return "/FälleKontrollen";
+        }else{
+            return "/Kontrollvariablen";
+        }
     };
 
 
@@ -254,10 +271,11 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis}) {
 
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to='/Kontrollvariablen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
-
+                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
+                        if(isMatchingMethode==="Exaktes Matching"){  visitedSite("ergebnisse")}else{visitedSite("scoremethode")}
+                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
                 </div>
 
             </CardContent>
