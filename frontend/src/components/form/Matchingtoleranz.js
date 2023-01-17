@@ -1,58 +1,73 @@
-import '../App.css';
+import '../../App.css';
 import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { DataGrid } from '@mui/x-data-grid';
-import { visitedSite } from "../components/NavB";
+import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useState } from "react";
+import { useState} from "react";
 import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 
 
-function Matchingtoleranz({ setMatchingtoleranz, isAllMatchingvariablen }) {
+function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllMatchingvariablen, isMatchingtoleranz }) {
 
-    console.log(isAllMatchingvariablen);
-    console.log(isAllMatchingvariablen.length);
+    let tableArray = [];
+    let placeholder=[];
 
-    let resultArray = [];
+    const [toleranzwert, settoleranzwert] = useState(() => { if(isMatchingtoleranz===""){for( let i =0; i< isAllMatchingvariablen.length; i++){placeholder[i]="±0.00 ";} setMatchingtoleranz(placeholder); return placeholder; }else{ return isMatchingtoleranz} });
 
-    for (let i = 1; i < isAllMatchingvariablen.length; i++) {
-        const tempObj = {
-            id: i,
-            var: isAllMatchingvariablen[i]
-        };
-        resultArray.push(tempObj);
+    for (let i = 0; i < isAllMatchingvariablen.length; i++) {
+            const tempObj = {
+                id: i,
+                ausgewählteVariablen: isAllMatchingvariablen[i].var,
+                toleranzwert: toleranzwert[i],
+            };
+        tableArray.push(tempObj);
     }
-    console.log(resultArray);
-    let kVarray = [];
-    let selectedRowsData;
-    const onRowsSelectionHandler = (ids) => {
-        selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
-        console.log('selectedRowsData' + selectedRowsData);
-        selectedRowsData.forEach((row) => { console.log(row.var); kVarray.push(row); });
-        console.log(kVarray);
-
-        setMatchingtoleranz(kVarray);
-
-    };
-
-
-    const [selectionModel, setSelectionModel] = useState();
+    console.log(tableArray);
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70, hide: true },
-        { field: 'var', headerName: 'Variable', width: 130 },
+        { field: 'id', headerName: 'ID', width: 0, hide: true},
+        { field: 'ausgewählteVariablen', headerName: 'Ausgewählte Variable', width: 295},
+        { field: 'toleranzwert', headerName: 'Toleranzwert', width: 290, editable: true },
     ];
 
+    let tmpArray = [];
+
+    function handleRowEditCommit(event){
+        console.log(event.value);
+        console.log(event.id);
+        let newValue = event.value;
+        let newValueId = event.id;
+
+        tableArray[newValueId].toleranzwert=newValue;
+        console.log(tableArray[newValueId].toleranzwert);
+
+
+        for (let i = 0; i < tableArray.length; i++) {
+            tmpArray.push(tableArray[i].toleranzwert);
+        }
+        console.log(tmpArray);
+        setMatchingtoleranz(tmpArray);
+        settoleranzwert(tmpArray);
+        console.log(tmpArray);
+    }
+    setMatchingtoleranzChip(isMatchingtoleranz.length +" Toleranzwerte")
+
+    console.log(tableArray);
+
+    console.log(isMatchingtoleranz);
+
+
     function löschen() {
-        setMatchingtoleranz('defaultMatchingtoleranz');
-        onRowsSelectionHandler([]);
-        setSelectionModel('');
+        setMatchingtoleranz("");
+        setMatchingtoleranzChip("");
     }
 
     return (
@@ -62,25 +77,22 @@ function Matchingtoleranz({ setMatchingtoleranz, isAllMatchingvariablen }) {
                 titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
                 sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }} />
 
-            <CardContent sx={{ backgroundColor: "white", width: "100%", height: "57.5%" }}>
+            <CardContent sx={{ backgroundColor: "white", width: "100%", height: "59%" }}>
 
                 <Typography sx={{ fontSize: 18, paddingTop: "1%", paddingLeft: "2%" }}>
                     Matchingtoleranz
                 </Typography>
                 <br />
+
                 <DataGrid id="datagrid" density="compact"
-                          sx={{ overflow: 'auto', display: "flex", width: "55%", height: "100%", alignSelf: "center", marginLeft: "23%", marginBottom: "1%" }}
-                          rows={resultArray}
+                          sx={{ overflow: 'auto', display: "flex", width: "65%", height: "100%", alignSelf: "center", marginLeft: "15%", marginBottom: "1%" }}
+                          rows={tableArray}
                           columns={columns}
                           hideFooterPagination={true}
                           hideFooter={true}
-                          checkboxSelection
-                          onSelectionModelChange={(newSelectionModel) => {
-                              onRowsSelectionHandler(newSelectionModel);
-                              setSelectionModel(newSelectionModel);
-                          }
-                          }
-                          selectionModel={selectionModel}
+                          checkboxSelection={false}
+                          onCellEditCommit={handleRowEditCommit}
+
                 />
                 <br />
 

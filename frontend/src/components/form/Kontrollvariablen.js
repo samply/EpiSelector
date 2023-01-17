@@ -21,7 +21,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
 
     let resultArray = [];
 
-    for (let i = 1; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
         const tempObj = {
             id: i,
             var: isDateiSpaltenNamen[i]

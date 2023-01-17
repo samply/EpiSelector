@@ -12,7 +12,7 @@ import MatchingAlgorithmus from "./components/form/MatchingAlgorithmus";
 import Zielvariable from "./components/form/Zielvariable";
 import Kontrollvariablen from "./components/form/Kontrollvariablen";
 import Matchingvariablen from "./components/form/Matchingvariablen";
-import Matchingtoleranz from "./components/Matchingtoleranz";
+import Matchingtoleranz from "./components/form/Matchingtoleranz";
 import FälleKontrollen from "./components/form/FälleKontrollen";
 import Datenquelle from "./components/form/dataimport/Datenquelle";
 import ÜbereinstimmungPropensityScore from "./components/form/ÜbereinstimmungPropensityScore";
@@ -42,9 +42,9 @@ function App() {
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
     const [isMatchingvariablen, setMatchingvariablen] = useState('defaultMatchingvariablen');
     const [isAllMatchingvariablen, setAllMatchingvariablen] = useState('');
-    const [isMatchingtoleranz, setMatchingtoleranz] = useState('defaultMatchingtoleranz');
+    const [isMatchingtoleranz, setMatchingtoleranz] = useState("");
+    const [isMatchingtoleranzChip, setMatchingtoleranzChip] = useState("");
     const [isFälleKontrollenGrupenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
-    const [isFälleKontrollenFallID, setFälleKontrollenFallID] = useState('defaultFälleKontrollenFallID');
     const [isErsetzung, setErsetzung] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
@@ -52,6 +52,7 @@ function App() {
     const [isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
     const [isPackageB, setPackageB] = useState('');
     const [isX, setX] = useState({})
+
 
 
 
@@ -87,12 +88,12 @@ function App() {
                               isMatchingvariablen={isMatchingvariablen}
                               isMatchingtoleranz={isMatchingtoleranz}
                               isFälleKontrollenGruppenindikator={isFälleKontrollenGrupenindikator}
-                              isFälleKontrollenFallID={{isFälleKontrollenFallID}}
                               isVerhältnis={isVerhältnis}
                               isScoreMethode={isScoreMethode}
                               isAlgorithmus={isAlgorithmus}
                               isErsetzung={isErsetzung}
                               isÜbereinstimmungswert={isÜbereinstimmungswert}
+                              isMatchingtoleranzChip={isMatchingtoleranzChip}
                         />
                     </div>
                     {/*Fragebogen und Graphische-Ergebnisse*/}
@@ -135,14 +136,15 @@ function App() {
                                                                    isAllMatchingvariablen={isAllMatchingvariablen} />}
                                 />
                                 <Route path="/Matchingtoleranz"
-                                       element={<Matchingtoleranz setMatchingtoleranz={setMatchingvariablen}
+                                       element={<Matchingtoleranz isMatchingtoleranz={isMatchingtoleranz}
+                                                                  setMatchingtoleranz={setMatchingtoleranz}
                                                                   isAllMatchingvariablen={isAllMatchingvariablen}
+                                                                  setMatchingtoleranzChip={setMatchingtoleranzChip}
                                        />}
                                 />
                                 <Route path="/FälleKontrollen"
                                        element={<FälleKontrollen setFälleKontrollenGruppenIndikator={setFälleKontrollenGruppenindikator}
-                                                                 setFälleKontrollenFallID={setFälleKontrollenFallID}
-                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
+                                                                 isAllMatchingvariablen={isAllMatchingvariablen}
                                        />}
                                 />
                                 <Route path="/Matching-Verhältnis"

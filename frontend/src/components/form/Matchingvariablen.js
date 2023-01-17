@@ -12,6 +12,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useState } from "react";
 import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 
 
 function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDateiSpaltenNamen, isAllMatchingvariablen }) {
@@ -21,7 +22,7 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
 
     let resultArray = [];
 
-    for (let i = 1; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
         const tempObj = {
             id: i,
             var: isDateiSpaltenNamen[i]
@@ -47,8 +48,8 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
     const [selectionModel, setSelectionModel] = useState();
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70, hide: true },
-        { field: 'var', headerName: 'Variable', width: 130 },
+        { field: 'id', headerName: 'ID', width: 0, hide: true },
+        { field: 'var', headerName: 'Variable', width: 510 },
     ];
 
     function löschen() {
@@ -70,8 +71,9 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
                     Matchingvariablen
                 </Typography>
                 <br />
+
                 <DataGrid id="datagrid" density="compact"
-                          sx={{ overflow: 'auto', display: "flex", width: "55%", height: "100%", alignSelf: "center", marginLeft: "23%", marginBottom: "1%" }}
+                          sx={{ overflow: 'auto', display: "flex", width: "65%", height: "100%", alignSelf: "center", marginLeft: "15%", marginBottom: "1%" }}
                           rows={resultArray}
                           columns={columns}
                           hideFooterPagination={true}

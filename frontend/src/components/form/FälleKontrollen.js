@@ -9,51 +9,70 @@ import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useState } from "react";
-import { CardHeader } from "@mui/material";
+import {CardHeader, Checkbox} from "@mui/material";
 import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
 
 
-function FälleKontrollen({ setFälleKontrollenFallID, setFälleKontrollenGruppenIndikator, isAllMatchingvariablen }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, isAllMatchingvariablen }) {
 
-    console.log(isAllMatchingvariablen);
-    console.log(isAllMatchingvariablen.length);
-
-    let resultArray = [];
-
-    for (let i = 1; i < isAllMatchingvariablen.length; i++) {
-        const tempObj = {
-            id: i,
-            var: isAllMatchingvariablen[i]
-        };
-        resultArray.push(tempObj);
+    const renderDetailsButton = (params) => {
+        return (
+            <strong>
+                <Checkbox
+                    size="small"
+                    style={{ marginLeft: 16 }}
+                    onChange={() => {
+                        console.log(params.row.variable);
+                        setFälleKontrollenGruppenIndikator("Gruppenindikator: " + params.row.variable );
+                    }}
+                >
+                    More Info
+                </Checkbox>
+            </strong>
+        )
     }
-    console.log(resultArray);
-    let kVarray = [];
-    let selectedRowsData;
-    const onRowsSelectionHandler = (ids) => {
-        selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
-        console.log('selectedRowsData' + selectedRowsData);
-        selectedRowsData.forEach((row) => { console.log(row.var); kVarray.push(row); });
-        console.log(kVarray);
-
-        setFälleKontrollenGruppenIndikator(kVarray);
-
-    };
 
 
-    const [selectionModel, setSelectionModel] = useState();
+    let tmpFallID = [];
+    let gruppenindikatorToggle = true;
+
+
+    function selectFallID(event){
+        tmpFallID.push(event.value);
+    }
+
+  /*  const columns = [
+        { field: 'id', headerName: 'ID', width: 0, hide: true},
+        { field: 'variable', headerName: 'Variable', width: 255},
+        { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 165,  renderCell: () => (
+                <div>
+                    <Checkbox id="checkboxgruppenindikator" onChange={selectGruppenindikator}/>
+                </div>
+            ),},
+        { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165, renderCell: () => (
+                <div>
+                    <Checkbox id="checkboxfallid" onChange={selectFallID}/>
+                </div>
+            ), },
+    ];*/
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 70, hide: true },
-        { field: 'var', headerName: 'Variable', width: 130 },
+        { field: 'id', headerName: 'ID', width: 0, hide: true},
+        { field: 'variable', headerName: 'Variable', width: 255, disableClickEventBubbling: true},
+        { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 165,  renderCell: renderDetailsButton, disableClickEventBubbling: true,},
+        { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165,  renderCell: renderDetailsButton, disableClickEventBubbling: true, },
     ];
 
-    function löschen() {
-        setFälleKontrollenGruppenIndikator('defaultFälleKontrollenGruppenindikator');
-        setFälleKontrollenFallID('defaultFälleKontrollenFallID');
-        onRowsSelectionHandler([]);
-        setSelectionModel('');
+    let rows=[];
+    for (let i = 0; i < isAllMatchingvariablen.length; i++) {
+        const tempObj = {
+            id: i,
+            variable: isAllMatchingvariablen[i].var,
+            gruppenindikator: "",
+            fallID: " ",
+        };
+        rows.push(tempObj);
     }
 
     return (
@@ -61,33 +80,28 @@ function FälleKontrollen({ setFälleKontrollenFallID, setFälleKontrollenGruppe
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
-                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }} />
+                sx={{ backgroundColor: "#E9F0FF", minWidth: "80%" }} />
 
-            <CardContent sx={{ backgroundColor: "white", width: "100%", height: "57.5%" }}>
+            <CardContent sx={{ backgroundColor: "white", width: "100%", height: "59%" }}>
 
                 <Typography sx={{ fontSize: 18, paddingTop: "1%", paddingLeft: "2%" }}>
                     Variable für Fälle und Kontrollen definieren
                 </Typography>
+
                 <br />
                 <DataGrid id="datagrid" density="compact"
-                          sx={{ overflow: 'auto', display: "flex", width: "55%", height: "100%", alignSelf: "center", marginLeft: "23%", marginBottom: "1%" }}
-                          rows={resultArray}
+                          sx={{ overflow: 'auto', display: "flex", width: "65%", height: "100%", alignSelf: "center", marginLeft: "15%", marginBottom: "1%" }}
+                          rows={rows}
                           columns={columns}
                           hideFooterPagination={true}
                           hideFooter={true}
-                          checkboxSelection
-                          onSelectionModelChange={(newSelectionModel) => {
-                              onRowsSelectionHandler(newSelectionModel);
-                              setSelectionModel(newSelectionModel);
-                          }
-                          }
-                          selectionModel={selectionModel}
                 />
+
                 <br />
 
-                <div style={{ height: "13%", display: "flex", float: "right", gap: "3%", width: "42%", marginRight: "3%" }}>
+                <div style={{ height: "13%", display: "flex", float: "right", gap: "3%",width: "42%", marginRight: "3%"  }}>
                     <Link style={{ textDecoration: "none" }} to='/Matchingtoleranz'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
-                    <Button sx={{ width: "auto", borderColor: "#B11B18", color: "#B11B18", "&:hover": { backgroundColor: "white", borderColor: "#B11B18" } }} variant="outlined" onClick={löschen}><DeleteIcon />Löschen</Button>
+                    <Button sx={{ width: "auto", borderColor: "#B11B18", color: "#B11B18", "&:hover": { backgroundColor: "white", borderColor: "#B11B18" } }} variant="outlined" ><DeleteIcon />Löschen</Button>
                     <Link style={{ textDecoration: "none" }} to='/Matching-Verhältnis' onClick={() => visitedSite("matchingverhältnis")}><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
 
                 </div>

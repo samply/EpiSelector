@@ -22,6 +22,8 @@ import BlurOnIcon from '@mui/icons-material/BlurOn';
 import TollIcon from '@mui/icons-material/Toll';
 import {CardHeader} from "@mui/material";
 import {TimelineOppositeContent} from "@mui/lab";
+import DonutSmallIcon from '@mui/icons-material/DonutSmall';
+import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
 
 
 export function visitedSite(icon){
@@ -30,7 +32,7 @@ export function visitedSite(icon){
 }
 
 
-function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isFälleKontrollenGruppenindikator, isFälleKontrollenFallID, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
@@ -322,7 +324,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                                              </TimelineOppositeContent>
                                              <TimelineSeparator>
-                                                 <TimelineDot id="matchingtoleranz"><ListAltIcon/></TimelineDot>
+                                                 <TimelineDot id="matchingtoleranz"><PhotoSizeSelectSmallIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
                                              <TimelineContent> <Link to='/Matchingtoleranz' onClick={()=>visitedSite("matchingtoleranz")}
@@ -337,8 +339,8 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                                  color: "white",
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
-                                                 visibility: isMatchingtoleranz === "defaultMatchingtoleranz" ? "hidden" : "visible" ,
-                                             }}>{isMatchingtoleranz} </div></Link></TimelineContent>
+                                                 visibility: isMatchingtoleranzChip === "" ? "hidden" : "visible" ,
+                                             }}>{isMatchingtoleranzChip} </div></Link></TimelineContent>
                                          </TimelineItem>
 
                                          <TimelineItem>
@@ -346,7 +348,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
 
                                              </TimelineOppositeContent>
                                              <TimelineSeparator>
-                                                 <TimelineDot id="fällekontrollen"><ListAltIcon/></TimelineDot>
+                                                 <TimelineDot id="fällekontrollen"><DonutSmallIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
                                              <TimelineContent> <Link to='/FälleKontrollen' onClick={()=>visitedSite("fällekontrollen")}
@@ -356,7 +358,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                                  left: "60px",
                                                  backgroundColor: "#B11B18",
                                                  width: "auto",
-                                                 height: "42%",
+                                                 height: "auto",
                                                  borderRadius: "15px",
                                                  color: "white",
                                                  justifyContent: "baseline",

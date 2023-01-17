@@ -130,3 +130,8 @@ radioButton{
     border-left: thin solid #e6e6e6;
     height: 250px;
 }
+
+.MuiDataGrid-columnHeaders{
+    background-color: #1d4189;
+    color: white;
+}
