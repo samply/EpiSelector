@@ -54,12 +54,24 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 
 
 
-function InfoBox() {
+function InfoBox({isWorkflow}) {
     const [expanded, setExpanded] = React.useState('panel2');
 
     const handleChange = (panel) => (event, newExpanded) => {
         setExpanded(newExpanded ? panel : false);
     };
+
+   /* const pageWorumgehteshier = () =>{
+        if(isWorkflow === "startseite"){
+            return (
+
+            )
+        }else{
+            return(<Typography fontSize={"medium"}>
+                test andere seite
+            </Typography>)
+        }
+    }*/
 
     return (
         <Box className="InfoBox"  >

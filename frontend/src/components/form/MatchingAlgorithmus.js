@@ -23,7 +23,9 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
 
     const [isChecked, setChecked] = useState(() => {
         if(isErsetzung ==="Ohne Ersetzung"){
-       return true;
+            return true;
+        }else{
+            return false;
         }
 
     });
@@ -31,6 +33,8 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     const [isChecked1, setChecked1] = useState(() => {
         if(isErsetzung ==="Mit Ersetzung"){
             return true;
+        }else{
+            return false;
         }
     });
 
@@ -45,7 +49,9 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     function handleClickOptionOM () {
         if(!isActiveOM){
             setIsActiveOM(true);
-            setAlgorithmus("Optimal Matching");}
+            setAlgorithmus("Optimal Matching");
+            setErsetzung(" ");
+        }
         setIsActiveNNM(false);
     }
 
@@ -71,6 +77,47 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
             return false;
         }
     };
+
+    const ersetzungsPart = () =>{
+        if(isActiveOM === false && isActiveNNM === true || isAlgorithmus === "Nearest Neighbour"){
+            return (<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
+                        <Typography style={{fontSize: 18, fontWeight:"normal"}} >
+                            Selektion der Kontrollen:
+                        </Typography>
+
+                        <div style={{display:"flex", flexFlow:"row"}}>
+                            <input type="radio" value="OhneErsetzung" checked={isChecked} onClick={
+                                (event) => {
+                                   if(isChecked === true){
+
+                                   }else{
+                                       setChecked(true);
+                                       setErsetzung("Ohne Ersetzung");
+                                       setChecked1(false);
+                                   }
+                                }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
+                        </div>
+                        <div style={{display:"flex", flexFlow:"row"}}>
+                            <input type="radio" value="MitErsetzung" checked={isChecked1} onClick={
+                                (event) => {
+                                   if(isChecked1 === false){
+                                       setChecked1(true);
+                                       setErsetzung("Mit Ersetzung")
+                                       setChecked(false);
+                                   }else{
+
+                                   }
+                                }
+                            }/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
+                        </div>
+                    </div>
+            );
+        }else{
+
+            return (<div style={{marginBottom:"12%"}}> </div>)
+        }
+    }
+
 
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
@@ -127,34 +174,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                         </Box>
                     </FormGroup>
                 </div>
-<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
-   <Typography style={{fontSize: 18, fontWeight:"normal"}} >
-        Selektion der Kontrollen:
-    </Typography>
-
-
-    <div style={{display:"flex", flexFlow:"row"}}>
-        <input type="radio" value="OhneErsetzung" checked={isChecked} onClick={
-            (event) => {
-                if(isChecked1===true || isErsetzung==='defaultErsetzung'){
-                    setChecked(true); setChecked1(false);
-                    setErsetzung("Ohne Ersetzung");
-                }
-            }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
-    </div>
-    <div style={{display:"flex", flexFlow:"row"}}>
-        <input type="radio" value="MitErsetzung" checked={isChecked1} onClick={
-            (event) => {
-                if(isChecked===true || isErsetzung==='defaultErsetzung'){
-                    setChecked(false); setErsetzung("Mit Ersetzung"); setChecked1(true);
-                }
-            }
-        }/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
-    </div>
-
-
-
-</div>
+                {ersetzungsPart()}
              </div>
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>

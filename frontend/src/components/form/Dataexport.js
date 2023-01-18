@@ -21,7 +21,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}){
+function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert, setDisclaimer}){
 
     const deleteAllData = () => {
         setDatenquelle("defaultQuelle");
@@ -35,6 +35,9 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
         setErsetzung("defaultErsetz");
         setÜbereinstimmungswert("defaultÜberinstimmungswert");
     };
+
+    setDisclaimer(false);
+
 
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
@@ -65,8 +68,8 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
 
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%", marginRight:"3%"}}>
                 <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} to='/Startseite' onClick={deleteAllData}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
+                <Button onClick={deleteAllData} sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
+                <Link style={{textDecoration: "none"}} onClick={deleteAllData} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
 
             </div>
 

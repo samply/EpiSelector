@@ -32,7 +32,7 @@ export function visitedSite(icon){
 }
 
 
-function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
@@ -78,7 +78,10 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent>
-                                    <Link  to='/Datenquelle' style={linkStyle} onClick={()=>visitedSite("datenquelle")}>Datenquelle wählen
+                                    <Link  to='/Datenquelle' style={linkStyle} onClick={()=> {
+                                        visitedSite("datenquelle");
+                                        setWorkflow("Datenquelle");
+                                    }}>Datenquelle wählen
                                        <br/><div style={{  display: "flex",
                                             paddingLeft: "10%",
                                             paddingRight: "10%",
@@ -277,7 +280,7 @@ function NavB({isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKont
                                                  <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent size="small"> <Link to='/uebereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
+                                             <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
                                                                                   style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",

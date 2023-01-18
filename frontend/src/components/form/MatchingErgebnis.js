@@ -13,9 +13,10 @@ import {CardHeader, TableCell, TableContainer, TableHead, TableRow} from "@mui/m
 import summary from '../../assets/summary.json';
 import {Paper, Table, TableBody} from "@material-ui/core";
 import Card from "@mui/material/Card";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DangerousIcon from '@mui/icons-material/Dangerous';
 
-
-function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode}) {
+function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen}) {
 
     const fertigeTabelle=[];
 
@@ -43,33 +44,45 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode}) {
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
                     <div style={{display:"flex", flexFlow:"column", paddingTop:"1%", paddingLeft:"1%", width:"95%"}}>
-                        <Typography sx={{fontSize: 14, paddingBottom:"1%"}} >
+                        <Typography sx={{fontSize: 18, paddingBottom:"2%", paddingLeft:"0.5%"}} >
                             Vergleich Fälle - Kontrollen
                         </Typography>
 
                         <TableContainer component={Paper}>
-                            <Table sx={{ minWidth: 210}} size="small" aria-label="a dense table">
+                            <Table sx={{ minWidth: 210, fontSize:"small"}} size="small" aria-label="a dense table">
                                 <TableBody>
                                     <TableRow>
-                                        <TableCell align={"center"} colSpan={4} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"small"}}>PreMatching</TableCell>
-                                        <TableCell align={"center"}  colSpan={5} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"small", borderLeft:"solid 1px white"}}>PostMatching</TableCell>
+                                        <TableCell align={"center"} colSpan={4} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"medium", padding:"8px"}}>PreMatching</TableCell>
+                                        <TableCell align={"center"}  colSpan={5} sx={{backgroundColor:"#1d4189", color:"white", fontSize:"medium", padding:"8px", borderLeft:"solid 1px white"}}>PostMatching</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell sx={{backgroundColor:"#E8E9EB", fontSize:"small"}}>Variable</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">Differenz</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">icu_mort=1</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">Differenz</TableCell>
-                                        <TableCell  colSpan={2} sx={{backgroundColor:"#E8E9EB", fontSize:"small"}} align="center">balance</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Variable</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=0</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Differenz</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=0</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Differenz</TableCell>
+                                        <TableCell  colSpan={2} sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Balance</TableCell>
                                     </TableRow>
 
                                     {tableXY.map((item) => (
                                         <TableRow key={item.id}>
-                                            {Object.values(item).map((val) => (
-                                                <TableCell>{val}</TableCell>
-                                            ))}
+                                            {Object.values(item).map((val) => {
+                                                if(val === "Balanced"){
+                                                    return(<TableCell style={{textAlign:"center", padding:"2px", paddingLeft:"5px"}}><CheckCircleIcon style={{color:"green", background:"none"}}/></TableCell>)
+                                                }else{
+                                                    if(val === "<0.1"){ return ("")
+                                                    }else{
+                                                        if(val === "Not Balanced"){
+                                                            return <TableCell style={{textAlign:"center", padding:"2px"}}><DangerousIcon style={{textAlign:"center", color:"red", background:"none"}}/></TableCell>
+                                                        }else{
+                                                            return (<TableCell style={{textAlign:"center", padding:"2px"}}>{val}</TableCell>)
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            )}
                                         </TableRow>
                                     ))}
 
@@ -78,11 +91,15 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode}) {
                         </TableContainer>
 
                     </div>
-                        <Typography style={{fontSize: "10px", paddingTop:"1%", paddingBottom:"1%", paddingLeft:"2%"}} >
+
+                        <Typography style={{fontSize: "10px", paddingTop:"1%", paddingBottom:"3%", paddingLeft:"2%"}} >
                             stetige Variablen: Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD) <br/>
                             kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen <br/>
                         </Typography>
 
+                        <Typography style={{paddingBottom:"5.5%", paddingLeft:"2%", fontSize:13}}>
+                            Variablen: {isDateiSpaltenNamen.length}, Beobachtungen: {isBeobachtungen}
+                        </Typography>
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>

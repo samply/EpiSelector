@@ -103,7 +103,7 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                                 boxShadow: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
-                        > Matching nach <br/> ausgewählten Variablen
+                        > Exaktes Matching nach <br/> ausgewählten Variablen
                         </Box>
 
                         <Box
@@ -120,7 +120,7 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                                 boxShadow: isActivePropS || isMatchingMethode ==="Propensity Score" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionPropS}
-                        > Propensityscore Matching
+                        > Propensity Score Matching
                         </Box>
 
                         <Box

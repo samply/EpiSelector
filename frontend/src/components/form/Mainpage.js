@@ -1,4 +1,4 @@
-import '../App.css';
+import '../../App.css';
 import {Link} from 'react-router-dom';
 import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import {visitedSite} from "../components/NavB";
+import {visitedSite} from "../NavB";
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -59,16 +59,18 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-function Mainpage() {
+function Mainpage({isDisclaimer}) {
 
-    const [age, setAge] = React.useState('');
+    const [maske, setMaske] = React.useState('');
 
 
     const handleChange = (event) => {
-        setAge(event.target.value);
+        setMaske(event.target.value);
     };
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState({isDisclaimer});
+
+    console.log(isDisclaimer);
 
     const handleClose = () => {
         setOpen(false);
@@ -93,6 +95,7 @@ function Mainpage() {
 
                 <br/><div>
                 <br/>
+
                 <BootstrapDialog
                     onClose={handleClose}
                     aria-labelledby="customized-dialog-title"
@@ -135,7 +138,7 @@ function Mainpage() {
                     <Select
                         labelId="demo-select-small"
                         id="demo-select-small"
-                        value={age}
+                        value={maske}
                         label="Maske"
                         onChange={handleChange}
                     >

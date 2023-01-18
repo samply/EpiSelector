@@ -1,7 +1,7 @@
 import './App.css';
 import TopNav from "./components/TopNav";
 import NavB from './components/NavB'
-import Mainpage from './pages/Mainpage';
+import Mainpage from './components/form/Mainpage';
 import UploadData from './components/form/dataimport/UploadData';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import InfoBox from "./components/InfoBox";
@@ -52,8 +52,10 @@ function App() {
     const [isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
     const [isPackageB, setPackageB] = useState('');
     const [isX, setX] = useState({})
+    const [isBeobachtungen, setBeobachtungen] = useState('');
+    const [isDisclaimer, setDisclaimer] = useState(true);
 
-
+    const[isWorkflow, setWorkflow] = useState("startseite");
 
 
     // isX = {
@@ -80,7 +82,8 @@ function App() {
                 <div className="Main">
                     {/*Navigations-Container*/}
                     <div className="LeftContainer">
-                        <NavB isDatenquelle={isDatenquelle}
+                        <NavB setWorkflow={setWorkflow}
+                              isDatenquelle={isDatenquelle}
                               isDatei={isDatei}
                               isMatchingMethode={isMatchingMethode}
                               isZielvariable={isZielvariable}
@@ -101,8 +104,8 @@ function App() {
 
                         <div className="FormContainer">
                             <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
-                                <Route path='/' exact element={<Mainpage />} />
-                                <Route path="/Startseite" element={<Mainpage />} />
+                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer} />} />
+                                <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} />} />
                                 <Route path="/Datenquelle"
                                        element={<Datenquelle setDatenquelle={setDatenquelle}
                                                              isDatenquelle={isDatenquelle} />}
@@ -111,7 +114,8 @@ function App() {
                                        element={<UploadData setDatei={setDatei}
                                                             setDateiSpaltenNamen={setDateiSpaltenNamen}
                                                             setVollständigeDatei={setVollständigeDatei}
-                                                            isVollständigeDatei={isVollständigeDatei} isDatei={isDatei} />}
+                                                            isVollständigeDatei={isVollständigeDatei} isDatei={isDatei}
+                                                            setBeobachtungen={setBeobachtungen}/>}
                                 />
                                 <Route path="/Matching-Methode"
                                        element={<MatchingMethode setMatchingMethode={setMatchingMethode}
@@ -174,9 +178,9 @@ function App() {
                                                                                 isÜbereinstimmungswert={isÜbereinstimmungswert} />}
                                 />
                                 <Route path="/Matching-Ergebnis"
-                                       element={<MatchingErgebnis isAllKontrollvariablen={isAllKontrollvariablen} isMatchingMethode={isMatchingMethode}/>}
+                                       element={<MatchingErgebnis isBeobachtungen={isBeobachtungen} isAllKontrollvariablen={isAllKontrollvariablen} isMatchingMethode={isMatchingMethode} isDateiSpaltenNamen={isDateiSpaltenNamen}/>}
                                 />
-                                <Route path="/Dataexport" element={<Dataexport />} />
+                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer}/>} />
                             </Routes>
                         </div>
                         <div className="dynamicResults">
@@ -186,7 +190,7 @@ function App() {
                     {/*Infobox in einem Container*/}
                     <div className="RightContainer">
                         {/*<InputProtokoll/>*/}
-                        <InfoBox />
+                        <InfoBox isWorkflow={isWorkflow}/>
                         <Foot />
                     </div>
                 </div>
