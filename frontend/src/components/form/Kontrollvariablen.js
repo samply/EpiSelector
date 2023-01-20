@@ -44,7 +44,14 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
 
     console.log(isAllKontrollvariablen);
 
-    const [selectionModel, setSelectionModel] = useState();
+/*    const [selectionModel, setSelectionModel] = useState(() => {
+        for(let i =0; i <isAllKontrollvariablen.length ; i++){
+            resultArray.filter((r) =>
+                r.variable === isAllKontrollvariablen[i].var).map((r) => r.id)
+        }
+    });*/
+
+    const [selectionModel, setSelectionModel] = useState(()=> {let tmpArray=[]; for(let i =0; i<isAllKontrollvariablen.length; i++){ tmpArray.push(isAllKontrollvariablen[i].id); } return tmpArray});
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true },

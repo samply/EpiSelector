@@ -15,9 +15,6 @@ import {CardHeader} from "@mui/material";
 
 function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isMatchingMethode}) {
 
-
-
-
     console.log(isDateiSpaltenNamen);
     console.log(isDateiSpaltenNamen.length);
     console.log(isMatchingMethode)
@@ -50,6 +47,7 @@ function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isM
         selectedRowsData.forEach((row)=>{console.log(row.variable); setZielvariable(row.variable);});
     };
 console.log("zielvariable" + isZielvariable);
+
     function funcselectionModel(){
         if(!isZielvariable==="defaultZielvariable"){setSelectionModel(Zielvariable); return selectionModel}else{return selectionModel}
     }

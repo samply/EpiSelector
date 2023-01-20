@@ -12,26 +12,11 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader, Checkbox} from "@mui/material";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
+import {useState} from "react";
 
 
-function FälleKontrollen({ setFälleKontrollenGruppenIndikator, isAllMatchingvariablen }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator }) {
 
-    const renderDetailsButton = (params) => {
-        return (
-            <strong>
-                <Checkbox
-                    size="small"
-                    style={{ marginLeft: 16 }}
-                    onChange={() => {
-                        console.log(params.row.variable);
-                        setFälleKontrollenGruppenIndikator("Gruppenindikator: " + params.row.variable );
-                    }}
-                >
-                    More Info
-                </Checkbox>
-            </strong>
-        )
-    }
 
 
     let tmpFallID = [];
@@ -59,9 +44,9 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, isAllMatchingva
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true},
-        { field: 'variable', headerName: 'Variable', width: 255, disableClickEventBubbling: true},
-        { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 165,  renderCell: renderDetailsButton, disableClickEventBubbling: true,},
-        { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165,  renderCell: renderDetailsButton, disableClickEventBubbling: true, },
+        { field: 'variable', headerName: 'Variable', width: 270, disableClickEventBubbling: true},
+        // { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 300,  disableClickEventBubbling: true,},
+        // { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165 }, renderCell: renderDetailsButton, disableClickEventBubbling: true,
     ];
 
     let rows=[];
@@ -69,11 +54,20 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, isAllMatchingva
         const tempObj = {
             id: i,
             variable: isAllMatchingvariablen[i].var,
-            gruppenindikator: "",
-            fallID: " ",
         };
         rows.push(tempObj);
     }
+
+    const [selectionModel, setSelectionModel] = useState(() =>
+        rows.filter((r) => r.variable === isFälleKontrollenGruppenindikator).map((r) => r.id),
+    );
+
+    const onRowsSelectionHandler = (ids) => {
+        const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
+        console.log(selectedRowsData);
+        selectedRowsData.forEach((row)=>{console.log(row.variable); setFälleKontrollenGruppenIndikator(row.variable); setFKChip("Gruppenindikator: " + row.variable);});
+
+    };
 
     return (
         <Card sx={{ width: "100%", height: "100%", borderRadius: '10px 10px 10px 10px' }}>
@@ -87,14 +81,26 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, isAllMatchingva
                 <Typography sx={{ fontSize: 18, paddingTop: "1%", paddingLeft: "2%" }}>
                     Variable für Fälle und Kontrollen definieren
                 </Typography>
+                <Typography sx={{fontSize: 14, color: "text.secondary", paddingTop: "1%", paddingLeft: "2%" }}>
+                    Gruppenindikator setzen
+                </Typography>
 
                 <br />
-                <DataGrid id="datagrid" density="compact"
-                          sx={{ overflow: 'auto', display: "flex", width: "65%", height: "100%", alignSelf: "center", marginLeft: "15%", marginBottom: "1%" }}
+                <DataGrid sx={{ overflow:'auto', display:"flex", width:"55%",height:"86%", alignSelf:"center", marginLeft:"23%", marginBottom:"1.5%"}}
                           rows={rows}
                           columns={columns}
                           hideFooterPagination={true}
                           hideFooter={true}
+                          checkboxSelection
+                          hideColumnsHeader
+                          headerHeight={0}
+                          density="compact"
+                          onSelectionModelChange={(newSelectionModel) => {
+                              onRowsSelectionHandler(newSelectionModel);
+                              setSelectionModel((prevModel) =>
+                                  newSelectionModel.filter((newId) =>!prevModel.includes(newId))
+                              );}}
+                          selectionModel={selectionModel}
                 />
 
                 <br />

@@ -32,7 +32,9 @@ export function visitedSite(icon){
 }
 
 
-function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+
+    console.log(isFKChip);
 
     const linkStyle = {
         textDecoration: "none",
@@ -367,7 +369,7 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
                                                  visibility: isFälleKontrollenGruppenindikator === "defaultFälleKontrollenGruppenindikator" ? "hidden" : "visible" ,
-                                             }}>{isFälleKontrollenGruppenindikator}</div></Link></TimelineContent>
+                                             }}>{isFKChip}</div></Link></TimelineContent>
                                          </TimelineItem>
 
 

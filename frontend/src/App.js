@@ -44,7 +44,7 @@ function App() {
     const [isAllMatchingvariablen, setAllMatchingvariablen] = useState('');
     const [isMatchingtoleranz, setMatchingtoleranz] = useState("");
     const [isMatchingtoleranzChip, setMatchingtoleranzChip] = useState("");
-    const [isFälleKontrollenGrupenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
+    const [isFälleKontrollenGruppenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
     const [isErsetzung, setErsetzung] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
@@ -54,6 +54,8 @@ function App() {
     const [isX, setX] = useState({})
     const [isBeobachtungen, setBeobachtungen] = useState('');
     const [isDisclaimer, setDisclaimer] = useState(true);
+    const [isFKChip, setFKChip] = useState(" ");
+
 
     const[isWorkflow, setWorkflow] = useState("startseite");
 
@@ -90,13 +92,14 @@ function App() {
                               isKontrollvariablen={isKontrollvariablen}
                               isMatchingvariablen={isMatchingvariablen}
                               isMatchingtoleranz={isMatchingtoleranz}
-                              isFälleKontrollenGruppenindikator={isFälleKontrollenGrupenindikator}
+                              isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                               isVerhältnis={isVerhältnis}
                               isScoreMethode={isScoreMethode}
                               isAlgorithmus={isAlgorithmus}
                               isErsetzung={isErsetzung}
                               isÜbereinstimmungswert={isÜbereinstimmungswert}
                               isMatchingtoleranzChip={isMatchingtoleranzChip}
+                              isFKChip={isFKChip}
                         />
                     </div>
                     {/*Fragebogen und Graphische-Ergebnisse*/}
@@ -149,6 +152,8 @@ function App() {
                                 <Route path="/FälleKontrollen"
                                        element={<FälleKontrollen setFälleKontrollenGruppenIndikator={setFälleKontrollenGruppenindikator}
                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
+                                                                 isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
+                                                                 setFKChip={setFKChip}
                                        />}
                                 />
                                 <Route path="/Matching-Verhältnis"

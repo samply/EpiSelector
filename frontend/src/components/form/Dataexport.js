@@ -4,24 +4,103 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
-import BottomNavigation from "@mui/material/BottomNavigation";
-import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import SimCardDownloadIcon from '@mui/icons-material/SimCardDownload';
 import CollectionsBookmarkIcon from '@mui/icons-material/CollectionsBookmark';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import {styled} from "@mui/material/styles";
-import MuiBottomNavigationAction from "@mui/material/BottomNavigationAction";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import {visitedSite} from "../NavB";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
+import axios from "axios";
+import {useEffect, useState} from "react";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import summary from '../../assets/summary.json';
+// import * as fs from "fs";
+// import {WordsApi} from "asposewordscloud";
+// import * as model from "asposewordscloud";
+
+const doc = new jsPDF();
+
+// define a generatePDF function that accepts a tickets argument
+const Matchingprotokoll = tickets => {
+    // initialize jsPDF
+
+    // define the columns we want and their titles
+    const tableColumn = ["Variable", "icu_mort=0", "icu_mort=1", "Differenz", "icu_mort=0", "icu_mort=1", "Differenz", "Balance"];
+    // define an empty array of rows
+    const tableRows = [];
+
+    // for each ticket pass all its data into an array
+    summary.forEach(variable => {
+        const ticketData = [
+            variable.row_names,
+            variable.unadjusted_means_treated,
+            variable.unadjusted_means_control,
+            variable.unadjusted_mean_diff,
+            variable.adjusted_means_treated,
+            variable.adjusted_means_control,
+            variable.adjusted_mean_diff,
+            variable.balance_covariats_post_matching,
+            variable.balance_thresholds_post_matching,
+            // called date-fns to format the date on the ticket
+
+
+        ];
+        // push each tickcet's info into a row
+        tableRows.push(ticketData);
+    });
+
+    const tableColumn1 = ["         ", "Pre-Matching","      ","      ","     ", "Post-Matching"," "," "];
+    const tableRows1 = [];
+
+    // startY is basically margin-top
+    doc.autoTable(tableColumn1, tableRows1, {startY:30})
+    doc.autoTable(tableColumn, tableRows, { startY: 38 });
+    const date = Date().split(" ");
+    // we use a date string to generate our filename.
+    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+    // ticket title. and margin-top + margin-left
+    doc.setFontSize(20);
+    doc.text("Matchingprotokoll", 14, 15);
+    doc.setFontSize(14); doc.setTextColor(100);
+    doc.text("Matching Ergebnisse", 14, 25);
+    // we define the name of our PDF file.
+    doc.save(`matchingprotokoll${dateStr}.pdf`);
+};
 
 
 function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert, setDisclaimer}){
+
+    const [resultData, setResultData] = useState([]);
+
+    useEffect(() => {
+        const getResults = async () => {
+            try {
+                const response = await axios.get("http://localhost:3000/results");
+                setResultData(response.data.resultData);
+            } catch (err) {
+                console.log("error");
+            }
+        };
+        getResults();
+    }, []);
+
+    const ergebnisse = resultData.filter(result => result.status === "completed");
+
+   /* const wordsApi = new WordsApi("####-####-####-####-####", "##################");
+
+    const docRTF = doc;
+    const request = new model.ConvertDocumentRequest({
+        document: docRTF,
+        format: "rtf"
+    });
+
+    const convert = wordsApi.convertDocument(request)
+        .then((convertDocumentResult) => {
+            console.log("Result of ConvertDocument: ", convertDocumentResult);
+        });*/
 
     const deleteAllData = () => {
         setDatenquelle("defaultQuelle");
@@ -54,7 +133,7 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
                 <div style={{display:"flex", justifyContent:"center", paddingTop:"5%", paddingBottom:"15%"}}>
 
                         <div sx={{display: "flex", flexFlow: "row", width: "100%", height: "80%", border: "bold solid", justifyContent:"space-evenly"}}>
-                            <Button style={{flexFlow:"column"}}>
+                            <Button  onClick={() => Matchingprotokoll(ergebnisse)} style={{flexFlow:"column"}}>
                                 <SimCardDownloadIcon sx={{fontSize: "xxx-large"}}/> Matchingprotokoll <br/>herunterladen
                             </Button>
                             <Button style={{flexFlow:"column"}}>
@@ -63,6 +142,7 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
                             <Button style={{flexFlow:"column"}}>
                                 <DashboardIcon sx={{fontSize: "xxx-large"}}/>Maske speichern
                             </Button>
+
                         </div>
                 </div>
 

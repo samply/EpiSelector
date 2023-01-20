@@ -45,7 +45,7 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
 
     console.log(isAllMatchingvariablen);
 
-    const [selectionModel, setSelectionModel] = useState();
+    const [selectionModel, setSelectionModel] = useState(()=> {let tmpArray=[]; for(let i =0; i<isAllMatchingvariablen.length; i++){ tmpArray.push(isAllMatchingvariablen[i].id); } return tmpArray});
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true },
