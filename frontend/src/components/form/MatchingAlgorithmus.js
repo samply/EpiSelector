@@ -59,7 +59,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
         setAlgorithmus('defaultAlgo');
         setIsActiveNNM(false);
         setIsActiveOM(false);
-        setErsetzung('defaultErsetz');
+        setErsetzung('Ohne Ersetzung');
 
     }
 

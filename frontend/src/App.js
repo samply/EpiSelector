@@ -30,7 +30,6 @@ import Foot from "./components/Foot";
 
 function App() {
 
-
     const [isDatenquelle, setDatenquelle] = useState('defaultQuelle');
     const [isDatei, setDatei] = useState('defaultDatei');
     const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
@@ -55,9 +54,11 @@ function App() {
     const [isBeobachtungen, setBeobachtungen] = useState('');
     const [isDisclaimer, setDisclaimer] = useState(true);
     const [isFKChip, setFKChip] = useState(" ");
+    const [isClickedKV, setClickedKV] = useState(false);
+    const [isClickedMV, setClickedMV] = useState(false);
 
 
-    const[isWorkflow, setWorkflow] = useState("startseite");
+    const[isWorkflow, setWorkflow] = useState("Startseite");
 
 
     // isX = {
@@ -84,7 +85,11 @@ function App() {
                 <div className="Main">
                     {/*Navigations-Container*/}
                     <div className="LeftContainer">
-                        <NavB setWorkflow={setWorkflow}
+                        <NavB isClickedMV={isClickedMV}
+                              setClickedMV={setClickedMV}
+                              isClickedKV={isClickedKV}
+                              setClickedKV={setClickedKV}
+                              setWorkflow={setWorkflow}
                               isDatenquelle={isDatenquelle}
                               isDatei={isDatei}
                               isMatchingMethode={isMatchingMethode}
@@ -100,6 +105,8 @@ function App() {
                               isÜbereinstimmungswert={isÜbereinstimmungswert}
                               isMatchingtoleranzChip={isMatchingtoleranzChip}
                               isFKChip={isFKChip}
+                              isAllKontrollvariablen={isAllKontrollvariablen}
+                              isAllMatchingvariablen={isAllMatchingvariablen}
                         />
                     </div>
                     {/*Fragebogen und Graphische-Ergebnisse*/}
@@ -107,7 +114,7 @@ function App() {
 
                         <div className="FormContainer">
                             <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
-                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer} />} />
+                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer}/>} />
                                 <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} />} />
                                 <Route path="/Datenquelle"
                                        element={<Datenquelle setDatenquelle={setDatenquelle}

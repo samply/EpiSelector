@@ -4,7 +4,7 @@ import '../App.css';
 import Typography from '@mui/material/Typography';
 
 
-function TopNav({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}) {
+function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
@@ -22,6 +22,7 @@ function TopNav({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, 
         setAlgorithmus("defaultAlgo");
         setErsetzung("defaultErsetz");
         setÜbereinstimmungswert("defaultÜberinstimmungswert");
+        setWorkflow("Startseite");
     };
 
     return (

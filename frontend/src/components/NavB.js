@@ -20,10 +20,11 @@ import {Link} from 'react-router-dom';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
 import TollIcon from '@mui/icons-material/Toll';
-import {CardHeader} from "@mui/material";
+import {Button, CardHeader} from "@mui/material";
 import {TimelineOppositeContent} from "@mui/lab";
 import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
+import {useState} from "react";
 
 
 export function visitedSite(icon){
@@ -32,15 +33,17 @@ export function visitedSite(icon){
 }
 
 
-function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
-
-    console.log(isFKChip);
+function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
 
     const linkStyle = {
         textDecoration: "none",
         color: 'black',
 
     };
+
+    let openDataimport = false;
+
+
 
     let openNavigation = false;
 
@@ -62,6 +65,15 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
     }
 
 
+    /*const allMV = () => {
+        for(let i =0; i< isAllMatchingvariablen.length; i++){
+            let tmp =[];
+            tmp.push(i.var);
+
+        }
+        return (<div>{i}<br/></div>)
+    }*/
+
     return (
             <Card variant="outlined" className="NavBStyle" sx={{borderRadius: '10px 10px 10px 10px', boxShadow: '1' }}>
                 <CardHeader
@@ -71,70 +83,97 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
 
                     <CardContent>
                         <Timeline position="right" sx={{align:"left", flex:0.1, marginTop:"-7px", marginLeft:"-20px"}}>
-                            <TimelineItem>
+                            {
+                                openDataimport ? (  <div>
+                                        <TimelineItem>
+                                            <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                            </TimelineOppositeContent>
+                                            <TimelineSeparator>
+                                                <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
+                                                <TimelineConnector/>
+                                            </TimelineSeparator>
+                                            <TimelineContent>
+                                                <Link  to='/Datenquelle' style={linkStyle} onClick={()=> {
+                                                    visitedSite("datenquelle");
+                                                    setWorkflow("Datenquelle");
+                                                }}>Datenquelle wählen
+                                                   <br/><div style={{  display: "flex",
+                                                        paddingLeft: "10%",
+                                                        paddingRight: "10%",
+                                                        left: "60px",
+                                                        backgroundColor: "#B11B18",
+                                                        width: "auto",
+                                                        height: "42%",
+                                                        borderRadius: "15px",
+                                                        color: "white",
+                                                        justifyContent: "baseline",
+                                                        paddingTop:"1%",
+                                                        visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible" ,
+                                                   }}>{isDatenquelle}</div>
+                                                </Link>
+                                            </TimelineContent>
+                                        </TimelineItem>
+                                        <TimelineItem>
+                                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
+
+                                            </TimelineOppositeContent>
+                                            <TimelineSeparator>
+                                                <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
+                                                <TimelineConnector/>
+                                            </TimelineSeparator>
+                                            <TimelineContent><Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
+                                                Datei hochladen<br/><div
+                                                style={{  display: "flex",
+                                                paddingLeft: "10%",
+                                                paddingRight: "10%",
+                                                left: "60px",
+                                                backgroundColor: "#B11B18",
+                                                width: "auto",
+                                                height: "42%",
+                                                borderRadius: "15px",
+                                                color: "white",
+                                                justifyContent: "baseline",
+                                                paddingTop:"1%",
+                                                visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
+                                            }}> {isDatei}</div></Link></TimelineContent>
+                                        </TimelineItem>
+                                </div>
+                                ):(
+                                <TimelineItem>
                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
-                                    <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
-                                    <TimelineConnector/>
+                                <TimelineDot id="dataimport"><UploadFileIcon/></TimelineDot>
+                                <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent>
-                                    <Link  to='/Datenquelle' style={linkStyle} onClick={()=> {
-                                        visitedSite("datenquelle");
-                                        setWorkflow("Datenquelle");
-                                    }}>Datenquelle wählen
-                                       <br/><div style={{  display: "flex",
-                                            paddingLeft: "10%",
-                                            paddingRight: "10%",
-                                            left: "60px",
-                                            backgroundColor: "#B11B18",
-                                            width: "auto",
-                                            height: "42%",
-                                            borderRadius: "15px",
-                                            color: "white",
-                                            justifyContent: "baseline",
-                                            paddingTop:"1%",
-                                            visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible" ,
-                                       }} >{isDatenquelle}</div>
-                                    </Link>
-                                </TimelineContent>
-                            </TimelineItem>
-
+                                <TimelineContent><Link to='/Datenquelle' onClick={()=>{visitedSite("datenquelle"); visitedSite("dataimport"); openDataimport=true; setWorkflow("Datenquelle");}} style={linkStyle}>
+                                Datenimport<br/><div
+                                style={{  display: "flex",
+                                paddingLeft: "10%",
+                                paddingRight: "10%",
+                                left: "60px",
+                                backgroundColor: "#B11B18",
+                                width: "auto",
+                                height: "42%",
+                                borderRadius: "15px",
+                                color: "white",
+                                justifyContent: "baseline",
+                                paddingTop:"1%",
+                                visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
+                            }}> {isDatei}</div></Link></TimelineContent>
+                                </TimelineItem>
+                                )
+                            }
                             <TimelineItem>
                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
-                                    <TimelineConnector/>
-                                </TimelineSeparator>
-                                <TimelineContent><Link to='/Datei-hochladen' onClick={()=>visitedSite("dateihochladen")} style={linkStyle}>
-                                    Datei hochladen<br/><div
-                                    style={{  display: "flex",
-                                    paddingLeft: "10%",
-                                    paddingRight: "10%",
-                                    left: "60px",
-                                    backgroundColor: "#B11B18",
-                                    width: "auto",
-                                    height: "42%",
-                                    borderRadius: "15px",
-                                    color: "white",
-                                    justifyContent: "baseline",
-                                    paddingTop:"1%",
-                                    visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
-                                }}> {isDatei}</div></Link></TimelineContent>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
                                     <TimelineDot id="matchingmethode"><JoinLeftIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}
+                                <TimelineContent><Link to='/Matching-Methode' onClick={()=>{visitedSite("matchingmethode"); setWorkflow("Matching-Methode")}}
                                                        style={linkStyle}>Matching-Methode <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
@@ -163,8 +202,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="zielvariable"><TollIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent> <Link to='/Zielvariable' onClick={()=>visitedSite("zielvariable")}
-                                                                     style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
+                                             <TimelineContent> <Link to='/Zielvariable' onClick={()=> {
+                                                 visitedSite("zielvariable");
+                                                 setWorkflow("Zielvariable");
+                                             }}
+                                                 style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -187,8 +229,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                              <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
                                              <TimelineConnector/>
                                          </TimelineSeparator>
-                                         <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=>visitedSite("kontrollvariablen")}
-                                                                 style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
+                                         <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=> {
+                                             visitedSite("kontrollvariablen");
+                                             setWorkflow("Kontrollvariablen");
+                                         }}
+                                             style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
                                              paddingLeft: "10%",
                                              paddingRight: "10%",
                                              left: "60px",
@@ -210,7 +255,10 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
+                                             <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=> {
+                                                 visitedSite("matchingverhältnis");
+                                                 setWorkflow("MatchingVerhältnis")
+                                             }} style={linkStyle}>
                                                  Matching Verhältnis  <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
@@ -234,8 +282,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="scoremethode" size="small"><CalculateIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung' onClick={()=>visitedSite("scoremethode")}
-                                                                                  style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
+                                             <TimelineContent size="small"> <Link to='/MethodeScoreBerechnung' onClick={()=> {
+                                                 visitedSite("scoremethode");
+                                                 setWorkflow("ScoreBerechnung");
+                                             }}
+                                                 style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -258,8 +309,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="algorithmus" size="small"><BlurOnIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent size="small"> <Link to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}
-                                                                                  style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
+                                             <TimelineContent size="small"> <Link to='/MatchingAlgorithmus' onClick={()=> {
+                                                 visitedSite("algorithmus");
+                                                 setWorkflow("Matching-Algorithmus");
+                                             }}
+                                                 style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -282,8 +336,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="übereinstimmung" size="small"><SquareFootIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}
-                                                                                  style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
+                                             <TimelineContent size="small"> <Link to='/ÜbereinstimmungPropensityScore' onClick={()=> {
+                                                 visitedSite("übereinstimmung");
+                                                 setWorkflow("Übereinstimmung");
+                                             }}
+                                                 style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -308,20 +365,42 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                              <TimelineDot id="matchingvariablen"><ListAltIcon/></TimelineDot>
                                              <TimelineConnector/>
                                          </TimelineSeparator>
-                                         <TimelineContent> <Link to='/Matchingvariablen' onClick={()=>visitedSite("matchingvariablen")}
-                                                                 style={linkStyle}>Matchingvariablen <br/><div style={{  display: "flex",
-                                             paddingLeft: "10%",
-                                             paddingRight: "10%",
-                                             left: "60px",
-                                             backgroundColor: "#B11B18",
-                                             width: "auto",
-                                             height: "42%",
-                                             borderRadius: "15px",
-                                             color: "white",
-                                             justifyContent: "baseline",
-                                             paddingTop:"1%",
-                                             visibility: isMatchingvariablen === "defaultMatchingvariablen" ? "hidden" : "visible" ,
-                                         }}>{isMatchingvariablen} </div></Link></TimelineContent>
+                                         <TimelineContent>
+                                           <div>
+                                               <Link to='/Matchingvariablen' onClick={()=>{visitedSite("matchingvariablen"); setWorkflow("Matchingvariablen"); setClickedMV(true);}}
+                                                      style={linkStyle}>Matchingvariablen
+                                                   <br/>
+
+                                               <div style={{  display: "flex",
+                                                   paddingLeft: "10%",
+                                                   paddingRight: "10%",
+                                                   left: "60px",
+                                                   backgroundColor: "#B11B18",
+                                                   width: "auto",
+                                                   height: "42%",
+                                                   borderRadius: "15px",
+                                                   color: "white",
+                                                   justifyContent: "baseline",
+                                                   paddingTop:"1%",
+                                                   visibility: isMatchingvariablen === "defaultMatchingvariablen" ? "hidden" : "visible" ,
+                                               }}> {isMatchingvariablen} <br/>
+                                                   <div  style={{  display: "flex",
+                                                       paddingLeft: "10%",
+                                                       paddingRight: "10%",
+                                                       left: "60px",
+                                                       backgroundColor: "#B11B18",
+                                                       width: "auto",
+                                                       height: "42%",
+                                                       borderRadius: "15px",
+                                                       color: "white",
+                                                       justifyContent: "baseline",
+                                                       paddingTop:"1%",
+                                                       visibility: isClickedMV === false ? "hidden" : "visible" ,
+                                                   }}> {()=>{ for(let i=0; i< isAllMatchingvariablen.length; i++){ let x = isAllMatchingvariablen[i].var; return(<div>{x}<br/></div>)}}}
+                                                   </div>
+                                               </div>  </Link>
+                                           </div>
+                                         </TimelineContent>
                                      </TimelineItem>
 
                                          <TimelineItem>
@@ -332,8 +411,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="matchingtoleranz"><PhotoSizeSelectSmallIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent> <Link to='/Matchingtoleranz' onClick={()=>visitedSite("matchingtoleranz")}
-                                                                     style={linkStyle}>Matchingtoleranz <br/><div style={{  display: "flex",
+                                             <TimelineContent> <Link to='/Matchingtoleranz' onClick={()=> {
+                                                 visitedSite("matchingtoleranz");
+                                                 setWorkflow("Matchingtoleranz");
+                                             }}
+                                                 style={linkStyle}>Matchingtoleranz <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -356,8 +438,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                                  <TimelineDot id="fällekontrollen"><DonutSmallIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
-                                             <TimelineContent> <Link to='/FälleKontrollen' onClick={()=>visitedSite("fällekontrollen")}
-                                                                     style={linkStyle}>Variablen für Fälle und Kontrollen definieren<br/><div style={{  display: "flex",
+                                             <TimelineContent> <Link to='/FälleKontrollen' onClick={()=> {
+                                                 visitedSite("fällekontrollen");
+                                                 setWorkflow("VariableFälleKontrolle");
+                                             }}
+                                                 style={linkStyle}>Variablen für Fälle und Kontrollen definieren<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -380,7 +465,10 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                  <TimelineDot id="matchingverhältnis"><AnalyticsIcon/></TimelineDot>
                                  <TimelineConnector/>
                                  </TimelineSeparator>
-                                 <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=>visitedSite("matchingverhältnis")} style={linkStyle}>
+                                 <TimelineContent><Link to='/Matching-Verhältnis' onClick={()=> {
+                                     visitedSite("matchingverhältnis");
+                                     setWorkflow("MatchingVerhältnis");
+                                 }} style={linkStyle}>
                                  Matching Verhältnis  <br/><div style={{  display: "flex",
                                  paddingLeft: "10%",
                                  paddingRight: "10%",
@@ -421,7 +509,10 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                     <TimelineDot id="ergebnisse"><FactCheckOutlinedIcon/></TimelineDot>
                                     <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Matching-Ergebnis' onClick={()=>visitedSite("ergebnisse")} style={linkStyle}>Matching
+                                <TimelineContent><Link to='/Matching-Ergebnis' onClick={()=> {
+                                    visitedSite("ergebnisse");
+                                    setWorkflow("MatchingErgebnis");
+                                }} style={linkStyle}>Matching
                                     Ergebnis </Link></TimelineContent>
                             </TimelineItem>
 
@@ -433,8 +524,11 @@ function NavB({setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvar
                                 <TimelineSeparator>
                                     <TimelineDot id="datenexport"><SimCardDownloadOutlinedIcon/></TimelineDot>
                                 </TimelineSeparator>
-                                <TimelineContent> <Link to='/Dataexport' onClick={()=>visitedSite("datenexport")}
-                                                        style={linkStyle}>Datenexport </Link></TimelineContent>
+                                <TimelineContent> <Link to='/Dataexport' onClick={()=> {
+                                    visitedSite("datenexport");
+                                    setWorkflow("Datenexport");
+                                }}
+                                style={linkStyle}>Datenexport </Link></TimelineContent>
                             </TimelineItem>
                         </Timeline>
 
