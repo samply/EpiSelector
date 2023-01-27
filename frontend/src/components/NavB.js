@@ -15,25 +15,43 @@ import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
 import BlurCircularOutlinedIcon from '@mui/icons-material/BlurCircularOutlined';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import BlurOnIcon from '@mui/icons-material/BlurOn';
 import TollIcon from '@mui/icons-material/Toll';
-import {Button, CardHeader} from "@mui/material";
+import { CardHeader} from "@mui/material";
 import {TimelineOppositeContent} from "@mui/lab";
 import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import PhotoSizeSelectSmallIcon from '@mui/icons-material/PhotoSizeSelectSmall';
-import {useState} from "react";
+import WorkspacesIcon from '@mui/icons-material/Workspaces';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import styled from "@emotion/styled";
+import IconButton from "@mui/material/IconButton";
 
 
 export function visitedSite(icon){
     const elem = document.getElementById(icon);
     elem.style.backgroundColor="#1d4189";
 }
+/*const ExpandMore = styled((props) => {
+    const { expand, ...other } = props;
+    return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+        duration: theme.transitions.duration.shortest,
+    }),
+}));*/
 
 
-function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
 
     const linkStyle = {
         textDecoration: "none",
@@ -41,21 +59,14 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
 
     };
 
-    let openDataimport = false;
-
-
-
-    let openNavigation = false;
-
+    let openNavigation;
     if(isMatchingMethode === "defaultMethode"){
         openNavigation = false;
     }else{
         openNavigation=true;
     }
 
-
     let isDefaultMethode = false;
-
     if(isMatchingMethode==="Exaktes Matching"){
         isDefaultMethode = false;
     }else{
@@ -65,14 +76,9 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
     }
 
 
-    /*const allMV = () => {
-        for(let i =0; i< isAllMatchingvariablen.length; i++){
-            let tmp =[];
-            tmp.push(i.var);
-
-        }
-        return (<div>{i}<br/></div>)
-    }*/
+    function dropKV() {
+        isAllKontrollvariablen.map(fruit => <div key={fruit}>{fruit.var}</div>)
+    }
 
     return (
             <Card variant="outlined" className="NavBStyle" sx={{borderRadius: '10px 10px 10px 10px', boxShadow: '1' }}>
@@ -83,74 +89,49 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
 
                     <CardContent>
                         <Timeline position="right" sx={{align:"left", flex:0.1, marginTop:"-7px", marginLeft:"-20px"}}>
-                            {
-                                openDataimport ? (  <div>
-                                        <TimelineItem>
-                                            <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
-                                            </TimelineOppositeContent>
-                                            <TimelineSeparator>
-                                                <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
-                                                <TimelineConnector/>
-                                            </TimelineSeparator>
-                                            <TimelineContent>
-                                                <Link  to='/Datenquelle' style={linkStyle} onClick={()=> {
-                                                    visitedSite("datenquelle");
-                                                    setWorkflow("Datenquelle");
-                                                }}>Datenquelle wählen
-                                                   <br/><div style={{  display: "flex",
-                                                        paddingLeft: "10%",
-                                                        paddingRight: "10%",
-                                                        left: "60px",
-                                                        backgroundColor: "#B11B18",
-                                                        width: "auto",
-                                                        height: "42%",
-                                                        borderRadius: "15px",
-                                                        color: "white",
-                                                        justifyContent: "baseline",
-                                                        paddingTop:"1%",
-                                                        visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible" ,
-                                                   }}>{isDatenquelle}</div>
-                                                </Link>
-                                            </TimelineContent>
-                                        </TimelineItem>
-                                        <TimelineItem>
-                                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
-                                            </TimelineOppositeContent>
-                                            <TimelineSeparator>
-                                                <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
-                                                <TimelineConnector/>
-                                            </TimelineSeparator>
-                                            <TimelineContent><Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
-                                                Datei hochladen<br/><div
-                                                style={{  display: "flex",
-                                                paddingLeft: "10%",
-                                                paddingRight: "10%",
-                                                left: "60px",
-                                                backgroundColor: "#B11B18",
-                                                width: "auto",
-                                                height: "42%",
-                                                borderRadius: "15px",
-                                                color: "white",
-                                                justifyContent: "baseline",
-                                                paddingTop:"1%",
-                                                visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
-                                            }}> {isDatei}</div></Link></TimelineContent>
-                                        </TimelineItem>
-                                </div>
-                                ):(
-                                <TimelineItem>
-                                <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
+                           <TimelineItem>
+                                <TimelineOppositeContent sx={{flex: 0}} color="textSecondary">
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
-                                <TimelineDot id="dataimport"><UploadFileIcon/></TimelineDot>
+                                    <TimelineDot id="datenquelle"><BlurCircularOutlinedIcon/></TimelineDot>
+                                    <TimelineConnector/>
+                                </TimelineSeparator>
+                                <TimelineContent>
+                                    <Link to='/Datenquelle' style={linkStyle} onClick={() => {
+                                        visitedSite("datenquelle");
+                                        setWorkflow("Datenquelle");
+                                    }}>Datenquelle wählen
+                                        <br/>
+                                        <div style={{
+                                            display: "flex",
+                                            paddingLeft: "10%",
+                                            paddingRight: "10%",
+                                            left: "60px",
+                                            backgroundColor: "#B11B18",
+                                            width: "auto",
+                                            height: "42%",
+                                            borderRadius: "15px",
+                                            color: "white",
+                                            justifyContent: "baseline",
+                                            paddingTop: "1%",
+                                            visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible",
+                                        }}>{isDatenquelle}</div>
+                                    </Link>
+                                </TimelineContent>
+                            </TimelineItem>
+
+                                <TimelineItem>
+                                <TimelineOppositeContent sx={{flex: 0}} color="textSecondary">
+                                </TimelineOppositeContent>
+                                <TimelineSeparator>
+                                <TimelineDot id="dateihochladen"><UploadFileIcon/></TimelineDot>
                                 <TimelineConnector/>
                                 </TimelineSeparator>
-                                <TimelineContent><Link to='/Datenquelle' onClick={()=>{visitedSite("datenquelle"); visitedSite("dataimport"); openDataimport=true; setWorkflow("Datenquelle");}} style={linkStyle}>
-                                Datenimport<br/><div
-                                style={{  display: "flex",
+                                <TimelineContent>
+                                <Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
+                                Datei hochladen<br/><div
+                                style={{display: "flex",
                                 paddingLeft: "10%",
                                 paddingRight: "10%",
                                 left: "60px",
@@ -162,10 +143,10 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
                                 justifyContent: "baseline",
                                 paddingTop:"1%",
                                 visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
-                            }}> {isDatei}</div></Link></TimelineContent>
+                            }}> {isDatei}</div></Link>
+                                </TimelineContent>
                                 </TimelineItem>
-                                )
-                            }
+
                             <TimelineItem>
                                 <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
                                 </TimelineOppositeContent>
@@ -223,30 +204,48 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
 
                                      <TimelineItem>
                                          <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
-
                                          </TimelineOppositeContent>
                                          <TimelineSeparator>
                                              <TimelineDot id="kontrollvariablen"><ListAltIcon/></TimelineDot>
                                              <TimelineConnector/>
                                          </TimelineSeparator>
-                                         <TimelineContent> <Link to='/Kontrollvariablen' onClick={()=> {
+                                         <TimelineContent>
+                                             <Link to='/Kontrollvariablen' onClick={()=> {
                                              visitedSite("kontrollvariablen");
                                              setWorkflow("Kontrollvariablen");
+                                             setExpanded(!expanded);
                                          }}
-                                             style={linkStyle}>Kontrollvariablen <br/><div style={{  display: "flex",
-                                             paddingLeft: "10%",
-                                             paddingRight: "10%",
-                                             left: "60px",
-                                             backgroundColor: "#B11B18",
-                                             width: "auto",
-                                             height: "42%",
-                                             borderRadius: "15px",
-                                             color: "white",
-                                             justifyContent: "baseline",
-                                             paddingTop:"1%",
-                                             visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hidden" : "visible" ,
-                                         }}>{isKontrollvariablen} </div></Link></TimelineContent>
+                                             style={linkStyle}>Kontrollvariablen <br/>
+                                                 <div>
+                                                     {isKontrollvariablen}
+                                                 </div>
+                                             </Link>
+                                            {/* <div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "21%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 marginBottom:"4px",
+                                                 visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hideen" : "visible",
+
+                                             }}>{isKontrollvariablen}</div>*/}
+                                             <Collapse in={expanded} >
+                                                 {
+                                                     /*  This maps each array item to a div adds
+                                                     the style declared above and return it */
+                                                     isAllKontrollvariablen.map(fruit => <div key={fruit}>{fruit.var}</div>)
+                                                 }
+                                             </Collapse>
+                                         </TimelineContent>
                                      </TimelineItem>
+
+
                                          <TimelineItem> {/*style={{display: 'none'}}*/}
                                              <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
@@ -492,7 +491,7 @@ function NavB({isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow
 
                                              </TimelineOppositeContent>
                                              <TimelineSeparator>
-                                                 <TimelineDot id="ergebnisse"><FactCheckOutlinedIcon/></TimelineDot>
+                                                 <TimelineDot><WorkspacesIcon/></TimelineDot>
                                                  <TimelineConnector/>
                                              </TimelineSeparator>
                                              <TimelineContent><Link style={linkStyle}>Matching

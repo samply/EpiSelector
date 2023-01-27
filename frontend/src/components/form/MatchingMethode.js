@@ -14,6 +14,11 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+import {AlertTitle} from "@mui/lab";
 
 function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
 
@@ -68,6 +73,12 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
         setIsActivePropS(false);
         setIsActiveZufallsP(false);
     }
+
+    const [open, setOpen] = React.useState(false);
+    const [isPlaceholder, setPlaceholder] = React.useState(true);
+
+
+
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
@@ -76,18 +87,42 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                 sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}} >
+                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%", paddingLeft:"3%"}} >
                     Matching Methode
                 </Typography>
+                <Collapse in={open}>
+                    <Alert style={{maxWidth:"82%", marginLeft:"7%"}} action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpen(false);
+                                setPlaceholder(true);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                           sx={{ mb: 2 }} severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen um weiter zu gehen</strong>
+                    </Alert>
 
+                </Collapse>
+                <Collapse in={isPlaceholder}>
+                    <div style={{margin:"10%"}}></div>
+                </Collapse>
                 <div style={{
                     minHeight: "80%",
                     display: "flex",
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
-                    paddingBottom:"14%"
+                    paddingBottom:"11%"
                 }}>
+
+
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"25px"}}>
                         <Box
                             style={{
@@ -148,7 +183,7 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
                     <Link style={{textDecoration: "none"}} to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
-                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen")}else{visitedSite("zielvariable")}
+                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen")}if(isMatchingMethode==="Propensity Score"){visitedSite("zielvariable")} if(isMatchingMethode==="defaultMethode"){ setOpen(true); setPlaceholder(false);}
                     }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>

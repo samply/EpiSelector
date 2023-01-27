@@ -59,10 +59,9 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-function Mainpage({isDisclaimer}) {
+function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
 
     const [maske, setMaske] = React.useState('');
-
 
     const handleChange = (event) => {
         setMaske(event.target.value);
@@ -70,11 +69,10 @@ function Mainpage({isDisclaimer}) {
 
     const [open, setOpen] = React.useState({isDisclaimer});
 
-    console.log(isDisclaimer);
-
     const handleClose = () => {
         setOpen(false);
     };
+
     return (<Card sx={{borderRadius: '10px 10px 10px 10px'}}>
         <CardHeader
             title="Matching"
@@ -153,7 +151,10 @@ function Mainpage({isDisclaimer}) {
 
                 <br/><br/>
                 <div style={{ height: "8%", float:"right", width:"12%"}}>
-                    <Link style={{textDecoration: "none"}} to ='/Datenquelle' onClick={()=>visitedSite("datenquelle")}>
+                    <Link style={{textDecoration: "none"}} to ='/Datenquelle' onClick={()=> {
+                        setWorkflow("Datenquelle");
+                        visitedSite("datenquelle");
+                    }}>
                         <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" startIcon={<PlayCircleFilledIcon />}>
                         Start
                     </Button>

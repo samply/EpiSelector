@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
 
-export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
+export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
 
     // State to store parsed data
     const [parsedData, setParsedData] = useState([]);
@@ -105,7 +105,9 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={()=>visitedSite("matchingmethode")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={()=> {
+                        visitedSite("matchingmethode");
+                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
 

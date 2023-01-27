@@ -61,18 +61,6 @@ function InfoBox({isWorkflow}) {
         setExpanded(newExpanded ? panel : false);
     };
 
-   /* const pageWorumgehteshier = () =>{
-        if(isWorkflow === "startseite"){
-            return (
-
-            )
-        }else{
-            return(<Typography fontSize={"medium"}>
-                test andere seite
-            </Typography>)
-        }
-    }*/
-
     const content1 = () =>{
         if(isWorkflow === "Startseite"){
             return (<div>Startseite Text WorumGehtEsHier</div>);
@@ -127,35 +115,7 @@ function InfoBox({isWorkflow}) {
 
     const content2 = () =>{
         if(isWorkflow === "Startseite"){
-            return (<div>Startseite Text <br/> <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Exposition: </Typography>
-                <Typography>Faktor, dem eine Gruppe von Menschen ausgesetzt ist.</Typography>
-                <br/>
-                <Typography style={{ fontWeight: "bold", fontSize:"medium" }}>Fall:</Typography>
-                <Typography>Person, bei der das Risikoereignis eintrat</Typography>
-                <br/>
-                <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Kohortenstudie: </Typography>
-                <Typography>Ziel, einen Zusammenhang zwischen einer oder mehreren Expositionen und dem Auftreten einer Krankheit aufzudecken.
-                    Dabei wird eine Gruppe exponierter und eine Gruppe nicht exponierter Personen über einen bestimmten
-                    Zeitraum hinsichtlich des Auftretens oder der Sterblichkeit bestimmter Krankheiten beobachtet.</Typography>
-                <br/>
-                <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Kontrolle:</Typography>
-                <Typography>Person, bei der das Risikoereignis nicht eintrat</Typography>
-                <br/>
-                <Typography style={{ fontWeight: "bold", fontSize:"medium" }}> Nested case-control study:</Typography>
-                <Typography>Fälle einer Krankheit, die in einer definierten Kohorte innerhalb
-                    einer schon gelaufenen oder noch laufenden Kohortenstudie auftreten, werden identifiziert.
-                    Für jeden Fall wird eine bestimmte Anzahl von angepassten Kontrollen aus der Kohorte ausgewählt,
-                    die die Krankheit zum Zeitpunkt des Auftretens der Krankheit im Fall nicht entwickelt haben.</Typography>
-                <br/>
-                <Typography style={{ fontWeight: "bold", fontSize:"medium" }}>Score matching:</Typography>
-                <Typography>Matching-Verfahren für Kontrollgruppenselektion um den Selektionsbias zu reduzieren.
-                    Bisherige, verzerrte Gruppenzuteilung wird aufgelöst indem für jedes Sample ein Propensity Score
-                    (= Wahrscheinlichkeit in der Versuchsgruppe zu landen auf Basis von zuvor erhobenen Hintergrunddaten,
-                    meist als Ergebnis einer logistischen Regression) berechnet wird und auf Basis dieser Werte ähnliche
-                    Samples zu einer Kontroll-Versuchspaargruppe zusammengefasst werden, die keine Verzerrung mehr enthalten.
-                </Typography>
-                <br/>
-            </div>);
+            return (<div>Startseite Text Fachbegriffe</div>);
         }
         if(isWorkflow === "Datenquelle"){
             return (<div>Datenquelle Text Fachbebriffe</div>);
@@ -207,32 +167,7 @@ function InfoBox({isWorkflow}) {
 
     const content3 = () =>{
         if(isWorkflow === "Startseite"){
-            return (<div>Startseite Text <br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                sit amet blandit leo lobortis eget.
-                <br/><br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                sit amet blandit leo lobortis eget.
-                <br/><br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                sit amet blandit leo lobortis eget.
-                <br/><br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                sit amet blandit leo lobortis eget.
-                <br/><br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum dolor
-                sit amet, consectetur adipiscing elit. Suspendisse malesuada lacus ex,
-                sit amet blandit leo lobortis eget.
-                <br/><br/></div>);
+            return (<div>Startseite Text Tipps</div>);
         }
         if(isWorkflow === "Datenquelle"){
             return (<div>Datenquelle Text Tipps</div>);
@@ -283,7 +218,7 @@ function InfoBox({isWorkflow}) {
     }
     return (
         <Box className="InfoBox"  >
-            <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{boxShadow: 1}}>
+           <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} sx={{boxShadow: 1}}>
                 <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
                     <Typography>Worum geht es hier</Typography>
                 </AccordionSummary>

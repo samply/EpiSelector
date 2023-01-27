@@ -56,8 +56,6 @@ function App() {
     const [isFKChip, setFKChip] = useState(" ");
     const [isClickedKV, setClickedKV] = useState(false);
     const [isClickedMV, setClickedMV] = useState(false);
-
-
     const[isWorkflow, setWorkflow] = useState("Startseite");
 
 
@@ -114,8 +112,8 @@ function App() {
 
                         <div className="FormContainer">
                             <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
-                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer}/>} />
-                                <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} />} />
+                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow}/>} />
+                                <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow}/>} />
                                 <Route path="/Datenquelle"
                                        element={<Datenquelle setDatenquelle={setDatenquelle}
                                                              isDatenquelle={isDatenquelle} />}

@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Button from '@mui/material/Button';
 
 const mimeTypeRegexp = /^(application|audio|example|image|message|model|multipart|text|video)\/[a-z0-9\.\+\*-]+$/;
 const extRegexp = /\.[a-zA-Z0-9]*$/;
@@ -222,7 +223,7 @@ class Files extends React.Component {
                 <input sx={{justifyContent:"space-evenly"}}
                     {...inputAttributes}
                 />
-                <div
+                <Button
                     className={this.props.className}
                     onClick={
                         this.props.clickable === true
@@ -237,7 +238,7 @@ class Files extends React.Component {
                     style={this.props.style}
                 >
                     {this.props.children}
-                </div>
+                </Button>
             </div>
         )
     }

@@ -60,6 +60,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
 
     function löschen() {
         setKontrollvariablen('defaultKontrollvariablen');
+        setAllKontrollvariablen("");
         onRowsSelectionHandler([]);
         setSelectionModel('');
     }
