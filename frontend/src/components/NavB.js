@@ -28,6 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
+import {useState} from "react";
 
 
 export function visitedSite(icon){
@@ -48,9 +49,17 @@ export function visitedSite(icon){
 
 function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
     const [expanded, setExpanded] = React.useState(false);
+    const [expanded1, setExpanded1] = React.useState(false);
+
+    const[isKVarray, setKVarray] = useState(isAllKontrollvariablen);
+    const[isMVarray, setMVarray] = useState(isAllMatchingvariablen);
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
+    };
+    const handleExpandClick1 = () => {
+        setExpanded1(!expanded1);
     };
 
     const linkStyle = {
@@ -216,31 +225,27 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                              setExpanded(!expanded);
                                          }}
                                              style={linkStyle}>Kontrollvariablen <br/>
-                                                 <div>
-                                                     {isKontrollvariablen}
-                                                 </div>
-                                             </Link>
-                                            {/* <div style={{  display: "flex",
-                                                 paddingLeft: "10%",
-                                                 paddingRight: "10%",
-                                                 left: "60px",
-                                                 backgroundColor: "#B11B18",
-                                                 width: "auto",
-                                                 height: "21%",
-                                                 borderRadius: "15px",
-                                                 color: "white",
-                                                 justifyContent: "baseline",
-                                                 paddingTop:"1%",
-                                                 marginBottom:"4px",
-                                                 visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hideen" : "visible",
 
-                                             }}>{isKontrollvariablen}</div>*/}
-                                             <Collapse in={expanded} >
-                                                 {
-                                                     /*  This maps each array item to a div adds
-                                                     the style declared above and return it */
-                                                     isAllKontrollvariablen.map(fruit => <div key={fruit}>{fruit.var}</div>)
-                                                 }
+                                             </Link><div style={{  display: "flex",
+                                             paddingLeft: "10%",
+                                             paddingRight: "10%",
+                                             left: "60px",
+                                             backgroundColor: "#B11B18",
+                                             width: "auto",
+                                             height: "auto",
+                                             borderRadius: "15px",
+                                             color: "white",
+                                             justifyContent: "baseline",
+                                             paddingTop:"1%",
+                                             marginBottom:"4px",
+                                             visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hidden" : "visible"}}>
+                                             {isKontrollvariablen}
+                                         </div>
+                                             <Collapse in={expanded}  >
+                                                 {() => {
+                                                     if(isAllKontrollvariablen.length > 0){
+                                                         isAllKontrollvariablen.map(fruit => <div key={fruit}>{fruit.var}</div>)}
+                                                 }}
                                              </Collapse>
                                          </TimelineContent>
                                      </TimelineItem>
@@ -365,40 +370,60 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                              <TimelineConnector/>
                                          </TimelineSeparator>
                                          <TimelineContent>
-                                           <div>
-                                               <Link to='/Matchingvariablen' onClick={()=>{visitedSite("matchingvariablen"); setWorkflow("Matchingvariablen"); setClickedMV(true);}}
-                                                      style={linkStyle}>Matchingvariablen
-                                                   <br/>
+                                             <Link to='/Matchingvariablen' onClick={()=> {
+                                                 visitedSite("matchingvaraiblen");
+                                                 setWorkflow("Matchingvaraiblen");
+                                                 setExpanded1(!expanded1);
+                                             }}
+                                                   style={linkStyle}>Matchingvariablen <br/>
 
-                                               <div style={{  display: "flex",
-                                                   paddingLeft: "10%",
-                                                   paddingRight: "10%",
-                                                   left: "60px",
-                                                   backgroundColor: "#B11B18",
-                                                   width: "auto",
-                                                   height: "42%",
-                                                   borderRadius: "15px",
-                                                   color: "white",
-                                                   justifyContent: "baseline",
-                                                   paddingTop:"1%",
-                                                   visibility: isMatchingvariablen === "defaultMatchingvariablen" ? "hidden" : "visible" ,
-                                               }}> {isMatchingvariablen} <br/>
-                                                   <div  style={{  display: "flex",
-                                                       paddingLeft: "10%",
-                                                       paddingRight: "10%",
-                                                       left: "60px",
-                                                       backgroundColor: "#B11B18",
-                                                       width: "auto",
-                                                       height: "42%",
-                                                       borderRadius: "15px",
-                                                       color: "white",
-                                                       justifyContent: "baseline",
-                                                       paddingTop:"1%",
-                                                       visibility: isClickedMV === false ? "hidden" : "visible" ,
-                                                   }}> {()=>{ for(let i=0; i< isAllMatchingvariablen.length; i++){ let x = isAllMatchingvariablen[i].var; return(<div>{x}<br/></div>)}}}
-                                                   </div>
-                                               </div>  </Link>
-                                           </div>
+                                             </Link><div style={{  display: "flex",
+                                             paddingLeft: "10%",
+                                             paddingRight: "10%",
+                                             left: "60px",
+                                             backgroundColor: "#B11B18",
+                                             width: "auto",
+                                             height: "auto",
+                                             borderRadius: "15px",
+                                             color: "white",
+                                             justifyContent: "baseline",
+                                             paddingTop:"1%",
+                                             marginBottom:"4px",
+                                             visibility: isMatchingvariablen === "defaultMatchingvariablen" ? "hidden" : "visible"}}>
+                                             {isMatchingvariablen}
+                                         </div>
+                                             {/* <div style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "21%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 marginBottom:"4px",
+                                                 visibility: isKontrollvariablen === "defaultKontrollvariablen" ? "hideen" : "visible",
+
+                                             }}>{isKontrollvariablen}</div>*/}
+                                             <Collapse in={expanded1} style={{  display: "flex",
+                                                 paddingLeft: "10%",
+                                                 paddingRight: "10%",
+                                                 left: "60px",
+                                                 backgroundColor: "#B11B18",
+                                                 width: "auto",
+                                                 height: "21%",
+                                                 borderRadius: "15px",
+                                                 color: "white",
+                                                 justifyContent: "baseline",
+                                                 paddingTop:"1%",
+                                                 marginBottom:"4px",}} >
+                                                 {() => {
+                                                     if(isAllMatchingvariablen.length > 0){
+                                                         isAllMatchingvariablen.map(fruit => <div key={fruit}>{fruit.var}</div>)}
+                                                 }}
+                                             </Collapse>
                                          </TimelineContent>
                                      </TimelineItem>
 
