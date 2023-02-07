@@ -60,7 +60,6 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   
   print(body$duration_h)
   print(body$age)
-  print(body$sex)
   
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
@@ -82,8 +81,12 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
+  print("Line 85")
+  
   # initialize m.out1
-  m.out1 
+  a <- NULL
+  
+  print("Line 88")
   
   # if exact matching
   if (mdistance == "mahalanobis") {
@@ -94,17 +97,26 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
     
     
     # matching
-    m.out1 <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
   # if other cases of matching 
   else {
     # matching
-    m.out1 <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
     
+    print("Line 107")
+    print(length(body$sex))
+    print(length(body$age))
+    print(body$sex)
+    body$sex <- factor(body$sex)
+    print(body$sex)
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+    
+    
+    print("line 111")
   }
   
   # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
-  result_dataset <- match.data(m.out1,
+  result_dataset <- match.data(a,
                                data = data.frame(body),
                                group = "all",
                                distance = "propensity score",
@@ -238,6 +250,9 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # body wird ausgelesen
   body = req$body 
   
+  print(body$duration_h)
+  print(body$age)
+  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -258,15 +273,50 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
-  # matching
-  m.out1 <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+  print("Line 85")
+  
+  # initialize m.out1
+  a <- NULL
+  
+  print("Line 88")
+  
+  # if exact matching
+  if (mdistance == "mahalanobis") {
+    
+    exact_vars<-paste(controllvariables,collapse="+")  
+    exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
+    
+    
+    
+    # matching
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+  }
+  # if other cases of matching 
+  else {
+    # matching
+    
+    print("Line 107")
+    print(length(body$sex))
+    print(length(body$age))
+    print(body$sex)
+    body$sex <- factor(body$sex)
+    print(body$sex)
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+    
+    
+    print("line 111")
+  }
   
   # Summary erstellen
-  sum <- bal.tab(m.out, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
+  sum <- bal.tab(a, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
+  
+  print("Zeile 281")
   
   # Daten auslesen
   row_names <- attributes(sum$Balanced.mean.diffs)$row.names
   count <- sum$Balanced.mean.diffs$count
+  
+  print("Zeile 287")
   
   # Daten in JSON umwandeln und Rueckgabe
   df <- data.frame(row_names, count)
