@@ -14,6 +14,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
+import test_data from "../../../assets/test_data.json"
 
 
 export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
@@ -55,7 +56,7 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
 
                 setDatei(event.target.files[0].name);
                 setDateiSpaltenNamen(rowsArray[0]);
-                setVollständigeDatei("Dies ist ein Test");
+                setVollständigeDatei(test_data);
 
                 console.log(results.data)
                 console.log(valuesArray.length)

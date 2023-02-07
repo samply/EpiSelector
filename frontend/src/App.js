@@ -127,7 +127,8 @@ function App() {
                                 />
                                 <Route path="/Matching-Methode"
                                        element={<MatchingMethode setMatchingMethode={setMatchingMethode}
-                                                                 isMatchingMethode={isMatchingMethode} />}
+                                                                 isMatchingMethode={isMatchingMethode}
+                                                                 isVollständigeDatei={isVollständigeDatei} />}
                                 />
                                 <Route path="/Zielvariable"
                                        element={<Zielvariable setZielvariable={setZielvariable}

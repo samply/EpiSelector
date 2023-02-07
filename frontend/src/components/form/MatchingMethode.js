@@ -20,11 +20,13 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import {AlertTitle} from "@mui/lab";
 
-function MatchingMethode({ setMatchingMethode, isMatchingMethode}) {
+function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständigeDatei}) {
 
     const [isActiveAusgVar, setIsActiveAusgVar] = useState(false);
     const [isActivePropS, setIsActivePropS] = useState(false);
     const [isActiveZufallsP, setIsActiveZufallsP] = useState(false);
+
+    console.log(isVollständigeDatei)
 
     const handleClickOptionAusgVar = () => {
         if (!isActiveAusgVar) {
