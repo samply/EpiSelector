@@ -22,7 +22,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     const [isActiveNNM, setIsActiveNNM] = useState(false);
 
     const [isChecked, setChecked] = useState(() => {
-        if(isErsetzung ==="Ohne Ersetzung"){
+        if(isErsetzung ==="FALSE"){
             return true;
         }else{
             return false;
@@ -31,7 +31,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     });
 
     const [isChecked1, setChecked1] = useState(() => {
-        if(isErsetzung ==="Mit Ersetzung"){
+        if(isErsetzung ==="TRUE"){
             return true;
         }else{
             return false;
@@ -41,7 +41,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     function handleClickOptionNNM(){
         if(!isActiveNNM){
             setIsActiveNNM(true);
-            setAlgorithmus("Nearest Neighbour");
+            setAlgorithmus("nearest");
             setIsActiveOM(false);
         }
     }
@@ -59,19 +59,19 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
         setAlgorithmus('defaultAlgo');
         setIsActiveNNM(false);
         setIsActiveOM(false);
-        setErsetzung('Ohne Ersetzung');
+        setErsetzung('FALSE');
 
     }
 
     function defaultValueOE(){
-        if(isErsetzung === "Ohne Ersetzung"){
+        if(isErsetzung === "FALSE"){
             return true;
         }else{
             return false;
         }
     };
     function defaultValueME(){
-        if(isErsetzung === "Mit Ersetzung"){
+        if(isErsetzung === "TRUE"){
             return true;
         }else{
             return false;
@@ -92,7 +92,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
 
                                    }else{
                                        setChecked(true);
-                                       setErsetzung("Ohne Ersetzung");
+                                       setErsetzung("FALSE");
                                        setChecked1(false);
                                    }
                                 }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
@@ -102,7 +102,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                                 (event) => {
                                    if(isChecked1 === false){
                                        setChecked1(true);
-                                       setErsetzung("Mit Ersetzung")
+                                       setErsetzung("TRUE")
                                        setChecked(false);
                                    }else{
 

@@ -32,7 +32,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
             setIsActive14(false);
             setIsActive110(false);
             setIsActive1Edit(false);
-            setVerhältnis("1:1");
+            setVerhältnis("1");
         }
 
         // 👇️ or set to true
@@ -47,7 +47,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
             setIsActive14(false);
             setIsActive110(false);
             setIsActive1Edit(false);
-            setVerhältnis("1:2");
+            setVerhältnis("2");
 
         }
         // 👇️ or set to true
@@ -57,7 +57,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         // 👇️ toggle
         if (!isActive13) {
             setIsActive13(true);
-            setVerhältnis("1:3");
+            setVerhältnis("3");
             setIsActive12(false);
             setIsActive11(false);
             setIsActive14(false);
@@ -71,7 +71,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         // 👇️ toggle
         if (!isActive14) {
             setIsActive14(true);
-            setVerhältnis("1:4");
+            setVerhältnis("4");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive11(false);
@@ -85,7 +85,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         // 👇️ toggle
         if (!isActive110) {
             setIsActive110(true);
-            setVerhältnis("1:10");
+            setVerhältnis("10");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive14(false);
@@ -99,7 +99,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         // 👇️ toggle
         if (!isActive1Edit) {
             setIsActive1Edit(true);
-            setVerhältnis("1:X");
+            setVerhältnis("X");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive14(false);

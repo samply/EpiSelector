@@ -123,7 +123,7 @@ function clearPieChart() {
 
 
 
-function DynamicResults({ isPackageB }) {
+function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert }) {
 
     // data
 
@@ -645,32 +645,8 @@ function DynamicResults({ isPackageB }) {
         }
     };
 
-
-
     let updateDiagrams = () => {
 
-        console.log("datei")
-        console.log(isPackageB.datei)
-        console.log("matchingMethode")
-        console.log(isPackageB.matchingMethode)
-        console.log("matchingVerhältnis")
-        console.log(isPackageB.matchingVerhältnis)
-        console.log("scoreMethode")
-        console.log(isPackageB.scoreMethode)
-        console.log("matchingAlgorithmus")
-        console.log(isPackageB.matchingAlgorithmus)
-        console.log("übereinstimmungswert")
-        console.log(isPackageB.übereinstimmungswert)
-        console.log("zielvariable")
-        console.log(isPackageB.zielvariable)
-        console.log("kontrollvariable")
-        console.log(isPackageB.kontrollvariable)
-        console.log("ersetzung")
-        console.log(isPackageB.ersetzung)
-
-
-
-
         // set histoselector with boolean variables from dataset
         fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
             method: 'POST',
@@ -678,28 +654,7 @@ function DynamicResults({ isPackageB }) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(isPackageB.datei)
-        }).then((response) => response.json())
-            .then((data) => {
-                console.log(data)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-    }
-
-
-    let updateDiagrams2 = () => {
-
-        // set histoselector with boolean variables from dataset
-        fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isPackageB.datei)
+            body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((data) => {
                 setHistoSelector(data)
@@ -725,15 +680,38 @@ function DynamicResults({ isPackageB }) {
                 console.error('Error:', error);
             });
 
+
+        
+        console.log(isAlgorithmus)
+        console.log(isErsetzung)
+        console.log(isZielvariable)
+        console.log(isAllKontrollvariablen)
+        console.log(isScoreMethode)
+        console.log(isMatchingMethode)
+        console.log(isVollständigeDatei)
+        console.log(isVerhältnis)
+        console.log(isVerhältnis)
+        console.log(isÜbereinstimmungswert)
+
+        var temp_string = "["
+        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
+            console.log(isAllKontrollvariablen[i])
+            console.log(isAllKontrollvariablen[i].var)
+            temp_string += isAllKontrollvariablen[i].var + ","
+        }
+        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
+        temp_string += "]"
+        console.log(temp_string)
+
         // set pie chart
         var param = {
-            groupindicator: "icu_mort",
-            controllvariables: "[age,sex,duration_h]",
-            mmethod: "nearest",
+            groupindicator: isZielvariable,
+            controllvariables: temp_string,
+            mmethod: isAlgorithmus,
             mdistance: "glm",
-            mreplace: "TRUE",
-            mratio: "2",
-            mcaliper: "0.2",
+            mreplace: isErsetzung,
+            mratio: isVerhältnis,
+            mcaliper: isÜbereinstimmungswert,
         };
 
         // (B) BUILD URL
@@ -748,7 +726,7 @@ function DynamicResults({ isPackageB }) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isVollständigeDatei)
         }).then((response) => response.json())
             .then((json) => {
                 setPiechart(json[0].count, json[1].count, false);
@@ -916,14 +894,14 @@ function DynamicResults({ isPackageB }) {
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced, &lt; 0.05</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced</Typography></div>
 
                                             </div>
 
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced, &gt; 0.05</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced</Typography></div>
                                             </div>
                                         </div>
                                     </div>
