@@ -47,7 +47,7 @@ export function visitedSite(icon){
 }));*/
 
 
-function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis, isScoreMethode, isAlgorithmus,isErsetzung, isÜbereinstimmungswert}) {
+function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis,isVerhältnisNav, isScoreMethode, isScoreMethodeNav, isAlgorithmus, isAlgorithmusNav, isErsetzung, isErsetzungNav, isÜbereinstimmungswert}) {
     const [expanded, setExpanded] = React.useState(false);
     const [expanded1, setExpanded1] = React.useState(false);
 
@@ -274,8 +274,8 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  color: "white",
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
-                                                 visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
-                                             }}> {isVerhältnis}</div></Link></TimelineContent>
+                                                 visibility: isVerhältnisNav === "defaultVerhältnis" ? "hidden" : "visible" ,
+                                             }}> {isVerhältnisNav}</div></Link></TimelineContent>
                                          </TimelineItem>
 
                                          <TimelineItem>
@@ -301,8 +301,8 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  color: "white",
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
-                                                 visibility: isScoreMethode === "defaultScoreMethode" ? "hidden" : "visible" ,
-                                             }}> {isScoreMethode}</div></Link></TimelineContent>
+                                                 visibility: isScoreMethodeNav === "defaultScoreMethode" ? "hidden" : "visible" ,
+                                             }}> {isScoreMethodeNav}</div></Link></TimelineContent>
                                          </TimelineItem>
 
                                          <TimelineItem>
@@ -328,8 +328,8 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  color: "white",
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
-                                                 visibility: isAlgorithmus === "defaultAlgo" ? "hidden" : "visible" ,
-                                             }}>{isAlgorithmus} <br/> {isErsetzung}</div></Link></TimelineContent>
+                                                 visibility: isAlgorithmusNav === "defaultAlgo" ? "hidden" : "visible" ,
+                                             }}>{isAlgorithmusNav} <br/> {isErsetzungNav}</div></Link></TimelineContent>
                                          </TimelineItem>
 
                                          <TimelineItem>
@@ -504,8 +504,8 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                  color: "white",
                                  justifyContent: "baseline",
                                  paddingTop:"1%",
-                                 visibility: isVerhältnis === "defaultVerhältnis" ? "hidden" : "visible" ,
-                             }}> {isVerhältnis}</div></Link></TimelineContent>
+                                 visibility: isVerhältnisNav === "defaultVerhältnis" ? "hidden" : "visible" ,
+                             }}> {isVerhältnisNav}</div></Link></TimelineContent>
                                  </TimelineItem>
 
                                      </div>

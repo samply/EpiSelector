@@ -42,7 +42,6 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
                 results.data.map((d) => {
                     rowsArray.push(Object.keys(d));
                     valuesArray.push(Object.values(d));
-
                 });
 
                 // Parsed Data Response in array format
@@ -54,12 +53,33 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
                 // Filtered Values
                 setValues(valuesArray);
 
+                /*var fileRight = rowsArray.map(function(value, index){return [value,valuesArray[index]]});
+                console.log(fileRight);*/
+
+                var fileRight = rowsArray[0].map(
+                    function(value, index){
+                        var tmpArray =[];
+                        for(let x=0; x<rowsArray[0].length; x++){ //geht alle Spalten durch (9 Stück)
+                            for(let i=0; i<valuesArray; i++){
+                                    tmpArray.push(valuesArray[i][x]);
+                            }
+                        }
+                        return [value,tmpArray]});
+                console.log(fileRight);
+
+
+
                 setDatei(event.target.files[0].name);
                 setDateiSpaltenNamen(rowsArray[0]);
                 setVollständigeDatei(test_data);
 
                 console.log(results.data)
                 console.log(valuesArray.length)
+                console.log(valuesArray[0].length)
+                console.log(rowsArray);
+                console.log(rowsArray[0][0].length);
+                console.log(rowsArray[0][0]);
+                console.log(valuesArray);
                 setBeobachtungen(valuesArray.length);
                 console.log(isVollständigeDatei);
 
@@ -70,6 +90,8 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
             },
         });
     };
+
+
 
     return (
         <Card  sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>

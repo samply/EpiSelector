@@ -16,13 +16,13 @@ import Card from "@mui/material/Card";
 
 
 
-function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgorithmus}) {
+function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmus, setErsetzung, isErsetzung, setErsetzungNav, isErsetzungNav}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
 
     const [isChecked, setChecked] = useState(() => {
-        if(isErsetzung ==="FALSE"){
+        if(isErsetzungNav ==="Ohne Ersetzung"){
             return true;
         }else{
             return false;
@@ -31,7 +31,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     });
 
     const [isChecked1, setChecked1] = useState(() => {
-        if(isErsetzung ==="TRUE"){
+        if(isErsetzungNav ==="Mit Ersetzung"){
             return true;
         }else{
             return false;
@@ -42,6 +42,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
         if(!isActiveNNM){
             setIsActiveNNM(true);
             setAlgorithmus("nearest");
+            setAlgorithmusNav("Nearest Neighbour");
             setIsActiveOM(false);
         }
     }
@@ -50,28 +51,32 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
         if(!isActiveOM){
             setIsActiveOM(true);
             setAlgorithmus("Optimal Matching");
+            setAlgorithmusNav("Optimal Matching");
             setErsetzung(" ");
+            setErsetzungNav(" ");
         }
         setIsActiveNNM(false);
     }
 
     function löschen(){
         setAlgorithmus('defaultAlgo');
+        setAlgorithmusNav('defaultAlgo');
         setIsActiveNNM(false);
         setIsActiveOM(false);
         setErsetzung('FALSE');
+        setErsetzungNav('Ohne Ersetzung');
 
     }
 
     function defaultValueOE(){
-        if(isErsetzung === "FALSE"){
+        if(isErsetzungNav === "Ohne Ersetzung"){
             return true;
         }else{
             return false;
         }
     };
     function defaultValueME(){
-        if(isErsetzung === "TRUE"){
+        if(isErsetzungNav === "Mit Ersetzung"){
             return true;
         }else{
             return false;
@@ -79,7 +84,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
     };
 
     const ersetzungsPart = () =>{
-        if(isActiveOM === false && isActiveNNM === true || isAlgorithmus === "Nearest Neighbour"){
+        if(isActiveOM === false && isActiveNNM === true || isAlgorithmusNav === "Nearest Neighbour"){
             return (<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
                         <Typography style={{fontSize: 18, fontWeight:"normal"}} >
                             Selektion der Kontrollen:
@@ -93,6 +98,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                                    }else{
                                        setChecked(true);
                                        setErsetzung("FALSE");
+                                       setErsetzungNav("Ohne Ersetzung");
                                        setChecked1(false);
                                    }
                                 }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
@@ -102,7 +108,8 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                                 (event) => {
                                    if(isChecked1 === false){
                                        setChecked1(true);
-                                       setErsetzung("TRUE")
+                                       setErsetzung("TRUE");
+                                       setErsetzungNav("Mit Ersetzung");
                                        setChecked(false);
                                    }else{
 
@@ -143,8 +150,8 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px", paddingTop:"2%"}}>
                         <Box onClick={handleClickOptionNNM}
                              style={{
-                                 backgroundColor: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "#1d4189":'#E8E9EB',
-                                 color: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "white":"#666666",
+                                 backgroundColor: isActiveNNM || isAlgorithmusNav === "Nearest Neighbour" ? "#1d4189":'#E8E9EB',
+                                 color: isActiveNNM || isAlgorithmusNav === "Nearest Neighbour" ? "white":"#666666",
                                  fontSize:"large",
                                  display: "flex",
                                  width: "15rem",
@@ -152,14 +159,14 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                                  alignItems:"center",
                                  justifyContent: "space-evenly",
                                  borderRadius: "15px",
-                                 boxShadow: isActiveNNM || isAlgorithmus === "Nearest Neighbour" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                 boxShadow: isActiveNNM || isAlgorithmusNav === "Nearest Neighbour" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                              }}
                         > Nearest Neighbour <br/>Matching (NNM)
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveOM || isAlgorithmus === "Optimal Matching" ? "#1d4189":'#E8E9EB',
-                                color: isActiveOM || isAlgorithmus === "Optimal Matching" ? "white":"#666666",
+                                backgroundColor: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "#1d4189":'#E8E9EB',
+                                color: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
                                 width: "15rem",
@@ -167,7 +174,7 @@ function MatchingAlgorithmus({setAlgorithmus, setErsetzung, isErsetzung, isAlgor
                                 alignItems:"center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveOM || isAlgorithmus === "Optimal Matching" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveOM || isAlgorithmusNav === "Optimal Matching" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionOM}
                         > Optimal Matching (OM)

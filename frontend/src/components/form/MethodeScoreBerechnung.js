@@ -15,7 +15,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
+function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethodeNav, setScoreMethodeNav}) {
 
     const [isActiveML, setIsActiveML] = useState(false);
     const [isActiveLR, setIsActiveLR] = useState(false);
@@ -24,6 +24,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
         if(!isActiveLR){
             setIsActiveLR(true);
             setScoreMethode("Logistische Regression");
+            setScoreMethodeNav("Logistische Regression");
             setIsActiveML(false);
         }
 
@@ -33,17 +34,16 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
         if(!isActiveML){
             setIsActiveML(true);
             setScoreMethode("Matching Learning Methode");
+            setScoreMethodeNav("Matching Learning Methode");
         setIsActiveLR(false);
         }
-
-
-
     }
 
     function löschen(){
         setIsActiveLR(false);
         setIsActiveML(false);
         setScoreMethode('defaultScoreMethode');
+        setScoreMethodeNav('defaultScoreMethode');
     }
 
     return (
@@ -72,8 +72,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
                     <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionLR}
                              style={{
-                                 backgroundColor: isActiveLR || isScoreMethode === "Logistische Regression" ? "#1d4189":'#E8E9EB',
-                                 color: isActiveLR || isScoreMethode === "Logistische Regression" ? "white":"#666666",
+                                 backgroundColor: isActiveLR || isScoreMethodeNav === "Logistische Regression" ? "#1d4189":'#E8E9EB',
+                                 color: isActiveLR || isScoreMethodeNav === "Logistische Regression" ? "white":"#666666",
                                  fontSize:"large",
                                  display: "flex",
                                  width: "15rem",
@@ -87,8 +87,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveML || isScoreMethode === "Matching Learning Methode"? "#1d4189":'#E8E9EB',
-                                color: isActiveML || isScoreMethode === "Matching Learning Methode" ? "white":"#666666",
+                                backgroundColor: isActiveML || isScoreMethodeNav === "Matching Learning Methode"? "#1d4189":'#E8E9EB',
+                                color: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
                                 width: "15rem",
@@ -96,7 +96,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode}) {
                                 alignItems:"center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveML || isScoreMethode === "Matching Learning Methode" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionML}
                         > Matching Learning Methode
