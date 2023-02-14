@@ -56,30 +56,42 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
                 /*var fileRight = rowsArray.map(function(value, index){return [value,valuesArray[index]]});
                 console.log(fileRight);*/
 
-                var fileRight = rowsArray[0].map(
-                    function(value, index){
-                        var tmpArray =[];
-                        for(let x=0; x<rowsArray[0].length; x++){ //geht alle Spalten durch (9 Stück)
-                            for(let i=0; i<valuesArray; i++){
-                                    tmpArray.push(valuesArray[i][x]);
-                            }
+                let tmpZ = (element)=>{
+                    for(let i = 0; i <valuesArray.length; i++){
+                        for(let x = 0; x < valuesArray[i].length; x++) {
+                            console.log(valuesArray[x][i])
+                            return element.concat(valuesArray[x][i]) ;
                         }
-                        return [value,tmpArray]});
+                    }
+                };
+                let tmpArray= [];
+                let tmpa = (element)=>{
+                    valuesArray.forEach(i => i.forEach( z => tmpArray.push(z) ))
+                }
+
+                console.log(tmpArray);
+
+                var fileRight = rowsArray[0].map( element => tmpa(element));
+
                 console.log(fileRight);
-
-
 
                 setDatei(event.target.files[0].name);
                 setDateiSpaltenNamen(rowsArray[0]);
                 setVollständigeDatei(test_data);
 
-                console.log(results.data)
-                console.log(valuesArray.length)
-                console.log(valuesArray[0].length)
+                console.log(results.data);
+
+                console.log(valuesArray);//(20)[Array(9)]
+                console.log(valuesArray.length) //20
+                console.log(valuesArray[0].length) //9
+                console.log(valuesArray[0]);
+                console.log(valuesArray[0][0]);
+
                 console.log(rowsArray);
                 console.log(rowsArray[0][0].length);
                 console.log(rowsArray[0][0]);
-                console.log(valuesArray);
+
+
                 setBeobachtungen(valuesArray.length);
                 console.log(isVollständigeDatei);
 
@@ -90,7 +102,6 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
             },
         });
     };
-
 
 
     return (
