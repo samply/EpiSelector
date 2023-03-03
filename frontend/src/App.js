@@ -189,7 +189,16 @@ function App() {
                                         isÜbereinstimmungswert={isÜbereinstimmungswert} />}
                                 />
                                 <Route path="/Matching-Ergebnis"
-                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen} isAllKontrollvariablen={isAllKontrollvariablen} isMatchingMethode={isMatchingMethode} isDateiSpaltenNamen={isDateiSpaltenNamen} />}
+                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen} 
+                                    isAllKontrollvariablen={isAllKontrollvariablen} 
+                                    isMatchingMethode={isMatchingMethode} 
+                                    isDateiSpaltenNamen={isDateiSpaltenNamen} 
+                                    isAlgorithmus={isAlgorithmus}
+                                    isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
+                                    isZielvariable={isZielvariable}
+                                    isVollständigeDatei={isVollständigeDatei}
+                                    isScoreMethode={isScoreMethode}
+                                    isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} />} />
                             </Routes>

@@ -166,14 +166,23 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
     const selectVariableA = (event) => {
 
+        var temp_string = "["
+        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
+            console.log(isAllKontrollvariablen[i])
+            console.log(isAllKontrollvariablen[i].var)
+            temp_string += isAllKontrollvariablen[i].var + ","
+        }
+        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
+        temp_string += "]"
+
         var param = {
-            groupindicator: "icu_mort",
-            controllvariables: "[age,sex,duration_h]",
-            mmethod: "nearest",
+            groupindicator: isZielvariable,
+            controllvariables: temp_string,
+            mmethod: isAlgorithmus,
             mdistance: "glm",
-            mreplace: "TRUE",
-            mratio: "2",
-            mcaliper: "0.2",
+            mreplace: isErsetzung,
+            mratio: isVerhältnis,
+            mcaliper: isÜbereinstimmungswert,
             controllvariable: event.target.value
         };
 
@@ -199,10 +208,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 console.error('Error:', error);
             });
 
-        //setHistograms([8.2, 10.4], [-100.2, -140.4], [8.2, 10.4], [-100.2, -140.4], 'ICU_MORT = 0', 'ICU_MORT = 1', '', 'm', 'w');
-
         setVariableA(event.target.value);
-
 
     };
 
@@ -232,14 +238,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((json) => {
-                console.log(json)
-                console.log(json.boxplot_one)
-                console.log(json.boxplot_two)
-                setBoxplots(event.target.value, 'icu_mort', [json.boxplot_one,
-                json.boxplot_two], [[0, 959.7167], [0, 1030], [0, 1042.1], [0, 1070], [0, 1107.9167], [0, 1276.7167], [0, 1507.1167], [0, 1914.8833], [1, 906.3167], [1, 918.7333], [1, 1242.4833], [1, 1269.2333], [1, 1368.4], [1, 2296.1333], [1, 2516.5]
-                ], [[72, 116.2167, 228, 410.9833, 830.75],
-                [73.3, 139.6917, 246.9, 444.5417, 897.5167]], [[0, 959.7167], [0, 1030], [0, 1042.1], [0, 1070], [0, 1107.9167], [0, 1276.7167], [0, 1507.1167], [0, 1914.8833], [1, 906.3167], [1, 918.7333], [1, 1242.4833], [1, 1269.2333], [1, 1368.4], [1, 2296.1333], [1, 2516.5]
-                ]);
+                setBoxplots(event.target.value, 'icu_mort', [json.boxplot_one,json.boxplot_two], [], [], []);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -657,7 +656,14 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((data) => {
-                setHistoSelector(data)
+                // remove target variable from list of variables
+                var newList = new Array();
+                for(var i = 0; i < data.length; i++) {
+                    if (data[i] != isZielvariable) {
+                        newList.push(data[i]);
+                    } 
+                }
+                setHistoSelector(newList)
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -741,6 +747,21 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
         label_variable_one.textContent = 'ICU_MORT = 1';
         disable_var_select = false;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     };
 
     let clearDiagrams = () => {
