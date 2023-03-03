@@ -34,8 +34,11 @@ function App() {
     const [isDatei, setDatei] = useState('defaultDatei');
     const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
     const [isVerhältnis, setVerhältnis] = useState('defaultVerhältnis');
+    const [isVerhältnisNav, setVerhältnisNav] = useState('defaultVerhältnis');
     const [isScoreMethode, setScoreMethode] = useState('defaultScoreMethode');
+    const [isScoreMehodeNav, setScoreMethodeNav] = useState('defaultScoreMethode');
     const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgo');
+    const [isAlgorithmusNav, setAlgorithmusNav] = useState('defaultAlgo');
     const [isÜbereinstimmungswert, setÜbereinstimmungswert] = useState('defaultÜbereinstimmungswert');
     const [isZielvariable, setZielvariable] = useState('defaultZielvariable');
     const [isKontrollvariablen, setKontrollvariablen] = useState('defaultKontrollvariablen');
@@ -45,6 +48,7 @@ function App() {
     const [isMatchingtoleranzChip, setMatchingtoleranzChip] = useState("");
     const [isFälleKontrollenGruppenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
     const [isErsetzung, setErsetzung] = useState('FALSE');
+    const [isErsetzungNav, setErsetzungNav] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
     const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
@@ -97,9 +101,13 @@ function App() {
                             isMatchingtoleranz={isMatchingtoleranz}
                             isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                             isVerhältnis={isVerhältnis}
+                            isVerhältnisNav={isVerhältnisNav}
                             isScoreMethode={isScoreMethode}
+                            isScoreMethodeNav={isScoreMehodeNav}
                             isAlgorithmus={isAlgorithmus}
+                            isAlgorithmusNav={isAlgorithmusNav}
                             isErsetzung={isErsetzung}
+                            isErsetzungNav={isErsetzungNav}
                             isÜbereinstimmungswert={isÜbereinstimmungswert}
                             isMatchingtoleranzChip={isMatchingtoleranzChip}
                             isFKChip={isFKChip}
@@ -164,18 +172,26 @@ function App() {
                                 />
                                 <Route path="/Matching-Verhältnis"
                                     element={<MatchingVerhältnis setVerhältnis={setVerhältnis}
-                                        isVerhältnis={isVerhältnis}
-                                        isMatchingMethode={isMatchingMethode} />}
+                                                                 setVerhältnisNav={setVerhältnisNav}
+                                                                 isVerhältnis={isVerhältnis}
+                                                                 isVerhältnisNav={isVerhältnisNav}
+                                                                 isMatchingMethode={isMatchingMethode} />}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
                                     element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}
-                                        isScoreMethode={isScoreMethode} />}
+                                                                     isScoreMethode={isScoreMethode}
+                                                                     isScoreMethodeNav={isScoreMehodeNav}
+                                                                     setScoreMethodeNav={setScoreMethodeNav}/>}
                                 />
                                 <Route path="/MatchingAlgorithmus"
                                     element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus}
-                                        setErsetzung={setErsetzung}
-                                        isErsetzung={isErsetzung}
-                                        isAlgorithmus={isAlgorithmus} />}
+                                                                  isAlgorithmus={isAlgorithmus}
+                                                                  isAlgorithmusNav={isAlgorithmusNav}
+                                                                  setAlgorithmusNav={setAlgorithmusNav}
+                                                                  setErsetzung={setErsetzung}
+                                                                  isErsetzung={isErsetzung}
+                                                                  isErsetzungNav={isErsetzungNav}
+                                                                  setErsetzungNav={setErsetzungNav}/>}
                                 />
                                 <Route path="/ÜbereinstimmungPropensityScore"
                                     element={<ÜbereinstimmungPropensityScore isAlgorithmus={isAlgorithmus}

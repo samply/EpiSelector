@@ -14,7 +14,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 import MatchingMethode from "./MatchingMethode";
 
-function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode}) {
+function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode}) {
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -33,6 +33,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
             setIsActive110(false);
             setIsActive1Edit(false);
             setVerhältnis("1");
+            setVerhältnisNav("1:1");
         }
 
         // 👇️ or set to true
@@ -48,6 +49,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
             setIsActive110(false);
             setIsActive1Edit(false);
             setVerhältnis("2");
+            setVerhältnisNav("1:2");
 
         }
         // 👇️ or set to true
@@ -58,6 +60,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         if (!isActive13) {
             setIsActive13(true);
             setVerhältnis("3");
+            setVerhältnisNav("1:3");
             setIsActive12(false);
             setIsActive11(false);
             setIsActive14(false);
@@ -72,6 +75,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         if (!isActive14) {
             setIsActive14(true);
             setVerhältnis("4");
+            setVerhältnisNav("1:4");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive11(false);
@@ -86,6 +90,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         if (!isActive110) {
             setIsActive110(true);
             setVerhältnis("10");
+            setVerhältnisNav("1:10");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive14(false);
@@ -100,6 +105,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, isMatchingMethode})
         if (!isActive1Edit) {
             setIsActive1Edit(true);
             setVerhältnis("X");
+            setVerhältnisNav("1:X");
             setIsActive12(false);
             setIsActive13(false);
             setIsActive14(false);

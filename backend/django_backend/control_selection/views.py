@@ -10,13 +10,13 @@ import requests as r
 @api_view(['GET'])
 def index(request):
     print("Here I am: " + request.method)
-    
+
     if request.method == 'GET':
         print("looking for you")
         name = request.query_params.get('name', None)
         body = request.data.get('reason')
         print(body)
-        base_url = "http://127.0.0.1:3699/test"
+        base_url = "http://127.0.0.1:6341/test"
         print("--------------------------------------------------------------------------------------------------------------            Dies ist die URL " +  base_url)
         req = r.get(base_url, proxies = {'http': '','https': '',})
         data = req.json()
@@ -38,7 +38,7 @@ def vote(request):
 @api_view(['POST'])
 def boolean_columns(request):
     body = request.data
-    base_url = "http://127.0.0.1:3699/boolean_columns"
+    base_url = "http://127.0.0.1:6341/boolean_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
     data = req.json()
     return Response(data)
@@ -47,7 +47,7 @@ def boolean_columns(request):
 @api_view(['POST'])
 def numeric_columns(request):
     body = request.data
-    base_url = "http://127.0.0.1:3699/numeric_columns"
+    base_url = "http://127.0.0.1:6341/numeric_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
     data = req.json()
     return Response(data)
@@ -65,7 +65,7 @@ def histogram(request):
     mratio = request.query_params.get("mratio")
     controllvariable = request.query_params.get("controllvariable")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'controllvariable':controllvariable}
-    base_url = "http://127.0.0.1:3699/histogram"
+    base_url = "http://127.0.0.1:6341/histogram"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -82,7 +82,7 @@ def pie_chart(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:3699/pie_chart"
+    base_url = "http://127.0.0.1:6341/pie_chart"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -99,7 +99,7 @@ def summary(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:3699/summary"
+    base_url = "http://127.0.0.1:6341/summary"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -115,7 +115,7 @@ def result_data(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:3699/result_data"
+    base_url = "http://127.0.0.1:6341/result_data"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -126,7 +126,7 @@ def boxplot(request):
     variable_x_axis = request.query_params.get("variable_x_axis")
     variable_y_axis = request.query_params.get("variable_y_axis")
     params = {'variable_x_axis': variable_x_axis, 'variable_y_axis': variable_y_axis}
-    base_url = "http://127.0.0.1:3699/boxplot"
+    base_url = "http://127.0.0.1:6341/boxplot"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
