@@ -139,20 +139,22 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                 </TimelineSeparator>
                                 <TimelineContent>
                                 <Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
-                                Datei hochladen<br/><div
-                                style={{display: "flex",
-                                paddingLeft: "10%",
-                                paddingRight: "10%",
-                                left: "60px",
-                                backgroundColor: "#B11B18",
-                                width: "auto",
-                                height: "42%",
-                                borderRadius: "15px",
-                                color: "white",
-                                justifyContent: "baseline",
-                                paddingTop:"1%",
-                                visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
-                            }}> {isDatei}</div></Link>
+                                Datei hochladen<br/>
+                                    <div
+                                        style={{display: "flex",
+                                        paddingLeft: "10%",
+                                        paddingRight: "10%",
+                                        left: "60px",
+                                        backgroundColor: "#B11B18",
+                                        width: "auto",
+                                        height: "42%",
+                                        borderRadius: "15px",
+                                        color: "white",
+                                        justifyContent: "baseline",
+                                        paddingTop:"1%",
+                                        visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
+                                    }}> {isDatei}</div>
+                                </Link>
                                 </TimelineContent>
                                 </TimelineItem>
 

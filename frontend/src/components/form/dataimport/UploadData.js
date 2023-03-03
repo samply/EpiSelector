@@ -19,135 +19,195 @@ import test_data from "../../../assets/test_data.json"
 
 export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
 
-    // State to store parsed data
-    const [parsedData, setParsedData] = useState([]);
-
-    //State to store table Column name
-    const [tableRows, setTableRows] = useState([]);
-
-    //State to store the values
-    const [values, setValues] = useState([]);
+    const [file, setFile] = useState();
+    const [array, setArray] = useState([]);
 
 
-    const changeHandler = (event) => {
-        // Passing file data (event.target.files[0]) to parse using Papa.parse
-        Papa.parse(event.target.files[0], {
-            header: true,
-            skipEmptyLines: true,
-            complete: function (results) {
-                const rowsArray = [];
-                const valuesArray = [];
+    const fileReader = new FileReader();
 
-                // Iterating data to get column name and their values
-                results.data.map((d) => {
-                    rowsArray.push(Object.keys(d));
-                    valuesArray.push(Object.values(d));
-                });
+    const handleOnChange = (e) => {
+        console.log(e.target.files[0].name);
+        setFile(e.target.files[0]);
+        setDatei(e.target.files[0].name);
 
-                // Parsed Data Response in array format
-                setParsedData(results.data);
-
-                // Filtered Column Names
-                setTableRows(rowsArray[0]);
-
-                // Filtered Values
-                setValues(valuesArray);
-
-                /*var fileRight = rowsArray.map(function(value, index){return [value,valuesArray[index]]});
-                console.log(fileRight);*/
-
-                let tmpZ = (element)=>{
-                    for(let i = 0; i <valuesArray.length; i++){
-                        for(let x = 0; x < valuesArray[i].length; x++) {
-                            console.log(valuesArray[x][i])
-                            return element.concat(valuesArray[x][i]) ;
-                        }
+        const files = e.target.files;
+        console.log(files);
+        if (files) {
+            console.log(files[0]);
+            Papa.parse(files[0], {
+                    complete: function (results) {
+                        console.log("Finished:", results.data);
+                        const jsonFile =   results.data[0].reduce((a,v) => ({...a,[v]:v}), {});
+                        console.log("jsonFile" +jsonFile);
                     }
-                };
-                let tmpArray= [];
-                let tmpa = (element)=>{
-                    valuesArray.forEach(i => i.forEach( z => tmpArray.push(z) ))
                 }
-
-                console.log(tmpArray);
-
-                var fileRight = rowsArray[0].map( element => tmpa(element));
-
-                console.log(fileRight);
-
-                setDatei(event.target.files[0].name);
-                setDateiSpaltenNamen(rowsArray[0]);
-                setVollständigeDatei(test_data);
-
-                console.log(results.data);
-
-                console.log(valuesArray);//(20)[Array(9)]
-                console.log(valuesArray.length) //20
-                console.log(valuesArray[0].length) //9
-                console.log(valuesArray[0]);
-                console.log(valuesArray[0][0]);
-
-                console.log(rowsArray);
-                console.log(rowsArray[0][0].length);
-                console.log(rowsArray[0][0]);
+            )
+        }
 
 
-                setBeobachtungen(valuesArray.length);
-                console.log(isVollständigeDatei);
 
-                Datainput = new Datainput(rowsArray, valuesArray);
 
-                Form.state.datei = Datainput.toString();
-                console.log(Form.state.datei);
-            },
+    };
+
+    const csvFileToArray = string => {
+        const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
+        const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+        console.log("csvHeader" + csvHeader);
+        console.log("csvRows" + csvRows);
+
+
+        setDateiSpaltenNamen(csvHeader);
+
+        const array = csvRows.map(i => {
+            const values = i.split(",");
+            const obj = csvHeader.reduce((object, header, index) => {
+                object[header] = values[index];
+                return object;
+            }, {});
+            return obj;
         });
+
+        setArray(array);
+        //--------------------------------------
+        /* var array = string.toString().split(" ")
+         //  console.log(array); here we are getting the first rows which is our header rows to convert it into keys we are logging it here
+         var data = []
+         // console.log(data);
+         for(const r of array){
+             // console.log(r);
+             let row = r.toString().split(",")
+             data.push(row)
+         }
+         console.log(data)
+         var heading = data[0]
+         // console.log(heading); to get the column headers which will act as key
+         var ans_array = []
+         // console.log(ans_array);
+         for(var i=1;i<data.length;i++){
+             var row = data[i]
+             var obj = {}
+             for(var j=0;j<heading.length;j++){
+                 if(!row[j]){
+                     row[j]="NA";
+                 }
+                 // console.log(row[j].toString())
+                 obj[heading[j].replaceAll(" ","_")] = row[j].toString().replaceAll(" ","_")
+             }
+             ans_array.push(obj)
+         }
+         console.log({ans_array})*/
     };
 
 
+    const handleOnSubmit = (e) => {
+        e.preventDefault();
+
+        if (file) {
+            fileReader.onload = function (event) {
+                const csvOutput = event.target.result;
+                console.log("csvOutput" + csvOutput);
+                setDateiSpaltenNamen(csvOutput[0]);
+                // setBeobachtungen(csvOutput.length);
+                csvFileToArray(csvOutput);
+            };
+
+            fileReader.readAsText(file);
+            console.log("fileReader" + fileReader);
+        }
+    };
+
+    const headerKeys = Object.keys(Object.assign({}, ...array));
+
+
     return (
-        <Card  sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
+        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%", paddingLeft:"3%"}} >
+                <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <div style={{width: "100%", height: "80%", paddingBottom:"17%"}}>
+                <div style={{width: "100%", height: "80%", paddingBottom: "17%"}}>
+                    <form>
+                        <input
+                            type={"file"}
+                            id={"csvFileInput"}
+                            accept={".csv"}
+                            onChange={handleOnChange}
+                        />
 
-                            <input
-                                type="file"
-                                name="file"
-                                onChange={changeHandler}
-                                accept=".csv"
-                                style={{
-                                    marginTop: "5%",
-                                    marginLeft: "3%",
-                                    padding: "5%",
-                                    border: "dashed lightgrey",
-                                    width: "80%",
-                                    justifyContent: "space-evenly"
-                                }}
-                            />
+                        <button
+                            onClick={(e) => {
+                                handleOnSubmit(e);
+                            }}
+                        >
+                            IMPORT CSV
+                        </button>
+                    </form>
+                    <br/>
+                    {/* <table sx={{maxHeight: "100px", overflow:"auto", maxWidth:"100px"}}>
+                            <thead>
+                            <tr key={"header"}>
+                                {headerKeys.map((key) => (
+                                    <th>{key}</th>
+                                ))}
+                            </tr>
+                            </thead>
 
+                            <tbody>
+                            {array.map((item) => (
+                                <tr key={item.id}>
+                                    {Object.values(item).map((val) => (
+                                        <td>{val}</td>
+                                    ))}
+                                </tr>
+                            ))}
+                            </tbody>
+                        </table>*/}
                 </div>
 
 
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={()=> {
+                <div style={{
+                    height: "8%",
+                    display: "flex",
+                    float: "right",
+                    gap: "3%",
+                    width: "42%",
+                    marginRight: "3%"
+                }}>
+                    <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{
+                        height: "100%",
+                        width: "auto",
+                        borderColor: "#1d4189",
+                        "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                        color: "#1d4189"
+                    }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Button sx={{
+                        width: "auto",
+                        borderColor: "#B11B18",
+                        color: "#B11B18",
+                        "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                    }} variant="outlined"><DeleteIcon/>Löschen</Button>
+                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={() => {
                         visitedSite("matchingmethode");
-                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    }}><Button sx={{
+                        height: "100%",
+                        width: "auto",
+                        color: "white",
+                        border: "none",
+                        backgroundColor: "#1d4189",
+                        "&:hover": {backgroundColor: "#1d4189"}
+                    }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
 
             </CardContent>
         </Card>
     );
-}
 
+}
 
