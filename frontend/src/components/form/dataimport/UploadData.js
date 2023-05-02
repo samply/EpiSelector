@@ -17,34 +17,49 @@ import {CardHeader} from "@mui/material";
 import test_data from "../../../assets/test_data.json"
 
 
-export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
 
-    const [file, setFile] = useState();
+
+export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
+
+    const [file, setFile] = useState('');
     const [array, setArray] = useState([]);
 
 
+    let column = [];
+    let rows = [];
+    let data = [];
+
     const fileReader = new FileReader();
 
-    const handleOnChange = (e) => {
+    const handleOnChange = async (e) => {
+
+        // only File name will be uploaded
         console.log(e.target.files[0].name);
         setFile(e.target.files[0]);
         setDatei(e.target.files[0].name);
 
         const files = e.target.files;
+        // list of Files wants to be displayed, but length says 1 and Files 0
         console.log(files);
         if (files) {
+             // the only uploaded File = Details about Name, LastModifikation, Date, Size etc.
             console.log(files[0]);
             Papa.parse(files[0], {
                     complete: function (results) {
+                        // in Arrays the whole content
                         console.log("Finished:", results.data);
-                        const jsonFile =   results.data[0].reduce((a,v) => ({...a,[v]:v}), {});
-                        console.log("jsonFile" +jsonFile);
+
+                        column = results.data[0];
+                        data = results.data;
+                        const jsonFile = results.data.reduce((a, v) => ({...a, [v[0]]: v}), {});
+                        // trying to convert to {"x":[],"y":[]} but wrong placement of content
+                        console.log(jsonFile);
+                        console.log("jsonFile" + JSON.stringify(jsonFile));
+
                     }
                 }
             )
         }
-
-
 
 
     };
@@ -52,10 +67,12 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
     const csvFileToArray = string => {
         const csvHeader = string.slice(0, string.indexOf("\n")).split(",");
         const csvRows = string.slice(string.indexOf("\n") + 1).split("\n");
+        // only Header of table is output
         console.log("csvHeader" + csvHeader);
+        // output: rows content as a block
         console.log("csvRows" + csvRows);
 
-
+        rows = csvRows;
         setDateiSpaltenNamen(csvHeader);
 
         const array = csvRows.map(i => {
@@ -66,37 +83,13 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
             }, {});
             return obj;
         });
-
         setArray(array);
-        //--------------------------------------
-        /* var array = string.toString().split(" ")
-         //  console.log(array); here we are getting the first rows which is our header rows to convert it into keys we are logging it here
-         var data = []
-         // console.log(data);
-         for(const r of array){
-             // console.log(r);
-             let row = r.toString().split(",")
-             data.push(row)
-         }
-         console.log(data)
-         var heading = data[0]
-         // console.log(heading); to get the column headers which will act as key
-         var ans_array = []
-         // console.log(ans_array);
-         for(var i=1;i<data.length;i++){
-             var row = data[i]
-             var obj = {}
-             for(var j=0;j<heading.length;j++){
-                 if(!row[j]){
-                     row[j]="NA";
-                 }
-                 // console.log(row[j].toString())
-                 obj[heading[j].replaceAll(" ","_")] = row[j].toString().replaceAll(" ","_")
-             }
-             ans_array.push(obj)
-         }
-         console.log({ans_array})*/
+
+
+
+
     };
+
 
 
     const handleOnSubmit = (e) => {
@@ -104,19 +97,105 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
 
         if (file) {
             fileReader.onload = function (event) {
-                const csvOutput = event.target.result;
-                console.log("csvOutput" + csvOutput);
-                setDateiSpaltenNamen(csvOutput[0]);
-                // setBeobachtungen(csvOutput.length);
-                csvFileToArray(csvOutput);
-            };
+                const csv = event.target.result;
+                // output in rows the complete content
+                console.log("csvOutput" + csv);
 
-            fileReader.readAsText(file);
-            console.log("fileReader" + fileReader);
-        }
+                //-----
+
+                const lines = csv.split("\n");
+                const headers = lines[0].split(",");
+                const result = {};
+
+                for (let i = 0; i < headers.length; i++) {
+                    result[headers[i]] = [];
+                }
+
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split(",");
+                    for (let j = 0; j < values.length; j++) {
+                        let parsedValue;
+                        if (values[j].trim() === "") {
+                            parsedValue = "";
+                        } else if (isNaN(values[j])) {
+                            parsedValue = values[j].replace(/\r/g, '');
+                        } else {
+                            parsedValue = parseFloat(values[j]);
+                        }
+                        result[headers[j]].push(parsedValue);
+                    }
+                }
+
+                console.log(result);
+
+
+                    //----
+                    setDateiSpaltenNamen(csv[0]);
+                    // setBeobachtungen(csv.length);
+                    csvFileToArray(csv);
+
+                    let jsonFile = {};
+                    let tmpObj = {};
+                    let key = "";
+                    let value = [];
+
+                    for (let x = 0; x <= csv[0].length; x++) {
+                        key = csv[0][x];
+                        for (let y = 0; y <= csv.length; y++) {
+                            value = csv[y][x];
+
+                        }
+                        tmpObj = {key: key, value: value};
+                        // can't be read, output= fileReader[object RleReader]
+                        console.log(tmpObj);
+
+
+                    }
+                }
+                ;
+
+                fileReader.readAsText(file);
+
+                console.log("fileReader" + fileReader.toString());
+            }
+
+
     };
 
-    const headerKeys = Object.keys(Object.assign({}, ...array));
+    // NEW TRY CHATGPTs Code
+/*
+    function csvToJson(csv) {
+        // Split the CSV string into rows
+        const rows = csv.trim().split('\n');
+
+        // Extract the headers from the first row
+        const headers = rows[0].split(',');
+
+        // Create an object with empty arrays for each header
+        const json = {};
+        headers.forEach(header => json[header] = []);
+
+        // Loop through the remaining rows
+        for (let i = 1; i < rows.length; i++) {
+            // Split the row into values
+            const values = rows[i].split(',');
+
+            // Loop through the headers and add the corresponding value to the array
+            headers.forEach((header, index) => {
+                json[header].push(values[index]);
+            });
+        }
+
+        return json;
+    }
+    var  csv = `record_id,_intime,_outtime,sepsis_jn,_sepsistime,gender,age,height,weight
+1,01JUN2020:07:00,06JUN2020:20:00,1,02JUN2020:09:00,0,61,180,85
+2,02JUN2020:08:00,03JUN2020:23:00,0,,0,65,188,95
+3,01JUN2020:14:00,04JUN2020:03:00,0,,1,44,172,77`;
+
+    const json = csvToJson(csv);
+    console.log(json);*/
+
 
 
     return (
@@ -192,9 +271,8 @@ export default function UploadData({ setDatei, setDateiSpaltenNamen, setVollstä
                         color: "#B11B18",
                         "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                     }} variant="outlined"><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Matching-Methode' onClick={() => {
-                        visitedSite("matchingmethode");
-                    }}><Button sx={{
+                    <Link style={{textDecoration: "none"}}  onClick={() => {visitedSite("matchingmethode");}} to='/Matching-Methode'>
+                        <Button   sx={{
                         height: "100%",
                         width: "auto",
                         color: "white",
