@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DangerousIcon from '@mui/icons-material/Dangerous';
 
-function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen}) {
+function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable}) {
 
     const fertigeTabelle=[];
 
@@ -34,6 +34,10 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
             return "/ÜbereinstimmungPropensityScore";
         }
     };
+
+    const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
+    const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
+
 
     return (
         <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
@@ -57,11 +61,11 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
                                     </TableRow>
                                     <TableRow>
                                         <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Variable</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">{columnHeader0}</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">{columnHeader1}</TableCell>
                                         <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Differenz</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=0</TableCell>
-                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">icu_mort=1</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">{columnHeader0}</TableCell>
+                                        <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">{columnHeader1}</TableCell>
                                         <TableCell  sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Differenz</TableCell>
                                         <TableCell  colSpan={2} sx={{backgroundColor:"#E8E9EB", fontSize:"small", padding:"8px"}} align="center">Balance</TableCell>
                                     </TableRow>

@@ -84,7 +84,7 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                 <br/>
                 <Typography variant="h4">
                     Willkommen beim
-                    Beobachtungsstudien-Assistent
+                    Beobachtungsstudien-Assistenten
                 </Typography>
                 <br/><br/>
                 <Typography variant="h6">

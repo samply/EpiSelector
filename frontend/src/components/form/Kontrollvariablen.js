@@ -14,21 +14,26 @@ import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen, isAllKontrollvariablen }) {
+function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen, isAllKontrollvariablen, isZielvariable }) {
 
     console.log(isDateiSpaltenNamen);
     console.log(isDateiSpaltenNamen.length);
 
+    const filteredArray = isDateiSpaltenNamen.filter(item => item !== isZielvariable);
+    console.log('filteredArray' + filteredArray);
+
     let resultArray = [];
 
-    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 0; i < filteredArray.length; i++) {
         const tempObj = {
             id: i,
-            var: isDateiSpaltenNamen[i]
+            var: filteredArray[i]
         };
         resultArray.push(tempObj);
     }
     console.log(resultArray);
+
+
     let kVarray = [];
     let selectedRowsData;
     const onRowsSelectionHandler = (ids) => {

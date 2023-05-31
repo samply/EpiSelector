@@ -20,7 +20,7 @@ function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllM
     let tableArray = [];
     let placeholder=[];
 
-    const [toleranzwert, settoleranzwert] = useState(() => { if(isMatchingtoleranz===""){for( let i =0; i< isAllMatchingvariablen.length; i++){placeholder[i]="±0.00 ";} setMatchingtoleranz(placeholder); return placeholder; }else{ return isMatchingtoleranz} });
+    const [toleranzwert, settoleranzwert] = useState(() => { if(isMatchingtoleranz===""){for( let i =0; i< isAllMatchingvariablen.length; i++){placeholder[i]="0.00 ";} setMatchingtoleranz(placeholder); return placeholder; }else{ return isMatchingtoleranz} });
 
     for (let i = 0; i < isAllMatchingvariablen.length; i++) {
             const tempObj = {
@@ -35,7 +35,11 @@ function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllM
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true},
         { field: 'ausgewählteVariablen', headerName: 'Ausgewählte Variable', width: 295},
-        { field: 'toleranzwert', headerName: 'Toleranzwert', width: 290, editable: true },
+        { field: 'toleranzwert', headerName: 'Toleranzwert', width: 290,  renderCell: (params) => (
+                <span>± {params.value}</span>
+            ),
+            editable: true,
+        },
     ];
 
     let tmpArray = [];

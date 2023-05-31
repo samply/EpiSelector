@@ -148,7 +148,8 @@ function App() {
                                     element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}
                                         setAllKontrollvariablen={setAllKontrollvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
-                                        isAllKontrollvariablen={isAllKontrollvariablen} />}
+                                        isAllKontrollvariablen={isAllKontrollvariablen}
+                                        isZielvariable={isZielvariable} />}
                                 />
                                 <Route path="/Matchingvariablen"
                                     element={<Matchingvariablen setMatchingvariablen={setMatchingvariablen}
@@ -168,6 +169,8 @@ function App() {
                                         isAllMatchingvariablen={isAllMatchingvariablen}
                                         isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                                         setFKChip={setFKChip}
+                                        isDateiSpaltenNamen={isDateiSpaltenNamen}
+                                        isMatchingvariablen={isMatchingvariablen}
                                     />}
                                 />
                                 <Route path="/Matching-Verhältnis"
@@ -205,7 +208,13 @@ function App() {
                                         isÜbereinstimmungswert={isÜbereinstimmungswert} />}
                                 />
                                 <Route path="/Matching-Ergebnis"
-                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen} isAllKontrollvariablen={isAllKontrollvariablen} isMatchingMethode={isMatchingMethode} isDateiSpaltenNamen={isDateiSpaltenNamen} />}
+                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
+                                                               isAllKontrollvariablen={isAllKontrollvariablen}
+                                                               isMatchingMethode={isMatchingMethode}
+                                                               isDateiSpaltenNamen={isDateiSpaltenNamen}
+                                                               isZielvariable={isZielvariable}
+                                                               isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
+                                    />}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} />} />
                             </Routes>

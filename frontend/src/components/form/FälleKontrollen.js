@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import {useState} from "react";
 
 
-function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen }) {
 
 
 
@@ -44,30 +44,37 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true},
-        { field: 'variable', headerName: 'Variable', width: 270, disableClickEventBubbling: true},
+        { field: 'var', headerName: 'Variable', width: 270, disableClickEventBubbling: true},
         // { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 300,  disableClickEventBubbling: true,},
         // { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165 }, renderCell: renderDetailsButton, disableClickEventBubbling: true,
     ];
 
+    const filteredArray = isDateiSpaltenNamen.filter(value => !isAllMatchingvariablen.some(obj => obj.var === value));
+    console.log('filteredArray' + filteredArray);
+
     let rows=[];
-    for (let i = 0; i < isAllMatchingvariablen.length; i++) {
+    for (let i = 0; i < filteredArray.length; i++) {
         const tempObj = {
             id: i,
-            variable: isAllMatchingvariablen[i].var,
+            var: filteredArray[i],
         };
         rows.push(tempObj);
     }
+    console.log(rows);
 
     const [selectionModel, setSelectionModel] = useState(() =>
-        rows.filter((r) => r.variable === isFälleKontrollenGruppenindikator).map((r) => r.id),
+        rows.filter((r) => r.var === isFälleKontrollenGruppenindikator).map((r) => r.id),
     );
 
     const onRowsSelectionHandler = (ids) => {
         const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
         console.log(selectedRowsData);
-        selectedRowsData.forEach((row)=>{console.log(row.variable); setFälleKontrollenGruppenIndikator(row.variable); setFKChip("Gruppenindikator: " + row.variable);});
-
+        selectedRowsData.forEach((row)=>{
+            console.log(row.variable);
+            setFälleKontrollenGruppenIndikator(row.var);
+            setFKChip("Gruppenindikator: " + row.var);});
     };
+
 
     return (
         <Card sx={{ width: "100%", height: "100%", borderRadius: '10px 10px 10px 10px' }}>

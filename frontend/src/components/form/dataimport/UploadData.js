@@ -74,6 +74,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
 
         rows = csvRows;
         setDateiSpaltenNamen(csvHeader);
+        console.log(csvHeader);
 
         const array = csvRows.map(i => {
             const values = i.split(",");
@@ -127,10 +128,12 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 }
 
                 console.log(result);
+                setVollständigeDatei(result);
 
 
                     //----
-                    setDateiSpaltenNamen(csv[0]);
+                    // setDateiSpaltenNamen(csv[0]);
+                    // console.log(csv[0]);
                     // setBeobachtungen(csv.length);
                     csvFileToArray(csv);
 
@@ -197,7 +200,6 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
     console.log(json);*/
 
 
-
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
@@ -210,22 +212,24 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <div style={{width: "100%", height: "80%", paddingBottom: "17%"}}>
+                <div style={{ marginLeft:"12%", display:"flex", justifyConent: "center", alignItems:"center", alignContent: "center", width: "40%", height: "80%", paddingBottom: "8%", border: "dashed", borderColor: "gray",marginBottom:"16%", paddingLeft:"15%", paddingRight:"15%", paddingTop:"8%"}}>
                     <form>
-                        <input
-                            type={"file"}
-                            id={"csvFileInput"}
-                            accept={".csv"}
-                            onChange={handleOnChange}
-                        />
+                        <form>
+                            <input
+                                type={"file"}
+                                id={"csvFileInput"}
+                                accept={".csv"}
+                                onChange={handleOnChange}
+                            />
 
-                        <button
-                            onClick={(e) => {
-                                handleOnSubmit(e);
-                            }}
-                        >
-                            IMPORT CSV
-                        </button>
+                            <button
+                                onClick={(e) => {
+                                    handleOnSubmit(e);
+                                }}
+                            >
+                                IMPORT CSV
+                            </button>
+                        </form>
                     </form>
                     <br/>
                     {/* <table sx={{maxHeight: "100px", overflow:"auto", maxWidth:"100px"}}>
