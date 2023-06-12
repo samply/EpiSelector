@@ -10,6 +10,63 @@
 		"balance_covariats_post_matching": "Balanced",
 		"balance_thresholds_post_matching": "<0.1"
 	},
+
+	{
+		"row_names": "race_white",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "race_xy",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "race_abc",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Not Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+
+	{
+		"row_names": "race_black",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "race_asian",
+		"unadjusted_means_treated": 59.8966,
+		"unadjusted_means_control": 67.4071,
+		"unadjusted_mean_diff": 0.522,
+		"adjusted_means_treated": 66.8468,
+		"adjusted_means_control": 66.973,
+		"adjusted_mean_diff": 0.0088,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
 	{
 		"row_names": "sex",
 		"unadjusted_means_treated": 0.4419,

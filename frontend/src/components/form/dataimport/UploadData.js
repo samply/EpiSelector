@@ -101,6 +101,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 const csv = event.target.result;
                 // output in rows the complete content
                 console.log("csvOutput" + csv);
+                setBeobachtungen();
 
                 //-----
 
@@ -134,7 +135,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                     //----
                     // setDateiSpaltenNamen(csv[0]);
                     // console.log(csv[0]);
-                    // setBeobachtungen(csv.length);
+                     setBeobachtungen(csv.length);
                     csvFileToArray(csv);
 
                     let jsonFile = {};
