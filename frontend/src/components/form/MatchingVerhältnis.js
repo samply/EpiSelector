@@ -12,9 +12,8 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
-import MatchingMethode from "./MatchingMethode";
 
-function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode}) {
+function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage}) {
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -115,6 +114,43 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, 
         // 👇️ or set to true
         // setIsActive(true);
     };
+
+    let logsomething = () => {
+        console.log("Log über Fertig-Button");
+        console.log(isMatchingMethode)
+        console.log(isAllMatchingvariablen)
+        console.log(isVollständigeDatei)
+        console.log(isMatchingtoleranz)
+        console.log(isFälleKontrollenGruppenindikator)
+        console.log(isVerhältnis)
+
+        //Richtige url einfügen
+        fetch('http://127.0.0.1:8000/control_selection/pie_chart?groupindicator=icu_mort&controllvariables=[age,sex,duration_h]&mmethod=nearest&mdistance=glm&mreplace=TRUE&mratio=2&mcaliper=0.2&controllvariable=sex', {
+            method: "post",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+            //make sure to serialize your JSON body
+            body: JSON.stringify(isVollständigeDatei)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log("Data:")
+                console.log(data);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+
+    }
+
+    // Rest-Aufruf
+
+    if (isEMJsonPackage !== 'defaultPackage') {
+        console.log(isEMJsonPackage);
+    }
 
     let toFunction = () => {
         if(isMatchingMethode==="Exaktes Matching"){
@@ -279,7 +315,7 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
                     <Link style={{textDecoration: "none"}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
+                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> { logsomething();
                         if(isMatchingMethode==="Exaktes Matching"){  visitedSite("ergebnisse")}else{visitedSite("scoremethode")}
                     }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
                 </div>

@@ -51,7 +51,8 @@ function App() {
     const [isErsetzungNav, setErsetzungNav] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('');
-    const [isJsonPackage, setJsonPackage] = useState('defaultPackage');
+    const [isPSJsonPackage, setPSJsonPackage] = useState('defaultPackage');
+    const [isEMJsonPackage, setEMJsonPackage] = useState('defaultPackage');
     const [isAllKontrollvariablen, setAllKontrollvariablen] = useState('');
     const [isPackageB, setPackageB] = useState('');
     const [isX, setX] = useState({})
@@ -178,7 +179,12 @@ function App() {
                                                                  setVerhältnisNav={setVerhältnisNav}
                                                                  isVerhältnis={isVerhältnis}
                                                                  isVerhältnisNav={isVerhältnisNav}
-                                                                 isMatchingMethode={isMatchingMethode} />}
+                                                                 isMatchingMethode={isMatchingMethode}
+                                                                 isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
+                                                                 isMatchingtoleranz={isMatchingtoleranz}
+                                                                 isAllMatchingvariablen={isAllMatchingvariablen}
+                                                                 isVollständigeDatei={isVollständigeDatei}
+                                                                 isMatchingMethode={isMatchingMethode}/>}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
                                     element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}

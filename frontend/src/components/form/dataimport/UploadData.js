@@ -15,6 +15,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 import test_data from "../../../assets/test_data.json"
+import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the appropriate icon components from Material-UI
 
 
 
@@ -23,6 +24,8 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
 
     const [file, setFile] = useState('');
     const [array, setArray] = useState([]);
+    const [csvImported, setCsvImported] = useState(false);
+    const [importFailed, setImportFailed] = useState(false);
 
 
     let column = [];
@@ -161,7 +164,10 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 fileReader.readAsText(file);
 
                 console.log("fileReader" + fileReader.toString());
-            }
+            setCsvImported(true);
+        }else{
+            setImportFailed(true)
+        }
 
 
     };
@@ -201,6 +207,9 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
     console.log(json);*/
 
 
+
+
+
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px'}}>
             <CardHeader
@@ -213,25 +222,34 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
                     Datei hochladen
                 </Typography>{/* File Uploader */}
-                <div style={{ marginLeft:"12%", display:"flex", justifyConent: "center", alignItems:"center", alignContent: "center", width: "40%", height: "80%", paddingBottom: "8%", border: "dashed", borderColor: "gray",marginBottom:"16%", paddingLeft:"15%", paddingRight:"15%", paddingTop:"8%"}}>
-                    <form>
+                <div style={{ marginLeft:"12%", display:"flex", justifyConent: "center", alignItems:"center", alignContent: "center", width: "40%", height: "80%", paddingBottom: "8%", border: "dashed", borderColor: "gray",marginBottom:"2%", paddingLeft:"15%", paddingRight:"15%", paddingTop:"8%"}}>
+
                         <form>
+                            <label style={{ display:"inline-block", padding: "10px",
+                                backgroundColor: "#1d4189",
+                                color: "white",
+                                border: "none",
+                                borderRadius: "4px",
+                                cursor: "pointer",
+                                position: "relative",
+                                overflow: "hidden"}}> 1. Datei auswählen</label>
                             <input
                                 type={"file"}
                                 id={"csvFileInput"}
                                 accept={".csv"}
                                 onChange={handleOnChange}
+                                style={{position: "absolute",
+                                    top: "20%",
+                                    left: "33%",
+                                    opacity: "0",
+                                    width: "33%%",
+                                    height: "20%",
+                                    cursor: "pointer"}}
+
                             />
 
-                            <button
-                                onClick={(e) => {
-                                    handleOnSubmit(e);
-                                }}
-                            >
-                                IMPORT CSV
-                            </button>
+
                         </form>
-                    </form>
                     <br/>
                     {/* <table sx={{maxHeight: "100px", overflow:"auto", maxWidth:"100px"}}>
                             <thead>
@@ -253,7 +271,24 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                             </tbody>
                         </table>*/}
                 </div>
+               <div style={{marginLeft:"12%", marginBottom:"2%"}}> <button
+                    onClick={(e) => {
+                        handleOnSubmit(e);
+                    }}
+                    style={{  display: "inline-block",
+                        padding: "13px",
+                        backgroundColor: "#1d4189",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "4px",
+                        cursor: "pointer",
+                        }}>
+                    2. Import CSV
+                </button>           {csvImported && <CheckCircle style={{color:"green"}} className="checkIcon" />}
+                                    {importFailed &&  <Cancel style={{color:"red"}} className="cancelIcon" />}
 
+
+               </div>
 
                 <div style={{
                     height: "8%",
@@ -261,7 +296,8 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                     float: "right",
                     gap: "3%",
                     width: "42%",
-                    marginRight: "3%"
+                    marginRight: "3%",
+                    marginTop:"5%"
                 }}>
                     <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{
                         height: "100%",

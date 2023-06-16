@@ -14,7 +14,8 @@ import summary from '../../assets/summary.json';
 import {Paper, Table, TableBody} from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import DangerousIcon from '@mui/icons-material/Dangerous';
+import Cancel from '@mui/icons-material/Cancel';
+
 
 function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable}) {
 
@@ -52,7 +53,8 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
                             Vergleich Fälle - Kontrollen
                         </Typography>
                         <Typography style={{fontSize: "10px",fontWeight:"bold", float:"right"}}>
-                            Variablen: {isDateiSpaltenNamen.length}, Beobachtungen: {isBeobachtungen}
+                            Pre-Matching: {isDateiSpaltenNamen.length} Variablen, {isBeobachtungen} Beobachtungen <br/>
+                            Post-Matching:{isDateiSpaltenNamen.length+3} Variablen, {isBeobachtungen} Beobachtungen
                         </Typography>
                       </div>
 
@@ -63,10 +65,10 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
                                     <Table sx={{ minWidth: 210, fontSize: "x-small" }} size="x-small" aria-label="a dense table">
                                         <TableBody>
                                             <TableRow sx={{ height: '30px' }}>
-                                                <TableCell align="left" colSpan={4} sx={{ backgroundColor: "#1d4189", color: "white", fontSize: "medium", padding: "4px" }}>
+                                                <TableCell align="center" colSpan={4} sx={{ backgroundColor: "#1d4189", color: "white", fontSize: "medium", padding: "4px" }}>
                                                     PreMatching
                                                 </TableCell>
-                                                <TableCell align="left" colSpan={5} sx={{ backgroundColor: "#1d4189", color: "white", fontSize: "medium", padding: "4px", borderLeft: "solid 1px white" }}>
+                                                <TableCell align="center" colSpan={5} sx={{ backgroundColor: "#1d4189", color: "white", fontSize: "medium", padding: "4px", borderLeft: "solid 1px white" }}>
                                                     PostMatching
                                                 </TableCell>
                                             </TableRow>
@@ -83,7 +85,7 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                                <div style={{ maxHeight: "220px", overflowY: "auto", overflowX:"none" }}>
+                                <div style={{ maxHeight: "210px", overflowY: "auto", overflowX:"none" }}>
                                     <TableContainer component={Paper} style={{ overflowX:"none"}}>
                                         <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small" aria-label="a dense table">
                                             <TableBody>
@@ -97,7 +99,7 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
                                                                 if(val === "<0.1"){ return ("")
                                                                 }else{
                                                                     if(val === "Not Balanced"){
-                                                                        return <TableCell style={{textAlign:"left", padding:"2px"}}><DangerousIcon style={{textAlign:"left", color:"red", background:"none"}}/></TableCell>
+                                                                        return <TableCell style={{textAlign:"left", padding:"2px"}}><Cancel style={{textAlign:"left", color:"red", background:"none"}} /></TableCell>
                                                                     }else{
                                                                         return (<TableCell style={{textAlign:"left", padding:"2px"}}>{val}</TableCell>)
                                                                     }

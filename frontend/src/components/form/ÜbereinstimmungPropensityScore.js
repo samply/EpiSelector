@@ -14,7 +14,7 @@ import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isJsonPackage, isÜbereinstimmungswert }) {
+function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isPSJsonPackage, isÜbereinstimmungswert }) {
 
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState(() => { if (isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") { return isÜbereinstimmungswert } else { return '' } });
@@ -58,8 +58,8 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
 
 
 
-    if (isJsonPackage !== 'defaultPackage') {
-        console.log(isJsonPackage);
+    if (isPSJsonPackage !== 'defaultPackage') {
+        console.log(isPSJsonPackage);
     }
 
     function löschen() {

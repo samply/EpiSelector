@@ -108,7 +108,7 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständig
                     }
                            sx={{ mb: 2 }} severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen um weiter zu gehen</strong>
+                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen um fortzufahren</strong>
                     </Alert>
 
                 </Collapse>
