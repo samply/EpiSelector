@@ -102,7 +102,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
     const handleClickOption1Edit = () => {
         setIsActive1Edit(!isActive1Edit);
         if (!isActive1Edit) {
-            setVerhältnisEdit("X");
+            setVerhältnisEdit("");
             setIsActive12(false);
             setIsActive14(false);
             setIsActive13(false);
@@ -175,7 +175,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
         setIsActive14(false);
         setIsActive110(false);
         setIsActive1Edit(false);
-        setVerhältnis("defaultVerhältnis");
+        setVerhältnis("");
         setVerhältnisEdit("");
 
     }
@@ -295,23 +295,44 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                     <Box
                         style={{
                             backgroundColor:
-                                isActive1Edit || isVerhältnis === "1:X" ? "#1d4189" : "#E8E9EB",
-                            color: isActive1Edit || isVerhältnis === "1:X" ? "white" : "#666666",
-                            fontSize: "large",
-                            display: "flex",
-                            width: "4rem",
-                            height: "4rem",
-                            alignItems: "center",
-                            justifyContent: "space-evenly",
-                            borderRadius: "15px",
+                                isActive1Edit || isVerhältnis == 'defaultVerhältnis' ? '#1d4189' : '#E8E9EB',
+                            color: isActive1Edit || isVerhältnis == 'defaultVerhältnis' ? 'white' : '#666666',
+                            fontSize: 'large',
+                            display: 'flex',
+                            width: '4rem',
+                            height: '4rem',
+                            alignItems: 'center',
+                            justifyContent: 'space-evenly',
+                            borderRadius: '15px',
                             boxShadow:
-                                isActive1Edit || isVerhältnis === "1:X"
-                                    ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
-                                    : "",
+                                isActive1Edit || isVerhältnis == 'defaultVerhältnis'
+                                    ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)'
+                                    : '',
                         }}
                         onClick={handleClickOption1Edit}
                     >
-                        1:{isActive1Edit ? <input type="text" value={verhältnisEdit} onChange={(e) => {setVerhältnisEdit(e.target.value); setVerhältnisNav("1:" +e.target.value); setVerhältnis(e.target.value)}} style={{ fontSize:"18px",width: "30px", textAlign: "center",paddingTop:"4px", background: "none", border:"none", color: isActive1Edit || isVerhältnis === "1:X" ? "white" : "#666666" }} autoFocus /> : "X"}
+                        1:
+                        {isActive1Edit ? (
+                            <input
+                                type="text"
+                                value={verhältnisEdit}
+                                onChange={(e) => {
+                                    setVerhältnis(e.target.value); setVerhältnisNav("1:" +e.target.value); setVerhältnisEdit(e.target.value);
+                                }}
+                                style={{
+                                    fontSize: '18px',
+                                    width: '30px',
+                                    textAlign: 'center',
+                                    paddingTop: '4px',
+                                    background: 'none',
+                                    border: 'none',
+                                    color: isActive1Edit || isVerhältnis !== '' ? 'white' : '#666666',
+                                }}
+                                autoFocus
+                            />
+                        ) : (
+                            verhältnisEdit
+                        )}
                     </Box>
 
                 </div>
