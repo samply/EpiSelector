@@ -35,6 +35,7 @@ function App() {
     const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
     const [isVerhältnis, setVerhältnis] = useState('defaultVerhältnis');
     const [isVerhältnisNav, setVerhältnisNav] = useState('defaultVerhältnis');
+    const [verhältnisEdit, setVerhältnisEdit] = useState("X");
     const [isScoreMethode, setScoreMethode] = useState('defaultScoreMethode');
     const [isScoreMehodeNav, setScoreMethodeNav] = useState('defaultScoreMethode');
     const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgo');
@@ -62,6 +63,7 @@ function App() {
     const [isClickedKV, setClickedKV] = useState(false);
     const [isClickedMV, setClickedMV] = useState(false);
     const [isWorkflow, setWorkflow] = useState("Startseite");
+    const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
 
 
     // isX = {
@@ -132,7 +134,8 @@ function App() {
                                         setDateiSpaltenNamen={setDateiSpaltenNamen}
                                         setVollständigeDatei={setVollständigeDatei}
                                         isVollständigeDatei={isVollständigeDatei} isDatei={isDatei}
-                                        setBeobachtungen={setBeobachtungen} />}
+                                        setBeobachtungen={setBeobachtungen}
+                                        setOnlyBinaryColumns={setOnlyBinaryColumns}/>}
                                 />
                                 <Route path="/Matching-Methode"
                                     element={<MatchingMethode setMatchingMethode={setMatchingMethode}
@@ -143,7 +146,8 @@ function App() {
                                     element={<Zielvariable setZielvariable={setZielvariable}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isZielvariable={isZielvariable}
-                                        isMatchingMethode={isMatchingMethode} />}
+                                        isMatchingMethode={isMatchingMethode}
+                                        isOnlyBinaryColumns={isOnlyBinaryColumns}/>}
                                 />
                                 <Route path="/Kontrollvariablen"
                                     element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}
@@ -172,6 +176,7 @@ function App() {
                                         setFKChip={setFKChip}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isMatchingvariablen={isMatchingvariablen}
+                                        isOnlyBinaryColumns={isOnlyBinaryColumns}
                                     />}
                                 />
                                 <Route path="/Matching-Verhältnis"
@@ -184,7 +189,9 @@ function App() {
                                                                  isMatchingtoleranz={isMatchingtoleranz}
                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
                                                                  isVollständigeDatei={isVollständigeDatei}
-                                                                 isMatchingMethode={isMatchingMethode}/>}
+                                                                 isMatchingMethode={isMatchingMethode}
+                                                                 verhältnisEdit={verhältnisEdit}
+                                                                 setVerhältnisEdit={setVerhältnisEdit}/>}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
                                     element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}

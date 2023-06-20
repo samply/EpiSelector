@@ -13,18 +13,20 @@ import {useState} from "react";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 
-function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isMatchingMethode}) {
+function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isMatchingMethode, isOnlyBinaryColumns}) {
 
-    console.log(isDateiSpaltenNamen);
-    console.log(isDateiSpaltenNamen.length);
+    console.log("Spalten: " +isDateiSpaltenNamen);
+    console.log("Spalten: " +isDateiSpaltenNamen.length);
+    console.log("BinarySpalten: " +isOnlyBinaryColumns);
+    console.log("BinarySpalten: " +isOnlyBinaryColumns.length);
     console.log(isMatchingMethode)
 
     let resultArray = [];
 
-    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+    for (let i = 0; i < isOnlyBinaryColumns.length; i++) {
         const tempObj = {
             id: i,
-            variable: isDateiSpaltenNamen[i]
+            variable: isOnlyBinaryColumns[i]
         };
 
         resultArray.push(tempObj);

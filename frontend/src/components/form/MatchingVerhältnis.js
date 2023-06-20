@@ -13,7 +13,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
-function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage}) {
+function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage}) {
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -100,20 +100,19 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, 
         // setIsActive(true);
     };
     const handleClickOption1Edit = () => {
-        // 👇️ toggle
+        setIsActive1Edit(!isActive1Edit);
         if (!isActive1Edit) {
-            setIsActive1Edit(true);
-            setVerhältnis("X");
-            setVerhältnisNav("1:X");
+            setVerhältnisEdit("X");
             setIsActive12(false);
-            setIsActive13(false);
             setIsActive14(false);
-            setIsActive110(false);
+            setIsActive13(false);
             setIsActive11(false);
+            setIsActive110(false);
+        } else {
+            setVerhältnisEdit("");
         }
-        // 👇️ or set to true
-        // setIsActive(true);
     };
+
 
     let logsomething = () => {
         console.log("Log über Fertig-Button");
@@ -177,6 +176,8 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, 
         setIsActive110(false);
         setIsActive1Edit(false);
         setVerhältnis("defaultVerhältnis");
+        setVerhältnisEdit("");
+
     }
 
     return (
@@ -291,23 +292,28 @@ function MatchingVerhältnis({setVerhältnis, isVerhältnis, setVerhältnisNav, 
                             > 1:10
                             </Box>
 
-                            <Box
-                                style={{
+                    <Box
+                        style={{
+                            backgroundColor:
+                                isActive1Edit || isVerhältnis === "1:X" ? "#1d4189" : "#E8E9EB",
+                            color: isActive1Edit || isVerhältnis === "1:X" ? "white" : "#666666",
+                            fontSize: "large",
+                            display: "flex",
+                            width: "4rem",
+                            height: "4rem",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                            borderRadius: "15px",
+                            boxShadow:
+                                isActive1Edit || isVerhältnis === "1:X"
+                                    ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px"
+                                    : "",
+                        }}
+                        onClick={handleClickOption1Edit}
+                    >
+                        1:{isActive1Edit ? <input type="text" value={verhältnisEdit} onChange={(e) => {setVerhältnisEdit(e.target.value); setVerhältnisNav("1:" +e.target.value); setVerhältnis(e.target.value)}} style={{ fontSize:"18px",width: "30px", textAlign: "center",paddingTop:"4px", background: "none", border:"none", color: isActive1Edit || isVerhältnis === "1:X" ? "white" : "#666666" }} autoFocus /> : "X"}
+                    </Box>
 
-                                    backgroundColor: isActive1Edit || isVerhältnis ==="1:X" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive1Edit || isVerhältnis ==="1:X" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive1Edit || isVerhältnis ==="1:X" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption1Edit}
-                            > 1:__
-                            </Box>
                 </div>
 </div>
 

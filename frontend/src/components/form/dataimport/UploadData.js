@@ -20,7 +20,7 @@ import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the a
 
 
 
-export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen}) {
+export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns}) {
 
     const [file, setFile] = useState('');
     const [array, setArray] = useState([]);
@@ -134,6 +134,13 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                 console.log(result);
                 setVollständigeDatei(result);
 
+                // Filter binary columns
+                const binaryColumns = Object.keys(result).filter((column) => {
+                    const values = result[column];
+                    return values.every((value) => value === 0 || value === 1);
+                });
+
+                setOnlyBinaryColumns(binaryColumns);
 
                     //----
                     // setDateiSpaltenNamen(csv[0]);
