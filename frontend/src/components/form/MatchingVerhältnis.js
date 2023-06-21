@@ -100,17 +100,17 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
         // setIsActive(true);
     };
     const handleClickOption1Edit = () => {
-        setIsActive1Edit(!isActive1Edit);
+
         if (!isActive1Edit) {
+            setIsActive1Edit(true);
             setVerhältnisEdit("");
             setIsActive12(false);
             setIsActive14(false);
             setIsActive13(false);
             setIsActive11(false);
             setIsActive110(false);
-        } else {
-            setVerhältnisEdit("");
         }
+
     };
 
 
@@ -295,8 +295,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                     <Box
                         style={{
                             backgroundColor:
-                                isActive1Edit || isVerhältnis == 'defaultVerhältnis' ? '#1d4189' : '#E8E9EB',
-                            color: isActive1Edit || isVerhältnis == 'defaultVerhältnis' ? 'white' : '#666666',
+                                isActive1Edit || isVerhältnis === verhältnisEdit?  "#1d4189" : '#E8E9EB',
+                            color: isActive1Edit || isVerhältnis === verhältnisEdit ?   "white" : "#666666",
                             fontSize: 'large',
                             display: 'flex',
                             width: '4rem',
@@ -305,9 +305,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                             justifyContent: 'space-evenly',
                             borderRadius: '15px',
                             boxShadow:
-                                isActive1Edit || isVerhältnis == 'defaultVerhältnis'
-                                    ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)'
-                                    : '',
+                                isActive1Edit || isVerhältnis === verhältnisEdit ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)' : '',
                         }}
                         onClick={handleClickOption1Edit}
                     >
@@ -326,7 +324,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                     paddingTop: '4px',
                                     background: 'none',
                                     border: 'none',
-                                    color: isActive1Edit || isVerhältnis !== '' ? 'white' : '#666666',
+                                    color: isActive1Edit || verhältnisEdit != '' ? 'white' : '#666666',
                                 }}
                                 autoFocus
                             />
