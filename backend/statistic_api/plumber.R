@@ -5,12 +5,13 @@
 # Find out more about building APIs with Plumber here:
 #
 #    https://www.rplumber.io/
+# 
+# for execution in Windows terminal use "C:\Your_Path_To_R\R\R_Version\bin\Rscript.exe" -e "library(plumber); r <- plumb('api.R'); r$run(port = 6341)"
 #
 
 library(plumber)
 library(MatchIt)
 library(plumber)
-library(rjson)
 library(stringr)
 library("jsonlite")
 library("ggplot2")
@@ -58,9 +59,6 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # body wird ausgelesen
   body = req$body 
   
-  print(body$duration_h)
-  print(body$age)
-  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -81,12 +79,8 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
-  print("Line 85")
-  
   # initialize m.out1
   a <- NULL
-  
-  print("Line 88")
   
   # if exact matching
   if (mdistance == "mahalanobis") {
@@ -94,25 +88,16 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
     exact_vars<-paste(controllvariables,collapse="+")  
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
-    
-    
     # matching
-    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+    # caliper_variable
+    # ohne mmethod (kann raus und ist raus, aber muss nicht raus)
+    a <- matchit(form, data = body, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
   # if other cases of matching 
   else {
     # matching
-    
-    print("Line 107")
-    print(length(body$sex))
-    print(length(body$age))
-    print(body$sex)
-    body$sex <- factor(body$sex)
-    print(body$sex)
+    # body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
-    
-    
-    print("line 111")
   }
   
   # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
@@ -133,48 +118,131 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   res
 }
 
-
-
-#* @param variable_x_axis Spaltenname im mitgegebenen Datensatz fuer die X-Achse des Boxplots, groupindicator
-#* @param variable_y_axis Spaltenname im mitgegebenen Datensatz fuer die Y-Achse des Boxplots, control variable
+#* @param groupindicator Name der Zielvariable, die Kontrollen und Faelle unterscheidet(X-Achse des Boxplots)
+#* @param controllvariable Controlvariable (Y-Achse des Boxplots)
+#* @param controllvariables Kontrollvariablen als json-Array
+#* @param mmethod Methode des Matching-Algorithmus
+#* @param mdistance Berechungsmethode des Propensity Scores
+#* @param mreplace Matching mit (TRUE) oder ohne (FALSE) Zuruecklegen der Kontrollen
+#* @param mcaliper Matching innerhalb einer spezifizierten Caliper-Weite
+#* @param mratio Verhaeltnis k:1 von Kontrollen zu Faelle
 #* @tag plotting
 #* @post /boxplot
-function(req,res,variable_x_axis,variable_y_axis) {
+function(req,res,groupindicator, controllvariable, controllvariables, mmethod, mdistance, mreplace, mcaliper, mratio) {
   
   # body wird ausgelesen
   body = req$body 
   
-  # Formel aus Variablen generieren 
-  form<-as.formula(paste(paste(variable_y_axis, "~ ", sep=" "),variable_x_axis))
   
-  # boxplot wird erstellt
-  boxplot <- boxplot(form, data = body)
-
-  # relevante Daten werden aus boxplot-Objekt ausgelesen
-  data_points_array <- boxplot$stats
-  outliers <- boxplot$out
-  outliers_group <- boxplot$group
-
-  # Outliers mit Gruppeninformationen erweitern und Duplikate entfernen
-  outliers <- Map(list, outliers_group, outliers) 
-  outliers <- unique(outliers)
-  # Boxplots beginnend von 0 statt 1 zaehlen
-  for (x in 1:length(outliers)) {
-    outliers[[x]][[1]] <- outliers[[x]][[1]] - 1
+  # Matching durchfuehren
+  
+  # string als boolean konvertieren
+  mreplace <- as.logical(mreplace)
+  
+  # string als numerisch konvertieren
+  mratio <- as.integer(mratio)
+  
+  # string als numerisch konvertieren
+  mcaliper <- c(as.double(mcaliper))
+  
+  # convert JSON array to R array
+  # remove [] from input
+  trimed_string <- substr(controllvariables, 2, nchar(controllvariables)-1)
+  # split string by commas and create array
+  controllvariables <- as.array(strsplit(trimed_string, ",")[[1]])
+  controllvariables <- as.character(controllvariables)
+  
+  # create form out of controllvariables array
+  vars<-paste(controllvariables,collapse="+")  
+  form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
+  
+  # initialize m.out1
+  a <- NULL
+  
+  # if exact matching
+  if (mdistance == "mahalanobis") {
+    
+    exact_vars<-paste(controllvariables,collapse="+")  
+    exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
+    
+    # matching
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
-
-  #data_points_array wird in zwei boxplot arrays aufgeteilt
-  data_points <- unlist(data_points_array)
-  boxplot_one_array <- data_points_array[,1]
-  boxplot_two_array <- data_points_array[,2]
+  # if other cases of matching 
+  else {
+    # matching
+    body$sex <- factor(body$sex)
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+  }
   
-  #Wertenamen der Boxplots auslesen
-  names = list()
-  names <- append(names,boxplot$names[1])
-  names <- append(names,boxplot$names[2])
+  # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
+  result_dataset <- match.data(a,
+                               data = data.frame(body),
+                               group = "all",
+                               distance = "propensity score",
+                               weights = "Matching weight",
+                               subclass = "MatchingID",
+                               include.s.weights = TRUE,
+                               drop.unmatched = TRUE)
+  
+  
+  
+  # Liste fuer Pre- und Post-Matching-Boxplots
+  pre_matching_boxplot <- NULL
+  post_matching_boxplot <- NULL
+  
+  for(i in 1:2) {
+    
+    if (i == 2) {
+      body = result_dataset
+    }
+    
+    # Formel aus Variablen generieren 
+    form<-as.formula(paste(paste(controllvariable, "~ ", sep=" "),groupindicator))
+    
+    # boxplot wird erstellt
+    boxplot <- boxplot(form, data = body)
+    
+    # relevante Daten werden aus boxplot-Objekt ausgelesen
+    data_points_array <- boxplot$stats
+    outliers <- boxplot$out
+    outliers_group <- boxplot$group
+    
+    # Outliers mit Gruppeninformationen erweitern und Duplikate entfernen
+    outliers <- Map(list, outliers_group, outliers) 
+    outliers <- unique(outliers)
+    # Flattening outliers
+    outliers <- lapply(outliers, function(x) unlist(x, recursive = FALSE))
+    
+    # Boxplots beginnend von 0 statt 1 zaehlen
+    if (length(outliers)>=1) {
+      for (x in 1:length(outliers)) {
+        outliers[[x]][1] <- outliers[[x]][1] - 1
+      }
+    }
+    
+    #data_points_array wird in zwei boxplot arrays aufgeteilt
+    data_points <- unlist(data_points_array)
+    boxplot_one_array <- data_points_array[,1]
+    boxplot_two_array <- data_points_array[,2]
+    
+    #Wertenamen der Boxplots auslesen
+    names = list()
+    names <- append(names,boxplot$names[1])
+    names <- append(names,boxplot$names[2])
+    
+    if (i == 1) {
+      pre_matching_boxplot <- list(outliers = outliers, boxplot_one = boxplot_one_array, boxplot_two = boxplot_two_array, plot_value_names = unlist(names))
+    }
+    else {
+      post_matching_boxplot <- list(outliers = outliers, boxplot_one = boxplot_one_array, boxplot_two = boxplot_two_array, plot_value_names = unlist(names))
+    }
+    
+  }
   
   # Umwandlung in JSON und Rueckgabe
-  res$body <- toJSON(list(outliers = outliers, boxplot_one = boxplot_one_array, boxplot_two = boxplot_two_array, plot_value_names = unlist(names)))
+  res$body <- toJSON(list(pre_matching = pre_matching_boxplot, post_matching = post_matching_boxplot))
+  
   res
 }
 
@@ -195,9 +263,6 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   # body wird ausgelesen
   body = req$body 
   
-  print(typeof(body))
-  print(class(body))
-  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -218,20 +283,68 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
-  # matching
-  m.out1 <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
-
+  # initialize m.out1
+  a <- NULL
+  
+  # if exact matching
+  if (mmethod == "exact") {
+    
+    exact_vars<-paste(controllvariables,collapse="+")  
+    exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
+    
+    c_values <- c("2", "33")
+    c_vars <- c("age", "duraction_h")
+    
+    mcaliper <- as.list(setNames(as.numeric(c_values), c_vars))
+    
+    # matching
+    a <- matchit(form, data = body, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+  }
+  # if other cases of matching 
+  else {
+    # matching
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+  }
+  
+  # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
+  result_dataset <- match.data(a,
+                               data = data.frame(body),
+                               group = "all",
+                               distance = "propensity score",
+                               weights = "Matching weight",
+                               subclass = "MatchingID",
+                               include.s.weights = TRUE,
+                               drop.unmatched = TRUE)
+  
+  # Create histogram data before matching
+  initial_freq <- with(body, table(get(groupindicator), get(controllvariable)))
+  initial_freq_values <- as.vector(initial_freq)
+  # Convert to percentage
+  total_absolute_values <- sum(initial_freq_values)
+  initial_freq_values <- (initial_freq_values / total_absolute_values) * 100
+  
+  # Create histogram data post matching
+  result_freq <- with(result_dataset, table(get(groupindicator), get(controllvariable)))
+  result_freq_values <- as.vector(result_freq)
+  # Convert to percentage
+  total_absolute_values <- sum(result_freq_values)
+  result_freq_values <- (result_freq_values / total_absolute_values) * 100
+  
+  # add colenames
+  categories <- colnames(initial_freq)
+  
   # plot erstellen
-  m <- bal.plot(m.out1, controllvariable, which = "both", mirror = TRUE,
-                type = "histogram", colors = c("white", "black"))
+  # m <- bal.plot(a, controllvariable, which = "both", mirror = TRUE,
+  #              type = "histogram", colors = c("white", "black"))
+  
   # Daten aus ggplot-Objekt auslesen
-  p <- ggplot_build(m)
+  # p <- ggplot_build(m)
   
   # Variablennamen auf der X-Achse auslesen
-  x_axis_labels = unique(m$data$var)
+  # x_axis_labels = unique(m$data$var)
  
   # Umwandlung in JSON und Rueckgabe
-  res$body <- toJSON(list(data = p$data[[1]]$y, x_axis_labels = x_axis_labels))
+  res$body <- toJSON(list(pre_match_data = initial_freq_values, post_match_data = result_freq_values, x_axis_labels = categories))
   res
 }
 
@@ -250,9 +363,6 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # body wird ausgelesen
   body = req$body 
   
-  print(body$duration_h)
-  print(body$age)
-  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -273,8 +383,6 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
-  print("Line 85")
-  
   # initialize m.out1
   a <- NULL
   
@@ -286,39 +394,23 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
     exact_vars<-paste(controllvariables,collapse="+")  
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
-    
-    
     # matching
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
   # if other cases of matching 
   else {
     # matching
-    
-    print("Line 107")
-    print(length(body$sex))
-    print(length(body$age))
-    print(body$sex)
     body$sex <- factor(body$sex)
-    print(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
-    
-    
-    print("line 111")
   }
   
   # Summary erstellen
   sum <- bal.tab(a, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
   
-  print("Zeile 281")
-  
   # Daten auslesen
   row_names <- attributes(sum$Balanced.mean.diffs)$row.names
   count <- sum$Balanced.mean.diffs$count
   
-  print("Zeile 287")
-  
-  # Daten in JSON umwandeln und Rueckgabe
   df <- data.frame(row_names, count)
   res$body <- toJSON(df)
   res
@@ -359,11 +451,44 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
   vars<-paste(controllvariables,collapse="+")  
   form<-as.formula(paste(paste(groupindicator, "~ ", sep=" "),vars))
   
-  # matching
-  m.out <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+  # initialize m.out1
+  a <- NULL
+  
+  # if exact matching
+  if (mdistance == "mahalanobis") {
+    
+    exact_vars<-paste(controllvariables,collapse="+")  
+    exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
+    
+    # matching
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+  }
+  # if other cases of matching 
+  else {
+    # matching
+    body$sex <- factor(body$sex)
+    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+  }
+  
+  # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
+  result_dataset <- match.data(a,
+                               data = data.frame(body),
+                               group = "all",
+                               distance = "propensity score",
+                               weights = "Matching weight",
+                               subclass = "MatchingID",
+                               include.s.weights = TRUE,
+                               drop.unmatched = TRUE)
+  
+  # Count cases and controls before and after matching 
+  prematch_cases <- sum(body[[groupindicator]] == 1)
+  prematch_controls <- sum(body[[groupindicator]] == 0)
+  
+  postmatch_cases <- sum(result_dataset[[groupindicator]] == 1)
+  postmatch_controls <- sum(result_dataset[[groupindicator]] == 0)
   
   # Summary erstellen
-  sum <- bal.tab(m.out, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
+  sum <- bal.tab(a, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
   
   # Daten auslesen
   row_names <- attributes(sum$Balance)$row.names[-1]
@@ -388,7 +513,8 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
                    unadjusted_means_control, unadjusted_mean_diff, 
                    adjusted_means_treated, adjusted_means_control, 
                    adjusted_mean_diff, balance_covariats_post_matching,
-                   balance_thresholds_post_matching)
+                   balance_thresholds_post_matching, prematch_cases, 
+                   prematch_controls, postmatch_cases, postmatch_controls)
   res$body <- toJSON(df)
   res
 }
@@ -406,13 +532,15 @@ function(req,res) {
     
     number_single_values <- length(unique(body[[i]]))
     
-    if (is.numeric(body[[i]]) && 2 < number_single_values) {
+    if (is.numeric(body[[i]]) && 20 < number_single_values) {
       li <- append(li,names(body)[i])
     }
   }
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
+  print("hello")
+  print(res)
   res
 
 }
@@ -429,13 +557,15 @@ function(req,res) {
     
     number_single_values <- length(unique(body[[i]]))
     
-    if (2 == number_single_values) {
+    if (20 >= number_single_values) {
       li <- append(li,names(body)[i])
     }
   }
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
+  print("hello")
+  print(res)
   res
   
 }

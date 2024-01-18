@@ -4,7 +4,8 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 import requests as r
 
-
+# Specify IP and Port for R Backend
+ip_address = "127.0.0.1:3032"
 
 
 @api_view(['GET'])
@@ -16,7 +17,7 @@ def index(request):
         name = request.query_params.get('name', None)
         body = request.data.get('reason')
         print(body)
-        base_url = "http://127.0.0.1:6341/test"
+        base_url = "http://" + ip_address + "/test"
         print("--------------------------------------------------------------------------------------------------------------            Dies ist die URL " +  base_url)
         req = r.get(base_url, proxies = {'http': '','https': '',})
         data = req.json()
@@ -38,18 +39,20 @@ def vote(request):
 @api_view(['POST'])
 def boolean_columns(request):
     body = request.data
-    base_url = "http://127.0.0.1:6341/boolean_columns"
+    base_url = "http://" + ip_address + "/boolean_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
     data = req.json()
+    print(data)
     return Response(data)
 
 
 @api_view(['POST'])
 def numeric_columns(request):
     body = request.data
-    base_url = "http://127.0.0.1:6341/numeric_columns"
+    base_url = "http://" + ip_address + "/numeric_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
     data = req.json()
+    print(data)
     return Response(data)
 
 
@@ -65,7 +68,7 @@ def histogram(request):
     mratio = request.query_params.get("mratio")
     controllvariable = request.query_params.get("controllvariable")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'controllvariable':controllvariable}
-    base_url = "http://127.0.0.1:6341/histogram"
+    base_url = "http://" + ip_address + "/histogram"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -82,7 +85,7 @@ def pie_chart(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:6341/pie_chart"
+    base_url = "http://" + ip_address + "/pie_chart"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -99,7 +102,7 @@ def summary(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:6341/summary"
+    base_url = "http://" + ip_address + "/summary"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -115,7 +118,7 @@ def result_data(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
-    base_url = "http://127.0.0.1:6341/result_data"
+    base_url = "http://" + ip_address + "/result_data"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -123,12 +126,20 @@ def result_data(request):
 @api_view(['POST'])
 def boxplot(request):
     body = request.data
-    variable_x_axis = request.query_params.get("variable_x_axis")
-    variable_y_axis = request.query_params.get("variable_y_axis")
-    params = {'variable_x_axis': variable_x_axis, 'variable_y_axis': variable_y_axis}
-    base_url = "http://127.0.0.1:6341/boxplot"
+    groupindicator = request.query_params.get("groupindicator")
+    controllvariables = request.query_params.get("controllvariables")
+    controllvariable = request.query_params.get("controllvariable")
+    mmethod = request.query_params.get("mmethod")
+    mdistance = request.query_params.get("mdistance")
+    mreplace = request.query_params.get("mreplace")
+    mcaliper = request.query_params.get("mcaliper")
+    mratio = request.query_params.get("mratio")
+
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'controllvariable':controllvariable, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+    base_url = "http://" + ip_address + "/boxplot"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
+    print(data)
     return Response(data)
 
 

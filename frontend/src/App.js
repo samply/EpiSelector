@@ -35,7 +35,6 @@ function App() {
     const [isMatchingMethode, setMatchingMethode] = useState('defaultMethode');
     const [isVerhältnis, setVerhältnis] = useState('defaultVerhältnis');
     const [isVerhältnisNav, setVerhältnisNav] = useState('defaultVerhältnis');
-    const [verhältnisEdit, setVerhältnisEdit] = useState("X");
     const [isScoreMethode, setScoreMethode] = useState('defaultScoreMethode');
     const [isScoreMehodeNav, setScoreMethodeNav] = useState('defaultScoreMethode');
     const [isAlgorithmus, setAlgorithmus] = useState('defaultAlgo');
@@ -153,8 +152,7 @@ function App() {
                                     element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}
                                         setAllKontrollvariablen={setAllKontrollvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
-                                        isAllKontrollvariablen={isAllKontrollvariablen}
-                                        isZielvariable={isZielvariable} />}
+                                        isAllKontrollvariablen={isAllKontrollvariablen} />}
                                 />
                                 <Route path="/Matchingvariablen"
                                     element={<Matchingvariablen setMatchingvariablen={setMatchingvariablen}
@@ -228,6 +226,16 @@ function App() {
                                                                isZielvariable={isZielvariable}
                                                                isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                                     />}
+                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
+                                    isAllKontrollvariablen={isAllKontrollvariablen}
+                                    isMatchingMethode={isMatchingMethode}
+                                    isDateiSpaltenNamen={isDateiSpaltenNamen}
+                                    isAlgorithmus={isAlgorithmus}
+                                    isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
+                                    isZielvariable={isZielvariable}
+                                    isVollständigeDatei={isVollständigeDatei}
+                                    isScoreMethode={isScoreMethode}
+                                    isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} />} />
                             </Routes>
