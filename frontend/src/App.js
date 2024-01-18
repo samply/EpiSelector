@@ -174,7 +174,6 @@ function App() {
                                         setFKChip={setFKChip}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isMatchingvariablen={isMatchingvariablen}
-                                        isOnlyBinaryColumns={isOnlyBinaryColumns}
                                     />}
                                 />
                                 <Route path="/Matching-Verhältnis"
@@ -188,8 +187,7 @@ function App() {
                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
                                                                  isVollständigeDatei={isVollständigeDatei}
                                                                  isMatchingMethode={isMatchingMethode}
-                                                                 verhältnisEdit={verhältnisEdit}
-                                                                 setVerhältnisEdit={setVerhältnisEdit}/>}
+                                                                />}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
                                     element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}

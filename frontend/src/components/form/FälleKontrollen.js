@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import {useState} from "react";
 
 
-function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen, isOnlyBinaryColumns }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen }) {
 
 
 
@@ -27,20 +27,20 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
         tmpFallID.push(event.value);
     }
 
-  /*  const columns = [
-        { field: 'id', headerName: 'ID', width: 0, hide: true},
-        { field: 'variable', headerName: 'Variable', width: 255},
-        { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 165,  renderCell: () => (
-                <div>
-                    <Checkbox id="checkboxgruppenindikator" onChange={selectGruppenindikator}/>
-                </div>
-            ),},
-        { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165, renderCell: () => (
-                <div>
-                    <Checkbox id="checkboxfallid" onChange={selectFallID}/>
-                </div>
-            ), },
-    ];*/
+    /*  const columns = [
+          { field: 'id', headerName: 'ID', width: 0, hide: true},
+          { field: 'variable', headerName: 'Variable', width: 255},
+          { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 165,  renderCell: () => (
+                  <div>
+                      <Checkbox id="checkboxgruppenindikator" onChange={selectGruppenindikator}/>
+                  </div>
+              ),},
+          { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165, renderCell: () => (
+                  <div>
+                      <Checkbox id="checkboxfallid" onChange={selectFallID}/>
+                  </div>
+              ), },
+      ];*/
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true},
@@ -49,7 +49,7 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
         // { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165 }, renderCell: renderDetailsButton, disableClickEventBubbling: true,
     ];
 
-    const filteredArray = isOnlyBinaryColumns.filter(value => !isAllMatchingvariablen.some(obj => obj.var === value));
+    const filteredArray = isDateiSpaltenNamen.filter(value => !isAllMatchingvariablen.some(obj => obj.var === value));
     console.log('filteredArray' + filteredArray);
 
     let rows=[];
