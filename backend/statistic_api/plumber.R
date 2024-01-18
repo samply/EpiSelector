@@ -5,12 +5,13 @@
 # Find out more about building APIs with Plumber here:
 #
 #    https://www.rplumber.io/
+# 
+# for execution in Windows terminal use "C:\Your_Path_To_R\R\R_Version\bin\Rscript.exe" -e "library(plumber); r <- plumb('api.R'); r$run(port = 6341)"
 #
 
 library(plumber)
 library(MatchIt)
 library(plumber)
-library(rjson)
 library(stringr)
 library("jsonlite")
 library("ggplot2")
@@ -88,12 +89,14 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
     # matching
-    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+    # caliper_variable
+    # ohne mmethod (kann raus und ist raus, aber muss nicht raus)
+    a <- matchit(form, data = body, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
   # if other cases of matching 
   else {
     # matching
-    body$sex <- factor(body$sex)
+    # body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
   
@@ -208,9 +211,14 @@ function(req,res,groupindicator, controllvariable, controllvariables, mmethod, m
     # Outliers mit Gruppeninformationen erweitern und Duplikate entfernen
     outliers <- Map(list, outliers_group, outliers) 
     outliers <- unique(outliers)
+    # Flattening outliers
+    outliers <- lapply(outliers, function(x) unlist(x, recursive = FALSE))
+    
     # Boxplots beginnend von 0 statt 1 zaehlen
-    for (x in 1:length(outliers)) {
-      outliers[[x]][[1]] <- outliers[[x]][[1]] - 1
+    if (length(outliers)>=1) {
+      for (x in 1:length(outliers)) {
+        outliers[[x]][1] <- outliers[[x]][1] - 1
+      }
     }
     
     #data_points_array wird in zwei boxplot arrays aufgeteilt
@@ -232,10 +240,8 @@ function(req,res,groupindicator, controllvariable, controllvariables, mmethod, m
     
   }
   
-  
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(list(pre_matching = pre_matching_boxplot, post_matching = post_matching_boxplot))
-  
   
   res
 }
@@ -281,32 +287,64 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   a <- NULL
   
   # if exact matching
-  if (mdistance == "mahalanobis") {
+  if (mmethod == "exact") {
     
     exact_vars<-paste(controllvariables,collapse="+")  
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
+    c_values <- c("2", "33")
+    c_vars <- c("age", "duraction_h")
+    
+    mcaliper <- as.list(setNames(as.numeric(c_values), c_vars))
+    
     # matching
-    a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+    a <- matchit(form, data = body, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
   }
   # if other cases of matching 
   else {
     # matching
-    body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
   
+  # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
+  result_dataset <- match.data(a,
+                               data = data.frame(body),
+                               group = "all",
+                               distance = "propensity score",
+                               weights = "Matching weight",
+                               subclass = "MatchingID",
+                               include.s.weights = TRUE,
+                               drop.unmatched = TRUE)
+  
+  # Create histogram data before matching
+  initial_freq <- with(body, table(get(groupindicator), get(controllvariable)))
+  initial_freq_values <- as.vector(initial_freq)
+  # Convert to percentage
+  total_absolute_values <- sum(initial_freq_values)
+  initial_freq_values <- (initial_freq_values / total_absolute_values) * 100
+  
+  # Create histogram data post matching
+  result_freq <- with(result_dataset, table(get(groupindicator), get(controllvariable)))
+  result_freq_values <- as.vector(result_freq)
+  # Convert to percentage
+  total_absolute_values <- sum(result_freq_values)
+  result_freq_values <- (result_freq_values / total_absolute_values) * 100
+  
+  # add colenames
+  categories <- colnames(initial_freq)
+  
   # plot erstellen
-  m <- bal.plot(a, controllvariable, which = "both", mirror = TRUE,
-                type = "histogram", colors = c("white", "black"))
+  # m <- bal.plot(a, controllvariable, which = "both", mirror = TRUE,
+  #              type = "histogram", colors = c("white", "black"))
+  
   # Daten aus ggplot-Objekt auslesen
-  p <- ggplot_build(m)
+  # p <- ggplot_build(m)
   
   # Variablennamen auf der X-Achse auslesen
-  x_axis_labels = unique(m$data$var)
+  # x_axis_labels = unique(m$data$var)
  
   # Umwandlung in JSON und Rueckgabe
-  res$body <- toJSON(list(data = p$data[[1]]$y, x_axis_labels = x_axis_labels))
+  res$body <- toJSON(list(pre_match_data = initial_freq_values, post_match_data = result_freq_values, x_axis_labels = categories))
   res
 }
 
@@ -416,8 +454,6 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
   # initialize m.out1
   a <- NULL
   
-  print("Line 88")
-  
   # if exact matching
   if (mdistance == "mahalanobis") {
     
@@ -433,6 +469,23 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
     body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
+  
+  # Construct a matched dataset from a matchit object -> Ausgabedatei fuer die User zur weiteren Analyse
+  result_dataset <- match.data(a,
+                               data = data.frame(body),
+                               group = "all",
+                               distance = "propensity score",
+                               weights = "Matching weight",
+                               subclass = "MatchingID",
+                               include.s.weights = TRUE,
+                               drop.unmatched = TRUE)
+  
+  # Count cases and controls before and after matching 
+  prematch_cases <- sum(body[[groupindicator]] == 1)
+  prematch_controls <- sum(body[[groupindicator]] == 0)
+  
+  postmatch_cases <- sum(result_dataset[[groupindicator]] == 1)
+  postmatch_controls <- sum(result_dataset[[groupindicator]] == 0)
   
   # Summary erstellen
   sum <- bal.tab(a, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
@@ -460,7 +513,8 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
                    unadjusted_means_control, unadjusted_mean_diff, 
                    adjusted_means_treated, adjusted_means_control, 
                    adjusted_mean_diff, balance_covariats_post_matching,
-                   balance_thresholds_post_matching)
+                   balance_thresholds_post_matching, prematch_cases, 
+                   prematch_controls, postmatch_cases, postmatch_controls)
   res$body <- toJSON(df)
   res
 }
@@ -478,13 +532,15 @@ function(req,res) {
     
     number_single_values <- length(unique(body[[i]]))
     
-    if (is.numeric(body[[i]]) && 2 < number_single_values) {
+    if (is.numeric(body[[i]]) && 20 < number_single_values) {
       li <- append(li,names(body)[i])
     }
   }
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
+  print("hello")
+  print(res)
   res
 
 }
@@ -501,13 +557,15 @@ function(req,res) {
     
     number_single_values <- length(unique(body[[i]]))
     
-    if (2 == number_single_values) {
+    if (20 >= number_single_values) {
       li <- append(li,names(body)[i])
     }
   }
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
+  print("hello")
+  print(res)
   res
   
 }

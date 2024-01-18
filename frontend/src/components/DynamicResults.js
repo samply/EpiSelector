@@ -25,9 +25,11 @@ HighchartsMore(Highcharts);
 let disable_var_select = true;
 var json_test_data = require('../assets/test_data.json');
 
+let ip_django = "127.0.0.1:8000"; 
 
 
-function setHistograms(data_pre_match_red, data_pre_match_blue, data_post_match_red, data_post_match_blue, x_axis_label, x_category_one, x_category_two) {
+
+function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categories) {
 
     let chartDom_a = document.getElementById("container_a");
     let chart_a = Highcharts.charts[Highcharts.attr(chartDom_a, 'data-highcharts-chart')];
@@ -42,14 +44,39 @@ function setHistograms(data_pre_match_red, data_pre_match_blue, data_post_match_
         text: x_axis_label
     });
 
-    chart_a.xAxis[0].categories = [x_category_one, x_category_two];
-    chart_b.xAxis[0].categories = [x_category_one, x_category_two];
+    chart_a.xAxis[0].categories = x_categories;
+    chart_b.xAxis[0].categories = x_categories;
+
+    // split data_pre_match into two arrays
+    var length = data_pre_match.length;
+    var middle = Math.floor(length / 2);
+    var data_pre_match_red = data_pre_match.slice(0, middle);
+    var data_pre_match_blue = data_pre_match.slice(middle);
+
+    // make blue bars negative, so that they rendered as bottom histogram
+    for (var i = 0; i < data_pre_match_blue.length; i++) {
+        data_pre_match_blue[i] = -data_pre_match_blue[i];
+    }
 
     chart_a.series[0].setData(data_pre_match_red);
     chart_a.series[1].setData(data_pre_match_blue);
 
+    // split data_post_match into two arrays
+    var length = data_post_match.length;
+    var middle = Math.floor(length / 2);
+    var data_post_match_red = data_post_match.slice(0, middle);
+    var data_post_match_blue = data_post_match.slice(middle);
+
+    // make blue bars negative, so that they rendered as bottom histogram
+    for (var i = 0; i < data_post_match_blue.length; i++) {
+        data_post_match_blue[i] = -data_post_match_blue[i];
+    }
+
     chart_b.series[0].setData(data_post_match_red);
     chart_b.series[1].setData(data_post_match_blue);
+
+
+    chart_a.yAxis[0].setExtremes(0, 100000);
 
     chart_a.redraw();
     chart_b.redraw();
@@ -58,7 +85,7 @@ function setHistograms(data_pre_match_red, data_pre_match_blue, data_post_match_
 
 function clearHistograms() {
 
-    setHistograms([], [], [], [], 'Ausgew. Variable', '', '');
+    setHistograms([], [], 'Ausgew. Variable', '', '');
 
 }
 
@@ -89,9 +116,35 @@ function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matc
         text: y_axis_label
     });
 
+    if (pre_matching_boxplots != null && post_matching_boxplots[0] != null) {
+        var combinedArray = pre_matching_boxplots[0].concat(pre_matching_boxplots[1], post_matching_boxplots[0], post_matching_boxplots[1]);
+
+        var yAxisValues = findYAxisValues(combinedArray);
+    
+        chart_c.yAxis[0].update({ min: yAxisValues.yAxisMin, max: yAxisValues.yAxisMax});
+        chart_d.yAxis[0].update({ min: yAxisValues.yAxisMin, max: yAxisValues.yAxisMax});
+    }
+
     chart_c.redraw();
+    chart_d.redraw();
 
 }
+
+
+function findYAxisValues(a) {
+    
+    // Find the largest value in the combined array
+    var largest = Math.max(...a);
+    
+    // Find the smallest value in the combined array
+    var smallest = Math.min(...a);
+  
+    // Return an object containing appropriate y-axis values
+    return {
+      yAxisMax: largest,
+      yAxisMin: smallest
+    };
+  }
 
 
 function clearBoxplots() {
@@ -187,7 +240,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         };
 
         // (B) BUILD URL
-        var url = new URL("http://127.0.0.1:8000/control_selection/histogram");
+        var url = new URL("http://" + ip_django + "/control_selection/histogram");
         for (let k in param) {
             url.searchParams.append(k, param[k]);
         }
@@ -201,8 +254,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((json) => {
+                console.log("HALLO")
                 console.log(json)
-                setHistograms([json.data[0], json.data[1]], [-1 * json.data[2], -1 * json.data[3]], [json.data[4], json.data[5]], [-1 * json.data[6], -1 * json.data[7]], '', json.x_axis_labels[0], json.x_axis_labels[1]);
+
+                console.log(json.post_match_data)
+                console.log(json.pre_match_data)
+                console.log(json.x_axis_labels)
+                setHistograms(json.pre_match_data, json.post_match_data, '', json.x_axis_labels);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -218,13 +276,29 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     const selectVariableB = (event) => {
 
 
+
+        var temp_string = "["
+        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
+            console.log(isAllKontrollvariablen[i])
+            console.log(isAllKontrollvariablen[i].var)
+            temp_string += isAllKontrollvariablen[i].var + ","
+        }
+        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
+        temp_string += "]"
+
         var param = {
-            variable_x_axis: "icu_mort",
-            variable_y_axis: "age",
+            groupindicator: isZielvariable,
+            controllvariables: temp_string,
+            mmethod: isAlgorithmus,
+            mdistance: "glm",
+            mreplace: isErsetzung,
+            mratio: isVerhältnis,
+            mcaliper: isÜbereinstimmungswert,
+            controllvariable: event.target.value
         };
 
         // (B) BUILD URL
-        var url = new URL("http://127.0.0.1:8000/control_selection/boxplot");
+        var url = new URL("http://" + ip_django + "/control_selection/boxplot");
         for (let k in param) {
             url.searchParams.append(k, param[k]);
         }
@@ -238,7 +312,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((json) => {
-                setBoxplots(event.target.value, 'icu_mort', [json.boxplot_one,json.boxplot_two], [], [], []);
+                console.log("HALLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + json.pre_matching.boxplot_one)
+                setBoxplots(event.target.value, 'icu_mort', [json.pre_matching.boxplot_one,json.pre_matching.boxplot_two], [], [json.post_matching.boxplot_one,json.post_matching.boxplot_two], []);
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -647,7 +722,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     let updateDiagrams = () => {
 
         // set histoselector with boolean variables from dataset
-        fetch('http://127.0.0.1:8000/control_selection/boolean_columns', {
+        fetch('http://' + ip_django + '/control_selection/boolean_columns', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -670,7 +745,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             });
 
         // set boxplotselector with numeric variables from dataset
-        fetch('http://127.0.0.1:8000/control_selection/numeric_columns', {
+        fetch('http://' + ip_django + '/control_selection/numeric_columns', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -721,7 +796,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         };
 
         // (B) BUILD URL
-        var url = new URL("http://127.0.0.1:8000/control_selection/pie_chart");
+        var url = new URL("http://" + ip_django + "/control_selection/pie_chart");
         for (let k in param) {
             url.searchParams.append(k, param[k]);
         }

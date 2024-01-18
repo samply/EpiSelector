@@ -1,5 +1,5 @@
 import '../../App.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as React from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
-import {visitedSite} from "../NavB";
+import { visitedSite } from "../NavB";
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
@@ -18,7 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import {CardHeader} from "@mui/material";
+import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -59,7 +59,7 @@ BootstrapDialogTitle.propTypes = {
     onClose: PropTypes.func.isRequired,
 };
 
-function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
+function Mainpage({ setMatchingStart, isDisclaimer, setWorkflow }) {
 
     const [maske, setMaske] = React.useState('');
 
@@ -67,101 +67,60 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
         setMaske(event.target.value);
     };
 
-    const [open, setOpen] = React.useState({isDisclaimer});
+    const [open, setOpen] = React.useState({ isDisclaimer });
 
     const handleClose = () => {
         setOpen(false);
     };
 
-    return (<Card sx={{borderRadius: '10px 10px 10px 10px'}}>
-        <CardHeader
-            title="Matching"
-            titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-            sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
-            <CardContent>
 
-                <br/>
-                <Typography variant="h4">
-                    Willkommen beim
-                    Beobachtungsstudien-Assistent
-                </Typography>
-                <br/><br/>
-                <Typography variant="h6">
-                    Mithilfe des Beobachtungsstudien-Assistenten können Sie anhand verschiedener Methoden in Ihrer Patientenliste Patienten mit bestimmten Kritierien selektieren.
-                </Typography>
+    return (
 
-                <br/><div>
-                <br/>
+        <Card sx={{ borderRadius: '10px 10px 10px 10px' }}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
+                sx={{ backgroundColor: "#E9F0FF", width: "100%" }}
+            />
 
-                <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
-                    open={open}
-                >
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        Disclaimer
-                    </BootstrapDialogTitle>
-                    <DialogContent dividers>
-                        <Typography textAlign={"justify"} >
-                            Dieser Beobachtungsstudienassistent wurde mit größtmöglicher Sorgfalt erstellt. Der Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und Aktualität der bereitgestellten Matching-Prozeduren und dazugehörigen Inhalte und Informationen. Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt nicht die Konsultation einer Statistikerin/eines Statistikers bzw. einer Epidemiologin/eines Epidemiologen.
-                            <br/><br/>
-                            Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
-                        </Typography>
-                        <br/>
-                        <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>
-                            Daniel E. Ho, Kosuke Imai, Gary King, Elizabeth A. Stuart (2011). MatchIt: Nonparametric Preprocessing for Parametric   Causal Inference. Journal of Statistical Software, Vol. 42, No. 8, pp. 1-28.
-                            <Link href={"https://doi.org/10.18637/jss.v042.i08"}>https://doi.org/10.18637/jss.v042.i08</Link>
-                        </Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}>Greifer N (2022). _cobalt: Covariate Balance Tables and Plots_. R package version 4.4.0,
-                            <Link href={"https://CRAN.R-project.org/package=cobalt"}>https://CRAN.R-project.org/package=cobalt</Link></Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}> H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
-                            <Link href={"https://ggplot2.tidyverse.org/"}>https://ggplot2.tidyverse.org/</Link></Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}> R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
-                            <Link href={"https://www.R-project.org/"}>https://www.R-project.org/</Link></Typography>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" autoFocus onClick={handleClose}>
-                            Verstanden
-                        </Button>
-                    </DialogActions>
-                </BootstrapDialog>
-            </div><br/>
-                <Typography variant="body">
-                    Optional können Sie eine Maske anwenden:
-                </Typography>
-                <br/><br/>
-                <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-                    <InputLabel id="demo-select-small">Maske</InputLabel>
-                    <Select
-                        labelId="demo-select-small"
-                        id="demo-select-small"
-                        value={maske}
-                        label="Maske"
-                        onChange={handleChange}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value={10}>Maske 1</MenuItem>
-                        <MenuItem value={20}>Maske 2</MenuItem>
-                        <MenuItem value={30}>Maske 3</MenuItem>
-                    </Select>
-                </FormControl>
+            <CardContent sx={{
+                width: '100%',
+                height: '500px',
+                border: '1px solid black',
+                padding: '10px',
+                position: 'relative'
+            }}>
 
-                <br/><br/>
-                <div style={{ height: "8%", float:"right", width:"12%"}}>
-                    <Link style={{textDecoration: "none"}} to ='/Datenquelle' onClick={()=> {
+
+
+
+
+
+
+
+                <div sx={{
+                    position: 'absolute',
+                    bottom: '8px',
+                    right: '8px'
+                }}>
+
+                    <Link style={{ textDecoration: "none" }} to='/Datenquelle' onClick={() => {
                         setWorkflow("Datenquelle");
                         visitedSite("datenquelle");
                     }}>
-                        <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" startIcon={<PlayCircleFilledIcon />}>
-                        Start
-                    </Button>
+                        <Button >
+                            Start
+                        </Button>
                     </Link>
+
                 </div>
-        </CardContent>
-</Card>
+
+
+            </CardContent>
+        </Card>
+
+
     );
 }
 
