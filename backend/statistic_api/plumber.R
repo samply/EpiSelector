@@ -260,6 +260,9 @@ function(req,res,groupindicator, controllvariable, controllvariables, mmethod, m
 #* @post /histogram
 function(req, res, controllvariable, groupindicator, controllvariables, mdistance, mmethod, mreplace, mcaliper, mratio) {
   
+  print("Controllvariables at begin of function")
+  print(controllvariables)
+  
   # body wird ausgelesen
   body = req$body 
   
@@ -275,6 +278,8 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   # convert JSON array to R array
   # remove [] from input
   trimed_string <- substr(controllvariables, 2, nchar(controllvariables)-1)
+  print(trimed_string)
+  
   # split string by commas and create array
   controllvariables <- as.array(strsplit(trimed_string, ",")[[1]])
   controllvariables <- as.character(controllvariables)
@@ -289,6 +294,10 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   # if exact matching
   if (mmethod == "exact") {
     
+    print("Z292")
+    print("Controllvariables:")
+    print(controllvariables)
+    
     exact_vars<-paste(controllvariables,collapse="+")  
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
@@ -297,12 +306,32 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
     
     mcaliper <- as.list(setNames(as.numeric(c_values), c_vars))
     
+    print("mdistance")
+    print(mdistance)
+    print("mreplace")
+    print(mreplace)
+    print("mratio")
+    print(mratio)
+    print("mcaliper")
+    print(mcaliper)
+    print("exact_form")
+    print(controllvariables)
+    print(exact_vars)
+    print(exact_form)
+    
+    
     # matching
+    print("Z303")
     a <- matchit(form, data = body, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE, exact = exact_form)
+    print("Z305")
   }
   # if other cases of matching 
   else {
     # matching
+    print("Hallo ")
+    print("spalten")
+    spalten_laengen <- sapply(body, length)
+    print(spalten_laengen)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
   
@@ -345,6 +374,7 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
  
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(list(pre_match_data = initial_freq_values, post_match_data = result_freq_values, x_axis_labels = categories))
+  print(res)
   res
 }
 
@@ -363,11 +393,13 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # body wird ausgelesen
   body = req$body 
   
+  print(body)
+  
   # string als boolean konvertieren
-  mreplace <- as.logical(mreplace)
   
   # string als numerisch konvertieren
   mratio <- as.integer(mratio)
+  mreplace <- as.logical(mreplace)
   
   # string als numerisch konvertieren
   mcaliper <- c(as.double(mcaliper))
@@ -391,6 +423,8 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # if exact matching
   if (mdistance == "mahalanobis") {
     
+    print("mahalanobis")
+    
     exact_vars<-paste(controllvariables,collapse="+")  
     exact_form<-as.formula(paste(paste("", "~ ", sep=" "),exact_vars))
     
@@ -401,7 +435,35 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   else {
     # matching
     body$sex <- factor(body$sex)
+    print("before normal matching")
+    
+    print("form")
+    print(form)
+    
+    print("mmethod")
+    print(mmethod)
+    
+    print("mdistance")
+    print(mdistance)
+    
+    print("mreplace")
+    print(mreplace)
+    
+    print("mratio")
+    print(mratio)
+    
+    print("caliper")
+    print(mcaliper)
+    
+
+    spalten_laengen <- sapply(body, length)
+    print(spalten_laengen)
+    
+    print(body$encid)
+    
+    
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
+    print("after normal matching")
   }
   
   # Summary erstellen
@@ -413,6 +475,8 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   
   df <- data.frame(row_names, count)
   res$body <- toJSON(df)
+  print("Rueckabe Pie Charts:")
+  print(res)
   res
 }
 
@@ -539,8 +603,6 @@ function(req,res) {
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
-  print("hello")
-  print(res)
   res
 
 }
@@ -564,8 +626,6 @@ function(req,res) {
   
   # Umwandlung in JSON und Rueckgabe
   res$body <- toJSON(unlist(li))
-  print("hello")
-  print(res)
   res
   
 }

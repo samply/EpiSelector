@@ -16,7 +16,7 @@ import HighchartsMore from 'highcharts/highcharts-more';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import { useState } from 'react';
-import { Panorama } from '@mui/icons-material';
+import { Panorama, TurnedIn } from '@mui/icons-material';
 import { CardHeader } from "@mui/material";
 HighchartsMore(Highcharts);
 
@@ -58,6 +58,9 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
         data_pre_match_blue[i] = -data_pre_match_blue[i];
     }
 
+    console.log("Pre-Match Histogramm")
+    console.log(data_pre_match_red)
+    console.log(data_pre_match_blue)
     chart_a.series[0].setData(data_pre_match_red);
     chart_a.series[1].setData(data_pre_match_blue);
 
@@ -72,14 +75,17 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
         data_post_match_blue[i] = -data_post_match_blue[i];
     }
 
+
     chart_b.series[0].setData(data_post_match_red);
     chart_b.series[1].setData(data_post_match_blue);
 
 
-    chart_a.yAxis[0].setExtremes(0, 100000);
+    // chart_a.yAxis[0].setExtremes(0, 100000);
 
     chart_a.redraw();
     chart_b.redraw();
+
+    console.log("Histogramme wurden gemalt.")
 }
 
 
@@ -237,7 +243,19 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             mratio: isVerhältnis,
             mcaliper: isÜbereinstimmungswert,
             controllvariable: event.target.value
+
+            // groupindicator: "icu_mort",
+            // controllvariables: "[age,sex]",
+            // mmethod: "exact",
+            // mdistance: "mahalanobis",
+            // mreplace: isErsetzung,
+            // mratio: 1,
+            // mcaliper: 0.2,
+            // controllvariable: event.target.value
         };
+
+        console.log("Histogramm-Aufruf wird abgeschickt mit params:");
+        console.log(param);
 
         // (B) BUILD URL
         var url = new URL("http://" + ip_django + "/control_selection/histogram");
@@ -254,7 +272,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             body: JSON.stringify(json_test_data)
         }).then((response) => response.json())
             .then((json) => {
-                console.log("HALLO")
+                console.log("Histogramm-Aufruf wurde abgeschickt")
                 console.log(json)
 
                 console.log(json.post_match_data)

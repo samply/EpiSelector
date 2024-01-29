@@ -61,6 +61,7 @@ def histogram(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
     controllvariables = request.query_params.get("controllvariables")
+    print(f"Controllvariables {controllvariables}")
     mmethod = request.query_params.get("mmethod")
     mdistance = request.query_params.get("mdistance")
     mreplace = request.query_params.get("mreplace")
