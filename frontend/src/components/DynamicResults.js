@@ -826,9 +826,10 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
+        }).then((response) => response.json(),  console.log("PieChartFetch is Vollständigedatei" +isVollständigeDatei))
             .then((json) => {
                 setPiechart(json[0].count, json[1].count, false);
+               
             })
             .catch((error) => {
                 console.error('Error:', error);

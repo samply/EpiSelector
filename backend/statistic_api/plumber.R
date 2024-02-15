@@ -266,6 +266,9 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   # body wird ausgelesen
   body = req$body 
   
+  print("LOG von der Variable SEx:")
+  print(body$sex)
+  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -319,6 +322,7 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
     print(exact_vars)
     print(exact_form)
     
+    body$sex <- factor(body$sex)
     
     # matching
     print("Z303")
@@ -392,7 +396,7 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   
   # body wird ausgelesen
   body = req$body 
-  
+  print("Body Pie Chart Coming..")
   print(body)
   
   # string als boolean konvertieren

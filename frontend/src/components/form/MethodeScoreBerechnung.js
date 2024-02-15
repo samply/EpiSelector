@@ -87,20 +87,25 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveML || isScoreMethodeNav === "Matching Learning Methode"? "#1d4189":'#E8E9EB',
-                                color: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "white":"#666666",
-                                fontSize:"large",
+                                backgroundColor: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "#1d4189" : '#E8E9EB',
+                                color: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "white" : "#666666",
+                                fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
                                 height: "8rem",
-                                alignItems:"center",
+                                alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                pointerEvents: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "none" : "auto",
+                                opacity: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? 0.5 : 1,
                             }}
-                            onClick={handleClickOptionML}
-                        > Matching Learning Methode
+                        >
+                            Matching Learning Methode
                         </Box>
+
+
+
                     </FormGroup>
                 </div>
             </div>

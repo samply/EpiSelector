@@ -66,7 +66,8 @@ function Datenquelle({setDatenquelle, isDatenquelle}) {
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
-                            style={{
+                             title="Laden Sie Ihre Daten Local aus Ihrem Rechner hoch."
+                             style={{
                                 backgroundColor: isActiveGeraet || isDatenquelle==="Gerät" ? "#1d4189":'#E8E9EB',
                                 color: isActiveGeraet || isDatenquelle==="Gerät" ? "white":"#666666",
                                 fontSize:"large",
@@ -80,22 +81,24 @@ function Datenquelle({setDatenquelle, isDatenquelle}) {
                             }}
                         > Vom Gerät
                         </Box>
-                            <Box
-                               style={{
-                                    backgroundColor: isActiveDRE || isDatenquelle==="DRE"? "#1d4189":'#E8E9EB',
-                                    color: isActiveDRE || isDatenquelle==="DRE"? "white":"#666666",
-                                    fontSize:"large",
-                                    display: "flex",
-                                    width: "15rem",
-                                    height: "8rem",
-                                    alignItems:"center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActiveDRE || isDatenquelle==="DRE" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOptionDRE}
-                            > DRE
-                            </Box>
+                            <Box style={{
+                                backgroundColor: isActiveDRE || isDatenquelle === "DRE" ? "#1d4189" : '#E8E9EB',
+                                color: isActiveDRE || isDatenquelle === "DRE" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "15rem",
+                                height: "8rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActiveDRE || isDatenquelle === "DRE" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                pointerEvents: isActiveDRE || isDatenquelle === "DRE" ? "auto" : "none",
+                                opacity: isActiveDRE || isDatenquelle === "DRE" ? 1 : 0.5,
+                            }}
+                        >
+                            DRE
+                        </Box>
+
                         </FormGroup>
                     </div>
 

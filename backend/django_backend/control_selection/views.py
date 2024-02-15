@@ -5,7 +5,7 @@ from rest_framework import status
 import requests as r
 
 # Specify IP and Port for R Backend
-ip_address = "127.0.0.1:3032"
+ip_address = "127.0.0.1:6341"
 
 
 @api_view(['GET'])
