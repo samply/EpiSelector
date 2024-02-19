@@ -19,6 +19,11 @@ import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the a
 import AppContext from '../../../AppContext';
 import CardActions from "@mui/material/CardActions";
 import Grid from '@mui/material/Grid';
+import Collapse from "@mui/material/Collapse";
+import Alert from "@mui/material/Alert";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import {AlertTitle} from "@mui/lab";
 
 
 
@@ -78,6 +83,20 @@ export default function UploadData() {
         handleFile(file);
     };
 
+    const [open, setOpen] = React.useState(false);
+    const [isPlaceholder, setPlaceholder] = React.useState(true);
+
+    let toFunction = () => {
+        if(isVollständigeDatei==="defaultVollständigedatei"){
+            return "";
+        }
+        else{
+            return "/Matching-Methode";
+        }
+
+
+    };
+
     return (
         <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
             <CardHeader
@@ -90,10 +109,32 @@ export default function UploadData() {
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
                     Datei hochladen
                 </Typography>{/* File Uploader */}
+                <Collapse in={open}>
+                    <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
+                        <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setOpen(false);
+                                setPlaceholder(true);
+                            }}
+                        >
+                            <CloseIcon fontSize="inherit"/>
+                        </IconButton>
+                    }
+                           sx={{mb: 2}} severity="error">
+                        <AlertTitle>Error</AlertTitle>
+                        Keine Daten — <strong>Sie müssen eine Datei hochladen, um
+                        fortzufahren</strong>
+                    </Alert>
 
+                </Collapse>
+                <Collapse in={isPlaceholder}>
+                    <div style={{margin: "10%"}}></div>
+                </Collapse>
 
-                <div
-                    onDrop={handleDrop}
+                <div onDrop={handleDrop}
                     onDragOver={(e) => e.preventDefault()}
                     style={{
                         border: '2px dashed #1d4189',
@@ -124,7 +165,7 @@ export default function UploadData() {
 
                 <br/>
 
-                <p style={{display: "flex", alignItems: "center"}}>
+                <p style={{marginLeft:'5%', display: "flex", alignItems: "center"}}>
                     {csvImported && (
                         <>
                             <CheckCircle style={{color: 'green'}} className="checkIcon"/>
@@ -163,10 +204,13 @@ export default function UploadData() {
                 </Grid>
                 <Grid item>
 
-                <Link style={{textDecoration: "none"}} onClick={() => {
+                <Link style={{textDecoration: "none"}} onClick={() => {  if (isVollständigeDatei === "defaultVollständigedatei") {
+                    setOpen(true);
+                    setPlaceholder(false);
+                }else{
                     visitedSite("matchingmethode");
-                    setWorkflow("Matching-Methode");
-                }} to='/Matching-Methode'>
+                    setWorkflow("Matching-Methode");}
+                }} to={toFunction()}>
                     <Button sx={{
                         height: "100%",
                         width: "auto",

@@ -20,6 +20,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
+import Grid from '@mui/material/Grid';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -73,11 +74,13 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
         setOpen(false);
     };
 
-    return (<Card sx={{borderRadius: '10px 10px 10px 10px'}}>
+    return (
+        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
+
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
 
             <CardContent>
 
@@ -88,46 +91,73 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                 </Typography>
                 <br/><br/>
                 <Typography variant="h6">
-                    Mithilfe des Beobachtungsstudien-Assistenten können Sie anhand verschiedener Methoden in Ihrer Patientenliste Patienten mit bestimmten Kritierien selektieren.
+                    Mithilfe des Beobachtungsstudien-Assistenten können Sie anhand verschiedener Methoden in Ihrer
+                    Patientenliste Patienten mit bestimmten Kritierien selektieren.
                 </Typography>
 
-                <br/><div>
                 <br/>
+                <div>
+                    <br/>
 
-                <BootstrapDialog
-                    onClose={handleClose}
-                    aria-labelledby="customized-dialog-title"
-                    open={open}
-                >
-                    <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
-                        Disclaimer
-                    </BootstrapDialogTitle>
-                    <DialogContent dividers>
-                        <Typography textAlign={"justify"} >
-                            Dieser Beobachtungsstudienassistent wurde mit größtmöglicher Sorgfalt erstellt. Der Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und Aktualität der bereitgestellten Matching-Prozeduren und dazugehörigen Inhalte und Informationen. Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt nicht die Konsultation einer Statistikerin/eines Statistikers bzw. einer Epidemiologin/eines Epidemiologen.
-                            <br/><br/>
-                            Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
-                        </Typography>
-                        <br/>
-                        <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>
-                            Daniel E. Ho, Kosuke Imai, Gary King, Elizabeth A. Stuart (2011). MatchIt: Nonparametric Preprocessing for Parametric   Causal Inference. Journal of Statistical Software, Vol. 42, No. 8, pp. 1-28.
-                            <Link href={"https://doi.org/10.18637/jss.v042.i08"}>https://doi.org/10.18637/jss.v042.i08</Link>
-                        </Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}>Greifer N (2022). _cobalt: Covariate Balance Tables and Plots_. R package version 4.4.0,
-                            <Link href={"https://CRAN.R-project.org/package=cobalt"}>https://CRAN.R-project.org/package=cobalt</Link></Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}> H. Wickham. ggplot2: Elegant Graphics for Data Analysis. Springer-Verlag New York, 2016.
-                            <Link href={"https://ggplot2.tidyverse.org/"}>https://ggplot2.tidyverse.org/</Link></Typography>
-                        <Typography textAlign={"justify"} fontSize={"x-small"}> R Core Team (2022). R: A language and environment for statistical computing. R Foundation for Statistical Computing, Vienna, Austria.
-                            <Link href={"https://www.R-project.org/"}>https://www.R-project.org/</Link></Typography>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" autoFocus onClick={handleClose}>
-                            Verstanden
-                        </Button>
-                    </DialogActions>
-                </BootstrapDialog>
-            </div><br/>
-               {/* <Typography variant="body">
+                    <BootstrapDialog
+                        onClose={handleClose}
+                        aria-labelledby="customized-dialog-title"
+                        open={open}
+                    >
+                        <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+                            Disclaimer
+                        </BootstrapDialogTitle>
+                        <DialogContent dividers>
+                            <Typography textAlign={"justify"}>
+                                Dieser Beobachtungsstudienassistent wurde mit größtmöglicher Sorgfalt erstellt. Der
+                                Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und
+                                Aktualität der bereitgestellten Matching-Prozeduren und dazugehörigen Inhalte und
+                                Informationen. Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt
+                                nicht die Konsultation einer Statistikerin/eines Statistikers bzw. einer
+                                Epidemiologin/eines Epidemiologen.
+                                <br/><br/>
+                                Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R
+                                Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket
+                                (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket
+                                (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
+                            </Typography>
+                            <br/>
+                            <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>
+                                Daniel E. Ho, Kosuke Imai, Gary King, Elizabeth A. Stuart (2011). MatchIt: Nonparametric
+                                Preprocessing for Parametric Causal Inference. Journal of Statistical Software, Vol. 42,
+                                No. 8, pp. 1-28.
+                                <Link
+                                    href={"https://doi.org/10.18637/jss.v042.i08"}>https://doi.org/10.18637/jss.v042.i08</Link>
+                            </Typography>
+                            <Typography textAlign={"justify"} fontSize={"x-small"}>Greifer N (2022). _cobalt: Covariate
+                                Balance Tables and Plots_. R package version 4.4.0,
+                                <Link
+                                    href={"https://CRAN.R-project.org/package=cobalt"}>https://CRAN.R-project.org/package=cobalt</Link></Typography>
+                            <Typography textAlign={"justify"} fontSize={"x-small"}> H. Wickham. ggplot2: Elegant
+                                Graphics for Data Analysis. Springer-Verlag New York, 2016.
+                                <Link
+                                    href={"https://ggplot2.tidyverse.org/"}>https://ggplot2.tidyverse.org/</Link></Typography>
+                            <Typography textAlign={"justify"} fontSize={"x-small"}> R Core Team (2022). R: A language
+                                and environment for statistical computing. R Foundation for Statistical Computing,
+                                Vienna, Austria.
+                                <Link href={"https://www.R-project.org/"}>https://www.R-project.org/</Link></Typography>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button sx={{
+                                height: "100%",
+                                width: "auto",
+                                color: "white",
+                                border: "none",
+                                backgroundColor: "#1d4189",
+                                "&:hover": {backgroundColor: "#1d4189"}
+                            }} variant="filled" autoFocus onClick={handleClose}>
+                                Verstanden
+                            </Button>
+                        </DialogActions>
+                    </BootstrapDialog>
+                </div>
+                <br/>
+                {/* <Typography variant="body">
                     Optional können Sie eine Maske anwenden:
                 </Typography>
                 <br/><br/>
@@ -150,17 +180,26 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                 </FormControl>*/}
 
                 <br/><br/>
-                <div style={{ height: "8%", float:"right", width:"12%"}}>
-                    <Link style={{textDecoration: "none"}} to ='/Datenquelle' onClick={()=> {
-                        setWorkflow("Datenquelle");
-                        visitedSite("datenquelle");
-                    }}>
-                        <Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled" startIcon={<PlayCircleFilledIcon />}>
-                            Start
-                        </Button>
-                    </Link>
-                </div>
+
             </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item> <Link style={{textDecoration: "none"}} to='/Datenquelle' onClick={() => {
+                    setWorkflow("Datenquelle");
+                    visitedSite("datenquelle");
+                }}>
+                    <Button sx={{
+                        height: "100%",
+                        width: "auto",
+                        color: "white",
+                        border: "none",
+                        backgroundColor: "#1d4189",
+                        "&:hover": {backgroundColor: "#1d4189"}
+                    }} variant="filled" startIcon={<PlayCircleFilledIcon/>}>
+                        Start
+                    </Button>
+                </Link>
+                </Grid>
+            </Grid>
         </Card>
     );
 }

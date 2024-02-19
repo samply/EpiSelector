@@ -25,7 +25,7 @@ HighchartsMore(Highcharts);
 let disable_var_select = true;
 var json_test_data = require('../assets/test_data.json');
 
-let ip_django = "127.0.0.1:8000"; 
+let ip_django = "127.0.0.1:8000";
 
 
 
@@ -126,7 +126,7 @@ function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matc
         var combinedArray = pre_matching_boxplots[0].concat(pre_matching_boxplots[1], post_matching_boxplots[0], post_matching_boxplots[1]);
 
         var yAxisValues = findYAxisValues(combinedArray);
-    
+
         chart_c.yAxis[0].update({ min: yAxisValues.yAxisMin, max: yAxisValues.yAxisMax});
         chart_d.yAxis[0].update({ min: yAxisValues.yAxisMin, max: yAxisValues.yAxisMax});
     }
@@ -138,13 +138,13 @@ function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matc
 
 
 function findYAxisValues(a) {
-    
+
     // Find the largest value in the combined array
     var largest = Math.max(...a);
-    
+
     // Find the smallest value in the combined array
     var smallest = Math.min(...a);
-  
+
     // Return an object containing appropriate y-axis values
     return {
       yAxisMax: largest,
@@ -337,12 +337,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 console.error('Error:', error);
             });
 
-
-
-
         setVariableB(event.target.value);
-
-
     };
 
 
@@ -442,7 +437,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         });
 
     });
-
 
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -754,7 +748,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 for(var i = 0; i < data.length; i++) {
                     if (data[i] != isZielvariable) {
                         newList.push(data[i]);
-                    } 
+                    }
                 }
                 setHistoSelector(newList)
             })
@@ -780,7 +774,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             });
 
 
-        
         console.log(isAlgorithmus)
         console.log(isErsetzung)
         console.log(isZielvariable)
@@ -829,7 +822,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         }).then((response) => response.json(),  console.log("PieChartFetch is Vollständigedatei" +isVollständigeDatei))
             .then((json) => {
                 setPiechart(json[0].count, json[1].count, false);
-               
+
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -842,20 +835,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         label_variable_one.textContent = 'ICU_MORT = 1';
         disable_var_select = false;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     };
 
     let clearDiagrams = () => {
@@ -872,11 +851,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
         label_variable_one.textContent = 'Zielvariable = 1';
     }
-
-
-
-
-
 
     return (
         <Card sx={{ width: "100%", minHeight: "100%", borderRadius: '10px 10px 10px 10px' }}>

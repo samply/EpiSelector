@@ -46,7 +46,7 @@ function App() {
     const [isErsetzung, setErsetzung] = useState('FALSE');
     const [isErsetzungNav, setErsetzungNav] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
-    const [isVollständigeDatei, setVollständigeDatei] = useState('');
+    const [isVollständigeDatei, setVollständigeDatei] = useState('defaultVollständigedatei');
     const [isPSJsonPackage, setPSJsonPackage] = useState('defaultPackage');
     const [isEMJsonPackage, setEMJsonPackage] = useState('defaultPackage');
     const [isAllKontrollvariablen, setAllKontrollvariablen] = useState('');

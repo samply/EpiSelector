@@ -74,7 +74,7 @@ const Matchingprotokoll = tickets => {
 
 
 function Dataexport() {
-    const { setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis,setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow } = useContext(AppContext);
+    const { setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis,setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei } = useContext(AppContext);
     const [resultData, setResultData] = useState([]);
 
     useEffect(() => {
@@ -116,6 +116,7 @@ function Dataexport() {
         setAlgorithmus("defaultAlgo");
         setErsetzung("defaultErsetz");
         setÜbereinstimmungswert("defaultÜbereinstimmungswert");
+        setVollständigedatei("defaultVollständigedatei");
     };
 
     setDisclaimer(false);

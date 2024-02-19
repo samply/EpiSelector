@@ -204,8 +204,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
 
-                                backgroundColor: isActive11 || isVerhältnis === "1:1" ? "#1d4189" : '#E8E9EB',
-                                color: isActive11 || isVerhältnis === "1:1" ? "white" : "#666666",
+                                backgroundColor: isActive11 || isVerhältnisNav === "1:1" ? "#1d4189" : '#E8E9EB',
+                                color: isActive11 || isVerhältnisNav === "1:1" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "4rem",
@@ -213,7 +213,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActive11 || isVerhältnis === "1:1" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActive11 || isVerhältnisNav === "1:1" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOption11}
                         > 1:1
@@ -222,8 +222,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
 
-                                backgroundColor: isActive12 || isVerhältnis === "1:2" ? "#1d4189" : '#E8E9EB',
-                                color: isActive12 || isVerhältnis === "1:2" ? "white" : "#666666",
+                                backgroundColor: isActive12 || isVerhältnisNav === "1:2" ? "#1d4189" : '#E8E9EB',
+                                color: isActive12 || isVerhältnisNav === "1:2" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "4rem",
@@ -231,7 +231,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActive12 || isVerhältnis === "1:2" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActive12 || isVerhältnisNav === "1:2" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOption12}
                         > 1:2
@@ -243,8 +243,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
 
-                                backgroundColor: isActive13 || isVerhältnis === "1:3" ? "#1d4189" : '#E8E9EB',
-                                color: isActive13 || isVerhältnis === "1:3" ? "white" : "#666666",
+                                backgroundColor: isActive13 || isVerhältnisNav === "1:3" ? "#1d4189" : '#E8E9EB',
+                                color: isActive13 || isVerhältnisNav === "1:3" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "4rem",
@@ -252,7 +252,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActive13 || isVerhältnis === "1:3" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActive13 || isVerhältnisNav === "1:3" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOption13}
                         > 1:3
@@ -261,8 +261,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
 
-                                backgroundColor: isActive14 || isVerhältnis === "1:4" ? "#1d4189" : '#E8E9EB',
-                                color: isActive14 || isVerhältnis === "1:4" ? "white" : "#666666",
+                                backgroundColor: isActive14 || isVerhältnisNav === "1:4" ? "#1d4189" : '#E8E9EB',
+                                color: isActive14 || isVerhältnisNav === "1:4" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "4rem",
@@ -270,7 +270,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActive14 || isVerhältnis === "1:4" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActive14 || isVerhältnisNav === "1:4" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOption14}
                         > 1:4
@@ -282,8 +282,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
 
-                                backgroundColor: isActive110 || isVerhältnis === "1:10" ? "#1d4189" : '#E8E9EB',
-                                color: isActive110 || isVerhältnis === "1:10" ? "white" : "#666666",
+                                backgroundColor: isActive110 || isVerhältnisNav === "1:10" ? "#1d4189" : '#E8E9EB',
+                                color: isActive110 || isVerhältnisNav === "1:10" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "4rem",
@@ -291,7 +291,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActive110 || isVerhältnis === "1:10" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActive110 || isVerhältnisNav === "1:10" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOption110}
                         > 1:10
@@ -300,8 +300,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                         <Box
                             style={{
                                 backgroundColor:
-                                    isActive1Edit || isVerhältnis === verhältnisEdit ? "#1d4189" : '#E8E9EB',
-                                color: isActive1Edit || isVerhältnis === verhältnisEdit ? "white" : "#666666",
+                                    isActive1Edit || isVerhältnisNav === verhältnisEdit ? "#1d4189" : '#E8E9EB',
+                                color: isActive1Edit || isVerhältnisNav === verhältnisEdit ? "white" : "#666666",
                                 fontSize: 'large',
                                 display: 'flex',
                                 width: '4rem',
@@ -310,7 +310,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 justifyContent: 'space-evenly',
                                 borderRadius: '15px',
                                 boxShadow:
-                                    isActive1Edit || isVerhältnis === verhältnisEdit ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)' : '',
+                                    isActive1Edit || isVerhältnisNav === verhältnisEdit ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)' : '',
                             }}
                             onClick={handleClickOption1Edit}
                         >
