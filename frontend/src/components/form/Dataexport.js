@@ -19,6 +19,8 @@ import "jspdf-autotable";
 import summary from '../../assets/summary.json';
 import AppContext from '../../AppContext';
 import {visitedSite} from "../NavB";
+import Grid from '@mui/material/Grid';
+
 
 
 const doc = new jsPDF();
@@ -120,42 +122,72 @@ function Dataexport() {
 
 
     return (
-        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
+        <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"4%", paddingLeft:"3%"}} >
-                Datenexport
-            </Typography>
+                <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "4%", paddingLeft: "3%"}}>
+                    Datenexport
+                </Typography>
 
-                <div style={{display:"flex", justifyContent:"center", paddingTop:"5%", paddingBottom:"15%"}}>
-
-                        <div sx={{display: "flex", flexFlow: "row", width: "100%", height: "80%", border: "bold solid", justifyContent:"space-evenly"}}>
-                            <Button  onClick={() => Matchingprotokoll(ergebnisse)} style={{flexFlow:"column"}}>
-                                <SimCardDownloadIcon sx={{fontSize: "xxx-large"}}/> Matchingprotokoll <br/>herunterladen
-                            </Button>
-                            <Button style={{flexFlow:"column"}}>
-                                <CollectionsBookmarkIcon sx={{fontSize: "xxx-large"}}/> Daten in DRE speichern
-                            </Button>
-                            <Button style={{flexFlow:"column"}}>
-                                <DashboardIcon sx={{fontSize: "xxx-large"}}/>Maske speichern
-                            </Button>
-
-                        </div>
+                <div style={{display: "flex", justifyContent: "center", paddingTop: "5%", paddingBottom: "15%"}}>
+                    <div style={{
+                        display: "flex",
+                        flexFlow: "row",
+                        width: "100%",
+                        height: "80%",
+                        border: "bold solid",
+                        justifyContent: "space-evenly"
+                    }}>
+                        <Button onClick={() => Matchingprotokoll(ergebnisse)} style={{flexFlow: "column"}}>
+                            <SimCardDownloadIcon sx={{fontSize: "xxx-large"}}/> Matchingprotokoll <br/>herunterladen
+                        </Button>
+                        <Button disabled style={{flexFlow: "column", color: "grey"}}>
+                            <CollectionsBookmarkIcon sx={{fontSize: "xxx-large"}}/> Daten in DRE speichern
+                        </Button>
+                        <Button disabled style={{flexFlow: "column", color: "grey"}}>
+                            <DashboardIcon sx={{fontSize: "xxx-large"}}/>Maske speichern
+                        </Button>
+                    </div>
                 </div>
 
-            <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%", marginRight:"3%"}}>
-                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                <Button onClick={deleteAllData} sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} onClick={() => { deleteAllData(); setWorkflow("Startseite")}} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
 
-            </div>
+            </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item>
+            <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                </Grid>
+                <Grid item>
+                <Button onClick={deleteAllData} sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined"><DeleteIcon/>Löschen</Button>
+                </Grid>
+                <Grid item>
+                <Link style={{textDecoration: "none"}} onClick={() => {
+                    deleteAllData();
+                    setWorkflow("Startseite")
+                }} to='/Startseite'><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    color: "white",
+                    border: "none",
+                    backgroundColor: "#1d4189", "&:hover": {backgroundColor: "#1d4189"}
+                }} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
+                </Grid>
 
-
-        </CardContent>
+            </Grid>
         </Card>
     );
 }

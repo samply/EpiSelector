@@ -127,7 +127,7 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                     </DialogActions>
                 </BootstrapDialog>
             </div><br/>
-                <Typography variant="body">
+               {/* <Typography variant="body">
                     Optional können Sie eine Maske anwenden:
                 </Typography>
                 <br/><br/>
@@ -147,7 +147,7 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                         <MenuItem value={20}>Maske 2</MenuItem>
                         <MenuItem value={30}>Maske 3</MenuItem>
                     </Select>
-                </FormControl>
+                </FormControl>*/}
 
                 <br/><br/>
                 <div style={{ height: "8%", float:"right", width:"12%"}}>

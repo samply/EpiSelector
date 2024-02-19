@@ -17,6 +17,9 @@ import {CardHeader} from "@mui/material";
 import test_data from "../../../assets/test_data.json"
 import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the appropriate icon components from Material-UI
 import AppContext from '../../../AppContext';
+import CardActions from "@mui/material/CardActions";
+import Grid from '@mui/material/Grid';
+
 
 
 export default function UploadData() {
@@ -70,16 +73,13 @@ export default function UploadData() {
         reader.readAsText(file);
     };
 
-
-
-
     const handleInputChange = (e) => {
         const file = e.target.files[0];
         handleFile(file);
     };
 
     return (
-        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px'}}>
+        <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
             <CardHeader
                 title="Matching"
                 titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
@@ -92,27 +92,37 @@ export default function UploadData() {
                 </Typography>{/* File Uploader */}
 
 
-                    <div
-                        onDrop={handleDrop}
-                        onDragOver={(e) => e.preventDefault()}
-                        style={{border: '2px dashed #1d4189', padding: '20px', marginBottom: '20px', width:"80%", marginLeft:"5%"}}
-                    >
-                        <p>CSV-Datei hier ablegen oder</p>
-                        <input
-                            type="file"
-                            id="csvFileInput"
-                            accept=".csv"
-                            onChange={handleInputChange}
-                            style={{display: 'none'}}
-                        />
-                        <label htmlFor="csvFileInput">
-                            <Button component="span" variant="filled" sx={{backgroundColor: "#1d4189", color:"white",  "&:hover": {backgroundColor: "#1d4189"}}}>
-                                Datei auswählen
-                            </Button>
-                        </label>
-                    </div>
+                <div
+                    onDrop={handleDrop}
+                    onDragOver={(e) => e.preventDefault()}
+                    style={{
+                        border: '2px dashed #1d4189',
+                        padding: '20px',
+                        marginBottom: '20px',
+                        width: "80%",
+                        marginLeft: "5%"
+                    }}
+                >
+                    <p>CSV-Datei hier ablegen oder</p>
+                    <input
+                        type="file"
+                        id="csvFileInput"
+                        accept=".csv"
+                        onChange={handleInputChange}
+                        style={{display: 'none'}}
+                    />
+                    <label htmlFor="csvFileInput">
+                        <Button component="span" variant="filled" sx={{
+                            backgroundColor: "#1d4189",
+                            color: "white",
+                            "&:hover": {backgroundColor: "#1d4189"}
+                        }}>
+                            Datei auswählen
+                        </Button>
+                    </label>
+                </div>
 
-                    <br/>
+                <br/>
 
                 <p style={{display: "flex", alignItems: "center"}}>
                     {csvImported && (
@@ -128,47 +138,48 @@ export default function UploadData() {
                         </>
                     )}
                 </p>
+            </CardContent>
 
-                <div style={{
-                    height: "8%",
-                    display: "flex",
-                    float: "right",
-                    gap: "3%",
-                    width: "42%",
-                    marginRight: "3%",
-                    marginTop: "5%"
-                }}>
-                    <Link style={{textDecoration: "none"}} onClick={() => {
-                        setWorkflow("Datenquelle");
-                    }} to='/Datenquelle' ><Button sx={{
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+
+                <Grid item> <Link style={{textDecoration: "none"}} onClick={() => {
+                    setWorkflow("Datenquelle");
+                }} to='/Datenquelle'><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                </Grid>
+                <Grid item>
+
+                <Button sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined"><DeleteIcon/>Löschen</Button>
+                </Grid>
+                <Grid item>
+
+                <Link style={{textDecoration: "none"}} onClick={() => {
+                    visitedSite("matchingmethode");
+                    setWorkflow("Matching-Methode");
+                }} to='/Matching-Methode'>
+                    <Button sx={{
                         height: "100%",
                         width: "auto",
-                        borderColor: "#1d4189",
-                        "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
-                        color: "#1d4189"
-                    }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{
-                        width: "auto",
-                        borderColor: "#B11B18",
-                        color: "#B11B18",
-                        "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
-                    }} variant="outlined"><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} onClick={() => {
-                        visitedSite("matchingmethode"); setWorkflow("Matching-Methode");
-                    }} to='/Matching-Methode'>
-                        <Button sx={{
-                            height: "100%",
-                            width: "auto",
-                            color: "white",
-                            border: "none",
-                            backgroundColor: "#1d4189",
-                            "&:hover": {backgroundColor: "#1d4189"}
-                        }} variant="filled">Weiter <ArrowForwardIcon/></Button>
-                    </Link>
+                        color: "white",
+                        border: "none",
+                        backgroundColor: "#1d4189",
+                        "&:hover": {backgroundColor: "#1d4189"}
+                    }} variant="filled">Weiter <ArrowForwardIcon/></Button>
+                </Link>
+                </Grid>
+            </Grid>
 
-                </div>
 
-            </CardContent>
         </Card>
     );
 

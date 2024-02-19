@@ -13,6 +13,8 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 import AppContext from "../../AppContext";
+import Grid from '@mui/material/Grid';
+
 
 function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage, setWorkflow}) {
 
@@ -184,171 +186,208 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
     }
 
     return (
-        <Card sx={{width:"100%",borderRadius: '10px 10px 10px 10px'}}>
+        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"3%", paddingLeft:"3%"}}>
+                <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "3%", paddingLeft: "3%"}}>
                     Matching Verhältnis
                 </Typography>
 
-<div style={{paddingLeft:"35%", align:"center"}}>
-              <div style={{display:"flex", flexFlow:"row", gap:"100px", paddingBottom:"5%"}}>
+                <div style={{paddingLeft: "35%", align: "center"}}>
+                    <div style={{display: "flex", flexFlow: "row", gap: "100px", paddingBottom: "5%"}}>
 
-                            <Box
-                                style={{
+                        <Box
+                            style={{
 
-                                    backgroundColor: isActive11 || isVerhältnis ==="1:1" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive11 || isVerhältnis ==="1:1" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive11 || isVerhältnis ==="1:1" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption11}
-                            > 1:1
-                            </Box>
+                                backgroundColor: isActive11 || isVerhältnis === "1:1" ? "#1d4189" : '#E8E9EB',
+                                color: isActive11 || isVerhältnis === "1:1" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "4rem",
+                                height: "4rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActive11 || isVerhältnis === "1:1" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                            }}
+                            onClick={handleClickOption11}
+                        > 1:1
+                        </Box>
 
-                            <Box
-                                style={{
+                        <Box
+                            style={{
 
-                                    backgroundColor: isActive12 || isVerhältnis ==="1:2" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive12 || isVerhältnis ==="1:2" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive12 || isVerhältnis ==="1:2" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption12}
-                            > 1:2
-                            </Box>
-            </div>
+                                backgroundColor: isActive12 || isVerhältnis === "1:2" ? "#1d4189" : '#E8E9EB',
+                                color: isActive12 || isVerhältnis === "1:2" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "4rem",
+                                height: "4rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActive12 || isVerhältnis === "1:2" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                            }}
+                            onClick={handleClickOption12}
+                        > 1:2
+                        </Box>
+                    </div>
 
-                <div style={{display:"flex", flexFlow:"row", gap:"100px", paddingBottom:"5%"}}>
+                    <div style={{display: "flex", flexFlow: "row", gap: "100px", paddingBottom: "5%"}}>
 
-                            <Box
-                                style={{
+                        <Box
+                            style={{
 
-                                    backgroundColor: isActive13 || isVerhältnis ==="1:3" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive13 || isVerhältnis ==="1:3" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive13 || isVerhältnis ==="1:3" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption13}
-                            > 1:3
-                            </Box>
+                                backgroundColor: isActive13 || isVerhältnis === "1:3" ? "#1d4189" : '#E8E9EB',
+                                color: isActive13 || isVerhältnis === "1:3" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "4rem",
+                                height: "4rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActive13 || isVerhältnis === "1:3" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                            }}
+                            onClick={handleClickOption13}
+                        > 1:3
+                        </Box>
 
-                            <Box
-                                style={{
+                        <Box
+                            style={{
 
-                                    backgroundColor: isActive14|| isVerhältnis ==="1:4" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive14 || isVerhältnis ==="1:4" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive14 || isVerhältnis ==="1:4" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption14}
-                            > 1:4
-                            </Box>
+                                backgroundColor: isActive14 || isVerhältnis === "1:4" ? "#1d4189" : '#E8E9EB',
+                                color: isActive14 || isVerhältnis === "1:4" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "4rem",
+                                height: "4rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActive14 || isVerhältnis === "1:4" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                            }}
+                            onClick={handleClickOption14}
+                        > 1:4
+                        </Box>
 
+                    </div>
+                    <div style={{display: "flex", flexFlow: "row", gap: "100px", paddingBottom: "8.5%"}}>
+
+                        <Box
+                            style={{
+
+                                backgroundColor: isActive110 || isVerhältnis === "1:10" ? "#1d4189" : '#E8E9EB',
+                                color: isActive110 || isVerhältnis === "1:10" ? "white" : "#666666",
+                                fontSize: "large",
+                                display: "flex",
+                                width: "4rem",
+                                height: "4rem",
+                                alignItems: "center",
+                                justifyContent: "space-evenly",
+                                borderRadius: "15px",
+                                boxShadow: isActive110 || isVerhältnis === "1:10" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                            }}
+                            onClick={handleClickOption110}
+                        > 1:10
+                        </Box>
+
+                        <Box
+                            style={{
+                                backgroundColor:
+                                    isActive1Edit || isVerhältnis === verhältnisEdit ? "#1d4189" : '#E8E9EB',
+                                color: isActive1Edit || isVerhältnis === verhältnisEdit ? "white" : "#666666",
+                                fontSize: 'large',
+                                display: 'flex',
+                                width: '4rem',
+                                height: '4rem',
+                                alignItems: 'center',
+                                justifyContent: 'space-evenly',
+                                borderRadius: '15px',
+                                boxShadow:
+                                    isActive1Edit || isVerhältnis === verhältnisEdit ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)' : '',
+                            }}
+                            onClick={handleClickOption1Edit}
+                        >
+                            1:
+                            {isActive1Edit ? (
+                                <input
+                                    type="text"
+                                    value={verhältnisEdit}
+                                    onChange={(e) => {
+                                        setVerhältnis(e.target.value);
+                                        setVerhältnisNav("1:" + e.target.value);
+                                        setVerhältnisEdit(e.target.value);
+                                    }}
+                                    style={{
+                                        fontSize: '18px',
+                                        width: '30px',
+                                        textAlign: 'center',
+                                        paddingTop: '4px',
+                                        background: 'none',
+                                        border: 'none',
+                                        color: isActive1Edit || verhältnisEdit != '' ? 'white' : '#666666',
+                                    }}
+                                    autoFocus
+                                />
+                            ) : (
+                                verhältnisEdit
+                            )}
+                        </Box>
+
+                    </div>
                 </div>
-                <div style={{display:"flex", flexFlow:"row", gap:"100px", paddingBottom:"8.5%"}}>
 
-                            <Box
-                                style={{
-
-                                    backgroundColor: isActive110 || isVerhältnis ==="1:10" ? "#1d4189" : '#E8E9EB',
-                                    color: isActive110 || isVerhältnis ==="1:10" ? "white" : "#666666",
-                                    fontSize: "large",
-                                    display: "flex",
-                                    width: "4rem",
-                                    height: "4rem",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly",
-                                    borderRadius: "15px",
-                                    boxShadow: isActive110 || isVerhältnis ==="1:10" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                }}
-                                onClick={handleClickOption110}
-                            > 1:10
-                            </Box>
-
-                    <Box
-                        style={{
-                            backgroundColor:
-                                isActive1Edit || isVerhältnis === verhältnisEdit?  "#1d4189" : '#E8E9EB',
-                            color: isActive1Edit || isVerhältnis === verhältnisEdit ?   "white" : "#666666",
-                            fontSize: 'large',
-                            display: 'flex',
-                            width: '4rem',
-                            height: '4rem',
-                            alignItems: 'center',
-                            justifyContent: 'space-evenly',
-                            borderRadius: '15px',
-                            boxShadow:
-                                isActive1Edit || isVerhältnis === verhältnisEdit ? '0px 1px 2px 0px rgba(29, 65, 137, 1), 0px 2px 6px 2px rgba(60, 64, 67, 0.15)' : '',
-                        }}
-                        onClick={handleClickOption1Edit}
-                    >
-                        1:
-                        {isActive1Edit ? (
-                            <input
-                                type="text"
-                                value={verhältnisEdit}
-                                onChange={(e) => {
-                                    setVerhältnis(e.target.value); setVerhältnisNav("1:" +e.target.value); setVerhältnisEdit(e.target.value);
-                                }}
-                                style={{
-                                    fontSize: '18px',
-                                    width: '30px',
-                                    textAlign: 'center',
-                                    paddingTop: '4px',
-                                    background: 'none',
-                                    border: 'none',
-                                    color: isActive1Edit || verhältnisEdit != '' ? 'white' : '#666666',
-                                }}
-                                autoFocus
-                            />
-                        ) : (
-                            verhältnisEdit
-                        )}
-                    </Box>
-
-                </div>
-</div>
-
-
-                <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} onClick={()=> { if(isMatchingMethode==="Exaktes Matching"){  setWorkflow("VariableFälleKontrolle");}else{setWorkflow("Kontrollvariablen")}}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> { logsomething();
-                        if(isMatchingMethode==="Exaktes Matching"){  visitedSite("ergebnisse"); setWorkflow("MatchingErgebnis");}else{visitedSite("scoremethode"); setWorkflow("ScoreBerechnung")}
-                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
-                </div>
 
             </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item> <Link style={{textDecoration: "none"}} onClick={() => {
+                    if (isMatchingMethode === "Exaktes Matching") {
+                        setWorkflow("VariableFälleKontrolle");
+                    } else {
+                        setWorkflow("Kontrollvariablen")
+                    }
+                }} to={backFunction()}><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                </Grid>
+                <Grid item>
+                <Button sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
+                </Grid>
+                <Grid item>
+                <Link style={{textDecoration: "none"}} to={toFunction()} onClick={() => {
+                    logsomething();
+                    if (isMatchingMethode === "Exaktes Matching") {
+                        visitedSite("ergebnisse");
+                        setWorkflow("MatchingErgebnis");
+                    } else {
+                        visitedSite("scoremethode");
+                        setWorkflow("ScoreBerechnung")
+                    }
+                }}><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    color: "white",
+                    border: "none",
+                    backgroundColor: "#1d4189",
+                    "&:hover": {backgroundColor: "#1d4189"}
+                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+            </Grid>
+            </Grid>
         </Card>
     );
 }

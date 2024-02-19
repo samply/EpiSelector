@@ -13,6 +13,8 @@ import { useState} from "react";
 import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
+import Grid from '@mui/material/Grid';
+
 
 
 function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllMatchingvariablen, isMatchingtoleranz, setWorkflow }) {
@@ -75,21 +77,29 @@ function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllM
     }
 
     return (
-        <Card sx={{ width: "100%", height: "100%", borderRadius: '10px 10px 10px 10px' }}>
+        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
-                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }} />
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
 
-            <CardContent sx={{ backgroundColor: "white", width: "100%", height: "59%" }}>
+            <CardContent sx={{backgroundColor: "white", width: "100%", height: "59%"}}>
 
-                <Typography sx={{ fontSize: 18, paddingTop: "1%", paddingLeft: "2%" }}>
+                <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "2%"}}>
                     Matchingtoleranz
                 </Typography>
-                <br />
+                <br/>
 
                 <DataGrid id="datagrid" density="compact"
-                          sx={{ overflow: 'auto', display: "flex", width: "65%", height: "100%", alignSelf: "center", marginLeft: "15%", marginBottom: "1%" }}
+                          sx={{
+                              overflow: 'auto',
+                              display: "flex",
+                              width: "65%",
+                              height: "100%",
+                              alignSelf: "center",
+                              marginLeft: "15%",
+                              marginBottom: "1%"
+                          }}
                           rows={tableArray}
                           columns={columns}
                           hideFooterPagination={true}
@@ -98,16 +108,43 @@ function Matchingtoleranz({ setMatchingtoleranzChip, setMatchingtoleranz, isAllM
                           onCellEditCommit={handleRowEditCommit}
 
                 />
-                <br />
+                <br/>
 
-                <div style={{ height: "13%", display: "flex", float: "right", gap: "3%", width: "42%", marginRight: "3%" }}>
-                    <Link style={{ textDecoration: "none" }} onClick={() => { setWorkflow("Matchingvariablen")}} to='/Matchingvariablen'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
-                    <Button sx={{ width: "auto", borderColor: "#B11B18", color: "#B11B18", "&:hover": { backgroundColor: "white", borderColor: "#B11B18" } }} variant="outlined" onClick={löschen}><DeleteIcon />Löschen</Button>
-                    <Link style={{ textDecoration: "none" }} to='/FälleKontrollen' onClick={() => {visitedSite("fällekontrollen"); setWorkflow("VariableFälleKontrolle")}}><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
-
-                </div>
 
             </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item>  <Link style={{textDecoration: "none"}} onClick={() => {
+                    setWorkflow("Matchingvariablen")
+                }} to='/Matchingvariablen'><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                </Grid>
+                <Grid item>
+                <Button sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
+                </Grid>
+                <Grid item>
+                <Link style={{textDecoration: "none"}} to='/FälleKontrollen' onClick={() => {
+                    visitedSite("fällekontrollen");
+                    setWorkflow("VariableFälleKontrolle")
+                }}><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    color: "white",
+                    border: "none",
+                    backgroundColor: "#1d4189",
+                    "&:hover": {backgroundColor: "#1d4189"}
+                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                </Grid>
+            </Grid>
         </Card>
     );
 }

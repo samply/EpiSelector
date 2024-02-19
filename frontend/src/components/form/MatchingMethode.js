@@ -19,6 +19,7 @@ import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import {AlertTitle} from "@mui/lab";
 import AppContext from '../../AppContext';
+import Grid from '@mui/material/Grid';
 
 
 function MatchingMethode() {
@@ -87,18 +88,18 @@ function MatchingMethode() {
 
 
     return (
-        <Card sx={{width:"100%", borderRadius: '10px 10px 10px 10px'}}>
+        <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
             <CardHeader
                 title="Matching"
-                titleTypographyProps={{fontSize:14, color:"text.secondary"}}
-                sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
+                titleTypographyProps={{fontSize: 14, color: "text.secondary"}}
+                sx={{backgroundColor: "#E9F0FF", minWidth: "100%"}}/>
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
-                <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"1%", paddingLeft:"3%"}} >
+                <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
                     Matching Methode
                 </Typography>
                 <Collapse in={open}>
-                    <Alert style={{maxWidth:"82%", marginLeft:"7%"}} action={
+                    <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
                         <IconButton
                             aria-label="close"
                             color="inherit"
@@ -108,17 +109,18 @@ function MatchingMethode() {
                                 setPlaceholder(true);
                             }}
                         >
-                            <CloseIcon fontSize="inherit" />
+                            <CloseIcon fontSize="inherit"/>
                         </IconButton>
                     }
-                           sx={{ mb: 2 }} severity="error">
+                           sx={{mb: 2}} severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen um fortzufahren</strong>
+                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen um
+                        fortzufahren</strong>
                     </Alert>
 
                 </Collapse>
                 <Collapse in={isPlaceholder}>
-                    <div style={{margin:"10%"}}></div>
+                    <div style={{margin: "10%"}}></div>
                 </Collapse>
                 <div style={{
                     minHeight: "80%",
@@ -126,15 +128,15 @@ function MatchingMethode() {
                     alignItems: "center",
                     flexDirection: "row",
                     justifyContent: "space-evenly",
-                    paddingBottom:"11%"
+                    paddingBottom: "11%"
                 }}>
 
 
-                    <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"25px"}}>
+                    <FormGroup style={{display: "flex", flexFlow: "row", justifyContent: "space-evenly", gap: "25px"}}>
                         <Box
                             style={{
-                                backgroundColor: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "#1d4189" : '#E8E9EB',
-                                color: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "white" : "#666666",
+                                backgroundColor: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "#1d4189" : '#E8E9EB',
+                                color: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -142,7 +144,7 @@ function MatchingMethode() {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveAusgVar || isMatchingMethode ==="Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
                         > Exaktes Matching nach <br/> ausgewählten Variablen
@@ -150,8 +152,8 @@ function MatchingMethode() {
 
                         <Box
                             style={{
-                                backgroundColor: isActivePropS || isMatchingMethode ==="Propensity Score" ? "#1d4189" : '#E8E9EB',
-                                color: isActivePropS || isMatchingMethode ==="Propensity Score" ? "white" : "#666666",
+                                backgroundColor: isActivePropS || isMatchingMethode === "Propensity Score" ? "#1d4189" : '#E8E9EB',
+                                color: isActivePropS || isMatchingMethode === "Propensity Score" ? "white" : "#666666",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -159,7 +161,7 @@ function MatchingMethode() {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActivePropS || isMatchingMethode ==="Propensity Score" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActivePropS || isMatchingMethode === "Propensity Score" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionPropS}
                         > Propensity Score Matching
@@ -176,9 +178,9 @@ function MatchingMethode() {
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow:  "",
+                                boxShadow: "",
                                 pointerEvents: "auto", // Pointer-Ereignisse umgekehrt
-                                opacity:  1, // Opazität umgekehrt
+                                opacity: 1, // Opazität umgekehrt
                             }}
                             // onClick={handleClickOptionZufallsP} <-- Hier wird das onClick-Ereignis entfernt
                         >
@@ -187,15 +189,51 @@ function MatchingMethode() {
                     </FormGroup>
                 </div>
 
-                <div style={{ display:"flex", height: "8%", float:"right", gap:"3%", width:"42%",marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} onClick={()=> {setWorkflow("Datei-hochladen")} } to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
-                    <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
-                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen"); setWorkflow("Matchingvariablen");}if(isMatchingMethode==="Propensity Score"){visitedSite("zielvariable"); setWorkflow("Zielvariable")} if(isMatchingMethode==="defaultMethode"){ setOpen(true); setPlaceholder(false);}
-                    }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+            </CardContent>
 
-                </div>
-        </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item> <Link style={{textDecoration: "none"}} onClick={() => {
+                    setWorkflow("Datei-hochladen")
+                }} to='/Datei-hochladen'><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                </Grid>
+                <Grid item>
+                <Button sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
+                </Grid>
+                <Grid item>
+                <Link style={{textDecoration: "none"}} to={toFunction()} onClick={() => {
+                    if (isMatchingMethode === "Exaktes Matching") {
+                        visitedSite("matchingvariablen");
+                        setWorkflow("Matchingvariablen");
+                    }
+                    if (isMatchingMethode === "Propensity Score") {
+                        visitedSite("zielvariable");
+                        setWorkflow("Zielvariable")
+                    }
+                    if (isMatchingMethode === "defaultMethode") {
+                        setOpen(true);
+                        setPlaceholder(false);
+                    }
+                }}><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    color: "white",
+                    border: "none",
+                    backgroundColor: "#1d4189",
+                    "&:hover": {backgroundColor: "#1d4189"}
+                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                </Grid>
+            </Grid>
         </Card>
     );
 }
