@@ -13,13 +13,13 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 import axios from "axios";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import summary from '../../assets/summary.json';
-// import * as fs from "fs";
-// import {WordsApi} from "asposewordscloud";
-// import * as model from "asposewordscloud";
+import AppContext from '../../AppContext';
+import {visitedSite} from "../NavB";
+
 
 const doc = new jsPDF();
 
@@ -71,8 +71,8 @@ const Matchingprotokoll = tickets => {
 };
 
 
-function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert, setDisclaimer}){
-
+function Dataexport() {
+    const { setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis,setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow } = useContext(AppContext);
     const [resultData, setResultData] = useState([]);
 
     useEffect(() => {
@@ -102,17 +102,18 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
             console.log("Result of ConvertDocument: ", convertDocumentResult);
         });*/
 
-    const deleteAllData = () => {
+    function deleteAllData() {
         setDatenquelle("defaultQuelle");
-        setDatei("defaultQuelle");
+        setDatei("defaultDatei");
         setMatchingMethode("defaultMethode");
         setZielvariable("defaultZielvariable");
         setKontrollvariablen("defaultKontrollvariablen");
         setVerhältnis("defaultVerhältnis");
+        setVerhältnisNav("defaultVerhältnis");
         setScoreMethode("defaultScoreMethode");
         setAlgorithmus("defaultAlgo");
         setErsetzung("defaultErsetz");
-        setÜbereinstimmungswert("defaultÜberinstimmungswert");
+        setÜbereinstimmungswert("defaultÜbereinstimmungswert");
     };
 
     setDisclaimer(false);
@@ -149,7 +150,7 @@ function Dataexport({setDatenquelle, setDatei, setMatchingMethode, setZielvariab
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"43%", marginRight:"3%"}}>
                 <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 <Button onClick={deleteAllData} sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} onClick={deleteAllData} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
+                <Link style={{textDecoration: "none"}} onClick={() => { deleteAllData(); setWorkflow("Startseite")}} to='/Startseite' ><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled"><DoneAllIcon/>Beenden </Button></Link>
 
             </div>
 

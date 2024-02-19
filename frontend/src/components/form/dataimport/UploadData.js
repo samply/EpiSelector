@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 import Papa from 'papaparse';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Datainput from "../../../model/DataInput";
 import Form from '../../../model/Form';
 import {visitedSite} from "../../NavB";
@@ -16,11 +16,11 @@ import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 import test_data from "../../../assets/test_data.json"
 import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the appropriate icon components from Material-UI
+import AppContext from '../../../AppContext';
 
 
-
-
-export default function UploadData({setDatei, setDateiSpaltenNamen, setVollständigeDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns}) {
+export default function UploadData() {
+    const { setDatei, setDateiSpaltenNamen, setVollständigeDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns, setWorkflow } = useContext(AppContext);
 
     const [file, setFile] = useState('');
     const [array, setArray] = useState([]);
@@ -63,6 +63,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
 
             console.log("Dateiname:", file.name);
             console.log(reformattedCsv);
+            console.log(headers);
 
             setCsvImported(true);
         };
@@ -106,7 +107,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                         />
                         <label htmlFor="csvFileInput">
                             <Button component="span" variant="filled" sx={{backgroundColor: "#1d4189", color:"white",  "&:hover": {backgroundColor: "#1d4189"}}}>
-                                1. Datei auswählen
+                                Datei auswählen
                             </Button>
                         </label>
                     </div>
@@ -137,7 +138,9 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                     marginRight: "3%",
                     marginTop: "5%"
                 }}>
-                    <Link style={{textDecoration: "none"}} to='/Datenquelle'><Button sx={{
+                    <Link style={{textDecoration: "none"}} onClick={() => {
+                        setWorkflow("Datenquelle");
+                    }} to='/Datenquelle' ><Button sx={{
                         height: "100%",
                         width: "auto",
                         borderColor: "#1d4189",
@@ -151,7 +154,7 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                         "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                     }} variant="outlined"><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}} onClick={() => {
-                        visitedSite("matchingmethode");
+                        visitedSite("matchingmethode"); setWorkflow("Matching-Methode");
                     }} to='/Matching-Methode'>
                         <Button sx={{
                             height: "100%",
@@ -160,7 +163,8 @@ export default function UploadData({setDatei, setDateiSpaltenNamen, setVollstän
                             border: "none",
                             backgroundColor: "#1d4189",
                             "&:hover": {backgroundColor: "#1d4189"}
-                        }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                        }} variant="filled">Weiter <ArrowForwardIcon/></Button>
+                    </Link>
 
                 </div>
 

@@ -15,7 +15,7 @@ import Box from "@mui/material/Box";
 import {useState} from "react";
 
 
-function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen, setWorkflow }) {
 
 
 
@@ -113,9 +113,9 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
                 <br />
 
                 <div style={{ height: "13%", display: "flex", float: "right", gap: "3%",width: "42%", marginRight: "3%"  }}>
-                    <Link style={{ textDecoration: "none" }} to='/Matchingtoleranz'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
+                    <Link style={{ textDecoration: "none" }} onClick={() => {setWorkflow("Matchingtoleranz")}} to='/Matchingtoleranz'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
                     <Button sx={{ width: "auto", borderColor: "#B11B18", color: "#B11B18", "&:hover": { backgroundColor: "white", borderColor: "#B11B18" } }} variant="outlined" ><DeleteIcon />Löschen</Button>
-                    <Link style={{ textDecoration: "none" }} to='/Matching-Verhältnis' onClick={() => visitedSite("matchingverhältnis")}><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
+                    <Link style={{ textDecoration: "none" }} to='/Matching-Verhältnis' onClick={() => {visitedSite("matchingverhältnis"); setWorkflow("MatchingVerhältnis")}}><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
 
                 </div>
 

@@ -15,7 +15,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethodeNav, setScoreMethodeNav}) {
+function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethodeNav, setScoreMethodeNav, setWorkflow}) {
 
     const [isActiveML, setIsActiveML] = useState(false);
     const [isActiveLR, setIsActiveLR] = useState(false);
@@ -87,8 +87,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "#1d4189" : '#E8E9EB',
-                                color: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "white" : "#666666",
+                                backgroundColor: '#f4f4f5',
+                                color: "#bababa",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -96,9 +96,9 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
-                                pointerEvents: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? "none" : "auto",
-                                opacity: isActiveML || isScoreMethodeNav === "Matching Learning Methode" ? 0.5 : 1,
+                                boxShadow:  "",
+                                pointerEvents: "auto", // Pointer-Ereignisse umgekehrt
+                                opacity:  1, // Opazität umgekehrt
                             }}
                         >
                             Matching Learning Methode
@@ -111,9 +111,9 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
             </div>
 
             <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                <Link style={{textDecoration: "none"}} to='/Matching-Verhältnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                <Link style={{textDecoration: "none"}} onClick={()=>{setWorkflow("MatchingVerhältnis")}} to='/Matching-Verhältnis'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button>
-                <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus' onClick={()=>visitedSite("algorithmus")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                <Link style={{textDecoration: "none"}} to='/MatchingAlgorithmus' onClick={()=>{visitedSite("algorithmus"); setWorkflow("Matching-Algorithmus")}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
             </div>
 

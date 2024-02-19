@@ -1,27 +1,29 @@
-import '../../App.css';
 import * as React from 'react';
+import { useContext } from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import {visitedSite} from "../NavB";
+import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import {CardHeader, TableCell, TableContainer, TableHead, TableRow} from "@mui/material";
+import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import summary from '../../assets/summary.json';
-import {Paper, Table, TableBody} from "@material-ui/core";
+import { Paper, Table, TableBody } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Cancel from '@mui/icons-material/Cancel';
+import AppContext from '../../AppContext';
 
 
-function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable}) {
+function MatchingErgebnis() {
+    const { isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow } = useContext(AppContext);
 
-    const fertigeTabelle=[];
+    const fertigeTabelle = [];
 
-    function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat ) {
+    function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
         return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
     }
 
@@ -124,9 +126,9 @@ function MatchingErgebnis({isAllKontrollvariablen, isMatchingMethode, isDateiSpa
 
 
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} onClick={()=> { if(isMatchingMethode==="Exaktes Matching"){  setWorkflow("MatchingVerhältnis");}else{setWorkflow("Kontrollvariablen")}}} to={backFunction()}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" ><DeleteIcon/>Löschen</Button>
-                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>visitedSite("datenexport")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={()=>{visitedSite("datenexport"); setWorkflow("Datenexport")}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
 
                 </div>
 

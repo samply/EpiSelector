@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from 'react-router-dom';
 import DeleteIcon from "@mui/icons-material/Delete";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {FormGroup} from "@material-ui/core";
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
@@ -13,25 +13,29 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
-
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Collapse from '@mui/material/Collapse';
 import CloseIcon from '@mui/icons-material/Close';
 import {AlertTitle} from "@mui/lab";
+import AppContext from '../../AppContext';
 
-function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständigeDatei}) {
+
+function MatchingMethode() {
+
+    const { setMatchingMethode, isMatchingMethode, isVollständigeDatei, setWorkflow } = useContext(AppContext);
 
     const [isActiveAusgVar, setIsActiveAusgVar] = useState(false);
     const [isActivePropS, setIsActivePropS] = useState(false);
     const [isActiveZufallsP, setIsActiveZufallsP] = useState(false);
-
-    console.log(isVollständigeDatei)
+    const [isgewählteMethode, setgewählteMethode] = useState(false);
+    console.log(isVollständigeDatei);
 
     const handleClickOptionAusgVar = () => {
         if (!isActiveAusgVar) {
             setIsActiveAusgVar(true);
             setMatchingMethode('Exaktes Matching');
+            setgewählteMethode('Exaktes Matching');
             setIsActiveZufallsP(false);
             setIsActivePropS(false);
         }
@@ -42,7 +46,8 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständig
         if (!isActivePropS) {
             setIsActivePropS(true);
             setMatchingMethode('Propensity Score');
-            setIsActiveZufallsP(false);
+            setgewählteMethode('Propensity Score');
+                setIsActiveZufallsP(false);
             setIsActiveAusgVar(false);
         }
 
@@ -59,10 +64,10 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständig
     };*/
 
     let toFunction = () => {
-        if(isMatchingMethode==="Exaktes Matching"){
+        if(isgewählteMethode==="Exaktes Matching"){
             return "/Matchingvariablen";
         }
-        if(isMatchingMethode==="Propensity Score"){
+        if(isgewählteMethode==="Propensity Score"){
             return "/Zielvariable";
         }
 
@@ -162,10 +167,8 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständig
 
                         <Box
                             style={{
-                                // backgroundColor: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189" : '#E8E9EB',
-                                // color: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "white" : "#666666",
-                                backgroundColor: '#E8E9EB',
-                                color: "#666666",
+                                backgroundColor: '#f4f4f5',
+                                color: "#bababa",
                                 fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
@@ -173,23 +176,25 @@ function MatchingMethode({ setMatchingMethode, isMatchingMethode, isVollständig
                                 alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                // boxShadow: isActiveZufallsP || isMatchingMethode ==="Zufallsprinzip" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow:  "",
+                                pointerEvents: "auto", // Pointer-Ereignisse umgekehrt
+                                opacity:  1, // Opazität umgekehrt
                             }}
-                            // onClick={handleClickOptionZufallsP}
-                        > Zufallsprinzip
+                            // onClick={handleClickOptionZufallsP} <-- Hier wird das onClick-Ereignis entfernt
+                        >
+                            Zufallsprinzip
                         </Box>
                     </FormGroup>
                 </div>
 
                 <div style={{ display:"flex", height: "8%", float:"right", gap:"3%", width:"42%",marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} onClick={()=> {setWorkflow("Datei-hochladen")} } to='/Datei-hochladen'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
                     <Link style={{textDecoration: "none"}}  to={toFunction()} onClick={()=> {
-                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen")}if(isMatchingMethode==="Propensity Score"){visitedSite("zielvariable")} if(isMatchingMethode==="defaultMethode"){ setOpen(true); setPlaceholder(false);}
+                       if(isMatchingMethode==="Exaktes Matching"){  visitedSite("matchingvariablen"); setWorkflow("Matchingvariablen");}if(isMatchingMethode==="Propensity Score"){visitedSite("zielvariable"); setWorkflow("Zielvariable")} if(isMatchingMethode==="defaultMethode"){ setOpen(true); setPlaceholder(false);}
                     }}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
-
         </CardContent>
         </Card>
     );

@@ -19,14 +19,10 @@ import ÜbereinstimmungPropensityScore from "./components/form/ÜbereinstimmungP
 import Dataexport from "./components/form/Dataexport";
 import MatchingErgebnis from "./components/form/MatchingErgebnis";
 import DynamicResult from "./components/DynamicResults";
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
 import * as React from 'react';
 import { useState } from "react";
 import Foot from "./components/Foot";
-
-
-
+import AppContext from './AppContext';
 
 function App() {
 
@@ -65,22 +61,10 @@ function App() {
     const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
 
 
-    // isX = {
-    //         datei: { isVollständigeDatei },
-    //         matchingMethode: { isMatchingMethode },
-    //         matchingVerhältnis: { isVerhältnis },
-    //         scoreMethode: { isScoreMethode },
-    //         matchingAlgorithmus: { isAlgorithmus },
-    //         übereinstimmungswert: { isÜbereinstimmungswert },
-    //         zielvariable: { isZielvariable },
-    //         kontrollvariablen: { isAllKontrollvariablen },
-    //         ersetzung: { isErsetzung }
-    // }
-
 
 
     return (
-        //Gesamte Ansicht
+        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}
@@ -126,45 +110,51 @@ function App() {
                                 <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow} />} />
                                 <Route path="/Datenquelle"
                                     element={<Datenquelle setDatenquelle={setDatenquelle}
-                                        isDatenquelle={isDatenquelle} />}
+                                        isDatenquelle={isDatenquelle} setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Datei-hochladen"
                                     element={<UploadData setDatei={setDatei}
                                         setDateiSpaltenNamen={setDateiSpaltenNamen}
                                         setVollständigeDatei={setVollständigeDatei}
-                                        isVollständigeDatei={isVollständigeDatei} isDatei={isDatei}
+                                        isVollständigeDatei={isVollständigeDatei}
+                                        isDatei={isDatei}
                                         setBeobachtungen={setBeobachtungen}
                                         setOnlyBinaryColumns={setOnlyBinaryColumns}/>}
                                 />
                                 <Route path="/Matching-Methode"
                                     element={<MatchingMethode setMatchingMethode={setMatchingMethode}
-                                        isMatchingMethode={isMatchingMethode}
-                                        isVollständigeDatei={isVollständigeDatei} />}
+                                                isMatchingMethode={isMatchingMethode}
+                                                isVollständigeDatei={isVollständigeDatei}
+                                                setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Zielvariable"
                                     element={<Zielvariable setZielvariable={setZielvariable}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isZielvariable={isZielvariable}
                                         isMatchingMethode={isMatchingMethode}
-                                        isOnlyBinaryColumns={isOnlyBinaryColumns}/>}
+                                        isOnlyBinaryColumns={isOnlyBinaryColumns}
+                                    setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Kontrollvariablen"
                                     element={<Kontrollvariablen setKontrollvariablen={setKontrollvariablen}
                                         setAllKontrollvariablen={setAllKontrollvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
-                                        isAllKontrollvariablen={isAllKontrollvariablen} />}
+                                        isAllKontrollvariablen={isAllKontrollvariablen}
+                                        setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Matchingvariablen"
                                     element={<Matchingvariablen setMatchingvariablen={setMatchingvariablen}
                                         setAllMatchingvariablen={setAllMatchingvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
-                                        isAllMatchingvariablen={isAllMatchingvariablen} />}
+                                        isAllMatchingvariablen={isAllMatchingvariablen}
+                                        setWorklfow={setWorkflow}/>}
                                 />
                                 <Route path="/Matchingtoleranz"
                                     element={<Matchingtoleranz isMatchingtoleranz={isMatchingtoleranz}
                                         setMatchingtoleranz={setMatchingtoleranz}
                                         isAllMatchingvariablen={isAllMatchingvariablen}
                                         setMatchingtoleranzChip={setMatchingtoleranzChip}
+                                        setWorkflow={setWorkflow}
                                     />}
                                 />
                                 <Route path="/FälleKontrollen"
@@ -174,6 +164,7 @@ function App() {
                                         setFKChip={setFKChip}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isMatchingvariablen={isMatchingvariablen}
+                                        setWorkflow={setWorkflow}
                                     />}
                                 />
                                 <Route path="/Matching-Verhältnis"
@@ -187,13 +178,15 @@ function App() {
                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
                                                                  isVollständigeDatei={isVollständigeDatei}
                                                                  isMatchingMethode={isMatchingMethode}
+                                                                 setWorkflow={setWorkflow}
                                                                 />}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
                                     element={<MethodeScoreBerechnung setScoreMethode={setScoreMethode}
                                                                      isScoreMethode={isScoreMethode}
                                                                      isScoreMethodeNav={isScoreMehodeNav}
-                                                                     setScoreMethodeNav={setScoreMethodeNav}/>}
+                                                                     setScoreMethodeNav={setScoreMethodeNav}
+                                                                     setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/MatchingAlgorithmus"
                                     element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus}
@@ -203,7 +196,8 @@ function App() {
                                                                   setErsetzung={setErsetzung}
                                                                   isErsetzung={isErsetzung}
                                                                   isErsetzungNav={isErsetzungNav}
-                                                                  setErsetzungNav={setErsetzungNav}/>}
+                                                                  setErsetzungNav={setErsetzungNav}
+                                                                    setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/ÜbereinstimmungPropensityScore"
                                     element={<ÜbereinstimmungPropensityScore isAlgorithmus={isAlgorithmus}
@@ -214,7 +208,8 @@ function App() {
                                         isVollständigeDatei={isVollständigeDatei}
                                         isScoreMethode={isScoreMethode}
                                         setÜbereinstimmungswert={setÜbereinstimmungswert}
-                                        isÜbereinstimmungswert={isÜbereinstimmungswert} />}
+                                        isÜbereinstimmungswert={isÜbereinstimmungswert}
+                                    setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Matching-Ergebnis"
                                     element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
@@ -223,7 +218,7 @@ function App() {
                                                                isDateiSpaltenNamen={isDateiSpaltenNamen}
                                                                isZielvariable={isZielvariable}
                                                                isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
-                                    />}
+                                                               setWorkflow={setWorkflow}/>}
                                     element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
                                     isAllKontrollvariablen={isAllKontrollvariablen}
                                     isMatchingMethode={isMatchingMethode}
@@ -235,7 +230,7 @@ function App() {
                                     isScoreMethode={isScoreMethode}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
-                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} />} />
+                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} />} />
                             </Routes>
                         </div>
                         <div className="dynamicResults">
@@ -260,6 +255,8 @@ function App() {
             {/*Fußzeile*/}
 
         </div>
+        </AppContext.Provider>
+
     );
 }
 

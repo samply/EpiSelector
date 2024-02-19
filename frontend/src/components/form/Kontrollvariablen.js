@@ -14,20 +14,19 @@ import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen, isAllKontrollvariablen, isZielvariable }) {
+function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDateiSpaltenNamen, isAllKontrollvariablen, isZielvariable, setWorkflow }) {
 
     console.log(isDateiSpaltenNamen);
-    console.log(isDateiSpaltenNamen.length);
 
-    const filteredArray = isDateiSpaltenNamen.filter(item => item !== isZielvariable);
-    console.log('filteredArray' + filteredArray);
+   // const filteredArray = isDateiSpaltenNamen.filter(item => item !== isZielvariable);
+   // console.log('filteredArray' + filteredArray);
 
     let resultArray = [];
 
-    for (let i = 0; i < filteredArray.length; i++) {
+    for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
         const tempObj = {
             id: i,
-            var: filteredArray[i]
+            var: isDateiSpaltenNamen[i]
         };
         resultArray.push(tempObj);
     }
@@ -93,16 +92,15 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
                     onSelectionModelChange={(newSelectionModel) => {
                         onRowsSelectionHandler(newSelectionModel);
                         setSelectionModel(newSelectionModel);
-                    }
-                    }
+                    } }
                     selectionModel={selectionModel}
                 />
-                <br />
+                <br/>
 
                 <div style={{ height: "13%", display: "flex", float: "right", gap: "3%", width: "42%", marginRight: "3%" }}>
-                    <Link style={{ textDecoration: "none" }} to='/Zielvariable'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
+                    <Link style={{ textDecoration: "none" }} onClick={() => {setWorkflow("Zielvariablen")}} to='/Zielvariable'><Button sx={{ height: "100%", width: "auto", borderColor: "#1d4189", "&:hover": { backgroundColor: "white", borderColor: "#1d4189" }, color: "#1d4189" }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
                     <Button sx={{ width: "auto", borderColor: "#B11B18", color: "#B11B18", "&:hover": { backgroundColor: "white", borderColor: "#B11B18" } }} variant="outlined" onClick={löschen}><DeleteIcon />Löschen</Button>
-                    <Link style={{ textDecoration: "none" }} to='/Matching-Verhältnis' onClick={() => visitedSite("matchingverhältnis")}><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
+                    <Link style={{ textDecoration: "none" }} onClick={() => {visitedSite("matchingverhältnis"); setWorkflow("MatchingVerhältnis")}} to='/Matching-Verhältnis' ><Button sx={{ height: "100%", width: "auto", color: "white", border: "none", backgroundColor: "#1d4189", "&:hover": { backgroundColor: "#1d4189" } }} variant="filled">Weiter <ArrowForwardIcon /></Button></Link>
 
                 </div>
 

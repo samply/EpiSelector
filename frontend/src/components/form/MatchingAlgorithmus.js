@@ -16,7 +16,7 @@ import Card from "@mui/material/Card";
 
 
 
-function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmus, setErsetzung, isErsetzung, setErsetzungNav, isErsetzungNav}) {
+function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmus, setErsetzung, isErsetzung, setErsetzungNav, isErsetzungNav, setWorkflow}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
@@ -165,16 +165,18 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                         </Box>
                         <Box
                             style={{
-                                backgroundColor: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "#1d4189":'#E8E9EB',
-                                color: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "white":"#666666",
-                                fontSize:"large",
+                                backgroundColor: '#f4f4f5',
+                                color: "#bababa",
+                                fontSize: "large",
                                 display: "flex",
                                 width: "15rem",
                                 height: "8rem",
-                                alignItems:"center",
+                                alignItems: "center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveOM || isAlgorithmusNav === "Optimal Matching" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow:  "",
+                                pointerEvents: "auto", // Pointer-Ereignisse umgekehrt
+                                opacity:  1, // Opazität umgekehrt
                             }}
                             onClick={handleClickOptionOM}
                         > Optimal Matching (OM)
@@ -184,9 +186,9 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                 {ersetzungsPart()}
              </div>
                 <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                    <Link style={{textDecoration: "none"}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} onClick={()=>{setWorkflow("ScoreBerechnung")}} to='/MethodeScoreBerechnung'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                     <Link style={{textDecoration: "none"}}><Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined" onClick={löschen} ><DeleteIcon/>Löschen</Button></Link>
-                    <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={()=>visitedSite("übereinstimmung")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={()=>{visitedSite("übereinstimmung"); setWorkflow("Übereinstimmung")}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                 </div>
         </CardContent>

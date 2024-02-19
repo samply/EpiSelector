@@ -35,16 +35,7 @@ export function visitedSite(icon){
     const elem = document.getElementById(icon);
     elem.style.backgroundColor="#1d4189";
 }
-/*const ExpandMore = styled((props) => {
-    const { expand, ...other } = props;
-    return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-    transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-        duration: theme.transitions.duration.shortest,
-    }),
-}));*/
+
 
 
 function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflow, isDatenquelle, isDatei, isMatchingMethode, isZielvariable, isKontrollvariablen, isAllMatchingvariablen, isAllKontrollvariablen, isMatchingvariablen, isMatchingtoleranz, isMatchingtoleranzChip, isFälleKontrollenGruppenindikator,isFKChip, isVerhältnis,isVerhältnisNav, isScoreMethode, isScoreMethodeNav, isAlgorithmus, isAlgorithmusNav, isErsetzung, isErsetzungNav, isÜbereinstimmungswert}) {

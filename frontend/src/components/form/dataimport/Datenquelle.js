@@ -15,7 +15,7 @@ import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 
 
-function Datenquelle({setDatenquelle, isDatenquelle}) {
+function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
 
     const [isActiveDRE, setIsActiveDRE] = useState(false);
     const [isActiveGeraet, setIsActiveGeraet] = useState(false);
@@ -103,9 +103,9 @@ function Datenquelle({setDatenquelle, isDatenquelle}) {
                     </div>
 
                     <div style={{ height: "8%", display:"flex", float:"right", gap:"3%", width:"42%", marginRight:"3%"}}>
-                            <Link style={{textDecoration: "none"}} to='/Startseite'><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                            <Link style={{textDecoration: "none"}} to='/Startseite' onClick={()=>{setWorkflow("Startseite");}}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                             <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined"onClick={löschen}> <DeleteIcon/>Löschen</Button>
-                            <Link style={{textDecoration: "none"}} to='/Datei-hochladen' onClick={()=>visitedSite("dateihochladen")}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                            <Link style={{textDecoration: "none"}} to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen"); setWorkflow("Datei-hochladen");}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
 
                     </div>
 
