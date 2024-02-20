@@ -14,7 +14,7 @@ import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from '@mui/material/Grid';
 
-let ip_django = "127.0.0.1:8000";
+// let ip_django = "127.0.0.1:8000";
 
 
 function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isPSJsonPackage, isÜbereinstimmungswert, setWorkflow }) {

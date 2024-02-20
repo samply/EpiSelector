@@ -28,7 +28,7 @@ import {AlertTitle} from "@mui/lab";
 
 
 export default function UploadData() {
-    const { setDatei, setDateiSpaltenNamen, setVollständigeDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns, setWorkflow } = useContext(AppContext);
+    const { setDatei, isBeobachtungen, setDateiSpaltenNamen, setVollständigeDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns, setWorkflow } = useContext(AppContext);
 
     const [file, setFile] = useState('');
     const [array, setArray] = useState([]);
@@ -79,10 +79,11 @@ export default function UploadData() {
             setDateiSpaltenNamen(headers);
             setOnlyBinaryColumns(headers);
             setVollständigeDatei(jsonData);
-            setBeobachtungen(jsonData.length);
-            console.log(jsonData.length);
+            setBeobachtungen(rows.length-1);
+            console.log(rows.length-1);
             console.log("Dateiname:", file.name);
             console.log(headers);
+            console.log(isBeobachtungen);
         };
         reader.readAsText(file);
         setCsvImported(true);

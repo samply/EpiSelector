@@ -23,6 +23,7 @@ import * as React from 'react';
 import { useState } from "react";
 import Foot from "./components/Foot";
 import AppContext from './AppContext';
+import DynamicResultsBackup from "./components/DynamicResultsBackup";
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
     const [isMatchingtoleranz, setMatchingtoleranz] = useState("");
     const [isMatchingtoleranzChip, setMatchingtoleranzChip] = useState("");
     const [isFälleKontrollenGruppenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
-    const [isErsetzung, setErsetzung] = useState('FALSE');
+    const [isErsetzung, setErsetzung] = useState('');
     const [isErsetzungNav, setErsetzungNav] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('defaultVollständigedatei');
@@ -113,7 +114,8 @@ function App() {
                                         isDatenquelle={isDatenquelle} setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Datei-hochladen"
-                                    element={<UploadData setDatei={setDatei}
+                                    element={<UploadData isBeobachtungen={isBeobachtungen}
+                                                         setDatei={setDatei}
                                         setDateiSpaltenNamen={setDateiSpaltenNamen}
                                         setVollständigeDatei={setVollständigeDatei}
                                         isVollständigeDatei={isVollständigeDatei}
@@ -237,14 +239,10 @@ function App() {
                             </Routes>
                         </div>
                         <div className="dynamicResults">
-                            <DynamicResult isPackageB={isPackageB} isAlgorithmus={isAlgorithmus}
-                                isAllKontrollvariablen={isAllKontrollvariablen}
-                                isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
-                                isZielvariable={isZielvariable}
-                                isMatchingMethode={isMatchingMethode}
-                                isVollständigeDatei={isVollständigeDatei}
-                                isScoreMethode={isScoreMethode}
-                                isÜbereinstimmungswert={isÜbereinstimmungswert} />
+                            <DynamicResultsBackup
+                                                   isToleranzBereichSet={isToleranzBereichSet}
+                                                   isErsetzung={isErsetzung}
+                                                   isMatchingMethode={isMatchingMethode} />
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}

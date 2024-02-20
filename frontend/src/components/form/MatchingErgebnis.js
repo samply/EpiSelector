@@ -39,25 +39,30 @@ function MatchingErgebnis() {
            console.log(isMatchingMethode);
            console.log(isErsetzung);
            console.log(isToleranzBereichSet);
-           console.log(FHSPSOE)
+           console.log(FHSPSOE);
+           console.log(isBeobachtungen);
            data = FHSPSOE;
        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
            console.log(isMatchingMethode);
            console.log(isErsetzung);
            console.log(isToleranzBereichSet);
-           console.log(FHSPSME)
+           console.log(FHSPSME);
+           console.log(isBeobachtungen);
+
            data = FHSPSME;
        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
            console.log(isMatchingMethode);
            console.log(isErsetzung);
            console.log(isToleranzBereichSet);
-           console.log(FHSEMOT)
+           console.log(FHSEMOT);
+           console.log(isBeobachtungen);
            data = FHSEMOT;
        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
            console.log(isMatchingMethode);
            console.log(isErsetzung);
            console.log(isToleranzBereichSet);
-           console.log(FHSEMMT)
+           console.log(FHSEMMT);
+           console.log(isBeobachtungen);
            data = FHSEMMT;
        }
        setResults(data);

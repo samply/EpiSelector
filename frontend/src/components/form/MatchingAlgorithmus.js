@@ -217,7 +217,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={() => {
                     visitedSite("übereinstimmung");
-                    setWorkflow("Übereinstimmung")
+                    setWorkflow("Übereinstimmung"); if(isErsetzung === ''){setErsetzung('FALSE');}
                 }}><Button sx={{
                     height: "100%",
                     width: "auto",
