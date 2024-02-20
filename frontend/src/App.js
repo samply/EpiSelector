@@ -59,12 +59,12 @@ function App() {
     const [isClickedMV, setClickedMV] = useState(false);
     const [isWorkflow, setWorkflow] = useState("Startseite");
     const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
-
+    const [isToleranzBereichSet, setToleranzBereichSet] = useState('FALSE');
 
 
 
     return (
-        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable}}>
+        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}
@@ -155,6 +155,7 @@ function App() {
                                         isAllMatchingvariablen={isAllMatchingvariablen}
                                         setMatchingtoleranzChip={setMatchingtoleranzChip}
                                         setWorkflow={setWorkflow}
+                                        setToleranzBereichSet={setToleranzBereichSet}
                                     />}
                                 />
                                 <Route path="/FälleKontrollen"
@@ -228,6 +229,8 @@ function App() {
                                     isZielvariable={isZielvariable}
                                     isVollständigeDatei={isVollständigeDatei}
                                     isScoreMethode={isScoreMethode}
+                                    isToleranzBereichSet={isToleranzBereichSet}
+                                    isErsetzung={isErsetzung}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} />} />

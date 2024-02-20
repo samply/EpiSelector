@@ -15,10 +15,7 @@ import Card from "@mui/material/Card";
 import AppContext from "../../AppContext";
 import Grid from '@mui/material/Grid';
 
-
 function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage, setWorkflow}) {
-
-
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -28,7 +25,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
     const [isActive1Edit, setIsActive1Edit] = useState(false);
 
     const handleClickOption11 = () => {
-        // 👇️ toggle
         if (!isActive11) {
             setIsActive11(true);
             setIsActive12(false);
@@ -39,12 +35,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setVerhältnis("1");
             setVerhältnisNav("1:1");
         }
-
-        // 👇️ or set to true
-        // setIsActive(true);
     };
     const handleClickOption12 = () => {
-        // 👇️ toggle
         if (!isActive12) {
             setIsActive12(true);
             setIsActive11(false);
@@ -56,11 +48,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setVerhältnisNav("1:2");
 
         }
-        // 👇️ or set to true
-        // setIsActive(true);
     };
     const handleClickOption13 = () => {
-        // 👇️ toggle
         if (!isActive13) {
             setIsActive13(true);
             setVerhältnis("3");
@@ -71,11 +60,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setIsActive110(false);
             setIsActive1Edit(false);
         }
-        // 👇️ or set to true
-        // setIsActive(true);
     };
     const handleClickOption14 = () => {
-        // 👇️ toggle
         if (!isActive14) {
             setIsActive14(true);
             setVerhältnis("4");
@@ -86,11 +72,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setIsActive110(false);
             setIsActive1Edit(false);
         }
-        // 👇️ or set to true
-        // setIsActive(true);
     };
     const handleClickOption110 = () => {
-        // 👇️ toggle
         if (!isActive110) {
             setIsActive110(true);
             setVerhältnis("10");
@@ -101,11 +84,8 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setIsActive11(false);
             setIsActive1Edit(false);
         }
-        // 👇️ or set to true
-        // setIsActive(true);
     };
     const handleClickOption1Edit = () => {
-
         if (!isActive1Edit) {
             setIsActive1Edit(true);
             setVerhältnisEdit("");
@@ -115,46 +95,44 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setIsActive11(false);
             setIsActive110(false);
         }
-
     };
 
-
-    let logsomething = () => {
+   /* let sendVariablesToBackend = () => {
         console.log("Log über Fertig-Button");
-        console.log(isMatchingMethode)
-        console.log(isAllMatchingvariablen)
-        console.log(isVollständigeDatei)
-        console.log(isMatchingtoleranz)
-        console.log(isFälleKontrollenGruppenindikator)
-        console.log(isVerhältnis)
+        console.log(isVollständigeDatei);
+        console.log(isMatchingMethode);
+        console.log(isAllMatchingvariablen);
+        console.log(isMatchingtoleranz);
+        console.log(isFälleKontrollenGruppenindikator);
+        console.log(isVerhältnis);
+
+        let selectedVariables = [];
+        selectedVariables.push(isVollständigeDatei);
+        selectedVariables.push(isMatchingMethode);
+        selectedVariables.push(isAllMatchingvariablen);
+        selectedVariables.push(isMatchingtoleranz);
+        selectedVariables.push(isFälleKontrollenGruppenindikator);
+        selectedVariables.push(isVerhältnis);
+
+        console.log("selectedVariables to Backend:" +selectedVariables);
 
         //Richtige url einfügen
-        fetch('http://127.0.0.1:8000/control_selection/pie_chart?groupindicator=icu_mort&controllvariables=[age,sex,duration_h]&mmethod=nearest&mdistance=glm&mreplace=TRUE&mratio=2&mcaliper=0.2&controllvariable=sex', {
+      /!*  fetch('http://127.0.0.1:8000/control_selection/pie_chart', {
             method: "post",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-
-            //make sure to serialize your JSON body
-            body: JSON.stringify(isVollständigeDatei)
+            body: JSON.stringify(selectedVariables)
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("Data:")
-                console.log(data);
+                console.log("Data:", data);
             })
             .catch((err) => {
                 console.log(err.message);
-            });
-
-    }
-
-    // Rest-Aufruf
-
-    if (isEMJsonPackage !== 'defaultPackage') {
-        console.log(isEMJsonPackage);
-    }
+            });*!/
+    }*/
 
     let toFunction = () => {
         if(isMatchingMethode==="Exaktes Matching"){
@@ -172,7 +150,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
         }
     };
 
-
     function löschen(){
         setIsActive11(false);
         setIsActive12(false);
@@ -182,7 +159,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
         setIsActive1Edit(false);
         setVerhältnis("");
         setVerhältnisEdit("");
-
     }
 
     return (
@@ -203,7 +179,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
                         <Box
                             style={{
-
                                 backgroundColor: isActive11 || isVerhältnisNav === "1:1" ? "#1d4189" : '#E8E9EB',
                                 color: isActive11 || isVerhältnisNav === "1:1" ? "white" : "#666666",
                                 fontSize: "large",
@@ -221,7 +196,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
                         <Box
                             style={{
-
                                 backgroundColor: isActive12 || isVerhältnisNav === "1:2" ? "#1d4189" : '#E8E9EB',
                                 color: isActive12 || isVerhältnisNav === "1:2" ? "white" : "#666666",
                                 fontSize: "large",
@@ -242,7 +216,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
                         <Box
                             style={{
-
                                 backgroundColor: isActive13 || isVerhältnisNav === "1:3" ? "#1d4189" : '#E8E9EB',
                                 color: isActive13 || isVerhältnisNav === "1:3" ? "white" : "#666666",
                                 fontSize: "large",
@@ -260,7 +233,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
                         <Box
                             style={{
-
                                 backgroundColor: isActive14 || isVerhältnisNav === "1:4" ? "#1d4189" : '#E8E9EB',
                                 color: isActive14 || isVerhältnisNav === "1:4" ? "white" : "#666666",
                                 fontSize: "large",
@@ -281,7 +253,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
                         <Box
                             style={{
-
                                 backgroundColor: isActive110 || isVerhältnisNav === "1:10" ? "#1d4189" : '#E8E9EB',
                                 color: isActive110 || isVerhältnisNav === "1:10" ? "white" : "#666666",
                                 fontSize: "large",
@@ -339,7 +310,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                                 verhältnisEdit
                             )}
                         </Box>
-
                     </div>
                 </div>
 
@@ -370,7 +340,6 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                 </Grid>
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to={toFunction()} onClick={() => {
-                    logsomething();
                     if (isMatchingMethode === "Exaktes Matching") {
                         visitedSite("ergebnisse");
                         setWorkflow("MatchingErgebnis");

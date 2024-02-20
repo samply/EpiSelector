@@ -1,0 +1,25 @@
+[
+	{
+		"row_names": "male",
+		"unadjusted_means_treated": 0.4483,
+		"unadjusted_means_control": 0.2973,
+		"unadjusted_mean_diff": -0.1510,
+		"adjusted_means_treated": 0.2973,
+		"adjusted_means_control": 0.2973,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+
+	{
+		"row_names": "prevalentHyp",
+		"unadjusted_means_treated": 0.2901,
+		"unadjusted_means_control": 1.0000,
+		"unadjusted_mean_diff": 0.7099,
+		"adjusted_means_treated": 1.0000,
+		"adjusted_means_control": 1.0000,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	}
+]

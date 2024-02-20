@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import {useContext, useEffect, useState} from 'react';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from 'react-router-dom';
@@ -11,6 +11,10 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import summary from '../../assets/summary.json';
+import FHSPSOE from '../../assets/FHS_PS_OE.json';
+import FHSPSME from '../../assets/FHS_PS_ME.json';
+import FHSEMMT from '../../assets/FHS_EM_MT.json';
+import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import { Paper, Table, TableBody } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -20,16 +24,74 @@ import Grid from '@mui/material/Grid';
 
 
 function MatchingErgebnis() {
-    const { isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow } = useContext(AppContext);
-
-    const fertigeTabelle = [];
+    const { isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet } = useContext(AppContext);
 
     function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
         return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
     }
 
-    const tableXY= summary;
-    console.log(tableXY);
+    const [results, setResults] = useState([]);
+
+   useEffect(() => {
+       let data;
+
+       if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSOE)
+           data = FHSPSOE;
+       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSME)
+           data = FHSPSME;
+       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMOT)
+           data = FHSEMOT;
+       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMMT)
+           data = FHSEMMT;
+       }
+       setResults(data);
+
+   }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]) ;
+
+
+
+    /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSOE)
+           results = FHSPSOE;
+       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSME)
+           results = FHSPSME;
+       }/* else if (MatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMOT)
+           return FHSEMOT;
+       } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMMT)
+           return FHSEMMT;
+       }*/
+
 
     let backFunction = () => {
         if(isMatchingMethode==="Exaktes Matching"){
@@ -73,7 +135,7 @@ function MatchingErgebnis() {
 
                     <div style={{maxHeight: "400px", overflowY: "auto"}}>
                         <TableContainer component={Paper}>
-                            <Table sx={{minWidth: 210, fontSize: "x-small"}} size="x-small" aria-label="a dense table">
+                            <Table sx={{minWidth: 210, fontSize: "x-small"}} size="small" aria-label="a dense table">
                                 <TableBody>
                                     <TableRow sx={{height: '30px'}}>
                                         <TableCell align="center" colSpan={4} sx={{
@@ -122,37 +184,34 @@ function MatchingErgebnis() {
                                        aria-label="a dense table">
                                     <TableBody>
 
-                                        {tableXY.map((item) => (
+                                        {results.map((item) => (
                                             <TableRow key={item.id}>
                                                 {Object.values(item).map((val) => {
-                                                        if (val === "Balanced") {
-                                                            return (<TableCell
-                                                                style={{textAlign: "left", padding: "2px"}}><CheckCircleIcon
-                                                                style={{color: "green", background: "none"}}/></TableCell>)
-                                                        } else {
-                                                            if (val === "<0.1") {
-                                                                return ("")
-                                                            } else {
-                                                                if (val === "Not Balanced") {
-                                                                    return <TableCell
-                                                                        style={{textAlign: "left", padding: "2px"}}><Cancel
-                                                                        style={{
-                                                                            textAlign: "left",
-                                                                            color: "red",
-                                                                            background: "none"
-                                                                        }}/></TableCell>
-                                                                } else {
-                                                                    return (<TableCell style={{
-                                                                        textAlign: "left",
-                                                                        padding: "2px"
-                                                                    }}>{val}</TableCell>)
-                                                                }
-                                                            }
-                                                        }
+                                                    if (val === "Balanced") {
+                                                        return (
+                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
+                                                                <CheckCircleIcon style={{color: "green", background: "none"}}/>
+                                                            </TableCell>
+                                                        );
+                                                    } else if (val === "<0.1") {
+                                                        return null; // Ignoriere diese Zelle
+                                                    } else if (val === "Not Balanced") {
+                                                        return (
+                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
+                                                                <Cancel style={{textAlign: "left", color: "red", background: "none"}}/>
+                                                            </TableCell>
+                                                        );
+                                                    } else {
+                                                        return (
+                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
+                                                                {val}
+                                                            </TableCell>
+                                                        );
                                                     }
-                                                )}
+                                                })}
                                             </TableRow>
                                         ))}
+
                                     </TableBody>
                                 </Table>
                             </TableContainer>

@@ -25,12 +25,10 @@ import Grid from '@mui/material/Grid';
 function MatchingMethode() {
 
     const { setMatchingMethode, isMatchingMethode, isVollständigeDatei, setWorkflow } = useContext(AppContext);
-
     const [isActiveAusgVar, setIsActiveAusgVar] = useState(false);
     const [isActivePropS, setIsActivePropS] = useState(false);
     const [isActiveZufallsP, setIsActiveZufallsP] = useState(false);
     const [isgewählteMethode, setgewählteMethode] = useState(false);
-    console.log(isVollständigeDatei);
 
     const handleClickOptionAusgVar = () => {
         if (!isActiveAusgVar) {
@@ -40,7 +38,6 @@ function MatchingMethode() {
             setIsActiveZufallsP(false);
             setIsActivePropS(false);
         }
-
     };
 
     const handleClickOptionPropS = () => {
@@ -51,7 +48,6 @@ function MatchingMethode() {
                 setIsActiveZufallsP(false);
             setIsActiveAusgVar(false);
         }
-
     };
 
    /* const handleClickOptionZufallsP = () => {
@@ -61,7 +57,6 @@ function MatchingMethode() {
             setIsActivePropS(false);
             setIsActiveAusgVar(false);
         }
-
     };*/
 
     let toFunction = () => {
@@ -71,8 +66,6 @@ function MatchingMethode() {
         if(isgewählteMethode==="Propensity Score"){
             return "/Zielvariable";
         }
-
-
     };
 
     function löschen(){
@@ -84,8 +77,6 @@ function MatchingMethode() {
 
     const [open, setOpen] = React.useState(false);
     const [isPlaceholder, setPlaceholder] = React.useState(true);
-
-
 
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
@@ -130,7 +121,6 @@ function MatchingMethode() {
                     justifyContent: "space-evenly",
                     paddingBottom: "11%"
                 }}>
-
 
                     <FormGroup style={{display: "flex", flexFlow: "row", justifyContent: "space-evenly", gap: "25px"}}>
                         <Box

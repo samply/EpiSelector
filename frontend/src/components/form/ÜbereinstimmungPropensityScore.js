@@ -14,54 +14,79 @@ import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from '@mui/material/Grid';
 
+let ip_django = "127.0.0.1:8000";
+
 
 function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isPSJsonPackage, isÜbereinstimmungswert, setWorkflow }) {
 
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState(() => { if (isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") { return isÜbereinstimmungswert } else { return '' } });
 
-    let logsomething = () => {
+   /* let sendVariablesToBackend = () => {
         console.log("Log über Fertig-Button");
-        console.log(isAlgorithmus)
-        console.log(isErsetzung)
-        console.log(isZielvariable)
-        console.log(isAllKontrollvariablen)
-        console.log(isScoreMethode)
-        console.log(isMatchingMethode)
-        console.log(isVollständigeDatei)
-        console.log(isVerhältnis)
+        console.log(isAlgorithmus);
+        console.log(isErsetzung);
+        console.log(isZielvariable);
+        console.log(isAllKontrollvariablen);
+        console.log(isScoreMethode);
+        console.log(isMatchingMethode);
+        console.log(isVollständigeDatei);
+        console.log(isVerhältnis);
 
-        fetch('http://127.0.0.1:8000/control_selection/pie_chart?groupindicator=icu_mort&controllvariables=[age,sex,duration_h]&mmethod=nearest&mdistance=glm&mreplace=TRUE&mratio=2&mcaliper=0.2&controllvariable=sex', {
-            method: "post",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
+        let selectedVariables = [];
+        selectedVariables.push(isVollständigeDatei);
+        selectedVariables.push(isMatchingMethode);
+        selectedVariables.push(isAlgorithmus);
+        selectedVariables.push(isErsetzung);
+        selectedVariables.push(isAllKontrollvariablen);
+        selectedVariables.push(isScoreMethode);
+        selectedVariables.push(isZielvariable);
+        selectedVariables.push(isÜbereinstimmungswert);
+        selectedVariables.push(isVerhältnis);
 
-            //make sure to serialize your JSON body
-            body: JSON.stringify(isVollständigeDatei)
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log("Data:")
-                console.log(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
+        var temp_string = "["
+        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
+            console.log(isAllKontrollvariablen[i])
+            console.log(isAllKontrollvariablen[i].var)
+            temp_string += isAllKontrollvariablen[i].var + ","
+        }
+        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
+        temp_string += "]"
 
-    }
+        var param = {
+            groupindicator: isZielvariable,
+            controllvariables: temp_string,
+            mmethod: isAlgorithmus,
+            mdistance: "glm",
+            mreplace: isErsetzung,
+            mratio: isVerhältnis,
+            mcaliper: isÜbereinstimmungswert,
+        };
 
-    // Rest-Aufruf
+        console.log("selectedVariables to Backend:" +selectedVariables);
 
-
-
-
-
-
-    if (isPSJsonPackage !== 'defaultPackage') {
-        console.log(isPSJsonPackage);
-    }
+        // (B) BUILD URL
+        var url = new URL("http://" + ip_django + "/control_selection/summary");
+        for (let k in param) {
+            url.searchParams.append(k, param[k]);
+        }
+        //Richtige url einfügen
+          fetch('http://127.0.0.1:8000/control_selection/summary', {
+              method: "post",
+              headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(isVollständigeDatei)
+          })
+              .then((response) => response.json())
+              .then((data) => {
+                  console.log("Data:", data);
+              })
+              .catch((err) => {
+                  console.log(err.message);
+              });
+    }*/
 
     function löschen() {
         setÜbereinstimmungswert('defaultÜbereinstimmungswert');
@@ -69,7 +94,7 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
         setValue('');
     }
 
-    global.aktuellerStatus = 'übereinstimmungswert';
+    // global.aktuellerStatus = 'übereinstimmungswert';
 
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
@@ -108,11 +133,9 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                                }}
                                error={isWert > 1 || isWert < 0}
                                required="true"
-
                     />
                 </div>
                 <br/>
-
 
             </CardContent>
             <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
@@ -136,7 +159,6 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                 </Grid>
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={() => {
-                    logsomething();
                     visitedSite("ergebnisse");
                     setWorkflow("MatchingErgebnis")
                 }}><Button sx={{
@@ -151,7 +173,6 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
             </Grid>
         </Card>
     );
-
 }
 
 export default ÜbereinstimmungPropensityScore;

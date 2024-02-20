@@ -75,10 +75,8 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
         data_post_match_blue[i] = -data_post_match_blue[i];
     }
 
-
     chart_b.series[0].setData(data_post_match_red);
     chart_b.series[1].setData(data_post_match_blue);
-
 
     // chart_a.yAxis[0].setExtremes(0, 100000);
 
@@ -160,9 +158,10 @@ function clearBoxplots() {
 }
 
 
-function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
+/*function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
 
     let chartDom_e = document.getElementById("container_e");
+    console.log("chartDom_e: " +chartDom_e);
     let chart_e = Highcharts.charts[Highcharts.attr(chartDom_e, 'data-highcharts-chart')];
 
     let char_text = balanced_var_count + ' von ' + (balanced_var_count + non_balanced_var_count) + ' Variablen';
@@ -173,11 +172,11 @@ function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
 
     chart_e.series[0].setData([{ name: char_text, y: balanced_var_count }, { name: '', y: non_balanced_var_count }]);
 
-}
+}*/
 
 
 function clearPieChart() {
-    setPiechart(0, 0, true);
+    // setPiechart(0, 0, true);
 }
 
 
@@ -269,7 +268,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isVollständigeDatei)
         }).then((response) => response.json())
             .then((json) => {
                 console.log("Histogramm-Aufruf wurde abgeschickt")
@@ -327,7 +326,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isVollständigeDatei)
         }).then((response) => response.json())
             .then((json) => {
                 console.log("HALLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + json.pre_matching.boxplot_one)
@@ -740,7 +739,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isVollständigeDatei)
         }).then((response) => response.json())
             .then((data) => {
                 // remove target variable from list of variables
@@ -763,7 +762,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(json_test_data)
+            body: JSON.stringify(isVollständigeDatei)
         }).then((response) => response.json())
             .then((data) => {
                 console.log('Success:', data);
@@ -819,10 +818,15 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json(),  console.log("PieChartFetch is Vollständigedatei" +isVollständigeDatei))
+        }).then((response) => response.json())
             .then((json) => {
-                setPiechart(json[0].count, json[1].count, false);
+                console.log(json);
+                console.log("JSON Count 0: " +json[0].count);
+                console.log("JSON Count 1: " +json[1].count);
 
+
+                // setPiechart(json[0].count, json[1].count, false);
+                console.log("after SetPieCart");
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -863,8 +867,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             <div>
                 <div sx={{ display: "flex", background: "white", justifyItems: "flex-end" }} item xs={12}>
 
-                    <button onClick={clearDiagrams}>Clear</button>
-                    <button onClick={updateDiagrams}>Load</button>
+                    {/*<button onClick={clearDiagrams}>Clear</button>
+                    <button onClick={updateDiagrams}>Load</button>*/}
 
                 </div>
                 <div style={{ display: "flex", flexFlow: "row" }}>

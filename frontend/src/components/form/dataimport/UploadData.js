@@ -55,28 +55,43 @@ export default function UploadData() {
             const rows = parsed.data.slice(1);
 
             // Umformatieren der CSV-Daten
-            let reformattedCsv = '';
+            const jsonData = {};
             headers.forEach((header, index) => {
-                reformattedCsv += header + ',';
-                rows.forEach(row => {
-                    reformattedCsv += row[index] + ',';
+                const columnName = header.trim(); // Entferne Leerzeichen
+                const columnData = [];
+                rows.forEach((row) => {
+                    const value = row[index] !== undefined ? row[index].trim() : ''; // Überprüfe auf undefiniert
+                    if (value !== '') { // Füge nur Werte hinzu, die nicht leer sind
+                        columnData.push(value);
+                    }
                 });
-                reformattedCsv += '\n';
+                jsonData[columnName] = columnData;
+                console.log(`Anzahl der Werte in Spalte "${columnName}": ${columnData.length}`);
             });
+
+
+            // jsonData enthält jetzt das gewünschte JSON-Objekt
+            console.log(jsonData);
+
+            // Setze hier die Daten in deinen State oder führe andere Aktionen aus
 
             setDatei(file.name);
             setDateiSpaltenNamen(headers);
             setOnlyBinaryColumns(headers);
-            setVollständigeDatei(reformattedCsv);
-
+            setVollständigeDatei(jsonData);
+            setBeobachtungen(jsonData.length);
+            console.log(jsonData.length);
             console.log("Dateiname:", file.name);
-            console.log(reformattedCsv);
             console.log(headers);
-
-            setCsvImported(true);
         };
         reader.readAsText(file);
+        setCsvImported(true);
     };
+
+
+
+
+
 
     const handleInputChange = (e) => {
         const file = e.target.files[0];

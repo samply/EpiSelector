@@ -1,0 +1,36 @@
+[
+	{
+		"row_names": "age",
+		"unadjusted_means_treated": 49.3479,
+		"unadjusted_means_control": 56.0721,
+		"unadjusted_mean_diff": 0.8821,
+		"adjusted_means_treated": 51.2500,
+		"adjusted_means_control": 51.2500,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+
+	{
+		"row_names": "male",
+		"unadjusted_means_treated": 0.4483,
+		"unadjusted_means_control": 0.2973,
+		"unadjusted_mean_diff": -0.1510,
+		"adjusted_means_treated": 0.5000,
+		"adjusted_means_control": 0.5000,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "BMI",
+		"unadjusted_means_treated": 25.7068,
+		"unadjusted_means_control": 28.2104,
+		"unadjusted_mean_diff": 0.4770,
+		"adjusted_means_treated": 25.9475,
+		"adjusted_means_control": 25.9475,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	}
+]
