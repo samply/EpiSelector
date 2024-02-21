@@ -53,8 +53,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
             setIsActiveOM(true);
             setAlgorithmus("Optimal Matching");
             setAlgorithmusNav("Optimal Matching");
-            setErsetzung(" ");
-            setErsetzungNav(" ");
+
         }
         setIsActiveNNM(false);
     }
@@ -97,6 +96,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                             if (!isChecked) {
                                 setChecked(true);
                                 setErsetzung("FALSE");
+                                console.log("Ersetzung gerade auf FALSE gesetzt");
                                 setErsetzungNav("Ohne Ersetzung");
                                 setChecked1(false);
                             }
@@ -111,6 +111,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                             if (!isChecked1) {
                                 setChecked1(true);
                                 setErsetzung("TRUE");
+                                console.log("Ersetzung gerade auf TRUE gesetzt");
                                 setErsetzungNav("Mit Ersetzung");
                                 setChecked(false);
                             }
@@ -207,14 +208,14 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+              {/*  <Grid item>
                 <Link style={{textDecoration: "none"}}><Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                 }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button></Link>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={() => {
                     visitedSite("übereinstimmung");

@@ -208,15 +208,15 @@ export default function UploadData() {
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+              {/*  <Grid item>
 
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
-                }} variant="outlined"><DeleteIcon/>Löschen</Button>
-                </Grid>
+                }} variant="outlined" onClick={()=>{setDatei('defaultDatei'); }}><DeleteIcon/>Löschen</Button>
+                </Grid>*/}
                 <Grid item>
 
                 <Link style={{textDecoration: "none"}} onClick={() => {  if (isVollständigeDatei === "defaultVollständigedatei") {

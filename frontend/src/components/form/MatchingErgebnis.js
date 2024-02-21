@@ -32,6 +32,56 @@ function MatchingErgebnis() {
 
     const [results, setResults] = useState([]);
 
+   const postPSMOE ='222';
+   const postPSMME='215';
+   const postEMOT ='0';
+   const postEMMT ='198';
+
+   const variablePSMOE ='19';
+   const variablePSMME ='18';
+   const variableEMOT ='0';
+   const variableEMMT = '18';
+
+   const postBeobachtungen = () =>{
+       if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+          return postPSMOE;
+       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           return postPSMME;
+       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isToleranzBereichSet);
+           return postEMOT;
+       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isToleranzBereichSet);
+           return postEMMT;
+       }
+   };
+
+    const postVariable = () =>{
+        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return variablePSMOE;
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return variablePSMME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return variableEMOT;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return variableEMMT;
+        }
+    };
+
    useEffect(() => {
        let data;
 
@@ -48,7 +98,6 @@ function MatchingErgebnis() {
            console.log(isToleranzBereichSet);
            console.log(FHSPSME);
            console.log(isBeobachtungen);
-
            data = FHSPSME;
        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
            console.log(isMatchingMethode);
@@ -121,7 +170,7 @@ function MatchingErgebnis() {
                     </Typography>
                     <Typography style={{fontSize: "10px", fontWeight: "bold", float: "right"}}>
                         Pre-Matching: {isDateiSpaltenNamen.length} Variablen, {isBeobachtungen} Beobachtungen <br/>
-                        Post-Matching:{isDateiSpaltenNamen.length + 3} Variablen, {isBeobachtungen} Beobachtungen
+                        Post-Matching:{postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
                     </Typography>
                 </div>
 
@@ -141,6 +190,7 @@ function MatchingErgebnis() {
                                 <TableBody>
                                     <TableRow sx={{height: '30px'}}>
                                         <TableCell align="center" colSpan={4} sx={{
+                                            border: 'solid 2px',
                                             backgroundColor: "#1d4189",
                                             color: "white",
                                             fontSize: "medium",
@@ -149,6 +199,7 @@ function MatchingErgebnis() {
                                             PreMatching
                                         </TableCell>
                                         <TableCell align="center" colSpan={5} sx={{
+                                            border: 'solid 2px',
                                             backgroundColor: "#1d4189",
                                             color: "white",
                                             fontSize: "medium",
@@ -159,9 +210,9 @@ function MatchingErgebnis() {
                                         </TableCell>
                                     </TableRow>
                                     <TableRow sx={{height: '30px'}}>
-                                        <TableCell sx={{backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px"}}
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px"}}
                                                    align="center">Variable</TableCell>
-                                        <TableCell sx={{backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px"}}
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px"}}
                                                    align="center">{columnHeader0}</TableCell>
                                         <TableCell sx={{backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px"}}
                                                    align="center">{columnHeader1}</TableCell>
@@ -191,14 +242,15 @@ function MatchingErgebnis() {
                                                     if (key === "row_names") {
                                                         // Behandle den Namen anders
                                                         return (
-                                                            <TableCell key={index} style={{ textAlign: "left", paddingRight: "px", padding: "5px" }}>
+                                                            <TableCell key={index} style={{  textAlign: "left", paddingRight: "2px", padding: "5px", width:'10px' }}>
                                                                 {val}
                                                             </TableCell>
+
                                                         );
                                                     } else {
                                                         if (val === "Balanced") {
                                                             return (
-                                                                <TableCell key={index} style={{ textAlign: "left", padding: "2px" }}>
+                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
                                                                     <CheckCircleIcon style={{ color: "green", background: "none" }} />
                                                                 </TableCell>
                                                             );
@@ -206,13 +258,13 @@ function MatchingErgebnis() {
                                                             return null; // Ignoriere diese Zelle
                                                         } else if (val === "Not Balanced") {
                                                             return (
-                                                                <TableCell key={index} style={{ textAlign: "left", padding: "2px" }}>
+                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
                                                                     <Cancel style={{ color: "red", background: "none" }} />
                                                                 </TableCell>
                                                             );
                                                         } else {
                                                             return (
-                                                                <TableCell key={index} style={{ textAlign: "left", paddingRight: "70px", padding: "8px" }}>
+                                                                <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
                                                                     {val}
                                                                 </TableCell>
                                                             );
@@ -251,14 +303,14 @@ function MatchingErgebnis() {
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+               {/* <Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                 }} variant="outlined"><DeleteIcon/>Löschen</Button>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={() => {
                     visitedSite("datenexport");

@@ -15,7 +15,7 @@ import Card from "@mui/material/Card";
 import AppContext from "../../AppContext";
 import Grid from '@mui/material/Grid';
 
-function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage, setWorkflow}) {
+function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage, setWorkflow, setToleranzBereichSetToResult, isToleranzBereichSet}) {
 
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
@@ -136,7 +136,9 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
 
     let toFunction = () => {
         if(isMatchingMethode==="Exaktes Matching"){
+
             return "/Matching-Ergebnis";
+
         }else{
             return "/MethodeScoreBerechnung";
         }
@@ -330,19 +332,23 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+               {/* <Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                 }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to={toFunction()} onClick={() => {
                     if (isMatchingMethode === "Exaktes Matching") {
                         visitedSite("ergebnisse");
                         setWorkflow("MatchingErgebnis");
+                        if(isToleranzBereichSet === "TRUE"){
+                            setToleranzBereichSetToResult("TRUE");
+
+                        }
                     } else {
                         visitedSite("scoremethode");
                         setWorkflow("ScoreBerechnung")

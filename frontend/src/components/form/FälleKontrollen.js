@@ -16,7 +16,7 @@ import {useState} from "react";
 import Grid from '@mui/material/Grid';
 
 
-function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen, setWorkflow }) {
+function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator,setFälleKontrollenGruppenindikator, isDateiSpaltenNamen, setWorkflow }) {
 
     let tmpFallID = [];
     let gruppenindikatorToggle = true;
@@ -139,14 +139,14 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+                {/*<Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
-                }} variant="outlined"><DeleteIcon/>Löschen</Button>
-                </Grid>
+                }} variant="outlined" onClick={()=>{ setFKChip(' ');}}><DeleteIcon/>Löschen</Button>
+                </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/Matching-Verhältnis' onClick={() => {
                     visitedSite("matchingverhältnis");

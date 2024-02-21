@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid';
 // let ip_django = "127.0.0.1:8000";
 
 
-function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isPSJsonPackage, isÜbereinstimmungswert, setWorkflow }) {
+function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, setÜbereinstimmungswert, isPSJsonPackage, isÜbereinstimmungswert, setWorkflow, setErsetzungToResult }) {
 
     const [isWert, setWert] = useState(0);
     const [value, setValue] = useState(() => { if (isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") { return isÜbereinstimmungswert } else { return '' } });
@@ -95,6 +95,20 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
     }
 
     // global.aktuellerStatus = 'übereinstimmungswert';
+    let toFunction = () => {
+            if(isErsetzung === "TRUE"){
+                setErsetzungToResult("TRUE");
+                console.log("setErsetzungToResult GERADE AUF TRUE GESETZT");
+                return "/Matching-Ergebnis";
+
+            }  else{
+            setErsetzungToResult("FALSE");
+                console.log("setErsetzungToResult GERADE AUF FALSE GESETZT");
+                return "/Matching-Ergebnis";
+
+
+            }
+    };
 
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
@@ -149,18 +163,19 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+                {/*<Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                 }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
-                <Link style={{textDecoration: "none"}} to='/Matching-Ergebnis' onClick={() => {
+                <Link style={{textDecoration: "none"}} to={toFunction()} onClick={() => {
                     visitedSite("ergebnisse");
-                    setWorkflow("MatchingErgebnis")
+                    setWorkflow("MatchingErgebnis");
+                    setErsetzungToResult('TRUE');
                 }}><Button sx={{
                     height: "100%",
                     width: "auto",
@@ -168,7 +183,7 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Fertig <ArrowForwardIcon/></Button></Link>
+                }} variant="filled" onClick={() =>{ setErsetzungToResult('TRUE');}}>Fertig <ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>

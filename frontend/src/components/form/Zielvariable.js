@@ -113,14 +113,14 @@ console.log("zielvariable" + isZielvariable);
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+               {/* <Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
                 }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/Kontrollvariablen' onClick={() => {
                     visitedSite("kontrollvariablen");

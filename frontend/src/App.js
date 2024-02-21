@@ -45,6 +45,7 @@ function App() {
     const [isMatchingtoleranzChip, setMatchingtoleranzChip] = useState("");
     const [isFälleKontrollenGruppenindikator, setFälleKontrollenGruppenindikator] = useState('defaultFälleKontrollenGruppenindikator');
     const [isErsetzung, setErsetzung] = useState('');
+    const [isErsetzungToResult, setErsetzungToResult] = useState('');
     const [isErsetzungNav, setErsetzungNav] = useState('Ohne Ersetzung');
     const [isDateiSpaltenNamen, setDateiSpaltenNamen] = useState('');
     const [isVollständigeDatei, setVollständigeDatei] = useState('defaultVollständigedatei');
@@ -61,11 +62,12 @@ function App() {
     const [isWorkflow, setWorkflow] = useState("Startseite");
     const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
     const [isToleranzBereichSet, setToleranzBereichSet] = useState('FALSE');
+    const [isToleranzBereichSetToResult, setToleranzBereichSetToResult] = useState('');
     const [isErgebnisse, setErgebnisse] = useState({});
 
 
     return (
-        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet}}>
+        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator,  isZielvariable, isErsetzung, isToleranzBereichSet}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}
@@ -182,6 +184,8 @@ function App() {
                                                                  isVollständigeDatei={isVollständigeDatei}
                                                                  isMatchingMethode={isMatchingMethode}
                                                                  setWorkflow={setWorkflow}
+                                                                 isToleranzBereichSet={isToleranzBereichSet}
+                                                                 setToleranzBereichSetToResult={setToleranzBereichSetToResult}
                                                                 />}
                                 />
                                 <Route path="/MethodeScoreBerechnung"
@@ -189,7 +193,9 @@ function App() {
                                                                      isScoreMethode={isScoreMethode}
                                                                      isScoreMethodeNav={isScoreMehodeNav}
                                                                      setScoreMethodeNav={setScoreMethodeNav}
-                                                                     setWorkflow={setWorkflow}/>}
+                                                                     setWorkflow={setWorkflow}
+                                                                     isErsetzung={isErsetzung}
+                                                                     />}
                                 />
                                 <Route path="/MatchingAlgorithmus"
                                     element={<MatchingAlgorithmus setAlgorithmus={setAlgorithmus}
@@ -200,12 +206,15 @@ function App() {
                                                                   isErsetzung={isErsetzung}
                                                                   isErsetzungNav={isErsetzungNav}
                                                                   setErsetzungNav={setErsetzungNav}
-                                                                    setWorkflow={setWorkflow}/>}
+                                                                  setWorkflow={setWorkflow}
+                                                                 />}
                                 />
                                 <Route path="/ÜbereinstimmungPropensityScore"
                                     element={<ÜbereinstimmungPropensityScore isAlgorithmus={isAlgorithmus}
                                         isAllKontrollvariablen={isAllKontrollvariablen}
-                                        isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
+                                        isVerhältnis={isVerhältnis}
+                                        isErsetzung={isErsetzung}
+                                        setErsetzungToResult={setErsetzungToResult}
                                         isZielvariable={isZielvariable}
                                         isMatchingMethode={isMatchingMethode}
                                         isVollständigeDatei={isVollständigeDatei}
@@ -239,21 +248,29 @@ function App() {
                                     isErsetzung={isErsetzung}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
-                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse}/>} />
+                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse} isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator} isZielvariable={isZielvariable}/>} />
                             </Routes>
                         </div>
                         <div className="dynamicResults">
-                            <DynamicResultsBackup
-                                                   isToleranzBereichSet={isToleranzBereichSet}
-                                                   isErsetzung={isErsetzung}
-                                                   isMatchingMethode={isMatchingMethode} />
+                                <DynamicResult isPackageB={isPackageB} isAlgorithmus={isAlgorithmus}
+                                               isAllKontrollvariablen={isAllKontrollvariablen}
+                                               isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
+                                               isZielvariable={isZielvariable}
+                                               isMatchingMethode={isMatchingMethode}
+                                               isVollständigeDatei={isVollständigeDatei}
+                                               isScoreMethode={isScoreMethode}
+                                               isÜbereinstimmungswert={isÜbereinstimmungswert}
+                                               isErsetzung={isErsetzung}
+                                               isToleranzBereichSet={isToleranzBereichSet}
+                                               isToleranzBereichSetToResult={isToleranzBereichSetToResult}
+                                               isErsetzungToResult={isErsetzungToResult}/>
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}
                     <div className="RightContainer">
                         {/*<InputProtokoll/>*/}
-                        <InfoBox isWorkflow={isWorkflow} />
-                        <Foot />
+                        <InfoBox isWorkflow={isWorkflow}/>
+                        <Foot/>
                     </div>
                 </div>
             </Router>

@@ -12,7 +12,7 @@ import Box from "@mui/material/Box";
 const Accordion = styled((props) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
-    backgroundColor:'#E9F0FF',
+    backgroundColor:'#f7f7f7',
     _minHeight: '100%',
     marginBottom:'4px',
     borderRadius: '3px 3px 3px 3px',

@@ -15,9 +15,13 @@ import * as Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Panorama, TurnedIn } from '@mui/icons-material';
 import { CardHeader } from "@mui/material";
+import FHSPSOE from "../assets/FHS_PS_OE.json";
+import FHSPSME from "../assets/FHS_PS_ME.json";
+import FHSEMOT from "../assets/FHS_EM_OT.json";
+import FHSEMMT from "../assets/FHS_EM_MT.json";
 HighchartsMore(Highcharts);
 
 
@@ -158,7 +162,7 @@ function clearBoxplots() {
 }
 
 
-/*function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
+function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
 
     let chartDom_e = document.getElementById("container_e");
     console.log("chartDom_e: " +chartDom_e);
@@ -172,19 +176,59 @@ function clearBoxplots() {
 
     chart_e.series[0].setData([{ name: char_text, y: balanced_var_count }, { name: '', y: non_balanced_var_count }]);
 
-}*/
+}
 
 
 function clearPieChart() {
     // setPiechart(0, 0, true);
 }
 
-
-
-function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert }) {
+function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult }) {
+    const [results, setResults] = useState([]);
 
     // data
+    useEffect(() => {
+        let data;
 
+        if (isMatchingMethode === "Propensity Score" && isErsetzungToResult === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isErsetzungToResult);
+            console.log(FHSPSOE);
+            data = FHSPSOE;
+            setPiechart(8,0,"false");
+
+
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzungToResult === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isErsetzungToResult);
+            console.log(FHSPSME);
+            setPiechart(8,0,"false");
+
+            data = FHSPSME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSetToResult === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(isToleranzBereichSetToResult);
+            console.log(FHSEMOT);
+            data = FHSEMOT;
+            setPiechart(0,0,"false");
+
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSetToResult === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSetToResult);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            data = FHSEMMT;
+            setPiechart(7,0,"false");
+
+        }
+        setResults(data);
+
+    }, [isMatchingMethode, isErsetzung, isToleranzBereichSetToResult]) ;
 
     let variablesNamesA = [
         "Variable A",
@@ -733,7 +777,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     let updateDiagrams = () => {
 
         // set histoselector with boolean variables from dataset
-        fetch('http://' + ip_django + '/control_selection/boolean_columns', {
+        /*fetch('http://' + ip_django + '/control_selection/boolean_columns', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -753,10 +797,10 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });
+            });*/
 
         // set boxplotselector with numeric variables from dataset
-        fetch('http://' + ip_django + '/control_selection/numeric_columns', {
+   /*     fetch('http://' + ip_django + '/control_selection/numeric_columns', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -770,67 +814,11 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             })
             .catch((error) => {
                 console.error('Error:', error);
-            });
+            });*/
 
 
-        console.log(isAlgorithmus)
-        console.log(isErsetzung)
-        console.log(isZielvariable)
-        console.log(isAllKontrollvariablen)
-        console.log(isScoreMethode)
-        console.log(isMatchingMethode)
-        console.log(isVollständigeDatei)
-        console.log(isVerhältnis)
-        console.log(isVerhältnis)
-        console.log(isÜbereinstimmungswert)
 
-        var temp_string = "["
-        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
-            console.log(isAllKontrollvariablen[i])
-            console.log(isAllKontrollvariablen[i].var)
-            temp_string += isAllKontrollvariablen[i].var + ","
-        }
-        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
-        temp_string += "]"
-        console.log(temp_string)
-
-        // set pie chart
-        var param = {
-            groupindicator: isZielvariable,
-            controllvariables: temp_string,
-            mmethod: isAlgorithmus,
-            mdistance: "glm",
-            mreplace: isErsetzung,
-            mratio: isVerhältnis,
-            mcaliper: isÜbereinstimmungswert,
-        };
-
-        // (B) BUILD URL
-        var url = new URL("http://" + ip_django + "/control_selection/pie_chart");
-        for (let k in param) {
-            url.searchParams.append(k, param[k]);
-        }
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
-            .then((json) => {
-                console.log(json);
-                console.log("JSON Count 0: " +json[0].count);
-                console.log("JSON Count 1: " +json[1].count);
-
-
-                // setPiechart(json[0].count, json[1].count, false);
-                console.log("after SetPieCart");
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+        // setPiechart(json[0].count, json[1].count, false);
 
         const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
         label_variable_zero.textContent = 'ICU_MORT = 0';
@@ -861,13 +849,12 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             <CardHeader
                 title="Matching-Ergebnisse"
                 titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
-                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }}
+                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%"  }} style={{paddingBottom:'30px'}}
             />
 
-            <div>
                 <div sx={{ display: "flex", background: "white", justifyItems: "flex-end" }} item xs={12}>
 
-                    {/*<button onClick={clearDiagrams}>Clear</button>
+                 {/*   <button onClick={clearDiagrams}>Clear</button>
                     <button onClick={updateDiagrams}>Load</button>*/}
 
                 </div>
@@ -875,7 +862,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
 
 
-                    <Grid sx={{ background: "white" }} item xs={4.5}>
+                    <Grid container justifyContent="center" spacing={2}>
+                        <Grid item xs={4.5} sx={{ background: "white" }}>
 
                         <Box pl={2} pr={2} pt={1}>
                             <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
@@ -923,13 +911,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                                 <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Zielvariable = 1</Typography></div>
                             </div>
                         </div>
-
-
-
-
-
                     </Grid>
-                    <Grid sx={{ background: "white" }} item xs={4.5}>
+
+                        <Grid item xs={4.5} sx={{ background: "white" }}>
                         <Box pl={2} pr={2} pt={1}>
 
                             <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
@@ -964,7 +948,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                         </div>
 
                     </Grid>
-                    <Grid sx={{ background: "white" }} item xs={3}>
+
+                        <Grid item xs={3} sx={{ background: "white" }}>
 
                         <div style={{
                             display: 'flex',
@@ -1002,8 +987,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                             </div>
                         </div>
                     </Grid>
+                    </Grid>
                 </div>
-            </div>
         </Card>
     );
 }

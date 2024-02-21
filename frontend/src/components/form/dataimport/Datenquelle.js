@@ -108,9 +108,9 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                 <Grid item>
                     <Link style={{textDecoration: "none"}} to='/Startseite' onClick={()=>{setWorkflow("Startseite");}}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-                <Grid item>
+                {/*<Grid item>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined"onClick={löschen}> <DeleteIcon/>Löschen</Button>
-                </Grid>
+                </Grid>*/}
                 <Grid item>
                     <Link style={{textDecoration: "none"}} to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen"); setWorkflow("Datei-hochladen");}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
                 </Grid>
