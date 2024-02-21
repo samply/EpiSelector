@@ -61,7 +61,7 @@ function App() {
     const [isWorkflow, setWorkflow] = useState("Startseite");
     const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
     const [isToleranzBereichSet, setToleranzBereichSet] = useState('FALSE');
-
+    const [isErgebnisse, setErgebnisse] = useState({});
 
 
     return (
@@ -215,7 +215,11 @@ function App() {
                                     setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Matching-Ergebnis"
-                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
+                                    element={<MatchingErgebnis isMatchingMethode={isMatchingMethode}
+                                                               isErsetzung={isErsetzung}
+                                                               isToleranzBereichSet={isToleranzBereichSet}
+                                                                setErgebnisse={setErgebnisse}
+                                                               isBeobachtungen={isBeobachtungen}
                                                                isAllKontrollvariablen={isAllKontrollvariablen}
                                                                isMatchingMethode={isMatchingMethode}
                                                                isDateiSpaltenNamen={isDateiSpaltenNamen}
@@ -235,7 +239,7 @@ function App() {
                                     isErsetzung={isErsetzung}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
-                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} />} />
+                                <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse}/>} />
                             </Routes>
                         </div>
                         <div className="dynamicResults">

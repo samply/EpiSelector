@@ -17,6 +17,10 @@ import {useContext, useEffect, useState} from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import summary from '../../assets/summary.json';
+import FHSPSOE from '../../assets/FHS_PS_OE.json';
+import FHSPSME from '../../assets/FHS_PS_ME.json';
+import FHSEMMT from '../../assets/FHS_EM_MT.json';
+import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import AppContext from '../../AppContext';
 import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
@@ -26,58 +30,90 @@ import Grid from '@mui/material/Grid';
 const doc = new jsPDF();
 
 // define a generatePDF function that accepts a tickets argument
-const Matchingprotokoll = tickets => {
-    // initialize jsPDF
-
-    // define the columns we want and their titles
-    const tableColumn = ["Variable", "icu_mort=0", "icu_mort=1", "Differenz", "icu_mort=0", "icu_mort=1", "Differenz", "Balance"];
-    // define an empty array of rows
-    const tableRows = [];
-
-    // for each ticket pass all its data into an array
-    summary.forEach(variable => {
-        const ticketData = [
-            variable.row_names,
-            variable.unadjusted_means_treated,
-            variable.unadjusted_means_control,
-            variable.unadjusted_mean_diff,
-            variable.adjusted_means_treated,
-            variable.adjusted_means_control,
-            variable.adjusted_mean_diff,
-            variable.balance_covariats_post_matching,
-            variable.balance_thresholds_post_matching,
-            // called date-fns to format the date on the ticket
-
-
-        ];
-        // push each tickcet's info into a row
-        tableRows.push(ticketData);
-    });
-
-    const tableColumn1 = ["         ", "Pre-Matching","      ","      ","     ", "Post-Matching"," "," "];
-    const tableRows1 = [];
-
-    // startY is basically margin-top
-    doc.autoTable(tableColumn1, tableRows1, {startY:30})
-    doc.autoTable(tableColumn, tableRows, { startY: 38 });
-    const date = Date().split(" ");
-    // we use a date string to generate our filename.
-    const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
-    // ticket title. and margin-top + margin-left
-    doc.setFontSize(20);
-    doc.text("Matchingprotokoll", 14, 15);
-    doc.setFontSize(14); doc.setTextColor(100);
-    doc.text("Matching Ergebnisse", 14, 25);
-    // we define the name of our PDF file.
-    doc.save(`matchingprotokoll${dateStr}.pdf`);
-};
 
 
 function Dataexport() {
-    const { setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis,setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei } = useContext(AppContext);
+    const { isMatchingMethode,isErsetzung,isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis,setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei } = useContext(AppContext);
     const [resultData, setResultData] = useState([]);
+    const [results, setResults] = useState([]);
+
+
+    const Matchingprotokoll = tickets => {
+        // initialize jsPDF
+
+        // define the columns we want and their titles
+        const tableColumn = ["Variable", "icu_mort=0", "icu_mort=1", "Differenz", "icu_mort=0", "icu_mort=1", "Differenz", "Balance"];
+        // define an empty array of rows
+        const tableRows = [];
+
+        // for each ticket pass all its data into an array
+        results.forEach(variable => {
+            const ticketData = [
+                variable.row_names,
+                variable.unadjusted_means_treated,
+                variable.unadjusted_means_control,
+                variable.unadjusted_mean_diff,
+                variable.adjusted_means_treated,
+                variable.adjusted_means_control,
+                variable.adjusted_mean_diff,
+                variable.balance_covariats_post_matching,
+                variable.balance_thresholds_post_matching,
+                // called date-fns to format the date on the ticket
+
+            ];
+            // push each tickcet's info into a row
+            tableRows.push(ticketData);
+        });
+
+        const tableColumn1 = ["         ", "Pre-Matching","      ","      ","     ", "Post-Matching"," "," "];
+        const tableRows1 = [];
+
+        // startY is basically margin-top
+        doc.autoTable(tableColumn1, tableRows1, {startY:30})
+        doc.autoTable(tableColumn, tableRows, { startY: 38 });
+        const date = Date().split(" ");
+        // we use a date string to generate our filename.
+        const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+        // ticket title. and margin-top + margin-left
+        doc.setFontSize(20);
+        doc.text("Matchingprotokoll", 14, 15);
+        doc.setFontSize(14); doc.setTextColor(100);
+        doc.text("Matching Ergebnisse", 14, 25);
+        // we define the name of our PDF file.
+        doc.save(`matchingprotokoll${dateStr}.pdf`);
+    };
 
     useEffect(() => {
+        let data;
+
+        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSOE);
+            data = FHSPSOE;
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSME);
+
+            data = FHSPSME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMOT);
+            data = FHSEMOT;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            data = FHSEMMT;
+        }
+        setResults(data);
+
         const getResults = async () => {
             try {
                 const response = await axios.get("http://localhost:3000/results");
@@ -89,7 +125,7 @@ function Dataexport() {
         getResults();
     }, []);
 
-    const ergebnisse = resultData.filter(result => result.status === "completed");
+    const ergebnisse = results.filter(result => result.status === "completed");
 
    /* const wordsApi = new WordsApi("####-####-####-####-####", "##################");
 
@@ -118,7 +154,6 @@ function Dataexport() {
         setÜbereinstimmungswert("defaultÜbereinstimmungswert");
         setVollständigedatei("defaultVollständigedatei");
     };
-
     setDisclaimer(false);
 
 

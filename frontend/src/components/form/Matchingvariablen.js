@@ -91,11 +91,10 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
                               onRowsSelectionHandler(newSelectionModel);
                               setSelectionModel(newSelectionModel);
                           }
-                          }
+                }
                           selectionModel={selectionModel}
                 />
                 <br/>
-
 
             </CardContent>
             <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>

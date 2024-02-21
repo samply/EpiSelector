@@ -18,11 +18,8 @@ import Grid from '@mui/material/Grid';
 
 function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAllMatchingvariablen, isFälleKontrollenGruppenindikator, isDateiSpaltenNamen, setWorkflow }) {
 
-
-
     let tmpFallID = [];
     let gruppenindikatorToggle = true;
-
 
     function selectFallID(event){
         tmpFallID.push(event.value);
@@ -50,10 +47,17 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
         // { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165 }, renderCell: renderDetailsButton, disableClickEventBubbling: true,
     ];
 
-    const filteredArray = isDateiSpaltenNamen.filter(value => !isAllMatchingvariablen.some(obj => obj.var === value));
-    console.log('filteredArray' + filteredArray);
+    let filteredArray;
 
-    let rows=[];
+    if (isAllMatchingvariablen && isAllMatchingvariablen.length > 0) {
+        // Wenn isAllMatchingvariablen befüllt ist, filtere die Elemente
+        filteredArray = isDateiSpaltenNamen.filter(value => !isAllMatchingvariablen.some(obj => obj.var === value));
+    } else {
+        // Wenn isAllMatchingvariablen nicht befüllt ist, zeige alle Elemente an
+        filteredArray = isDateiSpaltenNamen.slice();     }    console.log('filteredArray' + filteredArray);
+
+
+        let rows=[];
     for (let i = 0; i < filteredArray.length; i++) {
         const tempObj = {
             id: i,
@@ -87,7 +91,7 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
             <CardContent sx={{backgroundColor: "white", width: "100%", height: "59%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "2%"}}>
-                    Variable für Fälle und Kontrollen definieren
+                   Variable zur  Definition der Vergleichsgruppen auswählen
                 </Typography>
                 <Typography sx={{fontSize: 14, color: "text.secondary", paddingTop: "1%", paddingLeft: "2%"}}>
                     Gruppenindikator setzen

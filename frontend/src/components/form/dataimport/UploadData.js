@@ -26,7 +26,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import {AlertTitle} from "@mui/lab";
 
 
-
 export default function UploadData() {
     const { setDatei, isBeobachtungen, setDateiSpaltenNamen, setVollständigeDatei, isVollständigeDatei, setBeobachtungen, setOnlyBinaryColumns, setWorkflow } = useContext(AppContext);
 
@@ -34,7 +33,6 @@ export default function UploadData() {
     const [array, setArray] = useState([]);
     const [csvImported, setCsvImported] = useState(false);
     const [importFailed, setImportFailed] = useState(false);
-
 
     let column = [];
     let rows = [];
@@ -80,6 +78,7 @@ export default function UploadData() {
             setOnlyBinaryColumns(headers);
             setVollständigeDatei(jsonData);
             setBeobachtungen(rows.length-1);
+
             console.log(rows.length-1);
             console.log("Dateiname:", file.name);
             console.log(headers);

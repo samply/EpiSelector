@@ -86,14 +86,19 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
 
                 <br/>
                 <Typography variant="h4">
-                    Willkommen beim
-                    Beobachtungsstudien-Assistent
+                    Willkommen beim EpiSelector, <br/>
+                   Ihrem Beobachtungsstudien-Assistenten
                 </Typography>
                 <br/><br/>
                 <Typography variant="h6">
-                    Mithilfe des Beobachtungsstudien-Assistenten können Sie anhand verschiedener Methoden in Ihrer
-                    Patientenliste Patienten mit bestimmten Kritierien selektieren.
-                </Typography>
+                    Mithilfe des Beobachtungsstudien-Assistenten können Sie aus Ihrem Datensatz anhand festzulegender Kriterien Vergleichsgruppen bilden. Der EpiSelector stellt hierfür verschiedene Methoden zur Verfügung.
+                </Typography><br/>
+                <Typography>
+                    <strong>Bitte beachten Sie:</strong> <br/>
+                    Mit Behandelten oder der Behandlungsgruppe meinen wir je nach Studiendesign auch
+                   <ui>
+                       <li>Fälle und</li>
+                    <li>Exponierte</li></ui></Typography>
 
                 <br/>
                 <div>

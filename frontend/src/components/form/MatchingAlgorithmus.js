@@ -84,47 +84,48 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
         }
     };
 
-    const ersetzungsPart = () =>{
-        if(isActiveOM === false && isActiveNNM === true || isAlgorithmusNav === "Nearest Neighbour"){
-            return (<div style={{ display:"flex", paddingLeft:"5%", height:"50%", flexFlow:"column", paddingBottom:"4%"}}>
-                        <Typography style={{fontSize: 18, fontWeight:"normal"}} >
-                            Selektion der Kontrollen:
-                        </Typography>
+    const ersetzungsPart = () => {
+        if (isActiveOM === false && (isActiveNNM === true || isAlgorithmusNav === "Nearest Neighbour")) {
+            return (
+                <div style={{ display: "flex", flexDirection: "column", paddingLeft: "5%", paddingBottom: "4%" }}>
+                    <Typography style={{ fontSize: 18, fontWeight: "normal", paddingBottom: "1rem" }}>
+                        Selektion der Kontrollen:
+                    </Typography>
 
-                        <div style={{display:"flex", flexFlow:"row"}}>
-                            <input type="radio" value="OhneErsetzung" checked={isChecked} onClick={
-                                (event) => {
-                                   if(isChecked === true){
-
-                                   }else{
-                                       setChecked(true);
-                                       setErsetzung("FALSE");
-                                       setErsetzungNav("Ohne Ersetzung");
-                                       setChecked1(false);
-                                   }
-                                }}/>    <label style={{marginBottom:"3px"}}>Ohne Ersetzung, die Kontrolle kann nur als Kontrolle für einen einzigen Fall dienen</label>
-                        </div>
-                        <div style={{display:"flex", flexFlow:"row"}}>
-                            <input type="radio" value="MitErsetzung" checked={isChecked1} onClick={
-                                (event) => {
-                                   if(isChecked1 === false){
-                                       setChecked1(true);
-                                       setErsetzung("TRUE");
-                                       setErsetzungNav("Mit Ersetzung");
-                                       setChecked(false);
-                                   }else{
-
-                                   }
-                                }
-                            }/>    <label style={{marginBottom:"3px"}}>Mit Ersetzung, eine Kontrolle kann als Kontrolle für mehrere Fälle dienen</label>
-                        </div>
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
+                        <input type="radio" value="OhneErsetzung" checked={isChecked} onClick={() => {
+                            if (!isChecked) {
+                                setChecked(true);
+                                setErsetzung("FALSE");
+                                setErsetzungNav("Ohne Ersetzung");
+                                setChecked1(false);
+                            }
+                        }} />
+                        <label style={{ marginLeft: "0.5rem" }}>
+                            <strong>Ohne Ersetzung</strong>, ein:e Nicht-Behandelte:r kann nur als Nicht-Behandelte:r für eine:n einzige:n Behandelte:n dienen
+                        </label>
                     </div>
-            );
-        }else{
 
-            return (<div style={{marginBottom:"12%"}}> </div>)
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                        <input type="radio" value="MitErsetzung" checked={isChecked1} onClick={() => {
+                            if (!isChecked1) {
+                                setChecked1(true);
+                                setErsetzung("TRUE");
+                                setErsetzungNav("Mit Ersetzung");
+                                setChecked(false);
+                            }
+                        }} />
+                        <label style={{ marginLeft: "0.5rem" }}>
+                            <strong>Mit Ersetzung</strong>, ein:e Nicht-Behandelte:r kann als Nicht-Behandelte:r für mehrere Behandelte dienen
+                        </label>
+                    </div>
+                </div>
+            );
+        } else {
+            return null; // oder eine Alternative, die Sie verwenden möchten, wenn isActiveOM true ist
         }
     }
+
 
 
     return (

@@ -24,7 +24,7 @@ import Grid from '@mui/material/Grid';
 
 
 function MatchingErgebnis() {
-    const { isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet } = useContext(AppContext);
+    const { setErgebnisse, isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet } = useContext(AppContext);
 
     function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
         return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
@@ -70,7 +70,6 @@ function MatchingErgebnis() {
    }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]) ;
 
 
-
     /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
            console.log(isMatchingMethode);
            console.log(isErsetzung);
@@ -97,7 +96,6 @@ function MatchingErgebnis() {
            return FHSEMMT;
        }*/
 
-
     let backFunction = () => {
         if(isMatchingMethode==="Exaktes Matching"){
             return "/Matching-Verhältnis";
@@ -109,7 +107,6 @@ function MatchingErgebnis() {
     const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
 
-
     return (
         <Card sx={{width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative'}}>
             <CardHeader
@@ -120,7 +117,7 @@ function MatchingErgebnis() {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
                 <div style={{width: "95%", flexFlow: "row", paddingLeft: "0.5%"}}>
                     <Typography sx={{fontSize: 18}}>
-                        Vergleich Fälle - Kontrollen
+                        Matching-Ergebnisse
                     </Typography>
                     <Typography style={{fontSize: "10px", fontWeight: "bold", float: "right"}}>
                         Pre-Matching: {isDateiSpaltenNamen.length} Variablen, {isBeobachtungen} Beobachtungen <br/>
@@ -188,35 +185,42 @@ function MatchingErgebnis() {
                                 <Table sx={{fontSize: "small", border: '1px solid #ddd'}} size="small"
                                        aria-label="a dense table">
                                     <TableBody>
-
-                                        {results.map((item) => (
-                                            <TableRow key={item.id}>
-                                                {Object.values(item).map((val) => {
-                                                    if (val === "Balanced") {
+                                        {results.map((item, index) => (
+                                            <TableRow key={index}>
+                                                {Object.entries(item).map(([key, val], index) => {
+                                                    if (key === "row_names") {
+                                                        // Behandle den Namen anders
                                                         return (
-                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
-                                                                <CheckCircleIcon style={{color: "green", background: "none"}}/>
-                                                            </TableCell>
-                                                        );
-                                                    } else if (val === "<0.1") {
-                                                        return null; // Ignoriere diese Zelle
-                                                    } else if (val === "Not Balanced") {
-                                                        return (
-                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
-                                                                <Cancel style={{textAlign: "left", color: "red", background: "none"}}/>
-                                                            </TableCell>
-                                                        );
-                                                    } else {
-                                                        return (
-                                                            <TableCell style={{textAlign: "left", padding: "2px"}}>
+                                                            <TableCell key={index} style={{ textAlign: "left", paddingRight: "px", padding: "5px" }}>
                                                                 {val}
                                                             </TableCell>
                                                         );
+                                                    } else {
+                                                        if (val === "Balanced") {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "left", padding: "2px" }}>
+                                                                    <CheckCircleIcon style={{ color: "green", background: "none" }} />
+                                                                </TableCell>
+                                                            );
+                                                        } else if (val === "<0.1") {
+                                                            return null; // Ignoriere diese Zelle
+                                                        } else if (val === "Not Balanced") {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "left", padding: "2px" }}>
+                                                                    <Cancel style={{ color: "red", background: "none" }} />
+                                                                </TableCell>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "left", paddingRight: "70px", padding: "8px" }}>
+                                                                    {val}
+                                                                </TableCell>
+                                                            );
+                                                        }
                                                     }
                                                 })}
                                             </TableRow>
                                         ))}
-
                                     </TableBody>
                                 </Table>
                             </TableContainer>
@@ -226,8 +230,8 @@ function MatchingErgebnis() {
 
 
                 <Typography style={{fontSize: "10px", paddingLeft: "1%"}}>
-                    stetige Variablen: Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD) <br/>
-                    kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen <br/>
+                    <strong>* stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br/>
+                    <strong>kategoriale Variablen:</strong> Anteile bzw. rohe Differenz in den Anteilen <br/>
                 </Typography>
 
 
