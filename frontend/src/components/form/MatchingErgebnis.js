@@ -163,7 +163,7 @@ function MatchingErgebnis() {
     const noMatches = () =>{
         if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
             return <div>
-                <Alert style={{maxWidth: "82%", marginLeft: "7%", backgroundColor:'#ffc9ce', border:'solid red 1px'}} action={
+                <Alert style={{maxWidth: "82%", marginLeft: "7%", backgroundColor:'#fdeded'}} action={
                     <IconButton
                         aria-label="close"
                         color="inherit"
@@ -176,8 +176,8 @@ function MatchingErgebnis() {
                     </IconButton>
                 }
                        sx={{mb: 2}} severity="error">
-                    <AlertTitle>Error</AlertTitle>
-                    <strong>No Matches!</strong><br/> Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden
+                    <AlertTitle> <strong>No Matches</strong></AlertTitle>
+                    Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden.
                 </Alert></div>
         }
     }
