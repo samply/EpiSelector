@@ -1,25 +1,25 @@
 [
 	{
-		"row_names": "male",
-		"unadjusted_means_treated": 0.45,
-		"unadjusted_means_control": 0.30,
-		"unadjusted_mean_diff": -0.15,
-		"adjusted_means_treated": 0.30,
-		"adjusted_means_control": 0.30,
-		"adjusted_mean_diff": 0,
-		"balance_covariats_post_matching": "Balanced",
-		"balance_thresholds_post_matching": "<0.1"
+		"row_names": "",
+		"unadjusted_means_treated": "",
+		"unadjusted_means_control": "",
+		"unadjusted_mean_diff": "",
+		"adjusted_means_treated": "",
+		"adjusted_means_control": "",
+		"adjusted_mean_diff": "",
+		"balance_covariats_post_matching": "",
+		"balance_thresholds_post_matching": ""
 	},
 
 	{
-		"row_names": "prevalentHyp",
-		"unadjusted_means_treated": 0.29,
-		"unadjusted_means_control": 1.00,
-		"unadjusted_mean_diff": 0.71,
-		"adjusted_means_treated": 1.00,
-		"adjusted_means_control": 1.00,
-		"adjusted_mean_diff": 0,
-		"balance_covariats_post_matching": "Balanced",
-		"balance_thresholds_post_matching": "<0.1"
+		"row_names": "",
+		"unadjusted_means_treated": "",
+		"unadjusted_means_control": "",
+		"unadjusted_mean_diff": "",
+		"adjusted_means_treated": "",
+		"adjusted_means_control": "",
+		"adjusted_mean_diff": "",
+		"balance_covariats_post_matching": "",
+		"balance_thresholds_post_matching": ""
 	}
 ]

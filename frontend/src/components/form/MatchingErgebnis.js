@@ -21,6 +21,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Cancel from '@mui/icons-material/Cancel';
 import AppContext from '../../AppContext';
 import Grid from '@mui/material/Grid';
+import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
+import CloseIcon from "@mui/icons-material/Close";
+import {AlertTitle} from "@mui/lab";
 
 
 function MatchingErgebnis() {
@@ -32,35 +36,35 @@ function MatchingErgebnis() {
 
     const [results, setResults] = useState([]);
 
-   const postPSMOE ='222';
-   const postPSMME='215';
-   const postEMOT ='0';
-   const postEMMT ='198';
+    const postPSMOE ='222';
+    const postPSMME='215';
+    const postEMOT ='0';
+    const postEMMT ='198';
 
-   const variablePSMOE ='19';
-   const variablePSMME ='18';
-   const variableEMOT ='0';
-   const variableEMMT = '18';
+    const variablePSMOE ='19';
+    const variablePSMME ='18';
+    const variableEMOT ='0';
+    const variableEMMT = '18';
 
-   const postBeobachtungen = () =>{
-       if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-          return postPSMOE;
-       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           return postPSMME;
-       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isToleranzBereichSet);
-           return postEMOT;
-       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isToleranzBereichSet);
-           return postEMMT;
-       }
-   };
+    const postBeobachtungen = () =>{
+        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return postPSMOE;
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return postPSMME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return postEMOT;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return postEMMT;
+        }
+    };
 
     const postVariable = () =>{
         if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
@@ -82,41 +86,41 @@ function MatchingErgebnis() {
         }
     };
 
-   useEffect(() => {
-       let data;
+    useEffect(() => {
+        let data;
 
-       if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSOE);
-           console.log(isBeobachtungen);
-           data = FHSPSOE;
-       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSME);
-           console.log(isBeobachtungen);
-           data = FHSPSME;
-       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMOT);
-           console.log(isBeobachtungen);
-           data = FHSEMOT;
-       }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMMT);
-           console.log(isBeobachtungen);
-           data = FHSEMMT;
-       }
-       setResults(data);
+        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSOE);
+            console.log(isBeobachtungen);
+            data = FHSPSOE;
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSME);
+            console.log(isBeobachtungen);
+            data = FHSPSME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMOT);
+            console.log(isBeobachtungen);
+            data = FHSEMOT;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            console.log(isBeobachtungen);
+            data = FHSEMMT;
+        }
+        setResults(data);
 
-   }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]) ;
+    }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]) ;
 
 
     /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
@@ -152,6 +156,31 @@ function MatchingErgebnis() {
             return "/ÜbereinstimmungPropensityScore";
         }
     };
+
+    const [open, setOpen] = React.useState(false);
+    const [isPlaceholder, setPlaceholder] = React.useState(true);
+
+    const noMatches = () =>{
+        if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            return <div>
+                <Alert style={{maxWidth: "82%", marginLeft: "7%", backgroundColor:'#ffc9ce', border:'solid red 1px'}} action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setOpen(false);
+                            setPlaceholder(true);
+                        }}
+                    >
+                    </IconButton>
+                }
+                       sx={{mb: 2}} severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    <strong>No Matches!</strong><br/> Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden
+                </Alert></div>
+        }
+    }
 
     const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
@@ -276,6 +305,7 @@ function MatchingErgebnis() {
                                     </TableBody>
                                 </Table>
                             </TableContainer>
+                            {noMatches()}
                         </div>
                     </div>
                 </div>
@@ -303,7 +333,7 @@ function MatchingErgebnis() {
                     color: "#1d4189"
                 }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
                 </Grid>
-               {/* <Grid item>
+                {/* <Grid item>
                 <Button sx={{
                     width: "auto",
                     borderColor: "#B11B18",
@@ -312,17 +342,17 @@ function MatchingErgebnis() {
                 }} variant="outlined"><DeleteIcon/>Löschen</Button>
                 </Grid>*/}
                 <Grid item>
-                <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={() => {
-                    visitedSite("datenexport");
-                    setWorkflow("Datenexport")
-                }}><Button sx={{
-                    height: "100%",
-                    width: "auto",
-                    color: "white",
-                    border: "none",
-                    backgroundColor: "#1d4189",
-                    "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Dataexport' onClick={() => {
+                        visitedSite("datenexport");
+                        setWorkflow("Datenexport")
+                    }}><Button sx={{
+                        height: "100%",
+                        width: "auto",
+                        color: "white",
+                        border: "none",
+                        backgroundColor: "#1d4189",
+                        "&:hover": {backgroundColor: "#1d4189"}
+                    }} variant="filled">Weiter<ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>
