@@ -171,7 +171,7 @@ function(req,res,groupindicator, controllvariable, controllvariables, mmethod, m
   # if other cases of matching 
   else {
     # matching
-    #body$sex <- factor(body$sex)
+    body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
   
@@ -266,9 +266,6 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
   # body wird ausgelesen
   body = req$body 
   
-  print("LOG von der Variable SEx:")
-  #print(body$sex)
-  
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
   
@@ -322,7 +319,6 @@ function(req, res, controllvariable, groupindicator, controllvariables, mdistanc
     print(exact_vars)
     print(exact_form)
     
-    #body$sex <- factor(body$sex)
     
     # matching
     print("Z303")
@@ -396,7 +392,7 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   
   # body wird ausgelesen
   body = req$body 
-  print("Body Pie Chart Coming..")
+  
   print(body)
   
   # string als boolean konvertieren
@@ -438,23 +434,7 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
   # if other cases of matching 
   else {
     # matching
-    body$male <- as.integer(body$male)
-    body$age <- as.integer(body$age)
-    body$education <- as.integer(body$education)
-    body$currentSmoker <- as.integer(body$currentSmoker)
-    body$cigsPerDay <- as.integer(body$cigsPerDay)
-    body$BPMeds <- as.integer(body$BPMeds)
-    body$prevalentStroke <- as.integer(body$prevalentStroke)
-    body$prevalentHyp <- as.integer(body$prevalentHyp)
-    body$diabetes <- as.integer(body$diabetes)
-    body$totChol <- as.integer(body$totChol)
-    body$sysBP <- as.numeric(body$sysBP)
-    body$diaBP <- as.numeric(body$diaBP)
-    body$BMI <- as.numeric(body$BMI)
-    body$heartRate <- as.integer(body$heartRate)
-    body$glucose <- as.integer(body$glucose)
-    body$TenYearCHD <- as.integer(body$TenYearCHD)
-    
+    body$sex <- factor(body$sex)
     print("before normal matching")
     
     print("form")
@@ -479,11 +459,8 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
     spalten_laengen <- sapply(body, length)
     print(spalten_laengen)
     
-    #print(body$encid)
-    print("before matching 476")
-    print(str(body))
+    print(body$encid)
     
-    #a <- matchit(BPMeds ~ male + age + education + prevalentHyp + diabetes + totChol + BMI, data = body, method = nearest, distance = glm, replace = TRUE, ratio = 1, caliper = 0.2, std.caliper = FALSE)
     
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
     print("after normal matching")
@@ -515,13 +492,11 @@ function(req, res, groupindicator, controllvariables, mdistance, mmethod, mrepla
 #* @post /summary
 function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace, mcaliper, mratio) {
   
-  print("Summary Beginnt")
   # body wird ausgelesen
   body = req$body 
   
   # string als boolean konvertieren
   mreplace <- as.logical(mreplace)
-  print(mreplace)
   
   # string als numerisch konvertieren
   mratio <- as.integer(mratio)
@@ -555,9 +530,7 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
   # if other cases of matching 
   else {
     # matching
-    #body$sex <- factor(body$sex)
-    print("before summary matching")
-    print(mreplace)
+    body$sex <- factor(body$sex)
     a <- matchit(form, data = body, method = mmethod, distance = mdistance, replace = mreplace, ratio = mratio, caliper = mcaliper, std.caliper = FALSE)
   }
   
@@ -580,7 +553,7 @@ function(req,res,groupindicator, controllvariables, mdistance, mmethod, mreplace
   
   # Summary erstellen
   sum <- bal.tab(a, disp = c("means"), un = TRUE, stats = c("m"), thresholds = c(m = .1))
-
+  
   # Daten auslesen
   row_names <- attributes(sum$Balance)$row.names[-1]
   

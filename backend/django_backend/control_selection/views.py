@@ -2,10 +2,17 @@ from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from django.db import models
+from django.contrib.auth.models import User
 import requests as r
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from .models import SavedRRequest
+
+
 
 # Specify IP and Port for R Backend
-ip_address = "127.0.0.1:6341"
+ip_address = "127.0.0.1:3420"
 
 
 @api_view(['GET'])
@@ -118,7 +125,8 @@ def result_data(request):
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+    mcalipervariables = request.query_params.get("mcalipervariables")
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
     base_url = "http://" + ip_address + "/result_data"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
@@ -143,6 +151,82 @@ def boxplot(request):
     print(data)
     return Response(data)
 
+
+# save R-Call
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_request(request):
+    data = request.data
+
+    SavedRRequest.objects.create(
+        user=request.user,
+        groupindicator=data.get("groupindicator"),
+        controllvariables=data.get("controllvariables"),
+        mmethod=data.get("mmethod"),
+        mdistance=data.get("mdistance"),
+        mreplace=data.get("mreplace", False),
+        mratio=data.get("mratio"),
+        mcaliper=data.get("mcaliper"),
+        mcalipervariables=data.get("mcalipervariables"),
+        dataset_json=data.get("dataset_json"),
+    )
+    return Response({"message": "Request saved."}, status=201)
+
+
+# List of saved calls, excluding datasets
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_requests(request):
+    saved = SavedRRequest.objects.filter(user=request.user).order_by('-created_at')
+    result = [{
+        "id": r.id,
+        "created_at": r.created_at,
+        "groupindicator": r.groupindicator,
+        "controllvariables": r.controllvariables,
+        "mmethod": r.mmethod,
+        "mdistance": r.mdistance,
+        "mreplace": r.mreplace,
+        "mratio": r.mratio,
+        "mcaliper": r.mcaliper,
+        "mcalipervariables": r.mcalipervariables,
+    } for r in saved]
+    return Response(result)
+
+
+# Full call including dataset
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_request(request, request_id):
+    try:
+        saved = SavedRRequest.objects.get(id=request_id, user=request.user)
+    except SavedRRequest.DoesNotExist:
+        return Response({"error": "Not found"}, status=404)
+
+    return Response({
+        "id": saved.id,
+        "created_at": saved.created_at,
+        "groupindicator": saved.groupindicator,
+        "controllvariables": saved.controllvariables,
+        "mmethod": saved.mmethod,
+        "mdistance": saved.mdistance,
+        "mreplace": saved.mreplace,
+        "mratio": saved.mratio,
+        "mcaliper": saved.mcaliper,
+        "mcalipervariables": saved.mcalipervariables,
+        "dataset_json": saved.dataset_json,
+    })
+
+
+# Delete R call
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_request(request, pk):
+    try:
+        r_request = SavedRRequest.objects.get(pk=pk, user=request.user)
+        r_request.delete()
+        return Response({'message': 'Eintrag erfolgreich gelöscht.'}, status=status.HTTP_200_OK)
+    except SavedRRequest.DoesNotExist:
+        return Response({'error': 'Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 
