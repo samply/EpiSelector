@@ -11,9 +11,9 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import summary from '../../assets/summary.json';
-import FHSPSOE from '../../assets/FHS_PS_OE.json';
-import FHSPSME from '../../assets/FHS_PS_ME.json';
-import FHSEMMT from '../../assets/FHS_EM_MT.json';
+import FHSPSOE from '../../assets/FHS_PS_OE_V2.json';
+import FHSPSME from '../../assets/FHS_PS_ME_V2.json';
+import FHSEMMT from '../../assets/FHS_EM_MT_V2.json';
 import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import { Paper, Table, TableBody } from "@material-ui/core";
 import Card from "@mui/material/Card";
@@ -36,30 +36,31 @@ function MatchingErgebnis() {
 
     const [results, setResults] = useState([]);
 
-    const postPSMOE ='222';
+    const postPSMOE ='260';
     const postPSMME='215';
-    const postEMOT ='0';
-    const postEMMT ='198';
+    const postEMOT ='256';
+    const postEMMT ='256';
 
-    const variablePSMOE ='19';
+    const variablePSMOE ='45';
     const variablePSMME ='18';
-    const variableEMOT ='0';
-    const variableEMMT = '18';
+    const variableEMOT ='44';
+    const variableEMMT = '44';
 
-    const postBeobachtungen = () =>{
-        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return postPSMOE;
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+    /**} else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
             console.log(isMatchingMethode);
             console.log(isErsetzung);
             return postPSMME;
         }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
             console.log(isMatchingMethode);
             console.log(isToleranzBereichSet);
-            return postEMOT;
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            return postEMOT; */
+    const postBeobachtungen = () =>{
+        if (isMatchingMethode === "Propensity Score" ) {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return postPSMOE;
+        
+        }else if (isMatchingMethode === "Exaktes Matching" ) {
             console.log(isMatchingMethode);
             console.log(isToleranzBereichSet);
             return postEMMT;
@@ -86,31 +87,37 @@ function MatchingErgebnis() {
         }
     };
 
+
+    /**else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSME);
+            console.log(isBeobachtungen);
+            data = FHSPSME; 
+            
+            else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            console.log(isBeobachtungen);
+            data = FHSEMMT;
+        }*/
+
     useEffect(() => {
         let data;
 
-        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+        if (isMatchingMethode === "Propensity Score" ) {
             console.log(isMatchingMethode);
             console.log(isErsetzung);
             console.log(isToleranzBereichSet);
             console.log(FHSPSOE);
             console.log(isBeobachtungen);
             data = FHSPSOE;
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSPSME);
-            console.log(isBeobachtungen);
-            data = FHSPSME;
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSEMOT);
-            console.log(isBeobachtungen);
-            data = FHSEMOT;
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+        
+        }
+        else if (isMatchingMethode === "Exaktes Matching" ) {
             console.log(isMatchingMethode);
             console.log(isErsetzung);
             console.log(isToleranzBereichSet);
@@ -197,8 +204,10 @@ function MatchingErgebnis() {
                     <Typography sx={{fontSize: 18}}>
                         Matching-Ergebnisse
                     </Typography>
-                    <Typography style={{fontSize: "10px", fontWeight: "bold", float: "right"}}>
-                        Pre-Matching: {isDateiSpaltenNamen.length} Variablen, {isBeobachtungen} Beobachtungen <br/>
+                 
+                      <Typography style={{fontSize: "10px", fontWeight: "bold", float: "right"}}>
+                    
+                        Pre-Matching: 42 Variablen, 3826 Beobachtungen <br/>
                         Post-Matching:{postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
                     </Typography>
                 </div>
@@ -281,10 +290,10 @@ function MatchingErgebnis() {
                                                             return (
                                                                 <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
                                                                     <CheckCircleIcon style={{ color: "green", background: "none" }} />
+
                                                                 </TableCell>
                                                             );
-                                                        } else if (val === "<0.1") {
-                                                            return null; // Ignoriere diese Zelle
+                                                      
                                                         } else if (val === "Not Balanced") {
                                                             return (
                                                                 <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
@@ -312,7 +321,8 @@ function MatchingErgebnis() {
 
 
                 <Typography style={{fontSize: "10px", paddingLeft: "1%"}}>
-                    <strong>* stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br/>
+                <strong>PS:</strong> Propensity Score<br/>
+                    <strong>stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br/>
                     <strong>kategoriale Variablen:</strong> Anteile bzw. rohe Differenz in den Anteilen <br/>
                 </Typography>
 

@@ -101,7 +101,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     <Link to='/Datenquelle' style={linkStyle} onClick={() => {
                                         visitedSite("datenquelle");
                                         setWorkflow("Datenquelle");
-                                    }}>Datenquelle wählen
+                                    }}>Select data source
                                         <br/>
                                         <div style={{
                                             display: "flex",
@@ -130,7 +130,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                 </TimelineSeparator>
                                 <TimelineContent>
                                 <Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
-                                Datei hochladen<br/>
+                                Upload file<br/>
                                     <div
                                         style={{display: "flex",
                                         paddingLeft: "10%",
@@ -157,7 +157,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent><Link to='/Matching-Methode' onClick={()=>{visitedSite("matchingmethode"); setWorkflow("Matching-Methode")}}
-                                                       style={linkStyle}>Matching-Methode <br/><div style={{  display: "flex",
+                                                       style={linkStyle}>Matching method <br/><div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
@@ -189,7 +189,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("zielvariable");
                                                  setWorkflow("Zielvariable");
                                              }}
-                                                 style={linkStyle}>Zielvariable <br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Group indicator <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -217,7 +217,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                              setWorkflow("Kontrollvariablen");
                                              setExpanded(!expanded);
                                          }}
-                                             style={linkStyle}>Kontrollvariablen <br/>
+                                             style={linkStyle}>Covariates <br/>
 
                                              </Link><div style={{  display: "flex",
                                              paddingLeft: "10%",
@@ -256,7 +256,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("matchingverhältnis");
                                                  setWorkflow("MatchingVerhältnis")
                                              }} style={linkStyle}>
-                                                 Matching Verhältnis  <br/><div style={{  display: "flex",
+                                                 Matching ratio  <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -283,7 +283,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("scoremethode");
                                                  setWorkflow("ScoreBerechnung");
                                              }}
-                                                 style={linkStyle}>Methode der Score-Berechnung<br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Method for estimation of the PS-score<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -310,7 +310,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("algorithmus");
                                                  setWorkflow("Matching-Algorithmus");
                                              }}
-                                                 style={linkStyle}>Matching-Algorithmus<br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Matching algorithm<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -322,7 +322,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  justifyContent: "baseline",
                                                  paddingTop:"1%",
                                                  visibility: isAlgorithmusNav === "defaultAlgo" ? "hidden" : "visible" ,
-                                             }}>{isAlgorithmusNav} <br/> {isErsetzungNav}</div></Link></TimelineContent>
+                                             }}>{isAlgorithmusNav} </div></Link></TimelineContent> 
                                          </TimelineItem>
 
                                          <TimelineItem>
@@ -368,7 +368,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  setWorkflow("Matchingvaraiblen");
                                                  setExpanded1(!expanded1);
                                              }}
-                                                   style={linkStyle}>Matchingvariablen <br/>
+                                                   style={linkStyle}>Matching variables <br/>
 
                                              </Link><div style={{  display: "flex",
                                              paddingLeft: "10%",
@@ -432,7 +432,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("matchingtoleranz");
                                                  setWorkflow("Matchingtoleranz");
                                              }}
-                                                 style={linkStyle}>Matchingtoleranz <br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Matching tolerance <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -530,7 +530,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     visitedSite("ergebnisse");
                                     setWorkflow("MatchingErgebnis");
                                 }} style={linkStyle}>Matching
-                                    Ergebnis </Link></TimelineContent>
+                                    results </Link></TimelineContent>
                             </TimelineItem>
 
 
@@ -545,7 +545,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     visitedSite("datenexport");
                                     setWorkflow("Datenexport");
                                 }}
-                                style={linkStyle}>Datenexport </Link></TimelineContent>
+                                style={linkStyle}>Data export </Link></TimelineContent>
                             </TimelineItem>
                         </Timeline>
 

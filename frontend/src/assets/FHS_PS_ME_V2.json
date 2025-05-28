@@ -1,7 +1,7 @@
 [
 	{
-		"row_names": "PS ",
-		"unadjusted_means_treated": 3.3333,
+		"row_names": "distance",
+		"unadjusted_means_treated": 0.03,
 		"unadjusted_means_control": 0.13,
 		"unadjusted_mean_diff": 1.87,
 		"adjusted_means_treated": 0.13,
@@ -15,11 +15,11 @@
 		"unadjusted_means_treated": 49.67,
 		"unadjusted_means_control": 56.68,
 		"unadjusted_mean_diff": 0.93,
-		"adjusted_means_treated": 56.09,
-		"adjusted_means_control": 56.68,
-		"adjusted_mean_diff": 0.08,
+		"adjusted_means_treated": 56.74,
+		"adjusted_means_control": 56.6,
+		"adjusted_mean_diff": -0.02,
 		"balance_covariats_post_matching": "Balanced"
-	},	
+	},
 	{
 		"row_names": "male",
 		"unadjusted_means_treated": 0.46,
@@ -27,7 +27,7 @@
 		"unadjusted_mean_diff": -0.15,
 		"adjusted_means_treated": 0.31,
 		"adjusted_means_control": 0.31,
-		"adjusted_mean_diff": 0.00,
+		"adjusted_mean_diff": 0.0,
 		"balance_covariats_post_matching": "Balanced"
 	},
 	{
@@ -35,21 +35,21 @@
 		"unadjusted_means_treated": 1.98,
 		"unadjusted_means_control": 1.89,
 		"unadjusted_mean_diff": -0.09,
-		"adjusted_means_treated": 2.05,
+		"adjusted_means_treated": 1.82,
 		"adjusted_means_control": 1.89,
-		"adjusted_mean_diff": -0.16,
-		"balance_covariats_post_matching": "Not Balanced"
+		"adjusted_mean_diff": 0.07,
+		"balance_covariats_post_matching": "Balanced"
 	},
-
+	
 
 	{
 		"row_names": "BMI",
 		"unadjusted_means_treated": 25.75,
 		"unadjusted_means_control": 27.99,
 		"unadjusted_mean_diff": 0.43,
-		"adjusted_means_treated": 28.23,
-		"adjusted_means_control": 27.99,
-		"adjusted_mean_diff": 0.05,
+		"adjusted_means_treated": 28.89,
+		"adjusted_means_control": 27.93,
+		"adjusted_mean_diff": 0.01,
 		"balance_covariats_post_matching": "Balanced"
 	},
 	{

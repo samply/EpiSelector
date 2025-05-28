@@ -104,7 +104,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                                     opacity: 1, // Opazität umgekehrt
                                 }}
                             >
-                                Matching Learning Methode
+                                Machine Learning Methode
                             </Box>
 
 
