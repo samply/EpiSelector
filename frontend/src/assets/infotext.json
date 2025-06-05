@@ -1,0 +1,64 @@
+{
+  "infotext": {
+    "title": "Startseite",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Datenquelle",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "DatenUpload",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Matching-Methode",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Matching-Variablen",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Matching-Toleranz",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Fälle-und-Kontrollen",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Matching-Verhältnis",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Matching-Ergebnis",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    },
+    "title": "Datenexport",
+    "content": {
+      "Worum-geht-es-hier": { },
+      "Fachbegriffe": { },
+      "Tipps-zur-Eingabe":{ }
+    }
+  }
+  }
