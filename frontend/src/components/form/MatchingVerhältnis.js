@@ -17,6 +17,10 @@ import Grid from '@mui/material/Grid';
 
 function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältnis, isVerhältnis, setVerhältnisNav, isVerhältnisNav, isMatchingMethode, isFälleKontrollenGruppenindikator, isMatchingtoleranz, isAllMatchingvariablen, isVollständigeDatei, isEMJsonPackage, setWorkflow, setToleranzBereichSetToResult, isToleranzBereichSet}) {
 
+
+
+
+    
     const [isActive11, setIsActive11] = useState(false);
     const [isActive12, setIsActive12] = useState(false);
     const [isActive13, setIsActive13] = useState(false);
@@ -96,6 +100,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             setIsActive110(false);
         }
     };
+ 
 
    /* let sendVariablesToBackend = () => {
         console.log("Log über Fertig-Button");

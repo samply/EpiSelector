@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid';
 
 
 
-function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMatchingtoleranz, isAllMatchingvariablen, isMatchingtoleranz, setWorkflow }) {
+function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMatchingtoleranz, isAllMatchingvariablen, isMatchingtoleranz, setWorkflow, setToleranzBereich }) {
 
     let tableArray = [];
     let placeholder=[];
@@ -62,6 +62,7 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
         console.log(tmpArray);
         setMatchingtoleranz(tmpArray);
         setToleranzBereichSet('TRUE');
+        setToleranzBereich(tmpArray);
         settoleranzwert(tmpArray);
         console.log(tmpArray);
     }

@@ -1,40 +1,4 @@
 import './App.css';
-<<<<<<< HEAD
-import Nav from './Nav';
-import NavB from './NavB'
-import Mainpage from './Mainpage';
-import Betapage from './Betapage';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
-import InfoBox from "./InfoBox";
-import InputProtokoll from "./InputProtokoll";
-import TopNav from "./TopNav";
-
-
-function App() {
-
-
-  return (
-
-      <Router>
-          <TopNav/>
-        <div className="App">
-          <NavB/>
-          <Switch>
-            <Route path='/' exact component={Mainpage}/>
-            <Route path="/mainpage" component={Mainpage}/>
-            <Route path="/betapage" component={Betapage}/>
-          </Switch>
-            <div className="rightSideBuild">
-            <InputProtokoll/>
-            <InfoBox/>
-            </div>
-        </div>
-      </Router>
-  );
-}
-
-export default App;
-=======
 import TopNav from "./components/TopNav";
 import NavB from './components/NavB'
 import Mainpage from './components/form/Mainpage';
@@ -99,6 +63,7 @@ function App() {
     const [isOnlyBinaryColumns, setOnlyBinaryColumns] = useState('default');
     const [isToleranzBereichSet, setToleranzBereichSet] = useState('FALSE');
     const [isToleranzBereichSetToResult, setToleranzBereichSetToResult] = useState('');
+    const [isToleranzBereich, setToleranzBereich] = useState('FALSE');
     const [isErgebnisse, setErgebnisse] = useState({});
 
 
@@ -269,6 +234,10 @@ function App() {
                                                                isMatchingMethode={isMatchingMethode}
                                                                isDateiSpaltenNamen={isDateiSpaltenNamen}
                                                                isZielvariable={isZielvariable}
+                                                               isVerhältnis={isVerhältnis}
+                                                               isÜbereinstimmungswert={isÜbereinstimmungswert}
+                                                               isToleranzBereich={isToleranzBereich}
+                                                               isAlgorithmus={isAlgorithmus}
                                                                isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                                                                setWorkflow={setWorkflow}/>}
                                     element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
@@ -282,6 +251,7 @@ function App() {
                                     isScoreMethode={isScoreMethode}
                                     isToleranzBereichSet={isToleranzBereichSet}
                                     isErsetzung={isErsetzung}
+                                    isMatchingvariablen={isMatchingvariablen}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse} isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator} isZielvariable={isZielvariable}/>} />
@@ -320,4 +290,3 @@ function App() {
 
 export default App;
 
->>>>>>> develop
