@@ -28,7 +28,10 @@ import { AlertTitle } from "@mui/lab";
 
 
 function MatchingErgebnis() {
-    const { setErgebnisse, isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isMatchingvariablen } = useContext(AppContext);
+    const { setErgebnisse, isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
+
+    console.log("isAllMatchingvariablen: " + isAllMatchingvariablen);
+    
 
     function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
         return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
@@ -137,30 +140,37 @@ function MatchingErgebnis() {
         var distance = "";
         var realGroupIndicator = ""
         var realControlVariables = ""
+        var replace = ""
 
         if(isMatchingMethode == "Exaktes Matching") {
             distance = "mahalanobis"
             realGroupIndicator = isFälleKontrollenGruppenindikator
-            realControlVariables = isMatchingvariablen
+            realControlVariables = isAllMatchingvariablen
+            replace = "FALSE"
+            console.log("isAllMatchingvariablen: " + isAllMatchingvariablen)
         }
         if(isMatchingMethode == "Propensity Score") {
             distance = "glm"
             realGroupIndicator = isZielvariable
             realControlVariables = isAllKontrollvariablen
+            replace = "FALSE"
         }
         if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
             distance = "glm"
             realGroupIndicator = isZielvariable
             realControlVariables = isAllKontrollvariablen
         }
+        if(isMatchingMethode == "Optimal Matching") {
+            replace = ""
+        }
 
 
 
         console.log("receivedResults Groupindicator: " + realGroupIndicator)
-        console.log("receivedResults Kontrollvariablen: " + isAllKontrollvariablen)
+        console.log("receivedResults Kontrollvariablen: " + realControlVariables)
         console.log("receivedResults Matching-Methode: " + isMatchingMethode)
         console.log("receivedResults Distanz: " + distance)        
-        console.log("receivedResults Mreplace: " + isErsetzung)
+        console.log("receivedResults Mreplace: " + replace)
         console.log("receivedResults Mratio: " + isVerhältnis)
         console.log("receivedResults Toleranzbereich: " + isToleranzBereich)
         console.log("receivedResults Caliper-Variablen: " + isToleranzBereichSet)

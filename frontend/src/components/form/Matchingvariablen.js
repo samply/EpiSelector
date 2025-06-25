@@ -36,7 +36,7 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
         selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
         console.log('selectedRowsData' + selectedRowsData);
         selectedRowsData.forEach((row) => { console.log(row.var); kVarray.push(row); });
-        console.log(kVarray);
+        console.log("kVarray:" + kVarray);
 
         setAllMatchingvariablen(kVarray);
 

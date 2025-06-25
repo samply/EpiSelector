@@ -252,6 +252,7 @@ function App() {
                                     isToleranzBereichSet={isToleranzBereichSet}
                                     isErsetzung={isErsetzung}
                                     isMatchingvariablen={isMatchingvariablen}
+                                    isAllMatchingvariablen={isAllMatchingvariablen}
                                     isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse} isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator} isZielvariable={isZielvariable}/>} />

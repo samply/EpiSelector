@@ -97,6 +97,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                                 setChecked(true);
                                 setErsetzung("FALSE");
                                 console.log("Ersetzung gerade auf FALSE gesetzt");
+                                console.log("isErsetzung ist damit: "+ isErsetzung)
                               /*  setErsetzungNav("Ohne Ersetzung");*/
                                 setChecked1(false);
                             }
@@ -112,6 +113,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                                 setChecked1(true);
                                 setErsetzung("TRUE");
                                 console.log("Ersetzung gerade auf TRUE gesetzt");
+                                console.log("isErsetzung ist damit: " + isErsetzung)
                                /* setErsetzungNav("Mit Ersetzung");*/
                                 setChecked(false);
                             }
