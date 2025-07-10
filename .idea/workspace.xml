@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f00993d4-4fb4-4c70-8ee4-f5127d3a3402" name="Default Changelist" comment="changed alert in ergebnistabelle" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/diagrams" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="bugFix-DataImport" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/frontend/src/assets/summary.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/dataimport/UploadData.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/pages/Betapage.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/ÜbereinstimmungPropensityScore.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/Matchingtoleranz.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/MatchingVerhältnis.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/Matchingvariablen.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/App.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/MatchingErgebnis.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/Kontrollvariablen.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/form/FälleKontrollen.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/NavB.js" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/assets/test_data.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/frontend/src/components/DynamicResults.js" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2PdkXKvjB0oCYy78232sLv9iDKW" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/n651i/IdeaProjects/kontrollgruppenselektionFinal/frontend/src/assets&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;npm.start.executor&quot;: &quot;Run&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.3.2\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\n651i\IdeaProjects\kontrollgruppenselektionFinal\frontend\src\assets" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="start" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/frontend/package.json" />
+      <command value="start" />
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f00993d4-4fb4-4c70-8ee4-f5127d3a3402" name="Default Changelist" comment="" />
+      <created>1683794385330</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1683794385330</updated>
+      <workItem from="1683794388870" duration="1672000" />
+      <workItem from="1683811751231" duration="109000" />
+      <workItem from="1683811874874" duration="424000" />
+      <workItem from="1683884177197" duration="4327000" />
+      <workItem from="1684149609739" duration="828000" />
+      <workItem from="1685006663630" duration="10327000" />
+      <workItem from="1685104780980" duration="1886000" />
+      <workItem from="1685523967061" duration="8942000" />
+      <workItem from="1685609836509" duration="2593000" />
+      <workItem from="1686559355014" duration="13759000" />
+      <workItem from="1686752773416" duration="2543000" />
+      <workItem from="1686817460829" duration="7945000" />
+      <workItem from="1686834827381" duration="636000" />
+      <workItem from="1686913185767" duration="2463000" />
+      <workItem from="1687178439152" duration="4841000" />
+      <workItem from="1687258926759" duration="8495000" />
+      <workItem from="1687339323470" duration="4324000" />
+      <workItem from="1687423126138" duration="1239000" />
+      <workItem from="1688026343135" duration="594000" />
+      <workItem from="1689854751103" duration="1223000" />
+      <workItem from="1689926242268" duration="10000" />
+      <workItem from="1690285880863" duration="800000" />
+      <workItem from="1690358451965" duration="8000" />
+      <workItem from="1694428260221" duration="1277000" />
+      <workItem from="1705585116861" duration="6204000" />
+      <workItem from="1707749082555" duration="4822000" />
+      <workItem from="1707771103949" duration="4000000" />
+      <workItem from="1707916218905" duration="5881000" />
+      <workItem from="1707985915958" duration="10895000" />
+      <workItem from="1708337663375" duration="21810000" />
+      <workItem from="1708421012164" duration="22352000" />
+      <workItem from="1708456188174" duration="10665000" />
+      <workItem from="1708509178809" duration="17869000" />
+      <workItem from="1708544354452" duration="12308000" />
+      <workItem from="1708590411422" duration="115000" />
+      <workItem from="1708626618793" duration="2075000" />
+      <workItem from="1708635780428" duration="583000" />
+      <workItem from="1708946051937" duration="1078000" />
+      <workItem from="1717663852170" duration="1457000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fixed multiple Bugfixes:&#10;List Of Kontrollvariablen is now without the Zielvariable&#10;List of Matchingvariable is now without the Gruppenindikator&#10;Spaltenname of Matching ergebnisse is now dynamically to the Zielvariable and Gruppenindikator&#10;PlusMinus Symbol is now fixed in Matchingtoleranz">
+      <created>1685536547155</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1685536547155</updated>
+    </task>
+    <task id="LOCAL-00002" summary="WIP First version for MatchingErgebnis.js Tabelle">
+      <created>1686571068852</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1686571068860</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Variables of Exaktes Matching packed into a Json File for Backend&#10;+ Some Design Fixes in UploadData.js">
+      <created>1686918987873</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1686918987873</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added Rule/Fixed Bug: Only Binary Values Are Able to Be Listed in Zielvariable and FälleKontrollen.js. + Added in MatchingVerhältnis.js temporary 1:X functionality but doesent save permanent.">
+      <created>1687266484685</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1687266484685</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Fixed MatchingVerhältnis.js Editable Box. Can Now Be Saved Permanent">
+      <created>1687267773424</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1687267773424</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fixed Small Bugs To The Previous Commit">
+      <created>1687350132009</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1687350132009</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Work In Progress  - Merge of Backend and Frontend (Exaktes Matching hat ein Bug) PS-Matching funktioniert">
+      <created>1705590190688</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1705590190688</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Daten einlesen gefixt">
+      <option name="closed" value="true" />
+      <created>1708007387543</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1708007387543</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Multiple BugFixes for UsabilityTests Ready to Use">
+      <option name="closed" value="true" />
+      <created>1708351586182</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1708351586182</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Fixed Weiter,Zurück,Löschen Buttons">
+      <option name="closed" value="true" />
+      <created>1708356908402</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1708356908402</updated>
+    </task>
+    <task id="LOCAL-00011" summary="More Fixes">
+      <option name="closed" value="true" />
+      <created>1708360137313</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1708360137313</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Changed Matching-Ergebnis-Tabelle for Usability tests Added all four case results">
+      <option name="closed" value="true" />
+      <created>1708456304234</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1708456304234</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Added Kreisdiagramm in Backup DynamicResults and added Beobachtungen">
+      <option name="closed" value="true" />
+      <created>1708466222665</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1708466222665</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Backup Laufende Funktion">
+      <option name="closed" value="true" />
+      <created>1708532502396</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1708532502396</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Laufende funktion für Usability Studie mit funktionierendem Piechart und deaktivierter Lösch button plus protokoll herunterladen möglich und richtig">
+      <option name="closed" value="true" />
+      <created>1708556669847</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1708556669847</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Added Error for No Matches in Result Table">
+      <option name="closed" value="true" />
+      <created>1708631650510</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1708631650510</updated>
+    </task>
+    <task id="LOCAL-00017" summary="changed alert in ergebnistabelle">
+      <option name="closed" value="true" />
+      <created>1708636325691</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708636325691</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="develop" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed multiple Bugfixes:&#10;List Of Kontrollvariablen is now without the Zielvariable&#10;List of Matchingvariable is now without the Gruppenindikator&#10;Spaltenname of Matching ergebnisse is now dynamically to the Zielvariable and Gruppenindikator&#10;PlusMinus Symbol is now fixed in Matchingtoleranz" />
+    <MESSAGE value="WIP First version for MatchingErgebnis.js Tabelle" />
+    <MESSAGE value="Variables of Exaktes Matching packed into a Json File for Backend&#10;+ Some Design Fixes in UploadData.js" />
+    <MESSAGE value="Added Rule/Fixed Bug: Only Binary Values Are Able to Be Listed in Zielvariable and FälleKontrollen.js. + Added in MatchingVerhältnis.js temporary 1:X functionality but doesent save permanent." />
+    <MESSAGE value="Fixed MatchingVerhältnis.js Editable Box. Can Now Be Saved Permanent" />
+    <MESSAGE value="Fixed Small Bugs To The Previous Commit" />
+    <MESSAGE value="Work In Progress  - Merge of Backend and Frontend (Exaktes Matching hat ein Bug) PS-Matching funktioniert" />
+    <MESSAGE value="Daten einlesen gefixt" />
+    <MESSAGE value="Multiple BugFixes for UsabilityTests Ready to Use" />
+    <MESSAGE value="Fixed Weiter,Zurück,Löschen Buttons" />
+    <MESSAGE value="More Fixes" />
+    <MESSAGE value="Changed Matching-Ergebnis-Tabelle for Usability tests Added all four case results" />
+    <MESSAGE value="Added Kreisdiagramm in Backup DynamicResults and added Beobachtungen" />
+    <MESSAGE value="Backup Laufende Funktion" />
+    <MESSAGE value="Laufende funktion für Usability Studie mit funktionierendem Piechart und deaktivierter Lösch button plus protokoll herunterladen möglich und richtig" />
+    <MESSAGE value="Added Error for No Matches in Result Table" />
+    <MESSAGE value="changed alert in ergebnistabelle" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed alert in ergebnistabelle" />
+  </component>
+</project>
