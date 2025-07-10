@@ -33,7 +33,7 @@ function MatchingErgebnis() {
     console.log("isAllMatchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
         if (typeof item === 'string') return item;
         return item?.var || item?.variable || item?.name || item?.value || String(item);
-    }) : isAllMatchingvariablen);
+    }).join(', ') : isAllMatchingvariablen);
     
     // Debug logging to understand the data structure
     console.log("DEBUG - isAllMatchingvariablen type:", typeof isAllMatchingvariablen);
@@ -139,7 +139,7 @@ function MatchingErgebnis() {
                 console.log("All Kontrollvariablen:", Array.isArray(isAllKontrollvariablen) ? isAllKontrollvariablen.map(item => {
                     if (typeof item === 'string') return item;
                     return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }) : isAllKontrollvariablen);
+                }).join(', ') : isAllKontrollvariablen);
                 console.log("Kontrollvariablen:", isKontrollvariablen);
                 console.log("Matchingverhältnis: " + isVerhältnis);
                 console.log("Ersetzung: " + isErsetzung);
@@ -158,7 +158,7 @@ function MatchingErgebnis() {
                 console.log("All Matchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
                     if (typeof item === 'string') return item;
                     return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }) : isAllMatchingvariablen);
+                }).join(', ') : isAllMatchingvariablen);
                 console.log("Ersetzung: " + isErsetzung);
                 console.log("Toleranzwerte:", isMatchingtoleranz);
                 console.log("Matchingverhältnis: " + isVerhältnis);
@@ -191,7 +191,7 @@ function MatchingErgebnis() {
                 console.log("isAllMatchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
                     if (typeof item === 'string') return item;
                     return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }) : isAllMatchingvariablen)
+                }).join(', ') : isAllMatchingvariablen)
             }
             if(isMatchingMethode == "Propensity Score") {
                 distance = "glm"
