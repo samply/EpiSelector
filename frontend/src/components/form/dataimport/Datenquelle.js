@@ -27,7 +27,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
     function handleClickOptionGeraet(){
         if(!isActiveGeraet ){
             setIsActiveGeraet(true);
-            setDatenquelle("Gerät");
+            setDatenquelle("Local");
             setIsActiveDRE(false);
         }
     }
@@ -80,7 +80,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                                 borderRadius: "15px",
                                 boxShadow: isActiveGeraet || isDatenquelle==="Gerät" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
-                        > Vom Gerät
+                        > Local
                         </Box>
                             <Box style={{
                                 backgroundColor: isActiveDRE || isDatenquelle === "DRE" ? "#1d4189" : '#E8E9EB',

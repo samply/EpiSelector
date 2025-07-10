@@ -68,7 +68,7 @@ function App() {
 
 
     return (
-        <AppContext.Provider value={{setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen,  setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator,  isZielvariable, isErsetzung, isToleranzBereichSet}}>
+        <AppContext.Provider value={{setErgebnisse, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}

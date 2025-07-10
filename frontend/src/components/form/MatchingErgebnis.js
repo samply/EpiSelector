@@ -28,7 +28,7 @@ import { AlertTitle } from "@mui/lab";
 
 
 function MatchingErgebnis() {
-    const { setErgebnisse, isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
+    const { setErgebnisse, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
     console.log("isAllMatchingvariablen: " + isAllMatchingvariablen);
     
@@ -112,20 +112,30 @@ function MatchingErgebnis() {
         let data;
 
         if (isMatchingMethode === "Propensity Score") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSPSOE);
-            console.log(isBeobachtungen);
+            console.log("Datei: " + isDatei);
+            console.log("VollständigeDatei:", isVollständigeDatei);
+            console.log("MatchingMethode: " + isMatchingMethode);            
+            console.log("Groupindicator: " + isZielvariable);
+            console.log("All Kontrollvariablen:", isAllKontrollvariablen);
+            console.log("Kontrollvariablen:", isKontrollvariablen);
+            console.log("Matchingverhältnis: " + isVerhältnis);
+            console.log("Ersetzung: " + isErsetzung);
+            console.log("Methode für PS-Score: " + isScoreMethode);
+            console.log("Matching Algorithmus: " + isAlgorithmus);
+            console.log("Übereinstimmungswert: " + isÜbereinstimmungswert);
+            console.log("Toleranzwerte:", isMatchingtoleranz);
             data = FHSPSOE;
 
         }
         else if (isMatchingMethode === "Exaktes Matching") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSEMMT);
-            console.log(isBeobachtungen);
+            console.log("Datei: " + isDatei);
+            console.log("VollständigeDatei:", isVollständigeDatei);
+            console.log("MatchingMethode: " + isMatchingMethode);
+            console.log("Groupindicator: " + isFälleKontrollenGruppenindikator);
+            console.log("All Matchingvariablen:", isAllMatchingvariablen);
+            console.log("Ersetzung: " + isErsetzung);
+            console.log("Toleranzwerte:", isMatchingtoleranz);
+            console.log("Matchingverhältnis: " + isVerhältnis);
             data = FHSEMMT;
         }
         setResults(data);
