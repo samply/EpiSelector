@@ -30,10 +30,18 @@ import { AlertTitle } from "@mui/lab";
 function MatchingErgebnis() {
     const { setErgebnisse, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
-    console.log("isAllMatchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
+    // Transform arrays to comma-separated strings once
+    const allMatchingvariablenString = Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
         if (typeof item === 'string') return item;
         return item?.var || item?.variable || item?.name || item?.value || String(item);
-    }).join(', ') : isAllMatchingvariablen);
+    }).join(', ') : isAllMatchingvariablen;
+
+    const allKontrollvariablenString = Array.isArray(isAllKontrollvariablen) ? isAllKontrollvariablen.map(item => {
+        if (typeof item === 'string') return item;
+        return item?.var || item?.variable || item?.name || item?.value || String(item);
+    }).join(', ') : isAllKontrollvariablen;
+
+    console.log("isAllMatchingvariablen:", allMatchingvariablenString);
     
     // Debug logging to understand the data structure
     console.log("DEBUG - isAllMatchingvariablen type:", typeof isAllMatchingvariablen);
@@ -136,10 +144,7 @@ function MatchingErgebnis() {
                 console.log("VollständigeDatei:", isVollständigeDatei);
                 console.log("MatchingMethode: " + isMatchingMethode);            
                 console.log("Groupindicator: " + isZielvariable);
-                console.log("All Kontrollvariablen:", Array.isArray(isAllKontrollvariablen) ? isAllKontrollvariablen.map(item => {
-                    if (typeof item === 'string') return item;
-                    return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }).join(', ') : isAllKontrollvariablen);
+                console.log("All Kontrollvariablen:", allKontrollvariablenString);
                 console.log("Kontrollvariablen:", isKontrollvariablen);
                 console.log("Matchingverhältnis: " + isVerhältnis);
                 console.log("Ersetzung: " + isErsetzung);
@@ -155,10 +160,7 @@ function MatchingErgebnis() {
                 console.log("VollständigeDatei:", isVollständigeDatei);
                 console.log("MatchingMethode: " + isMatchingMethode);
                 console.log("Groupindicator: " + isFälleKontrollenGruppenindikator);
-                console.log("All Matchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
-                    if (typeof item === 'string') return item;
-                    return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }).join(', ') : isAllMatchingvariablen);
+                console.log("All Matchingvariablen:", allMatchingvariablenString);
                 console.log("Ersetzung: " + isErsetzung);
                 console.log("Toleranzwerte:", isMatchingtoleranz);
                 console.log("Matchingverhältnis: " + isVerhältnis);
@@ -186,23 +188,20 @@ function MatchingErgebnis() {
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
                 realGroupIndicator = isFälleKontrollenGruppenindikator
-                realControlVariables = isAllMatchingvariablen
+                realControlVariables = allMatchingvariablenString
                 replace = "FALSE"
-                console.log("isAllMatchingvariablen:", Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
-                    if (typeof item === 'string') return item;
-                    return item?.var || item?.variable || item?.name || item?.value || String(item);
-                }).join(', ') : isAllMatchingvariablen)
+                console.log("isAllMatchingvariablen:", allMatchingvariablenString)
             }
             if(isMatchingMethode == "Propensity Score") {
                 distance = "glm"
                 realGroupIndicator = isZielvariable
-                realControlVariables = isAllKontrollvariablen
+                realControlVariables = allKontrollvariablenString
                 replace = "FALSE"
             }
             if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
                 distance = "glm"
                 realGroupIndicator = isZielvariable
-                realControlVariables = isAllKontrollvariablen
+                realControlVariables = allKontrollvariablenString
             }
             if(isMatchingMethode == "Optimal Matching") {
                 replace = ""
