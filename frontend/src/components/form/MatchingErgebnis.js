@@ -1,0 +1,484 @@
+import * as React from 'react';
+import { useContext, useEffect, useState } from 'react';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import { Link } from 'react-router-dom';
+import DeleteIcon from "@mui/icons-material/Delete";
+
+import { visitedSite } from "../NavB";
+import Button from "@mui/material/Button";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import summary from '../../assets/summary.json';
+import FHSPSOE from '../../assets/FHS_PS_OE_V2.json';
+import FHSPSME from '../../assets/FHS_PS_ME_V2.json';
+import FHSEMMT from '../../assets/FHS_EM_MT_V2.json';
+import FHSEMOT from '../../assets/FHS_EM_OT.json';
+import { Paper, Table, TableBody } from "@material-ui/core";
+import Card from "@mui/material/Card";
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Cancel from '@mui/icons-material/Cancel';
+import AppContext from '../../AppContext';
+import Grid from '@mui/material/Grid';
+import IconButton from "@mui/material/IconButton";
+import Alert from "@mui/material/Alert";
+import CloseIcon from "@mui/icons-material/Close";
+import { AlertTitle } from "@mui/lab";
+
+
+function MatchingErgebnis() {
+    const { setErgebnisse, isAllKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
+
+    console.log("isAllMatchingvariablen: " + isAllMatchingvariablen);
+    
+
+    function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
+        return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
+    }
+
+    const [results, setResults] = useState([]);
+
+    const postPSMOE = '260';
+    const postPSMME = '215';
+    const postEMOT = '256';
+    const postEMMT = '256';
+
+    const variablePSMOE = '45';
+    const variablePSMME = '18';
+    const variableEMOT = '44';
+    const variableEMMT = '44';
+
+    /**} else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return postPSMME;
+        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return postEMOT; */
+    const postBeobachtungen = () => {
+        if (isMatchingMethode === "Propensity Score") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return postPSMOE;
+
+        } else if (isMatchingMethode === "Exaktes Matching") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return postEMMT;
+        }
+    };
+
+    const postVariable = () => {
+        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return variablePSMOE;
+        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            return variablePSMME;
+        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return variableEMOT;
+        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isToleranzBereichSet);
+            return variableEMMT;
+        }
+    };
+
+
+    /**else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSME);
+            console.log(isBeobachtungen);
+            data = FHSPSME; 
+            
+            else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            console.log(isBeobachtungen);
+            data = FHSEMMT;
+        }*/
+
+    useEffect(() => {
+        let data;
+
+        if (isMatchingMethode === "Propensity Score") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSPSOE);
+            console.log(isBeobachtungen);
+            data = FHSPSOE;
+
+        }
+        else if (isMatchingMethode === "Exaktes Matching") {
+            console.log(isMatchingMethode);
+            console.log(isErsetzung);
+            console.log(isToleranzBereichSet);
+            console.log(FHSEMMT);
+            console.log(isBeobachtungen);
+            data = FHSEMMT;
+        }
+        setResults(data);
+
+    }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
+
+
+    const receivedResults = (event) => {
+
+        console.log("Hier startet receivedResults");
+
+        var distance = "";
+        var realGroupIndicator = ""
+        var realControlVariables = ""
+        var replace = ""
+
+        if(isMatchingMethode == "Exaktes Matching") {
+            distance = "mahalanobis"
+            realGroupIndicator = isFälleKontrollenGruppenindikator
+            realControlVariables = isAllMatchingvariablen
+            replace = "FALSE"
+            console.log("isAllMatchingvariablen: " + isAllMatchingvariablen)
+        }
+        if(isMatchingMethode == "Propensity Score") {
+            distance = "glm"
+            realGroupIndicator = isZielvariable
+            realControlVariables = isAllKontrollvariablen
+            replace = "FALSE"
+        }
+        if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
+            distance = "glm"
+            realGroupIndicator = isZielvariable
+            realControlVariables = isAllKontrollvariablen
+        }
+        if(isMatchingMethode == "Optimal Matching") {
+            replace = ""
+        }
+
+
+
+        console.log("receivedResults Groupindicator: " + realGroupIndicator)
+        console.log("receivedResults Kontrollvariablen: " + realControlVariables)
+        console.log("receivedResults Matching-Methode: " + isMatchingMethode)
+        console.log("receivedResults Distanz: " + distance)        
+        console.log("receivedResults Mreplace: " + replace)
+        console.log("receivedResults Mratio: " + isVerhältnis)
+        console.log("receivedResults Toleranzbereich: " + isToleranzBereich)
+        console.log("receivedResults Caliper-Variablen: " + isToleranzBereichSet)
+
+        // Parameter als Variablen definieren
+        const baseUrl = "http://127.0.0.1:8000/control_selection/result_data";
+        const params = {
+            groupindicator: realGroupIndicator,
+            controllvariables: realControlVariables,
+            mmethod: isMatchingMethode,
+            mdistance: distance,
+            mreplace: isErsetzung,
+            mratio: isVerhältnis,
+            mcaliper: isToleranzBereich,
+            mcalipervariables: isToleranzBereichSet
+        };
+
+        // URL-Parameter in einen Query-String umwandeln
+        const queryString = new URLSearchParams({
+            groupindicator: params.groupindicator,
+            controllvariables: JSON.stringify(params.controllvariables),
+            mmethod: params.mmethod,
+            mdistance: params.mdistance,
+            mreplace: params.mreplace,
+            mratio: params.mratio,
+            mcaliper: JSON.stringify(params.mcaliper),
+            mcalipervariables: JSON.stringify(params.mcalipervariables)
+        }).toString();
+
+        // Kompletten URL zusammenbauen
+        const fullUrl = `${baseUrl}?${queryString}`;
+
+        // Beispiel-Daten für den Body
+        const bodyData = {
+            // Trage hier deine tatsächlichen Daten ein
+            exampleKey: "exampleValue"
+        };
+
+        // POST-Request mit Fetch API
+        fetch(fullUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Token dd6d5f6aff9c4228b9f6c19db94f9408ddf91bc3"
+            },
+            body: JSON.stringify(bodyData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(result => {
+                console.log("Antwort vom Server:", result);
+            })
+            .catch(error => {
+                console.error("Fehler beim POST-Aufruf:", error);
+            });
+
+
+
+
+
+
+
+    }       
+
+    receivedResults("start");
+
+    /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSOE)
+           results = FHSPSOE;
+       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSPSME)
+           results = FHSPSME;
+       }/* else if (MatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMOT)
+           return FHSEMOT;
+       } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
+           console.log(isMatchingMethode);
+           console.log(isErsetzung);
+           console.log(isToleranzBereichSet);
+           console.log(FHSEMMT)
+           return FHSEMMT;
+       }*/
+
+    let backFunction = () => {
+        if (isMatchingMethode === "Exaktes Matching") {
+            return "/Matching-Verhältnis";
+        } else {
+            return "/ÜbereinstimmungPropensityScore";
+        }
+    };
+
+    const [open, setOpen] = React.useState(false);
+    const [isPlaceholder, setPlaceholder] = React.useState(true);
+
+    const noMatches = () => {
+        if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
+            return <div>
+                <Alert style={{ maxWidth: "82%", marginLeft: "7%", backgroundColor: '#fdeded' }} action={
+                    <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setOpen(false);
+                            setPlaceholder(true);
+                        }}
+                    >
+                    </IconButton>
+                }
+                    sx={{ mb: 2 }} severity="error">
+                    <AlertTitle> <strong>No Matches</strong></AlertTitle>
+                    Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden.
+                </Alert></div>
+        }
+    }
+
+    const columnHeader0 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
+    const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
+
+
+    return (
+        <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
+            <CardHeader
+                title="Matching"
+                titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
+                sx={{ backgroundColor: "#E9F0FF", minWidth: "100%" }} />
+
+            <CardContent sx={{ backgroundColor: "white", width: "100%" }}>
+                <div style={{ width: "95%", flexFlow: "row", paddingLeft: "0.5%" }}>
+                    <Typography sx={{ fontSize: 18 }}>
+                        Matching-Ergebnisse
+                    </Typography>
+
+                    <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
+
+                        Pre-Matching: 42 Variablen, 3826 Beobachtungen <br />
+                        Post-Matching:{postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
+                    </Typography>
+                </div>
+
+                <div style={{
+                    maxHeight: "1000px",
+                    flexFlow: "column",
+                    paddingTop: "0%",
+                    paddingLeft: "1%",
+                    width: "95%",
+                    overflowY: "auto",
+                    marginBottom: "1%"
+                }}>
+
+                    <div style={{ maxHeight: "400px", overflowY: "auto" }}>
+                        <TableContainer component={Paper}>
+                            <Table sx={{ minWidth: 210, fontSize: "x-small" }} size="small" aria-label="a dense table">
+                                <TableBody>
+                                    <TableRow sx={{ height: '30px' }}>
+                                        <TableCell align="center" colSpan={4} sx={{
+                                            border: 'solid 2px',
+                                            backgroundColor: "#1d4189",
+                                            color: "white",
+                                            fontSize: "medium",
+                                            padding: "4px"
+                                        }}>
+                                            PreMatching
+                                        </TableCell>
+                                        <TableCell align="center" colSpan={5} sx={{
+                                            border: 'solid 2px',
+                                            backgroundColor: "#1d4189",
+                                            color: "white",
+                                            fontSize: "medium",
+                                            padding: "4px",
+                                            borderLeft: "solid 1px white"
+                                        }}>
+                                            PostMatching
+                                        </TableCell>
+                                    </TableRow>
+                                    <TableRow sx={{ height: '30px' }}>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">Variable</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">{columnHeader0}</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">{columnHeader1}</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">Differenz</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">{columnHeader0}</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">{columnHeader1}</TableCell>
+                                        <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">Differenz</TableCell>
+                                        <TableCell colSpan={2}
+                                            sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
+                                            align="center">Balance</TableCell>
+                                    </TableRow>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <div style={{ maxHeight: "210px", overflowY: "auto", overflowX: "none" }}>
+                            <TableContainer component={Paper} style={{ overflowX: "none" }}>
+                                <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small"
+                                    aria-label="a dense table">
+                                    <TableBody>
+                                        {results.map((item, index) => (
+                                            <TableRow key={index}>
+                                                {Object.entries(item).map(([key, val], index) => {
+                                                    if (key === "row_names") {
+                                                        // Behandle den Namen anders
+                                                        return (
+                                                            <TableCell key={index} style={{ textAlign: "left", paddingRight: "2px", padding: "5px", width: '10px' }}>
+                                                                {val}
+                                                            </TableCell>
+
+                                                        );
+                                                    } else {
+                                                        if (val === "Balanced") {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
+                                                                    <CheckCircleIcon style={{ color: "green", background: "none" }} />
+
+                                                                </TableCell>
+                                                            );
+
+                                                        } else if (val === "Not Balanced") {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
+                                                                    <Cancel style={{ color: "red", background: "none" }} />
+                                                                </TableCell>
+                                                            );
+                                                        } else {
+                                                            return (
+                                                                <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
+                                                                    {val}
+                                                                </TableCell>
+                                                            );
+                                                        }
+                                                    }
+                                                })}
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            {noMatches()}
+                        </div>
+                    </div>
+                </div>
+
+
+                <Typography style={{ fontSize: "10px", paddingLeft: "1%" }}>
+                    <strong>PS:</strong> Propensity Score<br />
+                    <strong>stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br />
+                    <strong>kategoriale Variablen:</strong> Anteile bzw. rohe Differenz in den Anteilen <br />
+                </Typography>
+
+
+            </CardContent>
+            <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float: 'right', bottom: 0, gap: '2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
+                <Grid item> <Link style={{ textDecoration: "none" }} onClick={() => {
+                    if (isMatchingMethode === "Exaktes Matching") {
+                        setWorkflow("MatchingVerhältnis");
+                    } else {
+                        setWorkflow("Kontrollvariablen")
+                    }
+                }} to={backFunction()}><Button sx={{
+                    height: "100%",
+                    width: "auto",
+                    borderColor: "#1d4189",
+                    "&:hover": { backgroundColor: "white", borderColor: "#1d4189" },
+                    color: "#1d4189"
+                }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
+                </Grid>
+                {/* <Grid item>
+                <Button sx={{
+                    width: "auto",
+                    borderColor: "#B11B18",
+                    color: "#B11B18",
+                    "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
+                }} variant="outlined"><DeleteIcon/>Löschen</Button>
+                </Grid>*/}
+                <Grid item>
+                    <Link style={{ textDecoration: "none" }} to='/Dataexport' onClick={() => {
+                        visitedSite("datenexport");
+                        setWorkflow("Datenexport")
+                    }}><Button sx={{
+                        height: "100%",
+                        width: "auto",
+                        color: "white",
+                        border: "none",
+                        backgroundColor: "#1d4189",
+                        "&:hover": { backgroundColor: "#1d4189" }
+                    }} variant="filled">Weiter<ArrowForwardIcon /></Button></Link>
+                </Grid>
+            </Grid>
+        </Card>
+    );
+}
+
+export default MatchingErgebnis;

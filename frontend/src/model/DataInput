@@ -1,0 +1,7 @@
+export class DataInpu{
+
+    constructor(attribute, inhalt) {
+        this.attribute = attribute;
+        this.inhalt = inhalt;
+    }
+}

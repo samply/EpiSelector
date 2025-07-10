@@ -1,0 +1,25 @@
+[
+	{
+		"row_names": "",
+		"unadjusted_means_treated": "",
+		"unadjusted_means_control": "",
+		"unadjusted_mean_diff": "",
+		"adjusted_means_treated": "",
+		"adjusted_means_control": "",
+		"adjusted_mean_diff": "",
+		"balance_covariats_post_matching": "",
+		"balance_thresholds_post_matching": ""
+	},
+
+	{
+		"row_names": "",
+		"unadjusted_means_treated": "",
+		"unadjusted_means_control": "",
+		"unadjusted_mean_diff": "",
+		"adjusted_means_treated": "",
+		"adjusted_means_control": "",
+		"adjusted_mean_diff": "",
+		"balance_covariats_post_matching": "",
+		"balance_thresholds_post_matching": ""
+	}
+]

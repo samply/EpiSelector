@@ -1,0 +1,92 @@
+[
+	{
+		"row_names": "distance",
+		"unadjusted_means_treated": 0.03,
+		"unadjusted_means_control": 0.12,
+		"unadjusted_mean_diff": 1.63,
+		"adjusted_means_treated": 0.12,
+		"adjusted_means_control": 0.12,
+		"adjusted_mean_diff": 0.00,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+
+	{
+		"row_names": "age",
+		"unadjusted_means_treated": 49.35,
+		"unadjusted_means_control": 56.07,
+		"unadjusted_mean_diff": 0.88,
+		"adjusted_means_treated": 56.49,
+		"adjusted_means_control": 56.07,
+		"adjusted_mean_diff": -0.05,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "education",
+		"unadjusted_means_treated": 1.98,
+		"unadjusted_means_control": 1.90,
+		"unadjusted_mean_diff": -0.08,
+		"adjusted_means_treated": 1.94,
+		"adjusted_means_control": 1.90,
+		"adjusted_mean_diff": -0.04,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "male",
+		"unadjusted_means_treated": 0.45,
+		"unadjusted_means_control": 0.30,
+		"unadjusted_mean_diff": -0.15,
+		"adjusted_means_treated": 0.33,
+		"adjusted_means_control": 0.30,
+		"adjusted_mean_diff": -0.04,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+
+	{
+		"row_names": "BMI",
+		"unadjusted_means_treated": 25.71,
+		"unadjusted_means_control": 28.21,
+		"unadjusted_mean_diff": 0.48,
+		"adjusted_means_treated": 28.61,
+		"adjusted_means_control": 28.21,
+		"adjusted_mean_diff": -0.08,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "diabetes",
+		"unadjusted_means_treated": 0.03,
+		"unadjusted_means_control": 0.07,
+		"unadjusted_mean_diff": 0.05,
+		"adjusted_means_treated": 0.05,
+		"adjusted_means_control": 0.07,
+		"adjusted_mean_diff": 0.02,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "totChol",
+		"unadjusted_means_treated": 236.11,
+		"unadjusted_means_control": 260.30,
+		"unadjusted_mean_diff": 0.51,
+		"adjusted_means_treated": 257.60,
+		"adjusted_means_control": 260.30,
+		"adjusted_mean_diff": 0.06,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	},
+	{
+		"row_names": "prevalentHyp",
+		"unadjusted_means_treated": 0.29,
+		"unadjusted_means_control": 1.00,
+		"unadjusted_mean_diff": 0.71,
+		"adjusted_means_treated": 1.00,
+		"adjusted_means_control": 1.00,
+		"adjusted_mean_diff": 0.00,
+		"balance_covariats_post_matching": "Balanced",
+		"balance_thresholds_post_matching": "<0.1"
+	}
+]

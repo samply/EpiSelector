@@ -1,0 +1,63 @@
+[
+	{
+		"row_names": "age",
+		"unadjusted_means_treated": 49.67,
+		"unadjusted_means_control": 56.68,
+		"unadjusted_mean_diff": 0.93,
+		"adjusted_means_treated": 56.37,
+		"adjusted_means_control": 56.60,
+		"adjusted_mean_diff": 0.03,
+		"balance_covariats_post_matching": "Balanced"
+	},
+	{
+		"row_names": "education",
+		"unadjusted_means_treated": 1.98,
+		"unadjusted_means_control": 1.89,
+		"unadjusted_mean_diff": -0.09,
+		"adjusted_means_treated": 1.87,
+		"adjusted_means_control": 1.89,
+		"adjusted_mean_diff": 0.02,
+		"balance_covariats_post_matching": "Balanced"
+	},
+	{
+		"row_names": "male",
+		"unadjusted_means_treated": 0.46,
+		"unadjusted_means_control": 0.31,
+		"unadjusted_mean_diff": -0.15,
+		"adjusted_means_treated": 0.31,
+		"adjusted_means_control": 0.31,
+		"adjusted_mean_diff": 0,
+		"balance_covariats_post_matching": "Balanced"
+	},
+	{
+		"row_names": "BMI",
+		"unadjusted_means_treated": 25.75,
+		"unadjusted_means_control": 27.99,
+		"unadjusted_mean_diff": 0.43,
+		"adjusted_means_treated": 27.73,
+		"adjusted_means_control": 27.73,
+		"adjusted_mean_diff": 0.00,
+		"balance_covariats_post_matching": "Balanced"
+	},
+	{
+		"row_names": "prevalentHyp",
+		"unadjusted_means_treated": 0.30,
+		"unadjusted_means_control": 1.00,
+		"unadjusted_mean_diff": 0.70,
+		"adjusted_means_treated": 1.00,
+		"adjusted_means_control": 1.00,
+		"adjusted_mean_diff": 0.00,
+		"balance_covariats_post_matching": "Balanced"
+	},
+	{
+		"row_names": "diabetes",
+		"unadjusted_means_treated": 0.03,
+		"unadjusted_means_control": 0.06,
+		"unadjusted_mean_diff": 0.03,
+		"adjusted_means_treated": 0.05,
+		"adjusted_means_control": 0.05,
+		"adjusted_mean_diff": 0.00,
+		"balance_covariats_post_matching": "Balanced"
+	}
+
+]
