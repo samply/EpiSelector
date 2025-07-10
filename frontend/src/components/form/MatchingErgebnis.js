@@ -30,7 +30,7 @@ import { AlertTitle } from "@mui/lab";
 function MatchingErgebnis() {
     const { setErgebnisse, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
-    console.log("isAllMatchingvariablen: " + isAllMatchingvariablen);
+    console.log("isAllMatchingvariablen:", isAllMatchingvariablen?.map(item => item.variable || item.name || item) || []);
     
 
     function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
@@ -116,7 +116,7 @@ function MatchingErgebnis() {
             console.log("VollständigeDatei:", isVollständigeDatei);
             console.log("MatchingMethode: " + isMatchingMethode);            
             console.log("Groupindicator: " + isZielvariable);
-            console.log("All Kontrollvariablen:", isAllKontrollvariablen);
+            console.log("All Kontrollvariablen:", isAllKontrollvariablen?.map(item => item.variable || item.name || item) || []);
             console.log("Kontrollvariablen:", isKontrollvariablen);
             console.log("Matchingverhältnis: " + isVerhältnis);
             console.log("Ersetzung: " + isErsetzung);
@@ -132,7 +132,7 @@ function MatchingErgebnis() {
             console.log("VollständigeDatei:", isVollständigeDatei);
             console.log("MatchingMethode: " + isMatchingMethode);
             console.log("Groupindicator: " + isFälleKontrollenGruppenindikator);
-            console.log("All Matchingvariablen:", isAllMatchingvariablen);
+            console.log("All Matchingvariablen:", isAllMatchingvariablen?.map(item => item.variable || item.name || item) || []);
             console.log("Ersetzung: " + isErsetzung);
             console.log("Toleranzwerte:", isMatchingtoleranz);
             console.log("Matchingverhältnis: " + isVerhältnis);
@@ -157,7 +157,7 @@ function MatchingErgebnis() {
             realGroupIndicator = isFälleKontrollenGruppenindikator
             realControlVariables = isAllMatchingvariablen
             replace = "FALSE"
-            console.log("isAllMatchingvariablen: " + isAllMatchingvariablen)
+            console.log("isAllMatchingvariablen:", isAllMatchingvariablen?.map(item => item.variable || item.name || item) || [])
         }
         if(isMatchingMethode == "Propensity Score") {
             distance = "glm"
