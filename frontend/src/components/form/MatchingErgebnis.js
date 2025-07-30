@@ -163,6 +163,8 @@ function MatchingErgebnis() {
                 console.log("All Matchingvariablen:", allMatchingvariablenString);
                 console.log("Ersetzung: " + isErsetzung);
                 console.log("Toleranzwerte:", isMatchingtoleranz);
+                console.log("DEBUG - isToleranzBereich in useEffect:", isToleranzBereich);
+                console.log("DEBUG - isToleranzBereichSet in useEffect:", isToleranzBereichSet);
                 console.log("Matchingverhältnis: " + isVerhältnis);
                 data = FHSEMMT;
             }
@@ -185,7 +187,7 @@ function MatchingErgebnis() {
             var realControlVariables = ""
             var replace = ""
             var test = ""
-            
+
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
                 realGroupIndicator = isFälleKontrollenGruppenindikator
@@ -216,8 +218,12 @@ function MatchingErgebnis() {
             console.log("receivedResults Distanz: " + distance)        
             console.log("receivedResults Mreplace: " + replace)
             console.log("receivedResults Mratio: " + isVerhältnis)
-            console.log("receivedResults Toleranzbereich: " + isToleranzBereich)
-            console.log("receivedResults Caliper-Variablen: " + isToleranzBereichSet)
+            console.log("DEBUG - isToleranzBereich type:", typeof isToleranzBereich)
+            console.log("DEBUG - isToleranzBereich content:", isToleranzBereich)
+            console.log("DEBUG - isMatchingtoleranz type:", typeof isMatchingtoleranz)
+            console.log("DEBUG - isMatchingtoleranz content:", isMatchingtoleranz)
+            console.log("receivedResults Caliper-Variablen: " + isToleranzBereich)
+            console.log("receivedResults Toleranzwerte (alternative): " + isMatchingtoleranz)
 
             // Parameter als Variablen definieren
             const baseUrl = "http://127.0.0.1:8000/control_selection/result_data";

@@ -63,15 +63,17 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
         setMatchingtoleranz(tmpArray);
         setToleranzBereichSet('TRUE');
         setToleranzBereich(tmpArray);
-        settoleranzwert(tmpArray);
-        console.log(tmpArray);
+        console.log("setToleranzBereich wird gesetzt mit:", tmpArray);
+
+        setToleranzwerte(tmpArray);
+        console.log("Finale tmpArray:", tmpArray);
     }
     setMatchingtoleranzChip(isMatchingtoleranz.length +" Toleranzwerte")
 
     console.log(tableArray);
 
-    console.log(isMatchingtoleranz);
-
+    console.log("isMatchingtoleranz" + isMatchingtoleranz);
+    
 
     function löschen() {
         setMatchingtoleranz("");
