@@ -187,6 +187,7 @@ function MatchingErgebnis() {
             var realControlVariables = ""
             var replace = ""
             var test = ""
+            var realMatchingMethode = ""
 
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
@@ -194,20 +195,24 @@ function MatchingErgebnis() {
                 realControlVariables = allMatchingvariablenString
                 replace = "FALSE"
                 console.log("isAllMatchingvariablen:", allMatchingvariablenString)
+                realMatchingMethode = "exact"
             }
-            if(isMatchingMethode == "Propensity Score") {
+            if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Nearest Neighbour") {
                 distance = "glm"
                 realGroupIndicator = isZielvariable
                 realControlVariables = allKontrollvariablenString
                 replace = "FALSE"
+                realMatchingMethode = "nearest"
             }
             if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
                 distance = "glm"
                 realGroupIndicator = isZielvariable
                 realControlVariables = allKontrollvariablenString
+                realMatchingMethode = "optimal"
             }
             if(isMatchingMethode == "Optimal Matching") {
                 replace = ""
+                realMatchingMethode = "optimal"
             }
 
 
@@ -230,11 +235,11 @@ function MatchingErgebnis() {
             const params = {
                 groupindicator: realGroupIndicator,
                 controllvariables: realControlVariables,
-                mmethod: isMatchingMethode,
+                mmethod: realMatchingMethode,
                 mdistance: distance,
                 mreplace: isErsetzung,
                 mratio: isVerhältnis,
-                mcaliper: isToleranzBereich,
+                mcaliper: isMatchingtoleranz,
                 mcalipervariables: isToleranzBereichSet
             };
 
@@ -254,10 +259,7 @@ function MatchingErgebnis() {
             const fullUrl = `${baseUrl}?${queryString}`;
 
             // Beispiel-Daten für den Body
-            const bodyData = {
-                // Trage hier deine tatsächlichen Daten ein
-                exampleKey: "exampleValue"
-            };
+            const bodyData = isVollständigeDatei
 
             // POST-Request mit Fetch API
             fetch(fullUrl, {
