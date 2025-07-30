@@ -184,7 +184,8 @@ function MatchingErgebnis() {
             var realGroupIndicator = ""
             var realControlVariables = ""
             var replace = ""
-
+            var test = ""
+            
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
                 realGroupIndicator = isFälleKontrollenGruppenindikator
