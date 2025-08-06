@@ -178,11 +178,13 @@ function MatchingErgebnis() {
 
     }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
 
+    var result_data = "";
 
     const receivedResults = (event) => {
         try {
             console.log("Hier startet receivedResults");
 
+           
             var distance = "";
             var realGroupIndicator = ""
             var realControlVariables = ""
@@ -192,7 +194,7 @@ function MatchingErgebnis() {
             var realErsetzung = ""
 
             console.log("Vorablog der Ersetzung:")
-            console.log(isErsetzung)
+            console.log("Algorithmus ist: " + isAlgorithmus)
       
             
             
@@ -215,14 +217,13 @@ function MatchingErgebnis() {
                 realErsetzung = isErsetzung
             }
             if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
+                console.log("Fall Optimal-Matching tritt ein")
                 distance = "glm"
                 realGroupIndicator = isZielvariable
                 realControlVariables = allKontrollvariablenString
                 realMatchingMethode = "optimal"
             }
-            if(isMatchingMethode == "Optimal Matching") {
-                realMatchingMethode = "optimal"
-            }
+      
 
 
 
@@ -332,6 +333,11 @@ function MatchingErgebnis() {
                 })
                 .then(result => {
                     console.log("Antwort vom Server:", result);
+                    result_data = result
+
+
+                    
+
                 })
                 .catch(error => {
                     console.error("Fehler beim POST-Aufruf:", error);
@@ -489,7 +495,7 @@ function MatchingErgebnis() {
                                 <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small"
                                     aria-label="a dense table">
                                     <TableBody>
-                                        {results.map((item, index) => (
+                                        {result_data.map((item, index) => (
                                             <TableRow key={index}>
                                                 {Object.entries(item).map(([key, val], index) => {
                                                     if (key === "row_names") {
