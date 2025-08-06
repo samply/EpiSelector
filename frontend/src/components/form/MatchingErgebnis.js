@@ -231,9 +231,10 @@ function MatchingErgebnis() {
             console.log("receivedResults Toleranzwerte (alternative): " + isMatchingtoleranz)
             
 
-            // Bestimme welche Variablen tatsächlich Toleranzwerte haben (nicht 0 oder null)
+            // Bestimme welche Variablen und Werte tatsächlich Toleranzwerte haben (nicht 0 oder null)
             let caliperVariables = [];
-            console.log("DEBUG - Filtering Caliper Variables:");
+            let caliperValues = [];
+            console.log("DEBUG - Filtering Caliper Variables and Values:");
             console.log("DEBUG - isMatchingtoleranz Array:", isMatchingtoleranz);
             console.log("DEBUG - isAllMatchingvariablen Array:", isAllMatchingvariablen);
 
@@ -255,16 +256,20 @@ function MatchingErgebnis() {
                     console.log(`DEBUG - Index ${i}: isNonZero = ${isNonZero}`);
 
                     if (isNonZero) {
+                        // Sammle sowohl die Variable als auch den Wert
+                        caliperValues.push(toleranzwert);
                         if (isAllMatchingvariablen[i]) {
                             const variableName = isAllMatchingvariablen[i].var || isAllMatchingvariablen[i].variable || isAllMatchingvariablen[i].name || String(isAllMatchingvariablen[i]);
-                            console.log(`DEBUG - Adding variable: ${variableName}`);
+                            console.log(`DEBUG - Adding variable: ${variableName} with value: ${toleranzwert}`);
                             caliperVariables.push(variableName);
                         }
                     }
                 }
             }
             const caliperVariablesString = `${caliperVariables.join(', ')}`;
+            const caliperValuesString = `${caliperValues.join(', ')}`;
             console.log("Caliper-Variables mit Toleranzwerten:", caliperVariablesString);
+            console.log("Caliper-Values (nur Nicht-Null):", caliperValuesString);
 
 
             // Parameter als Variablen definieren
@@ -276,7 +281,7 @@ function MatchingErgebnis() {
                 mdistance: distance,
                 mreplace: isErsetzung,
                 mratio: isVerhältnis,
-                mcaliper: isMatchingtoleranz,
+                mcaliper: caliperValuesString,
                 mcalipervariables: caliperVariablesString
             };
 
