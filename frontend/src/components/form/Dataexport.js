@@ -25,10 +25,8 @@ import AppContext from '../../AppContext';
 import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
 
-const doc = new jsPDF();
-
 function Dataexport() {
-    const { isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
+    const { isSummaryData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState([]);
 
@@ -36,13 +34,13 @@ function Dataexport() {
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
 
     const Matchingprotokoll = () => {
-        // Prüfe ob API-Daten verfügbar sind
-        if (!isErgebnisse || !Array.isArray(isErgebnisse) || isErgebnisse.length === 0) {
-            alert("Fehler: Keine Matching-Ergebnisse verfügbar. Bitte führen Sie zuerst das Matching durch.");
+        // Prüfe ob Summary-Daten verfügbar sind
+        if (!isSummaryData || !Array.isArray(isSummaryData) || isSummaryData.length === 0) {
+            alert("Fehler: Keine Summary-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
             return;
         }
         
-        console.log("PDF Export - isErgebnisse:", isErgebnisse);
+        console.log("PDF Export - isSummaryData:", isSummaryData);
         
         const tableColumn = [
             "Variable",
@@ -56,7 +54,7 @@ function Dataexport() {
         ];        
         const tableRows = [];
 
-        isErgebnisse.forEach(variable => {
+        isSummaryData.forEach(variable => {
             // Ignoriere die gleichen Spalten wie in der Tabelle
             if (variable.balance_thresholds_post_matching !== undefined || 
                 variable.postmatch_cases !== undefined || 
@@ -64,6 +62,7 @@ function Dataexport() {
                 variable.prematch_cases !== undefined || 
                 variable.prematch_controls !== undefined) {
                 // Skip diese Zeilen oder filtern Sie die Eigenschaften heraus
+                return;
             }
 
             const ticketData = [
@@ -87,14 +86,16 @@ function Dataexport() {
         const date = new Date().toString().split(" ");
         const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
         
-        doc.setFontSize(20);
-        doc.text("Matchingprotokoll", 14, 15);
-        doc.setFontSize(14); 
-        doc.setTextColor(100);
-        doc.text("Matching Ergebnisse", 14, 25);
+        const newDoc = new jsPDF();
+        
+        newDoc.setFontSize(20);
+        newDoc.text("Matchingprotokoll", 14, 15);
+        newDoc.setFontSize(14); 
+        newDoc.setTextColor(100);
+        newDoc.text("Matching Ergebnisse", 14, 25);
         
         // Header-Tabelle mit neuer Syntax
-        doc.autoTable({
+        newDoc.autoTable({
             head: tableColumn1,
             body: [],
             startY: 30,
@@ -102,14 +103,14 @@ function Dataexport() {
         });
         
         // Haupt-Tabelle mit neuer Syntax
-        doc.autoTable({
+        newDoc.autoTable({
             head: [tableColumn],
             body: tableRows,
             startY: 38,
             theme: 'striped'
         });
         
-        doc.save(`matchingprotokoll${dateStr}.pdf`);
+        newDoc.save(`matchingprotokoll${dateStr}.pdf`);
     };
 
     useEffect(() => {
@@ -129,16 +130,7 @@ function Dataexport() {
         // Setze Disclaimer im useEffect, nicht im Render
         setDisclaimer(false);
 
-        const getResults = async () => {
-            try {
-                const response = await axios.get("http://localhost:3000/results");
-                setResultData(response.data.resultData);
-            } catch (err) {
-                console.log("error");
-            }
-        };
-        getResults();
-    }, []);
+    }, [isMatchingMethode, isErsetzung, isToleranzBereichSet, setDisclaimer]);
 
     function deleteAllData() {
         setDatenquelle("defaultQuelle");

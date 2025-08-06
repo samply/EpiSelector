@@ -29,7 +29,7 @@ import Zielvariable from './Zielvariable';
 
 
 function MatchingErgebnis() {
-    const { setErgebnisse, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
+    const { setErgebnisse, setSummaryData: setGlobalSummaryData, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
     // Transform arrays to comma-separated strings once
     const allMatchingvariablenString = Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
@@ -493,6 +493,7 @@ function MatchingErgebnis() {
                     console.log("Antwort vom Server - Summary:", result);
                     setSummaryData(result);
                     setErgebnisse(result); // Speichere auch die Summary-Daten im AppContext für Dataexport
+                    setGlobalSummaryData(result); // Speichere Summary-Daten auch im globalen Context
                     setIsLoading(false);
                 })
                 .catch(error => {

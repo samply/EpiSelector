@@ -65,10 +65,11 @@ function App() {
     const [isToleranzBereichSetToResult, setToleranzBereichSetToResult] = useState('');
     const [isToleranzBereich, setToleranzBereich] = useState('FALSE');
     const [isErgebnisse, setErgebnisse] = useState({});
+    const [isSummaryData, setSummaryData] = useState(null);
 
 
     return (
-        <AppContext.Provider value={{setErgebnisse, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
+        <AppContext.Provider value={{setErgebnisse, isErgebnisse, setSummaryData, isSummaryData, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}
@@ -184,7 +185,6 @@ function App() {
                                                                  isMatchingtoleranz={isMatchingtoleranz}
                                                                  isAllMatchingvariablen={isAllMatchingvariablen}
                                                                  isVollständigeDatei={isVollständigeDatei}
-                                                                 isMatchingMethode={isMatchingMethode}
                                                                  setWorkflow={setWorkflow}
                                                                  isToleranzBereichSet={isToleranzBereichSet}
                                                                  setToleranzBereichSetToResult={setToleranzBereichSetToResult}
@@ -232,7 +232,6 @@ function App() {
                                                                 setErgebnisse={setErgebnisse}
                                                                isBeobachtungen={isBeobachtungen}
                                                                isAllKontrollvariablen={isAllKontrollvariablen}
-                                                               isMatchingMethode={isMatchingMethode}
                                                                isDateiSpaltenNamen={isDateiSpaltenNamen}
                                                                isZielvariable={isZielvariable}
                                                                isVerhältnis={isVerhältnis}
@@ -241,7 +240,7 @@ function App() {
                                                                isAlgorithmus={isAlgorithmus}
                                                                isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
                                                                setWorkflow={setWorkflow}/>}
-                                    element={<MatchingErgebnis isBeobachtungen={isBeobachtungen}
+                                  isBeobachtungen={isBeobachtungen}
                                     isAllKontrollvariablen={isAllKontrollvariablen}
                                     isMatchingMethode={isMatchingMethode}
                                     isDateiSpaltenNamen={isDateiSpaltenNamen}
@@ -251,10 +250,9 @@ function App() {
                                     isVollständigeDatei={isVollständigeDatei}
                                     isScoreMethode={isScoreMethode}
                                     isToleranzBereichSet={isToleranzBereichSet}
-                                    isErsetzung={isErsetzung}
                                     isMatchingvariablen={isMatchingvariablen}
                                     isAllMatchingvariablen={isAllMatchingvariablen}
-                                    isÜbereinstimmungswert={isÜbereinstimmungswert}/>}
+                                    isÜbereinstimmungswert={isÜbereinstimmungswert}
                                 />
                                 <Route path="/Dataexport" element={<Dataexport setDisclaimer={setDisclaimer} setWorkflow={setWorkflow} isErgebnisse={isErgebnisse} isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator} isZielvariable={isZielvariable}/>} />
                             </Routes>
@@ -262,13 +260,13 @@ function App() {
                         <div className="dynamicResults">
                                 <DynamicResult isPackageB={isPackageB} isAlgorithmus={isAlgorithmus}
                                                isAllKontrollvariablen={isAllKontrollvariablen}
-                                               isVerhältnis={isVerhältnis} isErsetzung={isErsetzung}
+                                               isVerhältnis={isVerhältnis} 
+                                               isErsetzung={isErsetzung}
                                                isZielvariable={isZielvariable}
                                                isMatchingMethode={isMatchingMethode}
                                                isVollständigeDatei={isVollständigeDatei}
                                                isScoreMethode={isScoreMethode}
                                                isÜbereinstimmungswert={isÜbereinstimmungswert}
-                                               isErsetzung={isErsetzung}
                                                isToleranzBereichSet={isToleranzBereichSet}
                                                isToleranzBereichSetToResult={isToleranzBereichSetToResult}
                                                isErsetzungToResult={isErsetzungToResult}/>
