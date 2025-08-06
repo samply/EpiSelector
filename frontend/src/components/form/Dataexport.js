@@ -63,17 +63,9 @@ function Dataexport() {
         isSummaryData.forEach((variable, index) => {
             console.log(`PDF Export - Variable ${index}:`, variable);
             
-            // Ignoriere Variablen die diese spezifischen Eigenschaften ENTHALTEN
-            if (variable.hasOwnProperty('balance_thresholds_post_matching') || 
-                variable.hasOwnProperty('postmatch_cases') || 
-                variable.hasOwnProperty('postmatch_controls') || 
-                variable.hasOwnProperty('prematch_cases') || 
-                variable.hasOwnProperty('prematch_controls')) {
-                // Skip diese Variablen komplett
-                console.log(`PDF Export - Skipping variable ${index} due to unwanted fields:`, Object.keys(variable));
-                return;
-            }
-
+            // Alle Variablen verarbeiten, aber nur die gewünschten Eigenschaften verwenden
+            // Ignoriere die Meta-Eigenschaften beim Erstellen der Tabelle
+            
             const ticketData = [
                 variable.row_names || variable.Variable || "",
                 variable.unadjusted_means_treated || variable.preMatchingIcu_mort0 || variable.prematch_mean_treated || "",
