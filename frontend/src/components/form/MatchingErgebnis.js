@@ -339,7 +339,7 @@ function MatchingErgebnis() {
         try {
             console.log("Hier startet receivedSummary");
             setIsLoading(true);
-            setResultData(null); // Reset previous data
+            setSummaryData(null); // Reset previous data
 
            
             var distance = "";
@@ -676,8 +676,8 @@ function MatchingErgebnis() {
                                                     Lade Matching-Ergebnisse...
                                                 </TableCell>
                                             </TableRow>
-                                        ) : resultData && Array.isArray(resultData) ? (
-                                            resultData.map((item, index) => (
+                                        ) : summaryData && Array.isArray(summaryData) ? (
+                                            summaryData.map((item, index) => (
                                                 <TableRow key={index}>
                                                     {Object.entries(item).map(([key, val], index) => {
                                                         if (key === "row_names") {
