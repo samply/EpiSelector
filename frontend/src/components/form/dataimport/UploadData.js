@@ -52,7 +52,7 @@ export default function UploadData() {
             const headers = parsed.data[0];
             const rows = parsed.data.slice(1);
 
-            // Umformatieren der CSV-Daten
+            // Umformatieren der CSV-Daten mit Typ-Konvertierung
             const jsonData = {};
             headers.forEach((header, index) => {
                 const columnName = header.trim(); // Entferne Leerzeichen
@@ -60,7 +60,27 @@ export default function UploadData() {
                 rows.forEach((row) => {
                     const value = row[index] !== undefined ? row[index].trim() : ''; // Überprüfe auf undefiniert
                     if (value !== '') { // Füge nur Werte hinzu, die nicht leer sind
-                        columnData.push(value);
+                        // Typ-Konvertierung: Zahlen zu Float, Rest als String
+                        let convertedValue = value;
+                        
+                        // Prüfe ob es eine reine Zahl ist (inkl. Dezimalzahlen)
+                        if (/^-?\d*\.?\d+$/.test(value)) {
+                            convertedValue = parseFloat(value);
+                            console.log(`Converting "${value}" to float: ${convertedValue}`);
+                        } 
+                        // Prüfe ob es ein Datum ist (verschiedene Formate)
+                        else if (/^\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4}$/.test(value) || 
+                                /^\d{4}[\/\-\.]\d{1,2}[\/\-\.]\d{1,2}$/.test(value) ||
+                                /^\d{1,2}\.\d{1,2}\.\d{4}$/.test(value)) {
+                            convertedValue = value; // Datum als String belassen
+                            console.log(`Keeping date as string: "${value}"`);
+                        }
+                        // Alles andere als String
+                        else {
+                            convertedValue = value;
+                        }
+                        
+                        columnData.push(convertedValue);
                     }
                 });
                 jsonData[columnName] = columnData;

@@ -282,7 +282,8 @@ function MatchingErgebnis() {
                 mreplace: isErsetzung,
                 mratio: isVerhältnis,
                 mcaliper: caliperValuesString,
-                mcalipervariables: caliperVariablesString
+                mcalipervariables: caliperVariablesString,
+                dataset: isVollständigeDatei
             };
 
             // test
@@ -301,8 +302,9 @@ function MatchingErgebnis() {
             // Kompletten URL zusammenbauen
             const fullUrl = `${baseUrl}?${queryString}`;
 
-            // Beispiel-Daten für den Body
+            // Dataset für den Body - jetzt mit verbesserter Typ-Konvertierung
             const bodyData = isVollständigeDatei
+            console.log("Sending dataset with improved type conversion:", bodyData);
 
             // POST-Request mit Fetch API
             fetch(fullUrl, {
