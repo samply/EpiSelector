@@ -67,6 +67,11 @@ function MatchingErgebnis() {
 
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState(null);
+
+    const [summary, setSummary] = useState([]);
+    const [summaryData, setSummaryData] = useState(null);
+
+
     const [isLoading, setIsLoading] = useState(false);
 
     const postPSMOE = '260';
@@ -79,14 +84,7 @@ function MatchingErgebnis() {
     const variableEMOT = '44';
     const variableEMMT = '44';
 
-    /**} else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return postPSMME;
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return postEMOT; */
+
     const postBeobachtungen = () => {
         if (isMatchingMethode === "Propensity Score") {
             console.log(isMatchingMethode);
@@ -121,26 +119,9 @@ function MatchingErgebnis() {
     };
 
 
-    /**else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSPSME);
-            console.log(isBeobachtungen);
-            data = FHSPSME; 
-            
-            else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(FHSEMMT);
-            console.log(isBeobachtungen);
-            data = FHSEMMT;
-        }*/
-
     useEffect(() => {
         try {
-            let data;
+     
 
             if (isMatchingMethode === "Propensity Score") {
                 console.log("Datei: " + isDatei);
@@ -155,7 +136,6 @@ function MatchingErgebnis() {
                 console.log("Matching Algorithmus: " + isAlgorithmus);
                 console.log("Übereinstimmungswert: " + isÜbereinstimmungswert);
                 console.log("Toleranzwerte:", isMatchingtoleranz);
-                data = FHSPSOE;
 
             }
             else if (isMatchingMethode === "Exaktes Matching") {
@@ -169,9 +149,8 @@ function MatchingErgebnis() {
                 console.log("DEBUG - isToleranzBereich in useEffect:", isToleranzBereich);
                 console.log("DEBUG - isToleranzBereichSet in useEffect:", isToleranzBereichSet);
                 console.log("Matchingverhältnis: " + isVerhältnis);
-                data = FHSEMMT;
             }
-            setResults(data);
+
         } catch (error) {
             console.error("Error in useEffect:", error);
             console.log("Fallback: Setting empty results array");
@@ -179,6 +158,10 @@ function MatchingErgebnis() {
         }
 
     }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
+
+
+
+
 
     const receivedResults = (event) => {
         try {
@@ -347,11 +330,199 @@ function MatchingErgebnis() {
             console.error("Error in receivedResults:", error);
         }
 
-    }       
+    }  
+    
+
+
+
+    const receivedSummary = (event) => {
+        try {
+            console.log("Hier startet receivedSummary");
+            setIsLoading(true);
+            setResultData(null); // Reset previous data
+
+           
+            var distance = "";
+            var realGroupIndicator = ""
+            var realControlVariables = ""
+            var replace = ""
+            var test = ""
+            var realMatchingMethode = ""
+            var realErsetzung = ""
+
+            console.log("Vorablog der Ersetzung:")
+            console.log("Algorithmus ist: " + isAlgorithmus)
+      
+            
+            
+
+
+            if(isMatchingMethode == "Exaktes Matching") {
+                distance = "mahalanobis"
+                realGroupIndicator = isFälleKontrollenGruppenindikator
+                realControlVariables = allMatchingvariablenString
+                console.log("isAllMatchingvariablen:", allMatchingvariablenString)
+                realMatchingMethode = "exact"
+                realErsetzung = "FALSE"
+            }
+            if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "nearest") {
+                console.log("Fall Propensity Score Matching Nearest Neighbour tritt ein mit Zielvariable: " + isZielvariable)
+                distance = "glm"
+                realGroupIndicator = isZielvariable
+                realControlVariables = allKontrollvariablenString
+                realMatchingMethode = "nearest"
+                realErsetzung = isErsetzung
+            }
+            if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
+                console.log("Fall Optimal-Matching tritt ein")
+                distance = "glm"
+                realGroupIndicator = isZielvariable
+                realControlVariables = allKontrollvariablenString
+                realMatchingMethode = "optimal"
+            }
+      
+
+
+
+            console.log("receivedResults Groupindicator: " + realGroupIndicator)
+            console.log("receivedResults Kontrollvariablen: " + realControlVariables)
+            console.log("receivedResults Matching-Methode: " + isMatchingMethode)
+            console.log("receivedResults Distanz: " + distance)        
+            console.log("receivedResults Mreplace: " + replace)
+            console.log("receivedResults Mratio: " + isVerhältnis)
+            console.log("DEBUG - isToleranzBereich type:", typeof isToleranzBereich)
+            console.log("DEBUG - isToleranzBereich content:", isToleranzBereich)
+            console.log("DEBUG - isMatchingtoleranz type:", typeof isMatchingtoleranz)
+            console.log("DEBUG - isMatchingtoleranz content:", isMatchingtoleranz)
+            console.log("receivedResults Caliper-Variablen: " + isToleranzBereich)
+            console.log("receivedResults Toleranzwerte (alternative): " + isMatchingtoleranz)
+            
+
+            // Bestimme welche Variablen und Werte tatsächlich Toleranzwerte haben (nicht 0 oder null)
+            let caliperVariables = [];
+            let caliperValues = [];
+            console.log("DEBUG - Filtering Caliper Variables and Values:");
+            console.log("DEBUG - isMatchingtoleranz Array:", isMatchingtoleranz);
+            console.log("DEBUG - isAllMatchingvariablen Array:", isAllMatchingvariablen);
+
+            if (Array.isArray(isMatchingtoleranz) && Array.isArray(isAllMatchingvariablen)) {
+                console.log("DEBUG - Both arrays are valid, length:", isMatchingtoleranz.length, isAllMatchingvariablen.length);
+
+                for (let i = 0; i < isMatchingtoleranz.length; i++) {
+                    const toleranzwert = isMatchingtoleranz[i];
+                    console.log(`DEBUG - Index ${i}: Toleranzwert = "${toleranzwert}" (type: ${typeof toleranzwert})`);
+
+                    // Prüfe ob der Toleranzwert gesetzt ist (nicht 0, nicht null, nicht leer)
+                    const isNonZero = toleranzwert &&
+                                     toleranzwert !== "0.00" &&
+                                     toleranzwert !== "0" &&
+                                     toleranzwert !== "" &&
+                                     toleranzwert !== null &&
+                                     parseFloat(toleranzwert) !== 0;
+
+                    console.log(`DEBUG - Index ${i}: isNonZero = ${isNonZero}`);
+
+                    if (isNonZero) {
+                        // Sammle sowohl die Variable als auch den Wert
+                        caliperValues.push(toleranzwert);
+                        if (isAllMatchingvariablen[i]) {
+                            const variableName = isAllMatchingvariablen[i].var || isAllMatchingvariablen[i].variable || isAllMatchingvariablen[i].name || String(isAllMatchingvariablen[i]);
+                            console.log(`DEBUG - Adding variable: ${variableName} with value: ${toleranzwert}`);
+                            caliperVariables.push(variableName);
+                        }
+                    }
+                }
+            }
+            const caliperVariablesString = `${caliperVariables.join(', ')}`;
+            const caliperValuesString = `${caliperValues.join(', ')}`;
+            console.log("Caliper-Variables mit Toleranzwerten:", caliperVariablesString);
+            console.log("Caliper-Values (nur Nicht-Null):", caliperValuesString);
+
+
+            // Parameter als Variablen definieren
+            const baseUrl = "http://127.0.0.1:8000/control_selection/summary";
+            const params = {
+                groupindicator: realGroupIndicator,
+                controllvariables: realControlVariables,
+                mmethod: realMatchingMethode,
+                mdistance: distance,
+                mreplace: realErsetzung,
+                mratio: isVerhältnis,
+                mcaliper: caliperValuesString,
+                mcalipervariables: caliperVariablesString,
+                dataset: isVollständigeDatei
+            };
+
+            // test
+            // URL-Parameter in einen Query-String umwandeln
+            const queryString = new URLSearchParams({
+                groupindicator: params.groupindicator,
+                controllvariables: `[${params.controllvariables}]`,
+                mmethod: params.mmethod,
+                mdistance: params.mdistance,
+                mreplace: params.mreplace,
+                mratio: params.mratio,
+                mcaliper: Array.isArray(params.mcaliper) ? params.mcaliper.join(',') : params.mcaliper,
+                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables
+            }).toString();
+
+            // Kompletten URL zusammenbauen
+            const fullUrl = `${baseUrl}?${queryString}`;
+
+            // Dataset für den Body - jetzt mit verbesserter Typ-Konvertierung
+            const bodyData = isVollständigeDatei
+            console.log("Sending dataset with improved type conversion:", bodyData);
+
+            // POST-Request mit Fetch API
+            fetch(fullUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Token dd6d5f6aff9c4228b9f6c19db94f9408ddf91bc3"
+                },
+                body: JSON.stringify(bodyData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(result => {
+                    console.log("Antwort vom Server - Summary:", result);
+                    setSummaryData(result);
+                    setIsLoading(false);
+                })
+                .catch(error => {
+                    console.error("Fehler beim POST-Aufruf:", error);
+                    setIsLoading(false);
+                    setSummaryData(null);
+                });
+        } catch (error) {
+            console.error("Error in receivedResults:", error);
+        }
+
+    }  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     // useEffect to call receivedResults only once when component mounts
     useEffect(() => {
         receivedResults("start");
+        receivedSummary("start");
     }, []); // Empty dependency array means this runs only once on mount
 
     /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
