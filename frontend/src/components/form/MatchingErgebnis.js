@@ -188,6 +188,7 @@ function MatchingErgebnis() {
             var replace = ""
             var test = ""
             var realMatchingMethode = ""
+            var realErsetzung = ""
 
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
@@ -196,6 +197,7 @@ function MatchingErgebnis() {
                 replace = "FALSE"
                 console.log("isAllMatchingvariablen:", allMatchingvariablenString)
                 realMatchingMethode = "exact"
+                realErsetzung = "FALSE"
             }
             if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Nearest Neighbour") {
                 distance = "glm"
@@ -203,6 +205,7 @@ function MatchingErgebnis() {
                 realControlVariables = allKontrollvariablenString
                 replace = "FALSE"
                 realMatchingMethode = "nearest"
+                realErsetzung = isErsetzung
             }
             if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Optimal Matching") {
                 distance = "glm"
@@ -279,7 +282,7 @@ function MatchingErgebnis() {
                 controllvariables: realControlVariables,
                 mmethod: realMatchingMethode,
                 mdistance: distance,
-                mreplace: isErsetzung,
+                mreplace: realErsetzung,
                 mratio: isVerhältnis,
                 mcaliper: caliperValuesString,
                 mcalipervariables: caliperVariablesString,
