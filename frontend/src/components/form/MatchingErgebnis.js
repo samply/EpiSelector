@@ -319,6 +319,7 @@ function MatchingErgebnis() {
                 .then(result => {
                     console.log("Antwort vom Server:", result);
                     setResultData(result);
+                    setErgebnisse(result); // Speichere die Daten im AppContext für Dataexport
                     setIsLoading(false);
                 })
                 .catch(error => {

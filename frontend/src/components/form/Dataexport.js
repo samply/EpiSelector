@@ -28,14 +28,17 @@ import Grid from '@mui/material/Grid';
 const doc = new jsPDF();
 
 function Dataexport() {
-    const { isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator } = useContext(AppContext);
+    const { isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState([]);
 
     const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
 
-    const Matchingprotokoll = tickets => {
+    const Matchingprotokoll = () => {
+        // Verwende die resultData aus dem AppContext (von MatchingErgebnis.js)
+        const dataToExport = isErgebnisse && Array.isArray(isErgebnisse) ? isErgebnisse : results;
+        
         const tableColumn = [
             "Variable",
             columnHeader0,
@@ -45,18 +48,19 @@ function Dataexport() {
             columnHeader1,
             "Differenz",
             "Balance"
-        ];        const tableRows = [];
+        ];        
+        const tableRows = [];
 
-        results.forEach(variable => {
+        dataToExport.forEach(variable => {
             const ticketData = [
                 variable.row_names,
-                variable.unadjusted_means_treated,
-                variable.unadjusted_means_control,
-                variable.unadjusted_mean_diff,
-                variable.adjusted_means_treated,
-                variable.adjusted_means_control,
-                variable.adjusted_mean_diff,
-                variable.balance_covariats_post_matching,
+                variable.unadjusted_means_treated || variable.preMatchingIcu_mort0,
+                variable.unadjusted_means_control || variable.preMatchingIcu_mort1,
+                variable.unadjusted_mean_diff || variable.preMatchingDif,
+                variable.adjusted_means_treated || variable.postMatchingIcu_mort0,
+                variable.adjusted_means_control || variable.postMatchingIcu_mort1,
+                variable.adjusted_mean_diff || variable.postMatchingDif,
+                variable.balance_covariats_post_matching || variable.balancePostMat,
             ];
             tableRows.push(ticketData);
         });
@@ -137,7 +141,7 @@ function Dataexport() {
                         border: "bold solid",
                         justifyContent: "space-evenly"
                     }}>
-                        <Button onClick={() => Matchingprotokoll(results.filter(result => result.status === "completed"))} style={{ flexFlow: "column" }}>
+                        <Button onClick={() => Matchingprotokoll()} style={{ flexFlow: "column" }}>
                             <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen
                         </Button>
                         <Button disabled style={{ flexFlow: "column", color: "grey" }}>
