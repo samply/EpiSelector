@@ -42,6 +42,12 @@ function Dataexport() {
         
         console.log("PDF Export - isSummaryData:", isSummaryData);
         
+        // Debug: Schaue dir die Struktur der ersten Variable an
+        if (isSummaryData.length > 0) {
+            console.log("PDF Export - Erste Variable:", isSummaryData[0]);
+            console.log("PDF Export - Verfügbare Keys:", Object.keys(isSummaryData[0]));
+        }
+        
         const tableColumn = [
             "Variable",
             columnHeader0,
@@ -54,14 +60,17 @@ function Dataexport() {
         ];        
         const tableRows = [];
 
-        isSummaryData.forEach(variable => {
-            // Ignoriere die gleichen Spalten wie in der Tabelle
-            if (variable.balance_thresholds_post_matching !== undefined || 
-                variable.postmatch_cases !== undefined || 
-                variable.postmatch_controls !== undefined || 
-                variable.prematch_cases !== undefined || 
-                variable.prematch_controls !== undefined) {
-                // Skip diese Zeilen oder filtern Sie die Eigenschaften heraus
+        isSummaryData.forEach((variable, index) => {
+            console.log(`PDF Export - Variable ${index}:`, variable);
+            
+            // Ignoriere Variablen die diese spezifischen Eigenschaften ENTHALTEN
+            if (variable.hasOwnProperty('balance_thresholds_post_matching') || 
+                variable.hasOwnProperty('postmatch_cases') || 
+                variable.hasOwnProperty('postmatch_controls') || 
+                variable.hasOwnProperty('prematch_cases') || 
+                variable.hasOwnProperty('prematch_controls')) {
+                // Skip diese Variablen komplett
+                console.log(`PDF Export - Skipping variable ${index} due to unwanted fields:`, Object.keys(variable));
                 return;
             }
 
@@ -75,8 +84,12 @@ function Dataexport() {
                 variable.adjusted_mean_diff || variable.postMatchingDif || variable.postmatch_mean_diff || "",
                 variable.balance_covariats_post_matching || variable.balancePostMat || variable.balance_post_matching || "Balanced",
             ];
+            
+            console.log(`PDF Export - Processed ticketData for variable ${index}:`, ticketData);
             tableRows.push(ticketData);
         });
+
+        console.log("PDF Export - Final tableRows:", tableRows);
 
         // Neue autoTable Syntax (nicht deprecated)
         const tableColumn1 = [
