@@ -25,6 +25,7 @@ import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 import { AlertTitle } from "@mui/lab";
+import Zielvariable from './Zielvariable';
 
 
 function MatchingErgebnis() {
@@ -190,20 +191,26 @@ function MatchingErgebnis() {
             var realMatchingMethode = ""
             var realErsetzung = ""
 
+            console.log("Vorablog der Ersetzung:")
+            console.log(isErsetzung)
+      
+            
+            
+
+
             if(isMatchingMethode == "Exaktes Matching") {
                 distance = "mahalanobis"
                 realGroupIndicator = isFälleKontrollenGruppenindikator
                 realControlVariables = allMatchingvariablenString
-                replace = "FALSE"
                 console.log("isAllMatchingvariablen:", allMatchingvariablenString)
                 realMatchingMethode = "exact"
                 realErsetzung = "FALSE"
             }
-            if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "Nearest Neighbour") {
+            if(isMatchingMethode == "Propensity Score" && isAlgorithmus == "nearest") {
+                console.log("Fall Propensity Score Matching Nearest Neighbour tritt ein mit Zielvariable: " + isZielvariable)
                 distance = "glm"
                 realGroupIndicator = isZielvariable
                 realControlVariables = allKontrollvariablenString
-                replace = "FALSE"
                 realMatchingMethode = "nearest"
                 realErsetzung = isErsetzung
             }
@@ -214,7 +221,6 @@ function MatchingErgebnis() {
                 realMatchingMethode = "optimal"
             }
             if(isMatchingMethode == "Optimal Matching") {
-                replace = ""
                 realMatchingMethode = "optimal"
             }
 
