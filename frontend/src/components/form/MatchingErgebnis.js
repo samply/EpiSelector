@@ -349,7 +349,10 @@ function MatchingErgebnis() {
 
     }       
 
-    receivedResults("start");
+    // useEffect to call receivedResults only once when component mounts
+    useEffect(() => {
+        receivedResults("start");
+    }, []); // Empty dependency array means this runs only once on mount
 
     /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
            console.log(isMatchingMethode);
