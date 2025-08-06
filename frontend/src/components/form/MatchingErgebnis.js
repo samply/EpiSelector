@@ -66,6 +66,8 @@ function MatchingErgebnis() {
     }
 
     const [results, setResults] = useState([]);
+    const [resultData, setResultData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const postPSMOE = '260';
     const postPSMME = '215';
@@ -178,11 +180,11 @@ function MatchingErgebnis() {
 
     }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
 
-    var result_data = "";
-
     const receivedResults = (event) => {
         try {
             console.log("Hier startet receivedResults");
+            setIsLoading(true);
+            setResultData(null); // Reset previous data
 
            
             var distance = "";
@@ -333,14 +335,13 @@ function MatchingErgebnis() {
                 })
                 .then(result => {
                     console.log("Antwort vom Server:", result);
-                    result_data = result
-
-
-                    
-
+                    setResultData(result);
+                    setIsLoading(false);
                 })
                 .catch(error => {
                     console.error("Fehler beim POST-Aufruf:", error);
+                    setIsLoading(false);
+                    setResultData(null);
                 });
         } catch (error) {
             console.error("Error in receivedResults:", error);
@@ -495,43 +496,57 @@ function MatchingErgebnis() {
                                 <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small"
                                     aria-label="a dense table">
                                     <TableBody>
-                                        {result_data.map((item, index) => (
-                                            <TableRow key={index}>
-                                                {Object.entries(item).map(([key, val], index) => {
-                                                    if (key === "row_names") {
-                                                        // Behandle den Namen anders
-                                                        return (
-                                                            <TableCell key={index} style={{ textAlign: "left", paddingRight: "2px", padding: "5px", width: '10px' }}>
-                                                                {val}
-                                                            </TableCell>
-
-                                                        );
-                                                    } else {
-                                                        if (val === "Balanced") {
+                                        {isLoading ? (
+                                            <TableRow>
+                                                <TableCell colSpan={9} style={{ textAlign: "center", padding: "20px" }}>
+                                                    Lade Matching-Ergebnisse...
+                                                </TableCell>
+                                            </TableRow>
+                                        ) : resultData && Array.isArray(resultData) ? (
+                                            resultData.map((item, index) => (
+                                                <TableRow key={index}>
+                                                    {Object.entries(item).map(([key, val], index) => {
+                                                        if (key === "row_names") {
+                                                            // Behandle den Namen anders
                                                             return (
-                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
-                                                                    <CheckCircleIcon style={{ color: "green", background: "none" }} />
-
-                                                                </TableCell>
-                                                            );
-
-                                                        } else if (val === "Not Balanced") {
-                                                            return (
-                                                                <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
-                                                                    <Cancel style={{ color: "red", background: "none" }} />
-                                                                </TableCell>
-                                                            );
-                                                        } else {
-                                                            return (
-                                                                <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
+                                                                <TableCell key={index} style={{ textAlign: "left", paddingRight: "2px", padding: "5px", width: '10px' }}>
                                                                     {val}
                                                                 </TableCell>
+
                                                             );
+                                                        } else {
+                                                            if (val === "Balanced") {
+                                                                return (
+                                                                    <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
+                                                                        <CheckCircleIcon style={{ color: "green", background: "none" }} />
+
+                                                                    </TableCell>
+                                                                );
+
+                                                            } else if (val === "Not Balanced") {
+                                                                return (
+                                                                    <TableCell key={index} style={{ textAlign: "center", padding: "2px" }}>
+                                                                        <Cancel style={{ color: "red", background: "none" }} />
+                                                                    </TableCell>
+                                                                );
+                                                            } else {
+                                                                return (
+                                                                    <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
+                                                                        {val}
+                                                                    </TableCell>
+                                                                );
+                                                            }
                                                         }
-                                                    }
-                                                })}
+                                                    })}
+                                                </TableRow>
+                                            ))
+                                        ) : (
+                                            <TableRow>
+                                                <TableCell colSpan={9} style={{ textAlign: "center", padding: "20px" }}>
+                                                    Keine Daten verfügbar
+                                                </TableCell>
                                             </TableRow>
-                                        ))}
+                                        )}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
