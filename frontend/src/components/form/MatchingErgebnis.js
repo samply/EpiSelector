@@ -680,6 +680,15 @@ function MatchingErgebnis() {
                                             summaryData.map((item, index) => (
                                                 <TableRow key={index}>
                                                     {Object.entries(item).map(([key, val], index) => {
+                                                        // Ignoriere spezifische Spalten
+                                                        if (key === "balance_thresholds_post_matching" || 
+                                                            key === "postmatch_cases" || 
+                                                            key === "postmatch_controls" || 
+                                                            key === "prematch_cases" || 
+                                                            key === "prematch_controls") {
+                                                            return null; // Diese Spalten nicht rendern
+                                                        }
+                                                        
                                                         if (key === "row_names") {
                                                             // Behandle den Namen anders
                                                             return (
