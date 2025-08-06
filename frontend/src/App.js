@@ -161,6 +161,7 @@ function App() {
                                         setMatchingtoleranzChip={setMatchingtoleranzChip}
                                         setWorkflow={setWorkflow}
                                         setToleranzBereichSet={setToleranzBereichSet}
+                                        setToleranzBereich={setToleranzBereich}
                                     />}
                                 />
                                 <Route path="/FälleKontrollen"

@@ -229,6 +229,43 @@ function MatchingErgebnis() {
             console.log("DEBUG - isMatchingtoleranz content:", isMatchingtoleranz)
             console.log("receivedResults Caliper-Variablen: " + isToleranzBereich)
             console.log("receivedResults Toleranzwerte (alternative): " + isMatchingtoleranz)
+            
+
+            // Bestimme welche Variablen tatsächlich Toleranzwerte haben (nicht 0 oder null)
+            let caliperVariables = [];
+            console.log("DEBUG - Filtering Caliper Variables:");
+            console.log("DEBUG - isMatchingtoleranz Array:", isMatchingtoleranz);
+            console.log("DEBUG - isAllMatchingvariablen Array:", isAllMatchingvariablen);
+
+            if (Array.isArray(isMatchingtoleranz) && Array.isArray(isAllMatchingvariablen)) {
+                console.log("DEBUG - Both arrays are valid, length:", isMatchingtoleranz.length, isAllMatchingvariablen.length);
+
+                for (let i = 0; i < isMatchingtoleranz.length; i++) {
+                    const toleranzwert = isMatchingtoleranz[i];
+                    console.log(`DEBUG - Index ${i}: Toleranzwert = "${toleranzwert}" (type: ${typeof toleranzwert})`);
+
+                    // Prüfe ob der Toleranzwert gesetzt ist (nicht 0, nicht null, nicht leer)
+                    const isNonZero = toleranzwert &&
+                                     toleranzwert !== "0.00" &&
+                                     toleranzwert !== "0" &&
+                                     toleranzwert !== "" &&
+                                     toleranzwert !== null &&
+                                     parseFloat(toleranzwert) !== 0;
+
+                    console.log(`DEBUG - Index ${i}: isNonZero = ${isNonZero}`);
+
+                    if (isNonZero) {
+                        if (isAllMatchingvariablen[i]) {
+                            const variableName = isAllMatchingvariablen[i].var || isAllMatchingvariablen[i].variable || isAllMatchingvariablen[i].name || String(isAllMatchingvariablen[i]);
+                            console.log(`DEBUG - Adding variable: ${variableName}`);
+                            caliperVariables.push(variableName);
+                        }
+                    }
+                }
+            }
+            const caliperVariablesString = `${caliperVariables.join(', ')}`;
+            console.log("Caliper-Variables mit Toleranzwerten:", caliperVariablesString);
+
 
             // Parameter als Variablen definieren
             const baseUrl = "http://127.0.0.1:8000/control_selection/result_data";
@@ -240,9 +277,10 @@ function MatchingErgebnis() {
                 mreplace: isErsetzung,
                 mratio: isVerhältnis,
                 mcaliper: isMatchingtoleranz,
-                mcalipervariables: isToleranzBereichSet
+                mcalipervariables: caliperVariablesString
             };
 
+            // test
             // URL-Parameter in einen Query-String umwandeln
             const queryString = new URLSearchParams({
                 groupindicator: params.groupindicator,
@@ -251,8 +289,8 @@ function MatchingErgebnis() {
                 mdistance: params.mdistance,
                 mreplace: params.mreplace,
                 mratio: params.mratio,
-                mcaliper: JSON.stringify(params.mcaliper),
-                mcalipervariables: JSON.stringify(params.mcalipervariables)
+                mcaliper: Array.isArray(params.mcaliper) ? params.mcaliper.join(',') : params.mcaliper,
+                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables
             }).toString();
 
             // Kompletten URL zusammenbauen
