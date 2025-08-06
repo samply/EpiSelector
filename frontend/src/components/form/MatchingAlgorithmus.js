@@ -176,8 +176,8 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                             </Box>
                             <Box
                                 style={{
-                                    backgroundColor: '#f4f4f5',
-                                    color: "#bababa",
+                                    backgroundColor: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "#1d4189" : '#E8E9EB',
+                                    color: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "white" : "#666666",
                                     fontSize: "large",
                                     display: "flex",
                                     width: "15rem",
@@ -185,9 +185,9 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                                     alignItems: "center",
                                     justifyContent: "space-evenly",
                                     borderRadius: "15px",
-                                    boxShadow: "",
-                                    pointerEvents: "auto", // Pointer-Ereignisse umgekehrt
-                                    opacity: 1, // Opazität umgekehrt
+                                    boxShadow: isActiveOM || isAlgorithmusNav === "Optimal Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                    pointerEvents: "auto",
+                                    opacity: 1,
                                 }}
                                 onClick={handleClickOptionOM}
                             > Optimal Matching (OM)
