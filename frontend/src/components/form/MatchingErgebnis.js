@@ -492,6 +492,7 @@ function MatchingErgebnis() {
                 .then(result => {
                     console.log("Antwort vom Server - Summary:", result);
                     setSummaryData(result);
+                    setErgebnisse(result); // Speichere auch die Summary-Daten im AppContext für Dataexport
                     setIsLoading(false);
                 })
                 .catch(error => {

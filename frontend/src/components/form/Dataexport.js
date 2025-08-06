@@ -36,8 +36,13 @@ function Dataexport() {
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
 
     const Matchingprotokoll = () => {
-        // Verwende die resultData aus dem AppContext (von MatchingErgebnis.js)
-        const dataToExport = isErgebnisse && Array.isArray(isErgebnisse) ? isErgebnisse : results;
+        // Prüfe ob API-Daten verfügbar sind
+        if (!isErgebnisse || !Array.isArray(isErgebnisse) || isErgebnisse.length === 0) {
+            alert("Fehler: Keine Matching-Ergebnisse verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            return;
+        }
+        
+        console.log("PDF Export - isErgebnisse:", isErgebnisse);
         
         const tableColumn = [
             "Variable",
@@ -51,31 +56,59 @@ function Dataexport() {
         ];        
         const tableRows = [];
 
-        dataToExport.forEach(variable => {
+        isErgebnisse.forEach(variable => {
+            // Ignoriere die gleichen Spalten wie in der Tabelle
+            if (variable.balance_thresholds_post_matching !== undefined || 
+                variable.postmatch_cases !== undefined || 
+                variable.postmatch_controls !== undefined || 
+                variable.prematch_cases !== undefined || 
+                variable.prematch_controls !== undefined) {
+                // Skip diese Zeilen oder filtern Sie die Eigenschaften heraus
+            }
+
             const ticketData = [
-                variable.row_names,
-                variable.unadjusted_means_treated || variable.preMatchingIcu_mort0,
-                variable.unadjusted_means_control || variable.preMatchingIcu_mort1,
-                variable.unadjusted_mean_diff || variable.preMatchingDif,
-                variable.adjusted_means_treated || variable.postMatchingIcu_mort0,
-                variable.adjusted_means_control || variable.postMatchingIcu_mort1,
-                variable.adjusted_mean_diff || variable.postMatchingDif,
-                variable.balance_covariats_post_matching || variable.balancePostMat,
+                variable.row_names || variable.Variable || "",
+                variable.unadjusted_means_treated || variable.preMatchingIcu_mort0 || variable.prematch_mean_treated || "",
+                variable.unadjusted_means_control || variable.preMatchingIcu_mort1 || variable.prematch_mean_control || "",
+                variable.unadjusted_mean_diff || variable.preMatchingDif || variable.prematch_mean_diff || "",
+                variable.adjusted_means_treated || variable.postMatchingIcu_mort0 || variable.postmatch_mean_treated || "",
+                variable.adjusted_means_control || variable.postMatchingIcu_mort1 || variable.postmatch_mean_control || "",
+                variable.adjusted_mean_diff || variable.postMatchingDif || variable.postmatch_mean_diff || "",
+                variable.balance_covariats_post_matching || variable.balancePostMat || variable.balance_post_matching || "Balanced",
             ];
             tableRows.push(ticketData);
         });
 
-        const tableColumn1 = ["", "Pre-Matching", "", "", "", "Post-Matching", "", "", ""];
-        const tableRows1 = [];
+        // Neue autoTable Syntax (nicht deprecated)
+        const tableColumn1 = [
+            ["", "Pre-Matching", "", "", "", "Post-Matching", "", "", ""]
+        ];
 
-        doc.autoTable(tableColumn1, tableRows1, { startY: 30 });
-        doc.autoTable(tableColumn, tableRows, { startY: 38 });
         const date = new Date().toString().split(" ");
         const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+        
         doc.setFontSize(20);
         doc.text("Matchingprotokoll", 14, 15);
-        doc.setFontSize(14); doc.setTextColor(100);
+        doc.setFontSize(14); 
+        doc.setTextColor(100);
         doc.text("Matching Ergebnisse", 14, 25);
+        
+        // Header-Tabelle mit neuer Syntax
+        doc.autoTable({
+            head: tableColumn1,
+            body: [],
+            startY: 30,
+            theme: 'grid'
+        });
+        
+        // Haupt-Tabelle mit neuer Syntax
+        doc.autoTable({
+            head: [tableColumn],
+            body: tableRows,
+            startY: 38,
+            theme: 'striped'
+        });
+        
         doc.save(`matchingprotokoll${dateStr}.pdf`);
     };
 
@@ -92,6 +125,9 @@ function Dataexport() {
             data = FHSEMMT;
         }
         setResults(data);
+
+        // Setze Disclaimer im useEffect, nicht im Render
+        setDisclaimer(false);
 
         const getResults = async () => {
             try {
@@ -118,7 +154,6 @@ function Dataexport() {
         setÜbereinstimmungswert("defaultÜbereinstimmungswert");
         setVollständigedatei("defaultVollständigedatei");
     };
-    setDisclaimer(false);
 
     return (
         <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
