@@ -293,7 +293,7 @@ function MatchingErgebnis() {
             // URL-Parameter in einen Query-String umwandeln
             const queryString = new URLSearchParams({
                 groupindicator: params.groupindicator,
-                controllvariables: JSON.stringify(params.controllvariables),
+                controllvariables: `[${params.controllvariables}]`,
                 mmethod: params.mmethod,
                 mdistance: params.mdistance,
                 mreplace: params.mreplace,
