@@ -224,6 +224,11 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     console.log("Alle Spalten:", allColumns);
     console.log("Ausgeschlossene Spalten:", excludeColumns);
     
+    console.log("🔍 ANALYSE ALLER SPALTEN FÜR KATEGORIALE VARIABLEN:");
+    console.log("Verfügbare Spalten:", allColumns);
+    console.log("Ausgeschlossene Spalten:", excludeColumns);
+    console.log("Zielvariable (wird ausgeschlossen):", targetVariable);
+    
     const categoricalVars = [];
     
     // Prüfe jede Spalte: kategoriale Variable = 2-16 einzigartige Ausprägungen
@@ -233,19 +238,34 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
             const validValues = resultData.map(row => row[col]).filter(val => val !== null && val !== undefined && val !== '');
             const uniqueValues = [...new Set(validValues)];
             
-            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten:`, uniqueValues.slice(0, 10));
+            console.log(`📋 Spalte "${col}":`);
+            console.log(`   - ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten`);
+            console.log(`   - Beispielwerte:`, uniqueValues.slice(0, 10));
+            console.log(`   - Ausgeschlossen wegen Zielvariable? ${col === targetVariable}`);
             
             // Kategoriale Variable: mindestens 2 und höchstens 16 Ausprägungen
             if (uniqueValues.length >= 2 && uniqueValues.length <= 16) {
                 categoricalVars.push(col);
-                console.log(`${col} als kategoriale Variable hinzugefügt (${uniqueValues.length} Ausprägungen)`);
+                console.log(`   ✅ "${col}" als kategoriale Variable hinzugefügt (${uniqueValues.length} Ausprägungen)`);
             } else {
-                console.log(`${col} NICHT kategoriale Variable: ${uniqueValues.length} Ausprägungen (außerhalb 2-16)`);
+                console.log(`   ❌ "${col}" NICHT kategoriale Variable: ${uniqueValues.length} Ausprägungen (außerhalb 2-16)`);
             }
+        } else {
+            console.log(`📋 Spalte "${col}": ⏭️ Übersprungen (ausgeschlossen)`);
         }
     });
     
-    console.log("Finale kategoriale Variablen:", categoricalVars);
+    console.log("=".repeat(60));
+    console.log("🔍 FINALE KATEGORIALE VARIABLEN FÜR HISTOGRAMM-SELECTOR:");
+    console.log("Anzahl gefundener kategorialer Variablen:", categoricalVars.length);
+    if (categoricalVars.length > 0) {
+        categoricalVars.forEach((varName, index) => {
+            console.log(`  ${index + 1}. "${varName}"`);
+        });
+    } else {
+        console.log("  ❌ KEINE kategorialen Variablen gefunden!");
+    }
+    console.log("=".repeat(60));
     return categoricalVars;
 }
 
@@ -291,6 +311,11 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
     console.log("Verwende Result-Daten für numerische Variablen");
     const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
     const allColumns = Object.keys(resultData[0]);
+    console.log("📊 ANALYSE ALLER SPALTEN FÜR NUMERISCHE VARIABLEN:");
+    console.log("Verfügbare Spalten:", allColumns);
+    console.log("Ausgeschlossene Spalten:", excludeColumns);
+    console.log("Zielvariable (wird ausgeschlossen):", targetVariable);
+    
     const numericVars = [];
     
     // Prüfe jede Spalte: numerische Variable = >16 Ausprägungen UND nur numerische Werte
@@ -303,20 +328,35 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
             // Prüfe ob alle Werte numerisch sind
             const allNumeric = validValues.every(val => !isNaN(parseFloat(val)) && isFinite(val));
             
-            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten, allNumeric=${allNumeric}`);
-            console.log(`  Beispielwerte:`, validValues.slice(0, 5));
+            console.log(`📋 Spalte "${col}":`);
+            console.log(`   - ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten`);
+            console.log(`   - Alle Werte numerisch? ${allNumeric}`);
+            console.log(`   - Beispielwerte:`, validValues.slice(0, 5));
+            console.log(`   - Ausgeschlossen wegen Zielvariable? ${col === targetVariable}`);
             
             // Numerische Variable: mehr als 16 Ausprägungen UND alle Werte sind numerisch
             if (uniqueValues.length > 16 && allNumeric) {
                 numericVars.push(col);
-                console.log(`${col} als numerische Variable hinzugefügt (${uniqueValues.length} Ausprägungen, alle numerisch)`);
+                console.log(`   ✅ "${col}" als numerische Variable hinzugefügt (${uniqueValues.length} Ausprägungen, alle numerisch)`);
             } else {
-                console.log(`${col} NICHT numerische Variable: ${uniqueValues.length} Ausprägungen (≤16) oder nicht alle numerisch (${allNumeric})`);
+                console.log(`   ❌ "${col}" NICHT numerische Variable: ${uniqueValues.length} Ausprägungen (≤16) oder nicht alle numerisch (${allNumeric})`);
             }
+        } else {
+            console.log(`📋 Spalte "${col}": ⏭️ Übersprungen (ausgeschlossen)`);
         }
     });
     
-    console.log("Finale numerische Variablen:", numericVars);
+    console.log("=".repeat(60));
+    console.log("📊 FINALE NUMERISCHE VARIABLEN FÜR BOXPLOT-SELECTOR:");
+    console.log("Anzahl gefundener numerischer Variablen:", numericVars.length);
+    if (numericVars.length > 0) {
+        numericVars.forEach((varName, index) => {
+            console.log(`  ${index + 1}. "${varName}"`);
+        });
+    } else {
+        console.log("  ❌ KEINE numerischen Variablen gefunden!");
+    }
+    console.log("=".repeat(60));
     return numericVars;
 }
 
