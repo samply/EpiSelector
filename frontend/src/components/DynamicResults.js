@@ -226,16 +226,21 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     
     const categoricalVars = [];
     
-    // Prüfe welche Variablen kategoriale Variablen sind (mindestens 2 Ausprägungen, aber nicht kontinuierlich)
+    // Prüfe jede Spalte: kategoriale Variable = 2-16 einzigartige Ausprägungen
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
-            const uniqueValues = [...new Set(resultData.map(row => row[col]))];
-            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte:`, uniqueValues.slice(0, 10));
+            // Filtere null/undefined Werte heraus
+            const validValues = resultData.map(row => row[col]).filter(val => val !== null && val !== undefined && val !== '');
+            const uniqueValues = [...new Set(validValues)];
             
-            // Kategoriale Variable: 2 oder mehr Ausprägungen, aber nicht zu viele (max 10 für Histogramm)
-            if (uniqueValues.length >= 2 && uniqueValues.length <= 10) {
+            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten:`, uniqueValues.slice(0, 10));
+            
+            // Kategoriale Variable: mindestens 2 und höchstens 16 Ausprägungen
+            if (uniqueValues.length >= 2 && uniqueValues.length <= 16) {
                 categoricalVars.push(col);
-                console.log(`${col} als kategoriale Variable hinzugefügt`);
+                console.log(`${col} als kategoriale Variable hinzugefügt (${uniqueValues.length} Ausprägungen)`);
+            } else {
+                console.log(`${col} NICHT kategoriale Variable: ${uniqueValues.length} Ausprägungen (außerhalb 2-16)`);
             }
         }
     });
@@ -288,21 +293,25 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
     const allColumns = Object.keys(resultData[0]);
     const numericVars = [];
     
-    // Prüfe welche Variablen metrisch/numerisch sind
+    // Prüfe jede Spalte: numerische Variable = >16 Ausprägungen UND nur numerische Werte
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
-            const values = resultData.map(row => row[col]).filter(val => val !== null && val !== undefined);
-            const uniqueValues = [...new Set(values)];
+            // Filtere null/undefined Werte heraus
+            const validValues = resultData.map(row => row[col]).filter(val => val !== null && val !== undefined && val !== '');
+            const uniqueValues = [...new Set(validValues)];
             
-            // Numerische Variable: Alle Werte sind Zahlen und es gibt viele verschiedene Werte (kontinuierlich)
-            const allNumeric = values.every(val => !isNaN(parseFloat(val)) && isFinite(val));
-            const hasEnoughVariation = uniqueValues.length > 10; // Mehr als 10 verschiedene Werte = kontinuierlich
+            // Prüfe ob alle Werte numerisch sind
+            const allNumeric = validValues.every(val => !isNaN(parseFloat(val)) && isFinite(val));
             
-            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte, allNumeric=${allNumeric}, hasEnoughVariation=${hasEnoughVariation}`);
+            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte von ${validValues.length} gültigen Werten, allNumeric=${allNumeric}`);
+            console.log(`  Beispielwerte:`, validValues.slice(0, 5));
             
-            if (allNumeric && hasEnoughVariation) {
+            // Numerische Variable: mehr als 16 Ausprägungen UND alle Werte sind numerisch
+            if (uniqueValues.length > 16 && allNumeric) {
                 numericVars.push(col);
-                console.log(`${col} als numerische Variable hinzugefügt`);
+                console.log(`${col} als numerische Variable hinzugefügt (${uniqueValues.length} Ausprägungen, alle numerisch)`);
+            } else {
+                console.log(`${col} NICHT numerische Variable: ${uniqueValues.length} Ausprägungen (≤16) oder nicht alle numerisch (${allNumeric})`);
             }
         }
     });
