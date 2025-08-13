@@ -202,15 +202,9 @@ function getAvailableVariables(resultData, summaryData) {
 function getBinaryVariables(resultData, summaryData, targetVariable) {
     // Verwende Summary-Daten wenn verfügbar
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        // In Summary-Daten sind binäre Variablen die mit Werten zwischen 0 und 1 (Proportionen)
-        // oder kategoriale Variablen mit genau 2 Ausprägungen
+        // Alle Variablen aus Summary-Daten als potentiell kategoriale Variablen betrachten
         return summaryData
-            .filter(row => {
-                const group0Val = parseFloat(row.pre_matching_group_0 || 0);
-                const group1Val = parseFloat(row.pre_matching_group_1 || 0);
-                // Akzeptiere sowohl Proportionen (0-1) als auch andere binäre Werte
-                return row.variable !== targetVariable;
-            })
+            .filter(row => row.variable !== targetVariable)
             .map(row => row.variable);
     }
     
@@ -220,33 +214,40 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     
     const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
     const allColumns = Object.keys(resultData[0]);
-    const binaryVars = [];
+    const categoricalVars = [];
     
-    // Prüfe welche Variablen genau 2 verschiedene Ausprägungen haben
+    // Prüfe welche Variablen kategoriale Variablen sind (mindestens 2 Ausprägungen, aber nicht kontinuierlich)
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
             const uniqueValues = [...new Set(resultData.map(row => row[col]))];
             
-            // Binäre Variable wenn genau 2 verschiedene Werte vorhanden sind
-            // (unabhängig davon ob es 0/1, m/w, ja/nein, etc. ist)
-            if (uniqueValues.length === 2) {
-                binaryVars.push(col);
+            // Kategoriale Variable: 2 oder mehr Ausprägungen, aber nicht zu viele (max 10 für Histogramm)
+            if (uniqueValues.length >= 2 && uniqueValues.length <= 10) {
+                categoricalVars.push(col);
             }
         }
     });
     
-    return binaryVars;
+    return categoricalVars;
 }
 
 function getNumericVariables(resultData, summaryData, targetVariable) {
     // Verwende Summary-Daten wenn verfügbar
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        // In Summary-Daten sind numerische Variablen die mit Werten > 1
+        // Erkenne numerische Variablen anhand der Spaltennamen oder Werte
         return summaryData
             .filter(row => {
                 const group0Val = parseFloat(row.pre_matching_group_0 || 0);
                 const group1Val = parseFloat(row.pre_matching_group_1 || 0);
-                return (group0Val > 1 || group1Val > 1) && row.variable !== targetVariable;
+                // Numerische Variablen haben typischerweise größere Werte oder sind offensichtlich numerisch
+                return row.variable !== targetVariable && 
+                       (group0Val > 1 || group1Val > 1 || 
+                        row.variable.toLowerCase().includes('age') ||
+                        row.variable.toLowerCase().includes('weight') ||
+                        row.variable.toLowerCase().includes('height') ||
+                        row.variable.toLowerCase().includes('score') ||
+                        row.variable.toLowerCase().includes('bmi') ||
+                        row.variable.toLowerCase().includes('time'));
             })
             .map(row => row.variable);
     }
@@ -259,18 +260,18 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
     const allColumns = Object.keys(resultData[0]);
     const numericVars = [];
     
-    // Prüfe welche Variablen numerisch sind (mehr als 2 verschiedene Werte)
+    // Prüfe welche Variablen metrisch/numerisch sind
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
-            const uniqueValues = [...new Set(resultData.map(row => row[col]))];
+            const values = resultData.map(row => row[col]).filter(val => val !== null && val !== undefined);
+            const uniqueValues = [...new Set(values)];
             
-            // Numerische Variable wenn mehr als 2 Werte oder kontinuierliche Werte
-            if (uniqueValues.length > 2) {
-                // Prüfe ob alle Werte numerisch sind
-                const allNumeric = resultData.every(row => !isNaN(parseFloat(row[col])));
-                if (allNumeric) {
-                    numericVars.push(col);
-                }
+            // Numerische Variable: Alle Werte sind Zahlen und es gibt viele verschiedene Werte (kontinuierlich)
+            const allNumeric = values.every(val => !isNaN(parseFloat(val)) && isFinite(val));
+            const hasEnoughVariation = uniqueValues.length > 10; // Mehr als 10 verschiedene Werte = kontinuierlich
+            
+            if (allNumeric && hasEnoughVariation) {
+                numericVars.push(col);
             }
         }
     });
@@ -281,42 +282,41 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
 function calculateHistogramData(resultData, variable, targetVariable) {
     if (!resultData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
     
-    // Für Histogramme brauchen wir binäre Daten - finde die beiden Ausprägungen
-    const uniqueValues = [...new Set(resultData.map(row => row[variable]))];
-    if (uniqueValues.length !== 2) {
-        console.warn(`Variable ${variable} ist nicht binär - hat ${uniqueValues.length} Ausprägungen`);
+    // Für Histogramme brauchen wir kategoriale Daten - finde die Ausprägungen
+    const uniqueValues = [...new Set(resultData.map(row => row[variable]))].sort();
+    if (uniqueValues.length < 2 || uniqueValues.length > 10) {
+        console.warn(`Variable ${variable} ist nicht für Histogramm geeignet - hat ${uniqueValues.length} Ausprägungen`);
         return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
     }
     
-    const [value1, value2] = uniqueValues.sort();
+    const targetValues = [...new Set(resultData.map(row => row[targetVariable]))].sort();
     
-    const group0Data = resultData.filter(row => row[targetVariable] == 0);
-    const group1Data = resultData.filter(row => row[targetVariable] == 1);
+    // Berechne Häufigkeiten für jede Kombination von Zielvariable und ausgewählter Variable
+    const pre_match_data = [];
     
-    // Berechne Häufigkeiten für jede Gruppe und jeden Wert
-    const value1Group0 = group0Data.filter(row => row[variable] == value1).length;
-    const value2Group0 = group0Data.filter(row => row[variable] == value2).length;
-    const value1Group1 = group1Data.filter(row => row[variable] == value1).length;
-    const value2Group1 = group1Data.filter(row => row[variable] == value2).length;
-    
-    // Konvertiere zu Prozenten
-    const total0 = group0Data.length;
-    const total1 = group1Data.length;
-    
-    const pre_match_data = [
-        total0 > 0 ? (value1Group0 / total0) * 100 : 0,
-        total0 > 0 ? (value2Group0 / total0) * 100 : 0,
-        total1 > 0 ? (value1Group1 / total1) * 100 : 0,
-        total1 > 0 ? (value2Group1 / total1) * 100 : 0
-    ];
+    targetValues.forEach(targetVal => {
+        const targetGroup = resultData.filter(row => row[targetVariable] == targetVal);
+        const totalInGroup = targetGroup.length;
+        
+        uniqueValues.forEach(val => {
+            const count = targetGroup.filter(row => row[variable] == val).length;
+            const percentage = totalInGroup > 0 ? (count / totalInGroup) * 100 : 0;
+            
+            if (targetVal == targetValues[0]) {
+                pre_match_data.push(percentage);
+            } else {
+                pre_match_data.push(-percentage); // Negative für zweite Gruppe (unteres Histogramm)
+            }
+        });
+    });
     
     // Für Post-Matching verwenden wir die gleichen Daten (da es bereits gematcht ist)
-    const post_match_data = pre_match_data;
+    const post_match_data = [...pre_match_data];
     
     return {
         pre_match_data,
         post_match_data,
-        x_axis_labels: [String(value1), String(value2)]
+        x_axis_labels: uniqueValues.map(String)
     };
 }
 
@@ -422,7 +422,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
     const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
-    const binaryVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
+    const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
     const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
     
     // Chart selection states
@@ -439,11 +439,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     useEffect(() => {
         if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
             console.log("Using result data from context:", isResultData);
+            console.log("Kategoriale Variablen:", categoricalVariables);
+            console.log("Numerische Variablen:", numericVariables);
             
             // Setze Default-Variablen für Charts nur wenn noch nicht gesetzt
-            if (binaryVariables.length > 0 && !histogramVariable) {
-                setHistogramVariable(binaryVariables[0]);
-                setVariableA(binaryVariables[0]);
+            if (categoricalVariables.length > 0 && !histogramVariable) {
+                setHistogramVariable(categoricalVariables[0]);
+                setVariableA(categoricalVariables[0]);
             }
             if (numericVariables.length > 0 && !boxplotVariable) {
                 setBoxplotVariable(numericVariables[0]);
@@ -462,18 +464,18 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     }, [isResultData, isSummaryData, histogramVariable, boxplotVariable]); // Entferne binaryVariables und numericVariables
 
     // Verwende echte Variablennamen anstatt statischer Listen
-    let variablesNamesA = binaryVariables.length > 0 ? binaryVariables : ["Keine binären Variablen verfügbar"];
+    let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
     let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["Keine numerischen Variablen verfügbar"];
 
 
     // Update variable selectors when data changes - use separate effect
     useEffect(() => {
-        if (binaryVariables.length > 0) {
-            setHistoSelector(binaryVariables);
+        if (categoricalVariables.length > 0) {
+            setHistoSelector(categoricalVariables);
         } else {
             setHistoSelector(["-"]);
         }
-    }, [binaryVariables]);
+    }, [categoricalVariables]);
     
     useEffect(() => {
         if (numericVariables.length > 0) {
