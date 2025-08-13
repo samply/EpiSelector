@@ -200,42 +200,58 @@ function getAvailableVariables(resultData, summaryData) {
 }
 
 function getBinaryVariables(resultData, summaryData, targetVariable) {
+    console.log("getBinaryVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
+    
     // Verwende Summary-Daten wenn verfügbar
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
+        console.log("Verwende Summary-Daten für kategoriale Variablen");
         // Alle Variablen aus Summary-Daten als potentiell kategoriale Variablen betrachten
-        return summaryData
+        const result = summaryData
             .filter(row => row && row.variable && row.variable !== targetVariable)
             .map(row => row.variable);
+        console.log("Kategoriale Variablen aus Summary:", result);
+        return result;
     }
     
     if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
+        console.log("Keine Result-Daten verfügbar");
         return [];
     }
     
+    console.log("Verwende Result-Daten für kategoriale Variablen");
     const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
     const allColumns = Object.keys(resultData[0]);
+    console.log("Alle Spalten:", allColumns);
+    console.log("Ausgeschlossene Spalten:", excludeColumns);
+    
     const categoricalVars = [];
     
     // Prüfe welche Variablen kategoriale Variablen sind (mindestens 2 Ausprägungen, aber nicht kontinuierlich)
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
             const uniqueValues = [...new Set(resultData.map(row => row[col]))];
+            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte:`, uniqueValues.slice(0, 10));
             
             // Kategoriale Variable: 2 oder mehr Ausprägungen, aber nicht zu viele (max 10 für Histogramm)
             if (uniqueValues.length >= 2 && uniqueValues.length <= 10) {
                 categoricalVars.push(col);
+                console.log(`${col} als kategoriale Variable hinzugefügt`);
             }
         }
     });
     
+    console.log("Finale kategoriale Variablen:", categoricalVars);
     return categoricalVars;
 }
 
 function getNumericVariables(resultData, summaryData, targetVariable) {
+    console.log("getNumericVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
+    
     // Verwende Summary-Daten wenn verfügbar
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
+        console.log("Verwende Summary-Daten für numerische Variablen");
         // Erkenne numerische Variablen anhand der Spaltennamen oder Werte
-        return summaryData
+        const result = summaryData
             .filter(row => {
                 if (!row || !row.variable || row.variable === targetVariable) {
                     return false;
@@ -246,21 +262,28 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
                 const variableName = row.variable.toLowerCase();
                 
                 // Numerische Variablen haben typischerweise größere Werte oder sind offensichtlich numerisch
-                return (group0Val > 1 || group1Val > 1 || 
+                const isNumeric = (group0Val > 1 || group1Val > 1 || 
                         variableName.includes('age') ||
                         variableName.includes('weight') ||
                         variableName.includes('height') ||
                         variableName.includes('score') ||
                         variableName.includes('bmi') ||
                         variableName.includes('time'));
+                        
+                console.log(`Variable ${row.variable}: group0=${group0Val}, group1=${group1Val}, isNumeric=${isNumeric}`);
+                return isNumeric;
             })
             .map(row => row.variable);
+        console.log("Numerische Variablen aus Summary:", result);
+        return result;
     }
     
     if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
+        console.log("Keine Result-Daten verfügbar");
         return [];
     }
     
+    console.log("Verwende Result-Daten für numerische Variablen");
     const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
     const allColumns = Object.keys(resultData[0]);
     const numericVars = [];
@@ -275,12 +298,16 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
             const allNumeric = values.every(val => !isNaN(parseFloat(val)) && isFinite(val));
             const hasEnoughVariation = uniqueValues.length > 10; // Mehr als 10 verschiedene Werte = kontinuierlich
             
+            console.log(`Spalte ${col}: ${uniqueValues.length} einzigartige Werte, allNumeric=${allNumeric}, hasEnoughVariation=${hasEnoughVariation}`);
+            
             if (allNumeric && hasEnoughVariation) {
                 numericVars.push(col);
+                console.log(`${col} als numerische Variable hinzugefügt`);
             }
         }
     });
     
+    console.log("Finale numerische Variablen:", numericVars);
     return numericVars;
 }
 
@@ -446,15 +473,30 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             console.log("Using result data from context:", isResultData);
             console.log("Kategoriale Variablen:", categoricalVariables);
             console.log("Numerische Variablen:", numericVariables);
+            console.log("Zielvariable:", isZielvariable);
+            console.log("Erste Zeile der Daten:", isResultData[0]);
+            console.log("Verfügbare Spalten:", Object.keys(isResultData[0]));
             
-            // Setze Default-Variablen für Charts nur wenn noch nicht gesetzt
+            // Reset alte Variable-States wenn keine Variablen verfügbar
+            if (categoricalVariables.length === 0) {
+                setVariableA('');
+                setHistogramVariable('');
+            }
+            if (numericVariables.length === 0) {
+                setVariableB('');
+                setBoxplotVariable('');
+            }
+            
+            // Setze Default-Variablen für Charts nur wenn noch nicht gesetzt UND Variablen verfügbar sind
             if (categoricalVariables.length > 0 && !histogramVariable) {
                 setHistogramVariable(categoricalVariables[0]);
                 setVariableA(categoricalVariables[0]);
+                console.log("Setze Histogramm-Variable:", categoricalVariables[0]);
             }
             if (numericVariables.length > 0 && !boxplotVariable) {
                 setBoxplotVariable(numericVariables[0]);
                 setVariableB(numericVariables[0]);
+                console.log("Setze Boxplot-Variable:", numericVariables[0]);
             }
             
             // Berechne Balance-Daten für Pie Chart
@@ -466,7 +508,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             // Aktiviere Variable Selektoren
             setDisableVarSelect(false);
         }
-    }, [isResultData, isSummaryData, histogramVariable, boxplotVariable]); // Entferne binaryVariables und numericVariables
+    }, [isResultData, isSummaryData, categoricalVariables, numericVariables]); // Hinzugefügt für bessere Reaktivität
 
     // Verwende echte Variablennamen anstatt statischer Listen
     let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
