@@ -455,9 +455,22 @@ function calculateBalanceData(summaryData) {
     return { balanced, notBalanced };
 }
 
-function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult }) {
+function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult, isFälleKontrollenGruppenindikator }) {
     const { isResultData, isSummaryData } = useContext(AppContext);
     const [results, setResults] = useState([]);
+    
+    // Bestimme die Zielvariable für Achsenbeschriftung basierend auf Matching-Methode
+    const getTargetVariableForLabels = () => {
+        if (isMatchingMethode === "Exaktes Matching") {
+            return isFälleKontrollenGruppenindikator || isZielvariable;
+        } else if (isMatchingMethode === "Propensity Score" && 
+                  (isAlgorithmus === "nearest" || isAlgorithmus === "Optimal Matching")) {
+            return isZielvariable;
+        }
+        return isZielvariable; // Fallback
+    };
+    
+    const targetVariableForLabels = getTargetVariableForLabels();
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
     const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
@@ -481,6 +494,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             console.log("Kategoriale Variablen:", categoricalVariables);
             console.log("Numerische Variablen:", numericVariables);
             console.log("Zielvariable:", isZielvariable);
+            console.log("Zielvariable für Labels:", targetVariableForLabels);
             console.log("Erste Zeile der Daten:", isResultData[0]);
             console.log("Verfügbare Spalten:", Object.keys(isResultData[0]));
             
@@ -494,17 +508,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 setBoxplotVariable('');
             }
             
-            // Setze Default-Variablen für Charts nur wenn noch nicht gesetzt UND Variablen verfügbar sind
-            if (categoricalVariables.length > 0 && !histogramVariable) {
-                setHistogramVariable(categoricalVariables[0]);
-                setVariableA(categoricalVariables[0]);
-                console.log("Setze Histogramm-Variable:", categoricalVariables[0]);
-            }
-            if (numericVariables.length > 0 && !boxplotVariable) {
-                setBoxplotVariable(numericVariables[0]);
-                setVariableB(numericVariables[0]);
-                console.log("Setze Boxplot-Variable:", numericVariables[0]);
-            }
+            // NICHT mehr automatisch setzen - Nutzer soll bewusst auswählen
+            // Variablen bleiben leer bis der Nutzer auswählt
             
             // Berechne Balance-Daten für Pie Chart
             if (isSummaryData && Array.isArray(isSummaryData)) {
@@ -512,10 +517,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 setPiechart(balanceData.balanced, balanceData.notBalanced, "false");
             }
             
+            // Aktualisiere die Achsenbeschriftungen
+            updateAxisLabels();
+            
             // Aktiviere Variable Selektoren
             setDisableVarSelect(false);
         }
-    }, [isResultData, isSummaryData, categoricalVariables, numericVariables]); // Hinzugefügt für bessere Reaktivität
+    }, [isResultData, isSummaryData, categoricalVariables, numericVariables, targetVariableForLabels]);
 
     // Verwende echte Variablennamen anstatt statischer Listen
     let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
@@ -525,7 +533,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     // Update variable selectors when data changes - use separate effect
     useEffect(() => {
         if (categoricalVariables.length > 0) {
-            setHistoSelector(categoricalVariables);
+            // Füge leeren Eintrag als ersten Eintrag hinzu
+            setHistoSelector(["-", ...categoricalVariables]);
         } else {
             setHistoSelector(["-"]);
         }
@@ -533,7 +542,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     
     useEffect(() => {
         if (numericVariables.length > 0) {
-            setBoxplotSelector(numericVariables);
+            // Füge leeren Eintrag als ersten Eintrag hinzu
+            setBoxplotSelector(["-", ...numericVariables]);
         } else {
             setBoxplotSelector(["-"]);
         }
@@ -542,11 +552,27 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     const [variable_boxplot, setBoxplotSelector] = useState(["-"]);
     const [variable_histo, setHistoSelector] = useState(["-"]);
 
+    // Funktion zum Aktualisieren der Achsenbeschriftungen
+    const updateAxisLabels = () => {
+        // Aktualisiere Textlabels unter den Histogrammen
+        const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
+        const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
+        
+        if (label_variable_zero && label_variable_one) {
+            label_variable_zero.textContent = `${targetVariableForLabels} = 0`;
+            label_variable_one.textContent = `${targetVariableForLabels} = 1`;
+        }
+    };
+
     const selectVariableA = (event) => {
         const selectedVariable = event.target.value;
         
-        if (!selectedVariable) {
-            console.log("Keine Variable ausgewählt");
+        if (!selectedVariable || selectedVariable === "-") {
+            console.log("Keine Variable ausgewählt oder leerer Eintrag");
+            // Leere die Histogramme wenn "-" gewählt wird
+            clearHistograms();
+            setHistogramVariable('');
+            setVariableA('');
             return;
         }
         
@@ -577,8 +603,12 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     const selectVariableB = (event) => {
         const selectedVariable = event.target.value;
         
-        if (!selectedVariable) {
-            console.log("Keine Variable ausgewählt für Boxplot");
+        if (!selectedVariable || selectedVariable === "-") {
+            console.log("Keine Variable ausgewählt für Boxplot oder leerer Eintrag");
+            // Leere die Boxplots wenn "-" gewählt wird
+            clearBoxplots();
+            setBoxplotVariable('');
+            setVariableB('');
             return;
         }
         
@@ -1003,56 +1033,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     };
 
     let updateDiagrams = () => {
-
-        // set histoselector with boolean variables from dataset
-        /*fetch('http://' + ip_django + '/control_selection/boolean_columns', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
-            .then((data) => {
-                // remove target variable from list of variables
-                var newList = new Array();
-                for(var i = 0; i < data.length; i++) {
-                    if (data[i] != isZielvariable) {
-                        newList.push(data[i]);
-                    }
-                }
-                setHistoSelector(newList)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });*/
-
-        // set boxplotselector with numeric variables from dataset
-   /*     fetch('http://' + ip_django + '/control_selection/numeric_columns', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
-            .then((data) => {
-                console.log('Success:', data);
-                setBoxplotSelector(data)
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });*/
-
-
-
         // setPiechart(json[0].count, json[1].count, false);
 
         const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
-        label_variable_zero.textContent = 'ICU_MORT = 0';
+        label_variable_zero.textContent = `${targetVariableForLabels} = 0`;
 
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
-        label_variable_one.textContent = 'ICU_MORT = 1';
+        label_variable_one.textContent = `${targetVariableForLabels} = 1`;
         setDisableVarSelect(false);
 
     };
