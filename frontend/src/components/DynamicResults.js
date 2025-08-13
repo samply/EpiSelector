@@ -204,7 +204,7 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
         // Alle Variablen aus Summary-Daten als potentiell kategoriale Variablen betrachten
         return summaryData
-            .filter(row => row.variable !== targetVariable)
+            .filter(row => row && row.variable && row.variable !== targetVariable)
             .map(row => row.variable);
     }
     
@@ -237,17 +237,22 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
         // Erkenne numerische Variablen anhand der Spaltennamen oder Werte
         return summaryData
             .filter(row => {
+                if (!row || !row.variable || row.variable === targetVariable) {
+                    return false;
+                }
+                
                 const group0Val = parseFloat(row.pre_matching_group_0 || 0);
                 const group1Val = parseFloat(row.pre_matching_group_1 || 0);
+                const variableName = row.variable.toLowerCase();
+                
                 // Numerische Variablen haben typischerweise größere Werte oder sind offensichtlich numerisch
-                return row.variable !== targetVariable && 
-                       (group0Val > 1 || group1Val > 1 || 
-                        row.variable.toLowerCase().includes('age') ||
-                        row.variable.toLowerCase().includes('weight') ||
-                        row.variable.toLowerCase().includes('height') ||
-                        row.variable.toLowerCase().includes('score') ||
-                        row.variable.toLowerCase().includes('bmi') ||
-                        row.variable.toLowerCase().includes('time'));
+                return (group0Val > 1 || group1Val > 1 || 
+                        variableName.includes('age') ||
+                        variableName.includes('weight') ||
+                        variableName.includes('height') ||
+                        variableName.includes('score') ||
+                        variableName.includes('bmi') ||
+                        variableName.includes('time'));
             })
             .map(row => row.variable);
     }
