@@ -202,27 +202,15 @@ function getAvailableVariables(resultData, summaryData) {
 function getBinaryVariables(resultData, summaryData, targetVariable) {
     console.log("getBinaryVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
     
-    // Verwende Summary-Daten wenn verfügbar
-    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        console.log("Verwende Summary-Daten für kategoriale Variablen");
-        // Alle Variablen aus Summary-Daten als potentiell kategoriale Variablen betrachten
-        const result = summaryData
-            .filter(row => row && row.variable && row.variable !== targetVariable)
-            .map(row => row.variable);
-        console.log("Kategoriale Variablen aus Summary:", result);
-        return result;
-    }
-    
+    // IMMER Result-Daten verwenden für bessere Analyse
     if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
-        console.log("Keine Result-Daten verfügbar");
+        console.log("❌ Keine Result-Daten verfügbar für kategoriale Variablen");
         return [];
     }
     
-    console.log("Verwende Result-Daten für kategoriale Variablen");
-    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
+    console.log("✅ Verwende Result-Daten für kategoriale Variablen (bessere Genauigkeit)");
+    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable, 'Matching weight', 'MatchingID'];
     const allColumns = Object.keys(resultData[0]);
-    console.log("Alle Spalten:", allColumns);
-    console.log("Ausgeschlossene Spalten:", excludeColumns);
     
     console.log("🔍 ANALYSE ALLER SPALTEN FÜR KATEGORIALE VARIABLEN:");
     console.log("Verfügbare Spalten:", allColumns);
@@ -272,44 +260,14 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
 function getNumericVariables(resultData, summaryData, targetVariable) {
     console.log("getNumericVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
     
-    // Verwende Summary-Daten wenn verfügbar
-    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        console.log("Verwende Summary-Daten für numerische Variablen");
-        // Erkenne numerische Variablen anhand der Spaltennamen oder Werte
-        const result = summaryData
-            .filter(row => {
-                if (!row || !row.variable || row.variable === targetVariable) {
-                    return false;
-                }
-                
-                const group0Val = parseFloat(row.pre_matching_group_0 || 0);
-                const group1Val = parseFloat(row.pre_matching_group_1 || 0);
-                const variableName = row.variable.toLowerCase();
-                
-                // Numerische Variablen haben typischerweise größere Werte oder sind offensichtlich numerisch
-                const isNumeric = (group0Val > 1 || group1Val > 1 || 
-                        variableName.includes('age') ||
-                        variableName.includes('weight') ||
-                        variableName.includes('height') ||
-                        variableName.includes('score') ||
-                        variableName.includes('bmi') ||
-                        variableName.includes('time'));
-                        
-                console.log(`Variable ${row.variable}: group0=${group0Val}, group1=${group1Val}, isNumeric=${isNumeric}`);
-                return isNumeric;
-            })
-            .map(row => row.variable);
-        console.log("Numerische Variablen aus Summary:", result);
-        return result;
-    }
-    
+    // IMMER Result-Daten verwenden für bessere Analyse
     if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
-        console.log("Keine Result-Daten verfügbar");
+        console.log("❌ Keine Result-Daten verfügbar für numerische Variablen");
         return [];
     }
     
-    console.log("Verwende Result-Daten für numerische Variablen");
-    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
+    console.log("✅ Verwende Result-Daten für numerische Variablen (bessere Genauigkeit)");
+    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable, 'Matching weight', 'MatchingID', 'start', 'end'];
     const allColumns = Object.keys(resultData[0]);
     console.log("📊 ANALYSE ALLER SPALTEN FÜR NUMERISCHE VARIABLEN:");
     console.log("Verfügbare Spalten:", allColumns);
