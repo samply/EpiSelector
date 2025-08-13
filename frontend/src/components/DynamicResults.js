@@ -15,7 +15,7 @@ import * as Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import {useEffect, useState, useContext} from 'react';
+import {useEffect, useState, useContext, useMemo} from 'react';
 import { Panorama, TurnedIn } from '@mui/icons-material';
 import { CardHeader } from "@mui/material";
 import FHSPSOE from "../assets/FHS_PS_OE.json";
@@ -411,10 +411,10 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     const { isResultData, isSummaryData } = useContext(AppContext);
     const [results, setResults] = useState([]);
     
-    // Variablenlisten basierend auf echten Daten
-    const availableVariables = getAvailableVariables(isResultData, isSummaryData);
-    const binaryVariables = getBinaryVariables(isResultData, isSummaryData, isZielvariable);
-    const numericVariables = getNumericVariables(isResultData, isSummaryData, isZielvariable);
+    // Memoize Variablenlisten um endlose Schleifen zu vermeiden
+    const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
+    const binaryVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
+    const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
     
     // Chart selection states
     const [histogramVariable, setHistogramVariable] = useState('');
@@ -426,12 +426,12 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     const [variableB, setVariableB] = React.useState('');
     const [disable_var_select, setDisableVarSelect] = useState(true);
 
-    // Data initialization from context
+    // Data initialization from context - only run when data actually changes
     useEffect(() => {
         if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
             console.log("Using result data from context:", isResultData);
             
-            // Setze Default-Variablen für Charts
+            // Setze Default-Variablen für Charts nur wenn noch nicht gesetzt
             if (binaryVariables.length > 0 && !histogramVariable) {
                 setHistogramVariable(binaryVariables[0]);
                 setVariableA(binaryVariables[0]);
@@ -450,27 +450,29 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             // Aktiviere Variable Selektoren
             setDisableVarSelect(false);
         }
-    }, [isResultData, isSummaryData, binaryVariables, numericVariables]);
+    }, [isResultData, isSummaryData, histogramVariable, boxplotVariable]); // Entferne binaryVariables und numericVariables
 
     // Verwende echte Variablennamen anstatt statischer Listen
     let variablesNamesA = binaryVariables.length > 0 ? binaryVariables : ["Keine binären Variablen verfügbar"];
     let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["Keine numerischen Variablen verfügbar"];
 
 
-    // Update variable selectors when data changes
+    // Update variable selectors when data changes - use separate effect
     useEffect(() => {
         if (binaryVariables.length > 0) {
             setHistoSelector(binaryVariables);
         } else {
             setHistoSelector(["-"]);
         }
-        
+    }, [binaryVariables]);
+    
+    useEffect(() => {
         if (numericVariables.length > 0) {
             setBoxplotSelector(numericVariables);
         } else {
             setBoxplotSelector(["-"]);
         }
-    }, [binaryVariables, numericVariables]);
+    }, [numericVariables]);
 
     const [variable_boxplot, setBoxplotSelector] = useState(["-"]);
     const [variable_histo, setHistoSelector] = useState(["-"]);
