@@ -15,18 +15,16 @@ import * as Highcharts from 'highcharts';
 import HighchartsMore from 'highcharts/highcharts-more';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useContext} from 'react';
 import { Panorama, TurnedIn } from '@mui/icons-material';
 import { CardHeader } from "@mui/material";
 import FHSPSOE from "../assets/FHS_PS_OE.json";
 import FHSPSME from "../assets/FHS_PS_ME.json";
 import FHSEMOT from "../assets/FHS_EM_OT.json";
 import FHSEMMT from "../assets/FHS_EM_MT.json";
+import AppContext from '../AppContext';
 HighchartsMore(Highcharts);
 
-
-
-let disable_var_select = true;
 var json_test_data = require('../assets/test_data.json');
 
 let ip_django = "127.0.0.1:8000";
@@ -183,204 +181,367 @@ function clearPieChart() {
     // setPiechart(0, 0, true);
 }
 
-function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult }) {
-    const [results, setResults] = useState([]);
+// Hilfsfunktionen für die Datenverarbeitung
+function getAvailableVariables(resultData, summaryData) {
+    // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
+    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
+        return summaryData.map(row => row.variable).filter(variable => variable);
+    }
+    
+    if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
+        return [];
+    }
+    
+    // Extrahiere alle Spaltennamen außer Zielvariable und Matching-spezifischen Spalten
+    const excludeColumns = ['subclass', 'weights', 'distance', '_id'];
+    const allColumns = Object.keys(resultData[0]);
+    
+    return allColumns.filter(col => !excludeColumns.includes(col));
+}
 
-    // data
-    useEffect(() => {
-        let data;
-
-        if (isMatchingMethode === "Propensity Score" && isErsetzungToResult === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isErsetzungToResult);
-            console.log(FHSPSOE);
-            data = FHSPSOE;
-            setPiechart(8,0,"false");
-
-
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzungToResult === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isErsetzungToResult);
-            console.log(FHSPSME);
-            setPiechart(8,0,"false");
-
-            data = FHSPSME;
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSetToResult === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSet);
-            console.log(isToleranzBereichSetToResult);
-            console.log(FHSEMOT);
-            data = FHSEMOT;
-            setPiechart(0,0,"false");
-
-        }else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSetToResult === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            console.log(isToleranzBereichSetToResult);
-            console.log(isToleranzBereichSet);
-            console.log(FHSEMMT);
-            data = FHSEMMT;
-            setPiechart(7,0,"false");
-
+function getBinaryVariables(resultData, summaryData, targetVariable) {
+    // Verwende Summary-Daten wenn verfügbar
+    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
+        // In Summary-Daten sind binäre Variablen die mit Werten zwischen 0 und 1
+        return summaryData
+            .filter(row => {
+                const group0Val = parseFloat(row.pre_matching_group_0 || 0);
+                const group1Val = parseFloat(row.pre_matching_group_1 || 0);
+                return (group0Val >= 0 && group0Val <= 1) && (group1Val >= 0 && group1Val <= 1) 
+                       && row.variable !== targetVariable;
+            })
+            .map(row => row.variable);
+    }
+    
+    if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
+        return [];
+    }
+    
+    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
+    const allColumns = Object.keys(resultData[0]);
+    const binaryVars = [];
+    
+    // Prüfe welche Variablen nur 0/1 Werte haben
+    allColumns.forEach(col => {
+        if (!excludeColumns.includes(col)) {
+            const uniqueValues = [...new Set(resultData.map(row => row[col]))];
+            const sortedValues = uniqueValues.sort();
+            
+            // Binäre Variable wenn nur 0 und 1 vorhanden sind
+            if (sortedValues.length === 2 && sortedValues[0] == 0 && sortedValues[1] == 1) {
+                binaryVars.push(col);
+            }
         }
-        setResults(data);
+    });
+    
+    return binaryVars;
+}
 
-    }, [isMatchingMethode, isErsetzung, isToleranzBereichSetToResult]) ;
+function getNumericVariables(resultData, summaryData, targetVariable) {
+    // Verwende Summary-Daten wenn verfügbar
+    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
+        // In Summary-Daten sind numerische Variablen die mit Werten > 1
+        return summaryData
+            .filter(row => {
+                const group0Val = parseFloat(row.pre_matching_group_0 || 0);
+                const group1Val = parseFloat(row.pre_matching_group_1 || 0);
+                return (group0Val > 1 || group1Val > 1) && row.variable !== targetVariable;
+            })
+            .map(row => row.variable);
+    }
+    
+    if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
+        return [];
+    }
+    
+    const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable];
+    const allColumns = Object.keys(resultData[0]);
+    const numericVars = [];
+    
+    // Prüfe welche Variablen numerisch sind (mehr als 2 verschiedene Werte)
+    allColumns.forEach(col => {
+        if (!excludeColumns.includes(col)) {
+            const uniqueValues = [...new Set(resultData.map(row => row[col]))];
+            
+            // Numerische Variable wenn mehr als 2 Werte oder kontinuierliche Werte
+            if (uniqueValues.length > 2) {
+                // Prüfe ob alle Werte numerisch sind
+                const allNumeric = resultData.every(row => !isNaN(parseFloat(row[col])));
+                if (allNumeric) {
+                    numericVars.push(col);
+                }
+            }
+        }
+    });
+    
+    return numericVars;
+}
 
-    let variablesNamesA = [
-        "Variable A",
-        "Variable B",
-        "Variable C",
-        "Variable D",
-        "Variable E",
-        "Variable F",
-        "Variable G",
-        "Variable H",
-        "Variable I",
-        "Variable J"
+function calculateHistogramData(resultData, variable, targetVariable) {
+    if (!resultData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
+    
+    // Für Histogramme brauchen wir binäre Daten
+    const group0Data = resultData.filter(row => row[targetVariable] == 0);
+    const group1Data = resultData.filter(row => row[targetVariable] == 1);
+    
+    // Berechne Häufigkeiten für jede Gruppe
+    const value0Group0 = group0Data.filter(row => row[variable] == 0).length;
+    const value1Group0 = group0Data.filter(row => row[variable] == 1).length;
+    const value0Group1 = group1Data.filter(row => row[variable] == 0).length;
+    const value1Group1 = group1Data.filter(row => row[variable] == 1).length;
+    
+    // Konvertiere zu Prozenten
+    const total0 = group0Data.length;
+    const total1 = group1Data.length;
+    
+    const pre_match_data = [
+        total0 > 0 ? (value0Group0 / total0) * 100 : 0,
+        total0 > 0 ? (value1Group0 / total0) * 100 : 0,
+        total1 > 0 ? (value0Group1 / total1) * 100 : 0,
+        total1 > 0 ? (value1Group1 / total1) * 100 : 0
     ];
+    
+    // Für Post-Matching verwenden wir die gleichen Daten (da es bereits gematcht ist)
+    const post_match_data = pre_match_data;
+    
+    return {
+        pre_match_data,
+        post_match_data,
+        x_axis_labels: ['0', '1']
+    };
+}
+
+function calculateHistogramDataFromSummary(summaryData, variable, targetVariable) {
+    if (!summaryData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
+    
+    // Finde die Zeile für die gewählte Variable
+    const variableRow = summaryData.find(row => row.variable === variable);
+    if (!variableRow) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
+    
+    // Extrahiere Pre- und Post-Matching Werte für beide Gruppen
+    const preGroup0 = parseFloat(variableRow.pre_matching_group_0 || 0) * 100;
+    const preGroup1 = parseFloat(variableRow.pre_matching_group_1 || 0) * 100;
+    const postGroup0 = parseFloat(variableRow.post_matching_group_0 || 0) * 100;
+    const postGroup1 = parseFloat(variableRow.post_matching_group_1 || 0) * 100;
+    
+    return {
+        pre_match_data: [100 - preGroup0, preGroup0, 100 - preGroup1, preGroup1],
+        post_match_data: [100 - postGroup0, postGroup0, 100 - postGroup1, postGroup1],
+        x_axis_labels: ['0', '1']
+    };
+}
+
+function calculateBoxplotData(resultData, variable, targetVariable) {
+    if (!resultData || !variable) return { pre_matching: {}, post_matching: {} };
+    
+    const group0Data = resultData.filter(row => row[targetVariable] == 0).map(row => parseFloat(row[variable]));
+    const group1Data = resultData.filter(row => row[targetVariable] == 1).map(row => parseFloat(row[variable]));
+    
+    function calculateBoxplotStats(data) {
+        if (data.length === 0) return [0, 0, 0, 0, 0];
+        
+        data.sort((a, b) => a - b);
+        const q1 = data[Math.floor(data.length * 0.25)];
+        const median = data[Math.floor(data.length * 0.5)];
+        const q3 = data[Math.floor(data.length * 0.75)];
+        const min = data[0];
+        const max = data[data.length - 1];
+        
+        return [min, q1, median, q3, max];
+    }
+    
+    return {
+        pre_matching: {
+            boxplot_one: calculateBoxplotStats(group0Data),
+            boxplot_two: calculateBoxplotStats(group1Data)
+        },
+        post_matching: {
+            boxplot_one: calculateBoxplotStats(group0Data),
+            boxplot_two: calculateBoxplotStats(group1Data)
+        }
+    };
+}
+
+function calculateBoxplotDataFromSummary(summaryData, variable, targetVariable) {
+    if (!summaryData || !variable) return { pre_matching: {}, post_matching: {} };
+    
+    // Finde die Zeile für die gewählte Variable
+    const variableRow = summaryData.find(row => row.variable === variable);
+    if (!variableRow) return { pre_matching: {}, post_matching: {} };
+    
+    // Extrahiere Mittelwerte (für vereinfachte Boxplots verwenden wir Mittelwert als Median)
+    const preGroup0Mean = parseFloat(variableRow.pre_matching_group_0 || 0);
+    const preGroup1Mean = parseFloat(variableRow.pre_matching_group_1 || 0);
+    const postGroup0Mean = parseFloat(variableRow.post_matching_group_0 || 0);
+    const postGroup1Mean = parseFloat(variableRow.post_matching_group_1 || 0);
+    
+    // Vereinfachte Boxplot-Daten mit Mittelwert als alle Quartile (da wir keine Rohdaten haben)
+    const createSimpleBoxplot = (mean) => [mean * 0.9, mean * 0.95, mean, mean * 1.05, mean * 1.1];
+    
+    return {
+        pre_matching: {
+            boxplot_one: createSimpleBoxplot(preGroup0Mean),
+            boxplot_two: createSimpleBoxplot(preGroup1Mean)
+        },
+        post_matching: {
+            boxplot_one: createSimpleBoxplot(postGroup0Mean),
+            boxplot_two: createSimpleBoxplot(postGroup1Mean)
+        }
+    };
+}
+
+function calculateBalanceData(summaryData) {
+    if (!summaryData || !Array.isArray(summaryData)) return { balanced: 0, notBalanced: 0 };
+    
+    let balanced = 0;
+    let notBalanced = 0;
+    
+    summaryData.forEach(item => {
+        if (item.balance_covariats_post_matching === "Balanced") {
+            balanced++;
+        } else if (item.balance_covariats_post_matching === "Not Balanced") {
+            notBalanced++;
+        }
+    });
+    
+    return { balanced, notBalanced };
+}
+
+function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult }) {
+    const { isResultData, isSummaryData } = useContext(AppContext);
+    const [results, setResults] = useState([]);
+    
+    // Variablenlisten basierend auf echten Daten
+    const availableVariables = getAvailableVariables(isResultData, isSummaryData);
+    const binaryVariables = getBinaryVariables(isResultData, isSummaryData, isZielvariable);
+    const numericVariables = getNumericVariables(isResultData, isSummaryData, isZielvariable);
+    
+    // Chart selection states
+    const [histogramVariable, setHistogramVariable] = useState('');
+    const [boxplotVariable, setBoxplotVariable] = useState('');
+    const [pieVariable, setPieVariable] = useState('');
+    
+    // Sync old variable states with new ones
+    const [variableA, setVariableA] = React.useState('');
+    const [variableB, setVariableB] = React.useState('');
+    const [disable_var_select, setDisableVarSelect] = useState(true);
+
+    // Data initialization from context
+    useEffect(() => {
+        if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
+            console.log("Using result data from context:", isResultData);
+            
+            // Setze Default-Variablen für Charts
+            if (binaryVariables.length > 0 && !histogramVariable) {
+                setHistogramVariable(binaryVariables[0]);
+                setVariableA(binaryVariables[0]);
+            }
+            if (numericVariables.length > 0 && !boxplotVariable) {
+                setBoxplotVariable(numericVariables[0]);
+                setVariableB(numericVariables[0]);
+            }
+            
+            // Berechne Balance-Daten für Pie Chart
+            if (isSummaryData && Array.isArray(isSummaryData)) {
+                const balanceData = calculateBalanceData(isSummaryData);
+                setPiechart(balanceData.balanced, balanceData.notBalanced, "false");
+            }
+            
+            // Aktiviere Variable Selektoren
+            setDisableVarSelect(false);
+        }
+    }, [isResultData, isSummaryData, binaryVariables, numericVariables]);
+
+    // Verwende echte Variablennamen anstatt statischer Listen
+    let variablesNamesA = binaryVariables.length > 0 ? binaryVariables : ["Keine binären Variablen verfügbar"];
+    let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["Keine numerischen Variablen verfügbar"];
 
 
-    let variablesNamesB = [
-        "Variable K",
-        "Variable L",
-        "Variable M",
-        "Variable N",
-        "Variable O",
-        "Variable P",
-        "Variable Q",
-        "Variable R",
-        "Variable S",
-        "Variable T"
-    ];
-
+    // Update variable selectors when data changes
+    useEffect(() => {
+        if (binaryVariables.length > 0) {
+            setHistoSelector(binaryVariables);
+        } else {
+            setHistoSelector(["-"]);
+        }
+        
+        if (numericVariables.length > 0) {
+            setBoxplotSelector(numericVariables);
+        } else {
+            setBoxplotSelector(["-"]);
+        }
+    }, [binaryVariables, numericVariables]);
 
     const [variable_boxplot, setBoxplotSelector] = useState(["-"]);
     const [variable_histo, setHistoSelector] = useState(["-"]);
 
-
-
-
-    const [variableA, setVariableA] = React.useState('');
-
     const selectVariableA = (event) => {
-
-        var temp_string = "["
-        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
-            console.log(isAllKontrollvariablen[i])
-            console.log(isAllKontrollvariablen[i].var)
-            temp_string += isAllKontrollvariablen[i].var + ","
+        const selectedVariable = event.target.value;
+        
+        if (!selectedVariable) {
+            console.log("Keine Variable ausgewählt");
+            return;
         }
-        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
-        temp_string += "]"
-
-        var param = {
-            groupindicator: isZielvariable,
-            controllvariables: temp_string,
-            mmethod: isAlgorithmus,
-            mdistance: "glm",
-            mreplace: isErsetzung,
-            mratio: isVerhältnis,
-            mcaliper: isÜbereinstimmungswert,
-            controllvariable: event.target.value
-
-            // groupindicator: "icu_mort",
-            // controllvariables: "[age,sex]",
-            // mmethod: "exact",
-            // mdistance: "mahalanobis",
-            // mreplace: isErsetzung,
-            // mratio: 1,
-            // mcaliper: 0.2,
-            // controllvariable: event.target.value
-        };
-
-        console.log("Histogramm-Aufruf wird abgeschickt mit params:");
-        console.log(param);
-
-        // (B) BUILD URL
-        var url = new URL("http://" + ip_django + "/control_selection/histogram");
-        for (let k in param) {
-            url.searchParams.append(k, param[k]);
+        
+        // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
+        let histogramData;
+        if (isSummaryData && Array.isArray(isSummaryData) && isSummaryData.length > 0) {
+            histogramData = calculateHistogramDataFromSummary(isSummaryData, selectedVariable, isZielvariable);
+            console.log("Verwende Summary-Daten für Histogramm:", histogramData);
+        } else if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
+            histogramData = calculateHistogramData(isResultData, selectedVariable, isZielvariable);
+            console.log("Verwende Result-Daten für Histogramm:", histogramData);
+        } else {
+            console.log("Keine Daten verfügbar für Histogramm");
+            return;
         }
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
-            .then((json) => {
-                console.log("Histogramm-Aufruf wurde abgeschickt")
-                console.log(json)
-
-                console.log(json.post_match_data)
-                console.log(json.pre_match_data)
-                console.log(json.x_axis_labels)
-                setHistograms(json.pre_match_data, json.post_match_data, '', json.x_axis_labels);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        setVariableA(event.target.value);
-
+        
+        console.log("Histogramm-Daten berechnet:", histogramData);
+        console.log("Pre-match data:", histogramData.pre_match_data);
+        console.log("Post-match data:", histogramData.post_match_data);
+        console.log("X-axis labels:", histogramData.x_axis_labels);
+        
+        setHistograms(histogramData.pre_match_data, histogramData.post_match_data, '', histogramData.x_axis_labels);
+        setHistogramVariable(selectedVariable);
+        setVariableA(selectedVariable);
     };
 
 
-    const [variableB, setVariableB] = React.useState('');
-
     const selectVariableB = (event) => {
-
-
-
-        var temp_string = "["
-        for (var i = 0; i <= isAllKontrollvariablen.length - 2; i++) {
-            console.log(isAllKontrollvariablen[i])
-            console.log(isAllKontrollvariablen[i].var)
-            temp_string += isAllKontrollvariablen[i].var + ","
+        const selectedVariable = event.target.value;
+        
+        if (!selectedVariable) {
+            console.log("Keine Variable ausgewählt für Boxplot");
+            return;
         }
-        temp_string += isAllKontrollvariablen[isAllKontrollvariablen.length - 1].var
-        temp_string += "]"
-
-        var param = {
-            groupindicator: isZielvariable,
-            controllvariables: temp_string,
-            mmethod: isAlgorithmus,
-            mdistance: "glm",
-            mreplace: isErsetzung,
-            mratio: isVerhältnis,
-            mcaliper: isÜbereinstimmungswert,
-            controllvariable: event.target.value
-        };
-
-        // (B) BUILD URL
-        var url = new URL("http://" + ip_django + "/control_selection/boxplot");
-        for (let k in param) {
-            url.searchParams.append(k, param[k]);
+        
+        // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
+        let boxplotData;
+        if (isSummaryData && Array.isArray(isSummaryData) && isSummaryData.length > 0) {
+            boxplotData = calculateBoxplotDataFromSummary(isSummaryData, selectedVariable, isZielvariable);
+            console.log("Verwende Summary-Daten für Boxplot:", boxplotData);
+        } else if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
+            boxplotData = calculateBoxplotData(isResultData, selectedVariable, isZielvariable);
+            console.log("Verwende Result-Daten für Boxplot:", boxplotData);
+        } else {
+            console.log("Keine Daten verfügbar für Boxplot");
+            return;
         }
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(isVollständigeDatei)
-        }).then((response) => response.json())
-            .then((json) => {
-                console.log("HALLLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO" + json.pre_matching.boxplot_one)
-                setBoxplots(event.target.value, 'icu_mort', [json.pre_matching.boxplot_one,json.pre_matching.boxplot_two], [], [json.post_matching.boxplot_one,json.post_matching.boxplot_two], []);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        setVariableB(event.target.value);
+        
+        console.log("Boxplot-Daten berechnet:", boxplotData);
+        console.log("Pre-matching boxplots:", boxplotData.pre_matching);
+        console.log("Post-matching boxplots:", boxplotData.post_matching);
+        
+        setBoxplots(
+            selectedVariable, 
+            isZielvariable, 
+            [boxplotData.pre_matching.boxplot_one, boxplotData.pre_matching.boxplot_two], 
+            [], 
+            [boxplotData.post_matching.boxplot_one, boxplotData.post_matching.boxplot_two], 
+            []
+        );
+        setBoxplotVariable(selectedVariable);
+        setVariableB(selectedVariable);
     };
 
 
@@ -825,7 +986,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
         label_variable_one.textContent = 'ICU_MORT = 1';
-        disable_var_select = false;
+        setDisableVarSelect(false);
 
     };
 
@@ -833,7 +994,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         clearBoxplots();
         clearHistograms();
         clearPieChart();
-        disable_var_select = true;
+        setDisableVarSelect(true);
         setHistoSelector([""]);
         setBoxplotSelector([""]);
         setVariableA("");
@@ -869,7 +1030,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                             <FormControl sx={{ m: 0, minWidth: "100%" }} disabled={disable_var_select} >
                                 <Select
                                     sx={{ width: "100%", height: 25, fontSize: 15 }}
-                                    isDisabled={true}
                                     displayEmpty
                                     renderValue={variableA !== "" ? undefined : () => "-"}
                                     value={variableA}
