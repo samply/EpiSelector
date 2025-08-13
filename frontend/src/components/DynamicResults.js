@@ -202,13 +202,14 @@ function getAvailableVariables(resultData, summaryData) {
 function getBinaryVariables(resultData, summaryData, targetVariable) {
     // Verwende Summary-Daten wenn verfügbar
     if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        // In Summary-Daten sind binäre Variablen die mit Werten zwischen 0 und 1
+        // In Summary-Daten sind binäre Variablen die mit Werten zwischen 0 und 1 (Proportionen)
+        // oder kategoriale Variablen mit genau 2 Ausprägungen
         return summaryData
             .filter(row => {
                 const group0Val = parseFloat(row.pre_matching_group_0 || 0);
                 const group1Val = parseFloat(row.pre_matching_group_1 || 0);
-                return (group0Val >= 0 && group0Val <= 1) && (group1Val >= 0 && group1Val <= 1) 
-                       && row.variable !== targetVariable;
+                // Akzeptiere sowohl Proportionen (0-1) als auch andere binäre Werte
+                return row.variable !== targetVariable;
             })
             .map(row => row.variable);
     }
@@ -221,14 +222,14 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     const allColumns = Object.keys(resultData[0]);
     const binaryVars = [];
     
-    // Prüfe welche Variablen nur 0/1 Werte haben
+    // Prüfe welche Variablen genau 2 verschiedene Ausprägungen haben
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
             const uniqueValues = [...new Set(resultData.map(row => row[col]))];
-            const sortedValues = uniqueValues.sort();
             
-            // Binäre Variable wenn nur 0 und 1 vorhanden sind
-            if (sortedValues.length === 2 && sortedValues[0] == 0 && sortedValues[1] == 1) {
+            // Binäre Variable wenn genau 2 verschiedene Werte vorhanden sind
+            // (unabhängig davon ob es 0/1, m/w, ja/nein, etc. ist)
+            if (uniqueValues.length === 2) {
                 binaryVars.push(col);
             }
         }
@@ -280,25 +281,33 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
 function calculateHistogramData(resultData, variable, targetVariable) {
     if (!resultData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
     
-    // Für Histogramme brauchen wir binäre Daten
+    // Für Histogramme brauchen wir binäre Daten - finde die beiden Ausprägungen
+    const uniqueValues = [...new Set(resultData.map(row => row[variable]))];
+    if (uniqueValues.length !== 2) {
+        console.warn(`Variable ${variable} ist nicht binär - hat ${uniqueValues.length} Ausprägungen`);
+        return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
+    }
+    
+    const [value1, value2] = uniqueValues.sort();
+    
     const group0Data = resultData.filter(row => row[targetVariable] == 0);
     const group1Data = resultData.filter(row => row[targetVariable] == 1);
     
-    // Berechne Häufigkeiten für jede Gruppe
-    const value0Group0 = group0Data.filter(row => row[variable] == 0).length;
-    const value1Group0 = group0Data.filter(row => row[variable] == 1).length;
-    const value0Group1 = group1Data.filter(row => row[variable] == 0).length;
-    const value1Group1 = group1Data.filter(row => row[variable] == 1).length;
+    // Berechne Häufigkeiten für jede Gruppe und jeden Wert
+    const value1Group0 = group0Data.filter(row => row[variable] == value1).length;
+    const value2Group0 = group0Data.filter(row => row[variable] == value2).length;
+    const value1Group1 = group1Data.filter(row => row[variable] == value1).length;
+    const value2Group1 = group1Data.filter(row => row[variable] == value2).length;
     
     // Konvertiere zu Prozenten
     const total0 = group0Data.length;
     const total1 = group1Data.length;
     
     const pre_match_data = [
-        total0 > 0 ? (value0Group0 / total0) * 100 : 0,
         total0 > 0 ? (value1Group0 / total0) * 100 : 0,
-        total1 > 0 ? (value0Group1 / total1) * 100 : 0,
-        total1 > 0 ? (value1Group1 / total1) * 100 : 0
+        total0 > 0 ? (value2Group0 / total0) * 100 : 0,
+        total1 > 0 ? (value1Group1 / total1) * 100 : 0,
+        total1 > 0 ? (value2Group1 / total1) * 100 : 0
     ];
     
     // Für Post-Matching verwenden wir die gleichen Daten (da es bereits gematcht ist)
@@ -307,7 +316,7 @@ function calculateHistogramData(resultData, variable, targetVariable) {
     return {
         pre_match_data,
         post_match_data,
-        x_axis_labels: ['0', '1']
+        x_axis_labels: [String(value1), String(value2)]
     };
 }
 
