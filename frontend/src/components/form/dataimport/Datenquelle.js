@@ -97,7 +97,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                                 opacity: isActiveDRE || isDatenquelle === "DRE" ? 1 : 0.5,
                             }}
                         >
-                            DRE
+                            External source
                         </Box>
 
                         </FormGroup>
