@@ -26,7 +26,7 @@ import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
 
 function Dataexport() {
-    const { isSummaryData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
+    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState([]);
 
@@ -118,6 +118,53 @@ function Dataexport() {
         newDoc.save(`matchingprotokoll${dateStr}.pdf`);
     };
 
+    const downloadCSV = () => {
+        // Prüfe ob Result-Daten verfügbar sind
+        if (!isResultData || !Array.isArray(isResultData) || isResultData.length === 0) {
+            alert("Fehler: Keine Result-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            return;
+        }
+        
+        console.log("CSV Export - isResultData:", isResultData);
+        
+        // CSV Header erstellen - verwende die Keys der ersten Zeile
+        const headers = Object.keys(isResultData[0]);
+        
+        // CSV Content erstellen
+        let csvContent = headers.join(',') + '\n';
+        
+        // Datenzeilen hinzufügen
+        isResultData.forEach(row => {
+            const values = headers.map(header => {
+                let value = row[header];
+                // Handle special characters and quotes in CSV
+                if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                    value = '"' + value.replace(/"/g, '""') + '"';
+                }
+                return value;
+            });
+            csvContent += values.join(',') + '\n';
+        });
+        
+        // CSV-Datei erstellen und herunterladen
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            
+            const date = new Date().toString().split(" ");
+            const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+            link.setAttribute('download', `matching_datensatz_${dateStr}.csv`);
+            
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
     useEffect(() => {
         let data;
 
@@ -176,8 +223,8 @@ function Dataexport() {
                         <Button onClick={() => Matchingprotokoll()} style={{ flexFlow: "column" }}>
                             <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen
                         </Button>
-                        <Button disabled style={{ flexFlow: "column", color: "grey" }}>
-                            <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Daten in DRE speichern
+                        <Button onClick={() => downloadCSV()} style={{ flexFlow: "column" }}>
+                            <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Datensatz <br /> herunterladen
                         </Button>
                         <Button disabled style={{ flexFlow: "column", color: "grey" }}>
                             <DashboardIcon sx={{ fontSize: "xxx-large" }} />Maske speichern

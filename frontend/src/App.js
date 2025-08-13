@@ -66,10 +66,11 @@ function App() {
     const [isToleranzBereich, setToleranzBereich] = useState('FALSE');
     const [isErgebnisse, setErgebnisse] = useState({});
     const [isSummaryData, setSummaryData] = useState(null);
+    const [isResultData, setResultData] = useState(null);
 
 
     return (
-        <AppContext.Provider value={{setErgebnisse, isErgebnisse, setSummaryData, isSummaryData, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
+        <AppContext.Provider value={{setErgebnisse, isErgebnisse, setSummaryData, isSummaryData, setResultData, isResultData, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
         <div className="App">
             <Router>
                 {/*Kopfzeile*/}

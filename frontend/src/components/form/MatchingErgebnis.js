@@ -29,7 +29,7 @@ import Zielvariable from './Zielvariable';
 
 
 function MatchingErgebnis() {
-    const { setErgebnisse, setSummaryData: setGlobalSummaryData, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
+    const { setErgebnisse, setSummaryData: setGlobalSummaryData, setResultData: setGlobalResultData, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
     // Transform arrays to comma-separated strings once
     const allMatchingvariablenString = Array.isArray(isAllMatchingvariablen) ? isAllMatchingvariablen.map(item => {
@@ -319,7 +319,7 @@ function MatchingErgebnis() {
                 .then(result => {
                     console.log("Antwort vom Server:", result);
                     setResultData(result);
-                    setErgebnisse(result); // Speichere die Daten im AppContext für Dataexport
+                    setGlobalResultData(result); // Speichere die Result-Daten auch im globalen Context
                     setIsLoading(false);
                 })
                 .catch(error => {
