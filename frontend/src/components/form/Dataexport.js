@@ -28,7 +28,7 @@ import { useAuth } from '../../context/AuthContext';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 function Dataexport() {
-    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz } = useContext(AppContext);
+    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen } = useContext(AppContext);
     const { user, isAuthenticated, saveMatchingProcess } = useAuth();
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState([]);
@@ -201,7 +201,17 @@ function Dataexport() {
                     processData.targetVariable = isZielvariable;
                 }
                 if (isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen") {
-                    processData.controlVariables = Array.isArray(isKontrollvariablen) ? isKontrollvariablen : [isKontrollvariablen];
+                    // Verwende isAllKontrollvariablen für die tatsächlichen Variablennamen
+                    const variables = isAllKontrollvariablen || isKontrollvariablen;
+                    if (Array.isArray(variables)) {
+                        processData.controlVariables = variables.map(variable => 
+                            typeof variable === 'object' && variable !== null 
+                                ? variable.var || variable.name || variable.label || variable.text || variable
+                                : variable
+                        ).filter(name => name);
+                    } else {
+                        processData.controlVariables = [variables];
+                    }
                 }
                 if (isVerhältnis && isVerhältnis !== "defaultVerhältnis") {
                     processData.ratio = isVerhältnis;
@@ -398,8 +408,29 @@ function Dataexport() {
                             {isZielvariable && isZielvariable !== "defaultZielvariable" && (
                                 <>• Zielvariable: {isZielvariable}<br/></>
                             )}
-                            {isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen" && (
-                                <>• Kontrollvariablen: {Array.isArray(isKontrollvariablen) ? isKontrollvariablen.length : isKontrollvariablen} Variable(n)<br/></>
+                            {isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen" && isKontrollvariablen.length > 0 && (
+                                <>• Kontrollvariablen: {
+                                    (() => {
+                                        // Verwende isAllKontrollvariablen für die tatsächlichen Variablennamen
+                                        const variables = isAllKontrollvariablen || isKontrollvariablen;
+                                        console.log('DEBUG variables:', variables, 'Type:', typeof variables, 'IsArray:', Array.isArray(variables));
+                                        
+                                        if (Array.isArray(variables)) {
+                                            return variables.map(variable => 
+                                                typeof variable === 'object' && variable !== null 
+                                                    ? variable.var || variable.name || variable.label || variable.text || variable
+                                                    : variable
+                                            ).filter(name => name).join(', ');
+                                        }
+                                        
+                                        // Falls es ein String ist der "X Kontrollvariablen" enthält, zeige Fallback
+                                        if (typeof variables === 'string' && variables.includes('Kontrollvariablen')) {
+                                            return 'Kontrollvariablen ausgewählt (Details nicht verfügbar)';
+                                        }
+                                        
+                                        return variables;
+                                    })()
+                                }<br/></>
                             )}
                             {isVerhältnis && isVerhältnis !== "defaultVerhältnis" && (
                                 <>• Verhältnis: 1:{isVerhältnis}<br/></>
