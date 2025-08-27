@@ -8,6 +8,8 @@ import requests as r
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import SavedRRequest
+from django.http import JsonResponse
+from datetime import datetime
 
 
 
@@ -227,6 +229,115 @@ def delete_request(request, pk):
         return Response({'message': 'Eintrag erfolgreich gelöscht.'}, status=status.HTTP_200_OK)
     except SavedRRequest.DoesNotExist:
         return Response({'error': 'Request not found'}, status=status.HTTP_404_NOT_FOUND)
+
+
+# Get user's saved processes for profile page
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_saved_processes(request, user_id):
+    """Get all saved matching processes for a specific user"""
+    if request.user.id != user_id and not request.user.is_staff:
+        return Response({'error': 'Zugriff verweigert.'}, status=status.HTTP_403_FORBIDDEN)
+    
+    try:
+        saved_processes = SavedRRequest.objects.filter(user_id=user_id).order_by('-created_at')
+        
+        processes_data = []
+        for process in saved_processes:
+            # Convert model data to the format expected by frontend
+            process_data = {
+                'id': process.id,
+                'name': f"{process.mmethod} - {process.groupindicator}" if process.groupindicator else f"Matching {process.id}",
+                'created_at': process.created_at.isoformat() if process.created_at else None,
+                'matching_method': process.mmethod or 'Unbekannt',
+                'algorithm': process.mdistance or 'nearest',
+                'target_variable': process.groupindicator or 'Unbekannt',
+                'control_variables': process.controllvariables or [],
+                'result_count': estimate_result_count(process),
+                'status': 'completed'  # For now, assume all saved processes are completed
+            }
+            processes_data.append(process_data)
+        
+        return Response(processes_data, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response({'error': f'Fehler beim Laden der Daten: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+def estimate_result_count(process):
+    """Estimate result count based on saved data"""
+    try:
+        # This is a simple estimation - in a real implementation you might parse the dataset_json
+        # or store the actual result count as a separate field
+        if process.dataset_json:
+            # Simple estimation based on ratio and method
+            base_count = 100
+            if process.mratio:
+                base_count *= process.mratio
+            return base_count
+        return 0
+    except:
+        return 0
+
+
+# Save a new matching process
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_matching_process(request):
+    """Save a new matching process with results"""
+    try:
+        data = request.data
+        
+        # Create new SavedRRequest
+        saved_request = SavedRRequest.objects.create(
+            user=request.user,
+            groupindicator=data.get('groupindicator'),
+            controllvariables=data.get('controllvariables', []),
+            mmethod=data.get('mmethod'),
+            mdistance=data.get('mdistance'),
+            mreplace=data.get('mreplace', False),
+            mratio=data.get('mratio', 1),
+            mcaliper=data.get('mcaliper'),
+            mcalipervariables=data.get('mcalipervariables'),
+            dataset_json=data.get('dataset_json', '{}')
+        )
+        
+        return Response({
+            'id': saved_request.id,
+            'message': 'Matching-Prozess erfolgreich gespeichert.'
+        }, status=status.HTTP_201_CREATED)
+        
+    except Exception as e:
+        return Response({
+            'error': f'Fehler beim Speichern: {str(e)}'
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# Download results for a saved process
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def download_process_results(request, process_id):
+    """Download results for a saved process as CSV"""
+    try:
+        saved_process = SavedRRequest.objects.get(id=process_id, user=request.user)
+        
+        # In a real implementation, you would generate/retrieve the actual CSV data
+        # For now, return a placeholder response
+        response = HttpResponse(
+            content_type='text/csv',
+            headers={'Content-Disposition': f'attachment; filename="matching_results_{process_id}.csv"'},
+        )
+        
+        # Placeholder CSV content
+        csv_content = "ID,Group,Variable1,Variable2\n1,Treatment,Value1,Value2\n2,Control,Value3,Value4\n"
+        response.write(csv_content)
+        
+        return response
+        
+    except SavedRRequest.DoesNotExist:
+        return Response({'error': 'Prozess nicht gefunden.'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': f'Download fehlgeschlagen: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

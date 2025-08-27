@@ -24,6 +24,9 @@ import { useState } from "react";
 import Foot from "./components/Foot";
 import AppContext from './AppContext';
 import DynamicResultsBackup from "./components/DynamicResultsBackup";
+import { AuthProvider } from "./context/AuthContext";
+import ProfilePage from "./pages/ProfilePage";
+import DemoInfo from "./components/DemoInfo";
 
 function App() {
 
@@ -70,54 +73,56 @@ function App() {
 
 
     return (
-        <AppContext.Provider value={{setErgebnisse, isErgebnisse, setSummaryData, isSummaryData, setResultData, isResultData, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
-        <div className="App">
-            <Router>
-                {/*Kopfzeile*/}
-                <TopNav />
-                {/*alles unter der Kopfzeile*/}
-                <div className="Main">
-                    {/*Navigations-Container*/}
-                    <div className="LeftContainer">
-                        <NavB isClickedMV={isClickedMV}
-                            setClickedMV={setClickedMV}
-                            isClickedKV={isClickedKV}
-                            setClickedKV={setClickedKV}
-                            setWorkflow={setWorkflow}
-                            isDatenquelle={isDatenquelle}
-                            isDatei={isDatei}
-                            isMatchingMethode={isMatchingMethode}
-                            isZielvariable={isZielvariable}
-                            isKontrollvariablen={isKontrollvariablen}
-                            isMatchingvariablen={isMatchingvariablen}
-                            isMatchingtoleranz={isMatchingtoleranz}
-                            isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
-                            isVerhältnis={isVerhältnis}
-                            isVerhältnisNav={isVerhältnisNav}
-                            isScoreMethode={isScoreMethode}
-                            isScoreMethodeNav={isScoreMehodeNav}
-                            isAlgorithmus={isAlgorithmus}
-                            isAlgorithmusNav={isAlgorithmusNav}
-                            isErsetzung={isErsetzung}
-                            isErsetzungNav={isErsetzungNav}
-                            isÜbereinstimmungswert={isÜbereinstimmungswert}
-                            isMatchingtoleranzChip={isMatchingtoleranzChip}
-                            isFKChip={isFKChip}
-                            isAllKontrollvariablen={isAllKontrollvariablen}
-                            isAllMatchingvariablen={isAllMatchingvariablen}
-                        />
-                    </div>
-                    {/*Fragebogen und Graphische-Ergebnisse*/}
-                    <div className="MiddleContainer">
+        <AuthProvider>
+            <AppContext.Provider value={{setErgebnisse, isErgebnisse, setSummaryData, isSummaryData, setResultData, isResultData, setMatchingMethode, isMatchingMethode, isVollständigeDatei, setVollständigeDatei, setWorkflow, setDateiSpaltenNamen, setDatei, isDatei, setBeobachtungen, setOnlyBinaryColumns, setDatenquelle, setZielvariable, setKontrollvariablen, isKontrollvariablen, setVerhältnis, isVerhältnis, setScoreMethode, isScoreMethode, setAlgorithmus, isAlgorithmus, setErsetzung, setÜbereinstimmungswert, isÜbereinstimmungswert, setDisclaimer, isAllKontrollvariablen, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, isErsetzung, isToleranzBereichSet, setToleranzBereich, isToleranzBereich, isMatchingtoleranz, isAllMatchingvariablen, isMatchingvariablen}}>
+            <div className="App">
+                <Router>
+                    {/*Kopfzeile*/}
+                    <TopNav />
+                    {/*alles unter der Kopfzeile*/}
+                    <div className="Main">
+                        {/*Navigations-Container*/}
+                        <div className="LeftContainer">
+                            <NavB isClickedMV={isClickedMV}
+                                setClickedMV={setClickedMV}
+                                isClickedKV={isClickedKV}
+                                setClickedKV={setClickedKV}
+                                setWorkflow={setWorkflow}
+                                isDatenquelle={isDatenquelle}
+                                isDatei={isDatei}
+                                isMatchingMethode={isMatchingMethode}
+                                isZielvariable={isZielvariable}
+                                isKontrollvariablen={isKontrollvariablen}
+                                isMatchingvariablen={isMatchingvariablen}
+                                isMatchingtoleranz={isMatchingtoleranz}
+                                isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}
+                                isVerhältnis={isVerhältnis}
+                                isVerhältnisNav={isVerhältnisNav}
+                                isScoreMethode={isScoreMethode}
+                                isScoreMethodeNav={isScoreMehodeNav}
+                                isAlgorithmus={isAlgorithmus}
+                                isAlgorithmusNav={isAlgorithmusNav}
+                                isErsetzung={isErsetzung}
+                                isErsetzungNav={isErsetzungNav}
+                                isÜbereinstimmungswert={isÜbereinstimmungswert}
+                                isMatchingtoleranzChip={isMatchingtoleranzChip}
+                                isFKChip={isFKChip}
+                                isAllKontrollvariablen={isAllKontrollvariablen}
+                                isAllMatchingvariablen={isAllMatchingvariablen}
+                            />
+                        </div>
+                        {/*Fragebogen und Graphische-Ergebnisse*/}
+                        <div className="MiddleContainer">
 
-                        <div className="FormContainer">
-                            <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
-                                <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow} />} />
-                                <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow} />} />
-                                <Route path="/Datenquelle"
-                                    element={<Datenquelle setDatenquelle={setDatenquelle}
-                                        isDatenquelle={isDatenquelle} setWorkflow={setWorkflow}/>}
-                                />
+                            <div className="FormContainer">
+                                <Routes sx={{ borderRadius: '10px 10px 10px 10px' }}>
+                                    <Route path='/' exact element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow} />} />
+                                    <Route path="/Startseite" element={<Mainpage isDisclaimer={isDisclaimer} setWorkflow={setWorkflow} />} />
+                                    <Route path="/profile" element={<ProfilePage />} />
+                                    <Route path="/Datenquelle"
+                                        element={<Datenquelle setDatenquelle={setDatenquelle}
+                                            isDatenquelle={isDatenquelle} setWorkflow={setWorkflow}/>}
+                                    />
                                 <Route path="/Datei-hochladen"
                                     element={<UploadData isBeobachtungen={isBeobachtungen}
                                                          setDatei={setDatei}
@@ -282,10 +287,13 @@ function App() {
                 </div>
             </Router>
             {/*Fußzeile*/}
+            
+            {/* Demo Info Panel */}
+            <DemoInfo />
 
         </div>
         </AppContext.Provider>
-
+        </AuthProvider>
     );
 }
 

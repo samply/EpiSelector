@@ -1,10 +1,18 @@
-import React from 'react'
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react'
+import {Link, useNavigate} from 'react-router-dom';
 import '../App.css';
 import Typography from '@mui/material/Typography';
+import { Button, Box, Menu, MenuItem, Avatar, IconButton } from '@mui/material';
+import { Person, AccountCircle } from '@mui/icons-material';
+import { useAuth } from '../context/AuthContext';
+import LoginDialog from './auth/LoginDialog';
 
 
 function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}) {
+    const [loginDialogOpen, setLoginDialogOpen] = useState(false);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const { user, logout, isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const linkStyle = {
         textDecoration: "none",
@@ -25,9 +33,79 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
         setWorkflow("Startseite");
     };
 
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        logout();
+        handleMenuClose();
+        deleteAllData(); // Reset all form data on logout
+    };
+
+    const handleProfileClick = () => {
+        handleMenuClose();
+        navigate('/profile'); // Navigate to profile page
+    };
+
     return (
-        <div className="TopNav">
-            <Typography  variant="h5" sx={{ paddingTop:"1%", paddingBottom:"0.5%", paddingLeft:"2%"}}><Link to='/Startseite' onClick={deleteAllData} style={linkStyle}>EpiSelector</Link></Typography>
+        <div className="TopNav" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h5" sx={{ paddingTop:"1%", paddingBottom:"0.5%", paddingLeft:"2%"}}>
+                <Link to='/Startseite' onClick={deleteAllData} style={linkStyle}>EpiSelector</Link>
+            </Typography>
+            
+            <Box sx={{ paddingRight: "2%", display: 'flex', alignItems: 'center', gap: 1 }}>
+                {isAuthenticated ? (
+                    <>
+                        <Typography variant="body2" sx={{ color: 'white', mr: 1 }}>
+                            Willkommen, {user?.first_name || user?.email}
+                        </Typography>
+                        <IconButton
+                            onClick={handleMenuOpen}
+                            sx={{ color: 'white' }}
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <Menu
+                            anchorEl={anchorEl}
+                            open={Boolean(anchorEl)}
+                            onClose={handleMenuClose}
+                        >
+                            <MenuItem onClick={handleProfileClick}>
+                                Mein Profil
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>
+                                Abmelden
+                            </MenuItem>
+                        </Menu>
+                    </>
+                ) : (
+                    <Button
+                        variant="outlined"
+                        sx={{ 
+                            color: 'white', 
+                            borderColor: 'white',
+                            '&:hover': {
+                                borderColor: 'white',
+                                backgroundColor: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }}
+                        onClick={() => setLoginDialogOpen(true)}
+                        startIcon={<Person />}
+                    >
+                        Anmelden
+                    </Button>
+                )}
+            </Box>
+            
+            <LoginDialog
+                open={loginDialogOpen}
+                onClose={() => setLoginDialogOpen(false)}
+            />
         </div>
     );
 }
