@@ -139,7 +139,8 @@ function ProfilePage() {
                 width: "100%", 
                 borderRadius: '10px 10px 10px 10px', 
                 position: 'relative', 
-                height: "200px",
+                height: "auto",
+                minHeight: "200px",
                 display: "flex",
                 flexDirection: "column"
             }}>
@@ -152,7 +153,8 @@ function ProfilePage() {
                     backgroundColor: "white", 
                     width: "100%", 
                     flex: 1,
-                    overflow: "auto"
+                    padding: "16px",
+                    paddingBottom: "20px"
                 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
@@ -180,7 +182,7 @@ function ProfilePage() {
                 width: "100%", 
                 borderRadius: '10px 10px 10px 10px', 
                 position: 'relative',
-                height: "calc(100vh - 300px)",
+                height: "calc(100vh - 320px)",
                 minHeight: "400px",
                 display: "flex",
                 flexDirection: "column"
@@ -192,7 +194,7 @@ function ProfilePage() {
                 />
                 <CardContent sx={{ 
                     backgroundColor: "white", 
-                    width: "100%", 
+                    width: "97%", 
                     flex: 1,
                     overflow: "hidden",
                     display: "flex",
@@ -221,7 +223,7 @@ function ProfilePage() {
                             }}
                         >
                             <Table size="small" sx={{ '& .MuiTableCell-root': { padding: '4px 8px' } }}>
-                                <TableHead>
+                                <TableHead sx={{ backgroundColor: "#d7d7d7" }}>
                                     <TableRow>
                                         <TableCell sx={{ minWidth: 100, padding: '4px 6px' }}><strong>Name</strong></TableCell>
                                         <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Erstellt</strong></TableCell>
@@ -236,11 +238,11 @@ function ProfilePage() {
                                     {savedProcesses.map((process) => (
                                         <TableRow key={process.id}>
                                             <TableCell sx={{ maxWidth: 120, padding: '4px 6px' }}>
-                                                <Typography variant="body2" noWrap title={process.name} sx={{ fontSize: '0.75rem' }}>
+                                                <Typography variant="body2" noWrap title={process.name} sx={{ fontSize: '14px' }}>
                                                     {process.name}
                                                 </Typography>
                                             </TableCell>
-                                            <TableCell sx={{ fontSize: '0.7rem', padding: '4px 6px' }}>
+                                            <TableCell sx={{ fontSize: '14px', padding: '4px 6px' }}>
                                                 {formatDate(process.created_at).split(' ')[0]}
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 6px' }}>
@@ -248,16 +250,16 @@ function ProfilePage() {
                                                     label={process.matching_method === 'Propensity Score' ? 'PS' : process.matching_method === 'Exaktes Matching' ? 'EM' : process.matching_method} 
                                                     size="small" 
                                                     variant="outlined"
-                                                    sx={{ fontSize: '0.6rem', height: 20, minWidth: 30 }}
+                                                    sx={{ fontSize: '14px', height: 20, minWidth: 30 }}
                                                 />
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 6px' }}>
-                                                <Typography variant="body2" component="code" sx={{ fontSize: '0.7rem' }} noWrap>
+                                                <Typography variant="body2" component="code" sx={{ fontSize: '14px' }} noWrap>
                                                     {process.target_variable}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 6px' }}>
-                                                <Typography variant="body2" sx={{ fontSize: '0.7rem', display: 'flex', alignItems: 'center', gap: 0.3 }}>
+                                                <Typography variant="body2" sx={{ fontSize: '14px', display: 'flex', alignItems: 'center', gap: 0.3 }}>
                                                     <Analytics fontSize="inherit" />
                                                     {process.result_count}
                                                 </Typography>
@@ -267,7 +269,7 @@ function ProfilePage() {
                                                     label={getStatusText(process.status)} 
                                                     size="small" 
                                                     color={getStatusColor(process.status)}
-                                                    sx={{ fontSize: '0.6rem', height: 20, minWidth: 50 }}
+                                                    sx={{ fontSize: '12px', height: 20, minWidth: 50 }}
                                                 />
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 4px' }}>
