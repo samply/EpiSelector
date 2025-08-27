@@ -74,8 +74,24 @@ export const AuthProvider = ({ children }) => {
             try {
                 const parsedUser = JSON.parse(userData);
                 setUser(parsedUser);
-                // Load mock processes for authenticated user
-                setSavedProcesses(MOCK_SAVED_PROCESSES);
+                
+                // Load saved processes from localStorage or use mock data
+                const savedProcessesKey = `savedProcesses_${parsedUser.id}`;
+                const storedProcesses = localStorage.getItem(savedProcessesKey);
+                
+                if (storedProcesses) {
+                    try {
+                        const parsedProcesses = JSON.parse(storedProcesses);
+                        setSavedProcesses(parsedProcesses);
+                    } catch (error) {
+                        console.error('Error parsing saved processes:', error);
+                        setSavedProcesses(MOCK_SAVED_PROCESSES);
+                    }
+                } else {
+                    // Load mock processes for authenticated user and save them
+                    setSavedProcesses(MOCK_SAVED_PROCESSES);
+                    localStorage.setItem(savedProcessesKey, JSON.stringify(MOCK_SAVED_PROCESSES));
+                }
             } catch (error) {
                 console.error('Error parsing user data:', error);
                 localStorage.removeItem('authToken');
@@ -111,7 +127,24 @@ export const AuthProvider = ({ children }) => {
                 localStorage.setItem('userData', JSON.stringify(userWithoutPassword));
                 
                 setUser(userWithoutPassword);
-                setSavedProcesses(MOCK_SAVED_PROCESSES);
+                
+                // Load saved processes from localStorage or use mock data
+                const savedProcessesKey = `savedProcesses_${userWithoutPassword.id}`;
+                const storedProcesses = localStorage.getItem(savedProcessesKey);
+                
+                if (storedProcesses) {
+                    try {
+                        const parsedProcesses = JSON.parse(storedProcesses);
+                        setSavedProcesses(parsedProcesses);
+                    } catch (error) {
+                        console.error('Error parsing saved processes:', error);
+                        setSavedProcesses(MOCK_SAVED_PROCESSES);
+                        localStorage.setItem(savedProcessesKey, JSON.stringify(MOCK_SAVED_PROCESSES));
+                    }
+                } else {
+                    setSavedProcesses(MOCK_SAVED_PROCESSES);
+                    localStorage.setItem(savedProcessesKey, JSON.stringify(MOCK_SAVED_PROCESSES));
+                }
                 
                 return { success: true };
             } else {
@@ -222,6 +255,41 @@ export const AuthProvider = ({ children }) => {
         return { success: true };
     };
 
+    const saveMatchingProcess = async (processData) => {
+        if (!user) {
+            throw new Error('Benutzer muss angemeldet sein');
+        }
+        
+        // Simulate API delay
+        await new Promise(resolve => setTimeout(resolve, 300));
+        
+        // Create new process with unique ID
+        const newProcess = {
+            id: Date.now(), // Simple ID generation
+            name: processData.name || `Matching ${new Date().toLocaleDateString()}`,
+            created_at: new Date().toISOString(),
+            matching_method: processData.matchingMethod,
+            algorithm: processData.algorithm,
+            target_variable: processData.targetVariable,
+            control_variables: processData.controlVariables,
+            ratio: processData.ratio,
+            score_method: processData.scoreMethod,
+            replacement: processData.replacement,
+            tolerance: processData.tolerance,
+            result_count: processData.resultCount || 0,
+            status: 'saved'
+        };
+        
+        // Add to saved processes
+        setSavedProcesses(prev => [newProcess, ...prev]);
+        
+        // Also save to localStorage for persistence
+        const updatedProcesses = [newProcess, ...savedProcesses];
+        localStorage.setItem(`savedProcesses_${user.id}`, JSON.stringify(updatedProcesses));
+        
+        return { success: true, process: newProcess };
+    };
+
     const value = {
         user,
         login,
@@ -233,7 +301,8 @@ export const AuthProvider = ({ children }) => {
         savedProcesses,
         getSavedProcesses,
         deleteProcess,
-        downloadProcessResults
+        downloadProcessResults,
+        saveMatchingProcess
     };
 
     return (

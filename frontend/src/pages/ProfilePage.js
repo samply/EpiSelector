@@ -158,7 +158,7 @@ function ProfilePage() {
                 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
-                        <Typography variant="h6">
+                        <Typography variant="body1">
                             {user.first_name} {user.last_name}
                         </Typography>
                     </Box>
@@ -337,16 +337,93 @@ function ProfilePage() {
                     {selectedProcess && (
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="h6" gutterBottom>Konfiguration</Typography>
-                            <Typography><strong>Matching-Methode:</strong> {selectedProcess.matching_method}</Typography>
-                            <Typography><strong>Algorithmus:</strong> {selectedProcess.algorithm}</Typography>
-                            <Typography><strong>Zielvariable:</strong> {selectedProcess.target_variable}</Typography>
-                            <Typography><strong>Kontrollvariablen:</strong></Typography>
-                            <Box sx={{ ml: 2, mt: 1 }}>
-                                {selectedProcess.control_variables?.map((variable, index) => (
-                                    <Chip key={index} label={variable} size="small" sx={{ mr: 1, mb: 1 }} />
-                                ))}
-                            </Box>
-                            <Typography sx={{ mt: 2 }}><strong>Anzahl Ergebnisse:</strong> {selectedProcess.result_count}</Typography>
+                            <Typography><strong>Matching-Methode:</strong> {selectedProcess.matching_method || selectedProcess.matchingMethod}</Typography>
+                            
+                            {/* Zeige Parameter je nach Matching-Methode */}
+                            {(selectedProcess.matching_method === "Propensity Score" || selectedProcess.matchingMethod === "Propensity Score") && (
+                                <>
+                                    {selectedProcess.target_variable && (
+                                        <Typography><strong>Zielvariable:</strong> {selectedProcess.target_variable}</Typography>
+                                    )}
+                                    {(selectedProcess.control_variables || selectedProcess.controlVariables) && (
+                                        <>
+                                            <Typography><strong>Kontrollvariablen:</strong></Typography>
+                                            <Box sx={{ ml: 2, mt: 1 }}>
+                                                {(selectedProcess.control_variables || selectedProcess.controlVariables)?.map((variable, index) => (
+                                                    <Chip key={index} label={variable} size="small" sx={{ mr: 1, mb: 1 }} />
+                                                ))}
+                                            </Box>
+                                        </>
+                                    )}
+                                    {(selectedProcess.ratio || selectedProcess.ratio) && (
+                                        <Typography><strong>Verhältnis:</strong> 1:{selectedProcess.ratio}</Typography>
+                                    )}
+                                    {(selectedProcess.score_method || selectedProcess.scoreMethod) && (
+                                        <Typography><strong>Score-Methode:</strong> {selectedProcess.score_method || selectedProcess.scoreMethod}</Typography>
+                                    )}
+                                    {(selectedProcess.match_value || selectedProcess.matchValue) && (
+                                        <Typography><strong>Übereinstimmungswert:</strong> ±{selectedProcess.match_value || selectedProcess.matchValue}</Typography>
+                                    )}
+                                </>
+                            )}
+                            
+                            {/* Exaktes Matching Parameter */}
+                            {(selectedProcess.matching_method === "Exaktes Matching" || selectedProcess.matchingMethod === "Exaktes Matching") && (
+                                <>
+                                    {(selectedProcess.groupIndicator) && (
+                                        <Typography><strong>Vergleichsgruppen:</strong> {selectedProcess.groupIndicator}</Typography>
+                                    )}
+                                    {(selectedProcess.matchingVariables) && (
+                                        <>
+                                            <Typography><strong>Matching-Variablen:</strong></Typography>
+                                            <Box sx={{ ml: 2, mt: 1 }}>
+                                                {selectedProcess.matchingVariables?.map((variable, index) => {
+                                                    // Extrahiere nur den var-Teil aus dem Objekt
+                                                    const variableName = typeof variable === 'object' && variable !== null
+                                                        ? (variable.var || variable.name || variable.label || variable.text || '')
+                                                        : variable;
+                                                    return variableName ? (
+                                                        <Chip key={index} label={variableName} size="small" sx={{ mr: 1, mb: 1 }} />
+                                                    ) : null;
+                                                }).filter(chip => chip !== null)}
+                                            </Box>
+                                        </>
+                                    )}
+                                    {(selectedProcess.matchingTolerance) && (
+                                        <Typography><strong>Matching-Toleranz:</strong> {
+                                            Array.isArray(selectedProcess.matchingTolerance)
+                                                ? selectedProcess.matchingTolerance.map(tol => 
+                                                    typeof tol === 'string' ? tol.trim() : tol
+                                                  ).join(', ')
+                                                : (typeof selectedProcess.matchingTolerance === 'object' 
+                                                    ? JSON.stringify(selectedProcess.matchingTolerance)
+                                                    : selectedProcess.matchingTolerance)
+                                        }</Typography>
+                                    )}
+                                    {(selectedProcess.ratio && selectedProcess.ratio !== "defaultVerhältnis") && (
+                                        <Typography><strong>Matching-Verhältnis:</strong> 1:{selectedProcess.ratio}</Typography>
+                                    )}
+                                </>
+                            )}
+                            
+                            {/* Für alle Methoden relevante Parameter */}
+                            {(selectedProcess.algorithm && selectedProcess.algorithm !== "defaultAlgo") && (
+                                <Typography><strong>Algorithmus:</strong> {selectedProcess.algorithm}</Typography>
+                            )}
+                            
+                            {(selectedProcess.replacement !== undefined || selectedProcess.replacement !== undefined) && (
+                                <Typography><strong>Ersetzung:</strong> {
+                                    selectedProcess.replacement === "TRUE" || selectedProcess.replacement === true 
+                                        ? 'Ja' 
+                                        : 'Nein'
+                                }</Typography>
+                            )}
+                            
+                            {(selectedProcess.tolerance !== undefined) && (
+                                <Typography><strong>Toleranz:</strong> {selectedProcess.tolerance}</Typography>
+                            )}
+                            
+                            <Typography sx={{ mt: 2 }}><strong>Anzahl Ergebnisse:</strong> {selectedProcess.result_count || selectedProcess.resultCount || 0}</Typography>
                             <Typography><strong>Erstellt am:</strong> {formatDate(selectedProcess.created_at)}</Typography>
                         </Box>
                     )}

@@ -24,11 +24,17 @@ import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import AppContext from '../../AppContext';
 import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
+import { useAuth } from '../../context/AuthContext';
+import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 
 function Dataexport() {
-    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse } = useContext(AppContext);
+    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz } = useContext(AppContext);
+    const { user, isAuthenticated, saveMatchingProcess } = useAuth();
     const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState([]);
+    const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+    const [processName, setProcessName] = useState('');
+    const [saving, setSaving] = useState(false);
 
     const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
@@ -165,6 +171,105 @@ function Dataexport() {
         }
     };
 
+    const handleSaveProcess = () => {
+        if (!isAuthenticated) {
+            alert('Sie müssen angemeldet sein, um eine Maske zu speichern.');
+            return;
+        }
+        setSaveDialogOpen(true);
+    };
+
+    const saveCurrentProcess = async () => {
+        if (!processName.trim()) {
+            alert('Bitte geben Sie einen Namen für die Maske ein.');
+            return;
+        }
+
+        setSaving(true);
+        
+        try {
+            const processData = {
+                name: processName,
+                matchingMethod: isMatchingMethode,
+                resultCount: isResultData ? isResultData.length : 0
+            };
+
+            // Nur relevante Parameter je nach Matching-Methode hinzufügen
+            if (isMatchingMethode === "Propensity Score") {
+                // Propensity Score Parameter
+                if (isZielvariable && isZielvariable !== "defaultZielvariable") {
+                    processData.targetVariable = isZielvariable;
+                }
+                if (isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen") {
+                    processData.controlVariables = Array.isArray(isKontrollvariablen) ? isKontrollvariablen : [isKontrollvariablen];
+                }
+                if (isVerhältnis && isVerhältnis !== "defaultVerhältnis") {
+                    processData.ratio = isVerhältnis;
+                }
+                if (isScoreMethode && isScoreMethode !== "defaultScoreMethode") {
+                    processData.scoreMethod = isScoreMethode;
+                }
+                if (isAlgorithmus && isAlgorithmus !== "defaultAlgo") {
+                    processData.algorithm = isAlgorithmus;
+                }
+                if (isÜbereinstimmungswert && isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") {
+                    processData.matchValue = isÜbereinstimmungswert;
+                }
+                if (isErsetzung !== undefined) {
+                    processData.replacement = isErsetzung;
+                }
+            } else if (isMatchingMethode === "Exaktes Matching") {
+                // Exaktes Matching Parameter
+                if (isFälleKontrollenGruppenindikator) {
+                    processData.groupIndicator = isFälleKontrollenGruppenindikator;
+                }
+                if (isAllMatchingvariablen && isAllMatchingvariablen !== '') {
+                    // Extrahiere die Namen der Matching-Variablen
+                    const extractVariableNames = (variables) => {
+                        if (Array.isArray(variables)) {
+                            return variables.map(variable => {
+                                if (typeof variable === 'object' && variable !== null) {
+                                    return variable.var || variable.name || variable.label || variable.text || '';
+                                }
+                                return variable;
+                            }).filter(name => name); // Entferne leere Namen
+                        } else if (typeof variables === 'object' && variables !== null) {
+                            const name = variables.var || variables.name || variables.label || variables.text || '';
+                            return name ? [name] : [];
+                        }
+                        return [variables];
+                    };
+                    
+                    processData.matchingVariables = extractVariableNames(isAllMatchingvariablen);
+                }
+                if (isMatchingtoleranz && isMatchingtoleranz !== '') {
+                    processData.matchingTolerance = isMatchingtoleranz;
+                }
+                if (isVerhältnis && isVerhältnis !== "defaultVerhältnis") {
+                    processData.ratio = isVerhältnis;
+                }
+            } else {
+                // Fallback für andere Methoden
+                if (isAlgorithmus && isAlgorithmus !== "defaultAlgo") {
+                    processData.algorithm = isAlgorithmus;
+                }
+            }
+
+            const result = await saveMatchingProcess(processData);
+            
+            if (result.success) {
+                alert('Maske erfolgreich gespeichert!');
+                setSaveDialogOpen(false);
+                setProcessName('');
+            }
+        } catch (error) {
+            console.error('Fehler beim Speichern:', error);
+            alert('Fehler beim Speichern der Maske: ' + error.message);
+        } finally {
+            setSaving(false);
+        }
+    };
+
     useEffect(() => {
         let data;
 
@@ -200,6 +305,7 @@ function Dataexport() {
     };
 
     return (
+        <>
         <Card sx={{ width: "100%", borderRadius: '10px 10px 10px 10px', position: 'relative' }}>
             <CardHeader
                 title="Matching"
@@ -226,7 +332,14 @@ function Dataexport() {
                         <Button onClick={() => downloadCSV()} style={{ flexFlow: "column" }}>
                             <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Datensatz <br /> herunterladen
                         </Button>
-                        <Button disabled style={{ flexFlow: "column", color: "grey" }}>
+                        <Button 
+                            onClick={handleSaveProcess} 
+                            style={{ 
+                                flexFlow: "column", 
+                                color: isAuthenticated ? "#1976d2" : "grey" 
+                            }}
+                            disabled={!isAuthenticated}
+                        >
                             <DashboardIcon sx={{ fontSize: "xxx-large" }} />Maske speichern
                         </Button>
                     </div>
@@ -260,7 +373,106 @@ function Dataexport() {
             </Grid>
         </Card>
 
-    )
+        {/* Dialog zum Speichern der Maske */}
+        <Dialog open={saveDialogOpen} onClose={() => setSaveDialogOpen(false)} maxWidth="sm" fullWidth>
+            <DialogTitle>Maske speichern</DialogTitle>
+            <DialogContent>
+                <TextField
+                    autoFocus
+                    margin="dense"
+                    label="Name der Maske"
+                    fullWidth
+                    variant="outlined"
+                    value={processName}
+                    onChange={(e) => setProcessName(e.target.value)}
+                    placeholder="z.B. Herzinsuffizienz Studie 2024"
+                    sx={{ mt: 2 }}
+                />
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
+                    Die folgenden Einstellungen werden gespeichert:
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 1, pl: 2 }}>
+                    • Matching-Methode: {isMatchingMethode}<br/>
+                    {isMatchingMethode === "Propensity Score" ? (
+                        <>
+                            {isZielvariable && isZielvariable !== "defaultZielvariable" && (
+                                <>• Zielvariable: {isZielvariable}<br/></>
+                            )}
+                            {isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen" && (
+                                <>• Kontrollvariablen: {Array.isArray(isKontrollvariablen) ? isKontrollvariablen.length : isKontrollvariablen} Variable(n)<br/></>
+                            )}
+                            {isVerhältnis && isVerhältnis !== "defaultVerhältnis" && (
+                                <>• Verhältnis: 1:{isVerhältnis}<br/></>
+                            )}
+                            {isScoreMethode && isScoreMethode !== "defaultScoreMethode" && (
+                                <>• Score-Methode: {isScoreMethode}<br/></>
+                            )}
+                            {isAlgorithmus && isAlgorithmus !== "defaultAlgo" && (
+                                <>• Algorithmus: {isAlgorithmus}<br/></>
+                            )}
+                            {isÜbereinstimmungswert && isÜbereinstimmungswert !== "defaultÜbereinstimmungswert" && (
+                                <>• Übereinstimmungswert: ±{isÜbereinstimmungswert}<br/></>
+                            )}
+                            {isErsetzung !== undefined && (
+                                <>• Ersetzung: {isErsetzung === "TRUE" || isErsetzung === true ? 'Ja' : 'Nein'}<br/></>
+                            )}
+                        </>
+                    ) : isMatchingMethode === "Exaktes Matching" ? (
+                        <>
+                            {/* Exaktes Matching Parameter */}
+                            {isFälleKontrollenGruppenindikator && (
+                                <>• Vergleichsgruppen: {isFälleKontrollenGruppenindikator}<br/></>
+                            )}
+                            {isAllMatchingvariablen && isAllMatchingvariablen !== '' && (
+                                <>• Matching-Variablen: {
+                                    Array.isArray(isAllMatchingvariablen) 
+                                        ? isAllMatchingvariablen.map(variable => 
+                                            typeof variable === 'object' && variable !== null 
+                                                ? variable.var || variable.name || variable.label || variable.text || ''
+                                                : variable
+                                          ).filter(name => name).join(', ')
+                                        : (typeof isAllMatchingvariablen === 'object' && isAllMatchingvariablen !== null
+                                            ? isAllMatchingvariablen.var || isAllMatchingvariablen.name || isAllMatchingvariablen.label || isAllMatchingvariablen.text || ''
+                                            : isAllMatchingvariablen)
+                                }<br/></>
+                            )}
+                            {isMatchingtoleranz && isMatchingtoleranz !== '' && (
+                                <>• Matching-Toleranz: {
+                                    Array.isArray(isMatchingtoleranz) 
+                                        ? isMatchingtoleranz.map(tol => typeof tol === 'string' ? tol.trim() : tol).join(', ')
+                                        : (typeof isMatchingtoleranz === 'object' 
+                                            ? JSON.stringify(isMatchingtoleranz) 
+                                            : isMatchingtoleranz)
+                                }<br/></>
+                            )}
+                            {isVerhältnis && isVerhältnis !== "defaultVerhältnis" && (
+                                <>• Matching-Verhältnis: 1:{isVerhältnis}<br/></>
+                            )}
+                        </>
+                    ) : (
+                        <>• Algorithmus: {isAlgorithmus}<br/></>
+                    )}
+                </Typography>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setSaveDialogOpen(false)} disabled={saving}>
+                    Abbrechen
+                </Button>
+                <Button 
+                    onClick={saveCurrentProcess} 
+                    variant="contained" 
+                    disabled={saving || !processName.trim()}
+                    sx={{ 
+                        backgroundColor: "#1d4189",
+                        "&:hover": { backgroundColor: "#1d4189" }
+                    }}
+                >
+                    {saving ? 'Speichern...' : 'Speichern'}
+                </Button>
+            </DialogActions>
+        </Dialog>
+        </>
+    );
 }
 
 export default Dataexport;
