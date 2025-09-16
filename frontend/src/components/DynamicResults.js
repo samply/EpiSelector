@@ -612,8 +612,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         }
         
         // Berechne Häufigkeiten für jede Kategorie und Gruppe
-        const frequenciesGroup0 = [];
-        const frequenciesGroup1 = [];
+        const frequenciesGroup0 = [];  // Gruppe 0 - nach UNTEN (negativ)
+        const frequenciesGroup1 = [];  // Gruppe 1 - nach OBEN (positiv)
         
         allUniqueValues.forEach(category => {
             const countGroup0 = valuesGroup0.filter(val => val == category).length;
@@ -623,19 +623,20 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             const percentGroup0 = valuesGroup0.length > 0 ? (countGroup0 / valuesGroup0.length) * 100 : 0;
             const percentGroup1 = valuesGroup1.length > 0 ? (countGroup1 / valuesGroup1.length) * 100 : 0;
             
-            frequenciesGroup0.push(percentGroup0);
-            frequenciesGroup1.push(-percentGroup1); // Negativ für unteres Histogramm
+            // GESPIEGELT: Gruppe 1 positiv (oben), Gruppe 0 negativ (unten)
+            frequenciesGroup1.push(percentGroup1);   // Gruppe 1: OBEN (positiv)
+            frequenciesGroup0.push(-percentGroup0);  // Gruppe 0: UNTEN (negativ)
             
-            console.log(`📊 Kategorie "${category}": Gruppe0=${countGroup0}(${percentGroup0.toFixed(1)}%), Gruppe1=${countGroup1}(${percentGroup1.toFixed(1)}%)`);
+            console.log(`📊 Kategorie "${category}": Gruppe1=${countGroup1}(${percentGroup1.toFixed(1)}% OBEN), Gruppe0=${countGroup0}(${percentGroup0.toFixed(1)}% UNTEN)`);
         });
         
-        console.log(`📈 FINALE HISTOGRAMM-DATEN:`);
-        console.log(`   - Gruppe 0 (positiv):`, frequenciesGroup0);
-        console.log(`   - Gruppe 1 (negativ):`, frequenciesGroup1);
+        console.log(`📈 FINALE GESPIEGELTE HISTOGRAMM-DATEN:`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1) OBEN (positiv):`, frequenciesGroup1);
+        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0) UNTEN (negativ):`, frequenciesGroup0);
         console.log(`   - Kategorien:`, allUniqueValues.map(String));
         
-        // Kombiniere die Daten für setHistograms (erwartet: [group0_data, group1_data])
-        const combinedData = [...frequenciesGroup0, ...frequenciesGroup1];
+        // Kombiniere die Daten für setHistograms: [group1_positive, group0_negative]
+        const combinedData = [...frequenciesGroup1, ...frequenciesGroup0];
         
         // Aktualisiere die Histogramme - verwende gleiche Daten für Pre und Post-Matching vorerst
         setHistograms(combinedData, combinedData, selectedVariable, allUniqueValues.map(String));
