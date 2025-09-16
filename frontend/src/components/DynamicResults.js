@@ -576,27 +576,75 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             return;
         }
         
-        // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
-        let histogramData;
-        if (isSummaryData && Array.isArray(isSummaryData) && isSummaryData.length > 0) {
-            histogramData = calculateHistogramDataFromSummary(isSummaryData, selectedVariable, isZielvariable);
-            console.log("Verwende Summary-Daten für Histogramm:", histogramData);
-        } else if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
-            histogramData = calculateHistogramData(isResultData, selectedVariable, isZielvariable);
-            console.log("Verwende Result-Daten für Histogramm:", histogramData);
-        } else {
-            console.log("Keine Daten verfügbar für Histogramm");
+        console.log(`=== HISTOGRAMM-GENERIERUNG FÜR VARIABLE: ${selectedVariable} ===`);
+        console.log(`Zielvariable: ${targetVariableForLabels}`);
+        
+        // Verwende immer Result-Daten für detaillierte Histogramme
+        if (!isResultData || !Array.isArray(isResultData) || isResultData.length === 0) {
+            console.log("❌ Keine Result-Daten verfügbar für Histogramm-Generierung");
             return;
         }
         
-        console.log("Histogramm-Daten berechnet:", histogramData);
-        console.log("Pre-match data:", histogramData.pre_match_data);
-        console.log("Post-match data:", histogramData.post_match_data);
-        console.log("X-axis labels:", histogramData.x_axis_labels);
+        console.log(`✅ Verwende Result-Daten (${isResultData.length} Datensätze)`);
         
-        setHistograms(histogramData.pre_match_data, histogramData.post_match_data, '', histogramData.x_axis_labels);
+        // Filtere Daten nach Zielvariable = 0 und = 1
+        const dataGroup0 = isResultData.filter(row => row[targetVariableForLabels] == 0);
+        const dataGroup1 = isResultData.filter(row => row[targetVariableForLabels] == 1);
+        
+        console.log(`📊 Datenaufteilung:`);
+        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${dataGroup0.length} Datensätze`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${dataGroup1.length} Datensätze`);
+        
+        // Extrahiere Werte der ausgewählten Variable für beide Gruppen
+        const valuesGroup0 = dataGroup0.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        const valuesGroup1 = dataGroup1.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        
+        console.log(`📈 Variablenwerte für "${selectedVariable}":`);
+        console.log(`   - Gruppe 0: ${valuesGroup0.length} gültige Werte`, valuesGroup0.slice(0, 10));
+        console.log(`   - Gruppe 1: ${valuesGroup1.length} gültige Werte`, valuesGroup1.slice(0, 10));
+        
+        // Finde alle einzigartigen Werte (Kategorien)
+        const allUniqueValues = [...new Set([...valuesGroup0, ...valuesGroup1])].sort();
+        console.log(`🏷️ Kategorien der Variable "${selectedVariable}":`, allUniqueValues);
+        
+        if (allUniqueValues.length < 2 || allUniqueValues.length > 16) {
+            console.warn(`⚠️ Variable "${selectedVariable}" hat ${allUniqueValues.length} Kategorien - möglicherweise nicht optimal für Histogramm`);
+        }
+        
+        // Berechne Häufigkeiten für jede Kategorie und Gruppe
+        const frequenciesGroup0 = [];
+        const frequenciesGroup1 = [];
+        
+        allUniqueValues.forEach(category => {
+            const countGroup0 = valuesGroup0.filter(val => val == category).length;
+            const countGroup1 = valuesGroup1.filter(val => val == category).length;
+            
+            // Berechne Prozentsätze
+            const percentGroup0 = valuesGroup0.length > 0 ? (countGroup0 / valuesGroup0.length) * 100 : 0;
+            const percentGroup1 = valuesGroup1.length > 0 ? (countGroup1 / valuesGroup1.length) * 100 : 0;
+            
+            frequenciesGroup0.push(percentGroup0);
+            frequenciesGroup1.push(-percentGroup1); // Negativ für unteres Histogramm
+            
+            console.log(`📊 Kategorie "${category}": Gruppe0=${countGroup0}(${percentGroup0.toFixed(1)}%), Gruppe1=${countGroup1}(${percentGroup1.toFixed(1)}%)`);
+        });
+        
+        console.log(`📈 FINALE HISTOGRAMM-DATEN:`);
+        console.log(`   - Gruppe 0 (positiv):`, frequenciesGroup0);
+        console.log(`   - Gruppe 1 (negativ):`, frequenciesGroup1);
+        console.log(`   - Kategorien:`, allUniqueValues.map(String));
+        
+        // Kombiniere die Daten für setHistograms (erwartet: [group0_data, group1_data])
+        const combinedData = [...frequenciesGroup0, ...frequenciesGroup1];
+        
+        // Aktualisiere die Histogramme - verwende gleiche Daten für Pre und Post-Matching vorerst
+        setHistograms(combinedData, combinedData, selectedVariable, allUniqueValues.map(String));
+        
+        // Aktualisiere State
         setHistogramVariable(selectedVariable);
         setVariableA(selectedVariable);
+        
+        console.log(`✅ Histogramme für "${selectedVariable}" erfolgreich generiert!`);
     };
 
 
