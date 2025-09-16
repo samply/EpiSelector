@@ -673,17 +673,30 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             console.log(`   POST: Gruppe1=${postCountGroup1}(${postPercentGroup1.toFixed(1)}%), Gruppe0=${postCountGroup0}(${postPercentGroup0.toFixed(1)}%)`);
         });
         
-        // Berechne einheitlichen Y-Achsenbereich
+        // Berechne einheitlichen Y-Achsenbereich (symmetrisch um 0)
+        // Finde den maximalen Absolutwert aus allen Prozentsätzen
         const maxPercentage = Math.max(...allPercentages);
         const minPercentage = Math.min(...allPercentages);
-        const yAxisOffset = Math.max(5, (maxPercentage - minPercentage) * 0.1); // 10% Offset, mindestens 5%
-        const yAxisMax = maxPercentage + yAxisOffset;
-        const yAxisMin = -(minPercentage + yAxisOffset); // Negativ für unteren Bereich
         
-        console.log(`📈 Y-ACHSEN BEREICH:`);
+        // Der maximale Absolutwert bestimmt die Symmetrie
+        // Da untere Histogramme negativ werden, nehmen wir den größeren Absolutwert
+        const maxAbsoluteValue = Math.max(Math.abs(maxPercentage), Math.abs(minPercentage));
+        
+        // 10% Offset hinzufügen
+        const offsetPercent = 0.1; // 10%
+        const yAxisOffset = Math.max(5, maxAbsoluteValue * offsetPercent); // Mindestens 5% Offset
+        
+        // Symmetrische Y-Achse: -maxWert bis +maxWert
+        const yAxisLimit = maxAbsoluteValue + yAxisOffset;
+        const yAxisMax = yAxisLimit;   // Positive Grenze (oben)
+        const yAxisMin = -yAxisLimit;  // Negative Grenze (unten, gespiegelt)
+        
+        console.log(`📈 Y-ACHSEN BEREICH (SYMMETRISCH):`);
         console.log(`   - Max Prozentsatz: ${maxPercentage.toFixed(1)}%`);
         console.log(`   - Min Prozentsatz: ${minPercentage.toFixed(1)}%`);
-        console.log(`   - Y-Achse: ${yAxisMin.toFixed(1)}% bis ${yAxisMax.toFixed(1)}%`);
+        console.log(`   - Max Absolutwert: ${maxAbsoluteValue.toFixed(1)}%`);
+        console.log(`   - Offset (10%): ${yAxisOffset.toFixed(1)}%`);
+        console.log(`   - Y-Achse (symmetrisch): ${yAxisMin.toFixed(1)}% bis ${yAxisMax.toFixed(1)}%`);
         
         console.log(`📈 FINALE PRE-MATCHING HISTOGRAMM-DATEN:`);
         console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, preFrequenciesGroup1);
