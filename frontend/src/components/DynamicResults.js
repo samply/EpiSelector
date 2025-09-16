@@ -587,67 +587,145 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         
         console.log(`✅ Verwende Result-Daten (${isResultData.length} Datensätze)`);
         
-        // Filtere Daten nach Zielvariable = 0 und = 1
-        const dataGroup0 = isResultData.filter(row => row[targetVariableForLabels] == 0);
-        const dataGroup1 = isResultData.filter(row => row[targetVariableForLabels] == 1);
+        // ========== PRE-MATCHING DATEN (alle Datensätze) ==========
+        console.log(`📊 PRE-MATCHING: Verwende alle ${isResultData.length} Datensätze`);
         
-        console.log(`📊 Datenaufteilung:`);
-        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${dataGroup0.length} Datensätze`);
-        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${dataGroup1.length} Datensätze`);
+        // Filtere Pre-Matching Daten nach Zielvariable = 0 und = 1
+        const preDataGroup0 = isResultData.filter(row => row[targetVariableForLabels] == 0);
+        const preDataGroup1 = isResultData.filter(row => row[targetVariableForLabels] == 1);
         
-        // Extrahiere Werte der ausgewählten Variable für beide Gruppen
-        const valuesGroup0 = dataGroup0.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
-        const valuesGroup1 = dataGroup1.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        console.log(`📊 PRE-MATCHING Datenaufteilung:`);
+        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${preDataGroup0.length} Datensätze`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${preDataGroup1.length} Datensätze`);
         
-        console.log(`📈 Variablenwerte für "${selectedVariable}":`);
-        console.log(`   - Gruppe 0: ${valuesGroup0.length} gültige Werte`, valuesGroup0.slice(0, 10));
-        console.log(`   - Gruppe 1: ${valuesGroup1.length} gültige Werte`, valuesGroup1.slice(0, 10));
+        // ========== POST-MATCHING DATEN (nur Matching weight = 1) ==========
+        const postMatchingData = isResultData.filter(row => row['Matching weight'] == 1);
+        console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight = 1)`);
         
-        // Finde alle einzigartigen Werte (Kategorien)
-        const allUniqueValues = [...new Set([...valuesGroup0, ...valuesGroup1])].sort();
+        // Filtere Post-Matching Daten nach Zielvariable = 0 und = 1
+        const postDataGroup0 = postMatchingData.filter(row => row[targetVariableForLabels] == 0);
+        const postDataGroup1 = postMatchingData.filter(row => row[targetVariableForLabels] == 1);
+        
+        console.log(`📊 POST-MATCHING Datenaufteilung:`);
+        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${postDataGroup0.length} Datensätze`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${postDataGroup1.length} Datensätze`);
+        
+        // Extrahiere Werte der ausgewählten Variable für PRE-MATCHING Gruppen
+        const preValuesGroup0 = preDataGroup0.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        const preValuesGroup1 = preDataGroup1.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        
+        // Extrahiere Werte der ausgewählten Variable für POST-MATCHING Gruppen
+        const postValuesGroup0 = postDataGroup0.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        const postValuesGroup1 = postDataGroup1.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
+        
+        console.log(`📈 PRE-MATCHING Variablenwerte für "${selectedVariable}":`);
+        console.log(`   - Gruppe 0: ${preValuesGroup0.length} gültige Werte`, preValuesGroup0.slice(0, 10));
+        console.log(`   - Gruppe 1: ${preValuesGroup1.length} gültige Werte`, preValuesGroup1.slice(0, 10));
+        
+        console.log(`📈 POST-MATCHING Variablenwerte für "${selectedVariable}":`);
+        console.log(`   - Gruppe 0: ${postValuesGroup0.length} gültige Werte`, postValuesGroup0.slice(0, 10));
+        console.log(`   - Gruppe 1: ${postValuesGroup1.length} gültige Werte`, postValuesGroup1.slice(0, 10));
+        
+        // Finde alle einzigartigen Werte (Kategorien) aus beiden Datensätzen
+        const allUniqueValues = [...new Set([...preValuesGroup0, ...preValuesGroup1, ...postValuesGroup0, ...postValuesGroup1])].sort();
         console.log(`🏷️ Kategorien der Variable "${selectedVariable}":`, allUniqueValues);
         
         if (allUniqueValues.length < 2 || allUniqueValues.length > 16) {
             console.warn(`⚠️ Variable "${selectedVariable}" hat ${allUniqueValues.length} Kategorien - möglicherweise nicht optimal für Histogramm`);
         }
         
-        // Berechne Häufigkeiten für jede Kategorie und Gruppe
-        const frequenciesGroup1 = [];  // Gruppe 1 - nach OBEN (erste Hälfte)
-        const frequenciesGroup0 = [];  // Gruppe 0 - nach UNTEN (zweite Hälfte)
+        // ========== BERECHNE PRE-MATCHING HÄUFIGKEITEN ==========
+        const preFrequenciesGroup1 = [];  // Gruppe 1 - nach OBEN (erste Hälfte)
+        const preFrequenciesGroup0 = [];  // Gruppe 0 - nach UNTEN (zweite Hälfte)
+        
+        // ========== BERECHNE POST-MATCHING HÄUFIGKEITEN ==========
+        const postFrequenciesGroup1 = [];  // Gruppe 1 - nach OBEN (erste Hälfte)
+        const postFrequenciesGroup0 = [];  // Gruppe 0 - nach UNTEN (zweite Hälfte)
+        
+        // Sammle alle Prozentsätze für Y-Achsen Berechnung
+        const allPercentages = [];
         
         allUniqueValues.forEach(category => {
-            const countGroup0 = valuesGroup0.filter(val => val == category).length;
-            const countGroup1 = valuesGroup1.filter(val => val == category).length;
+            // PRE-MATCHING Berechnungen
+            const preCountGroup0 = preValuesGroup0.filter(val => val == category).length;
+            const preCountGroup1 = preValuesGroup1.filter(val => val == category).length;
             
-            // Berechne Prozentsätze
-            const percentGroup0 = valuesGroup0.length > 0 ? (countGroup0 / valuesGroup0.length) * 100 : 0;
-            const percentGroup1 = valuesGroup1.length > 0 ? (countGroup1 / valuesGroup1.length) * 100 : 0;
+            const prePercentGroup0 = preValuesGroup0.length > 0 ? (preCountGroup0 / preValuesGroup0.length) * 100 : 0;
+            const prePercentGroup1 = preValuesGroup1.length > 0 ? (preCountGroup1 / preValuesGroup1.length) * 100 : 0;
             
-            // Erste Hälfte: Gruppe 1 (oben, rot)
-            frequenciesGroup1.push(percentGroup1);
-            // Zweite Hälfte: Gruppe 0 (wird von setHistograms negativ gemacht für unten, blau)
-            frequenciesGroup0.push(percentGroup0);
+            preFrequenciesGroup1.push(prePercentGroup1);
+            preFrequenciesGroup0.push(prePercentGroup0);
+            allPercentages.push(prePercentGroup0, prePercentGroup1);
             
-            console.log(`📊 Kategorie "${category}": Gruppe1=${countGroup1}(${percentGroup1.toFixed(1)}% OBEN), Gruppe0=${countGroup0}(${percentGroup0.toFixed(1)}% UNTEN)`);
+            // POST-MATCHING Berechnungen
+            const postCountGroup0 = postValuesGroup0.filter(val => val == category).length;
+            const postCountGroup1 = postValuesGroup1.filter(val => val == category).length;
+            
+            const postPercentGroup0 = postValuesGroup0.length > 0 ? (postCountGroup0 / postValuesGroup0.length) * 100 : 0;
+            const postPercentGroup1 = postValuesGroup1.length > 0 ? (postCountGroup1 / postValuesGroup1.length) * 100 : 0;
+            
+            postFrequenciesGroup1.push(postPercentGroup1);
+            postFrequenciesGroup0.push(postPercentGroup0);
+            allPercentages.push(postPercentGroup0, postPercentGroup1);
+            
+            console.log(`📊 Kategorie "${category}":`);
+            console.log(`   PRE:  Gruppe1=${preCountGroup1}(${prePercentGroup1.toFixed(1)}%), Gruppe0=${preCountGroup0}(${prePercentGroup0.toFixed(1)}%)`);
+            console.log(`   POST: Gruppe1=${postCountGroup1}(${postPercentGroup1.toFixed(1)}%), Gruppe0=${postCountGroup0}(${postPercentGroup0.toFixed(1)}%)`);
         });
         
-        console.log(`📈 FINALE HISTOGRAMM-DATEN FÜR setHistograms:`);
-        console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, frequenciesGroup1);
-        console.log(`   - Zweite Hälfte (Gruppe 0=${targetVariableForLabels}=0, BLAU, UNTEN):`, frequenciesGroup0);
+        // Berechne einheitlichen Y-Achsenbereich
+        const maxPercentage = Math.max(...allPercentages);
+        const minPercentage = Math.min(...allPercentages);
+        const yAxisOffset = Math.max(5, (maxPercentage - minPercentage) * 0.1); // 10% Offset, mindestens 5%
+        const yAxisMax = maxPercentage + yAxisOffset;
+        const yAxisMin = -(minPercentage + yAxisOffset); // Negativ für unteren Bereich
+        
+        console.log(`📈 Y-ACHSEN BEREICH:`);
+        console.log(`   - Max Prozentsatz: ${maxPercentage.toFixed(1)}%`);
+        console.log(`   - Min Prozentsatz: ${minPercentage.toFixed(1)}%`);
+        console.log(`   - Y-Achse: ${yAxisMin.toFixed(1)}% bis ${yAxisMax.toFixed(1)}%`);
+        
+        console.log(`📈 FINALE PRE-MATCHING HISTOGRAMM-DATEN:`);
+        console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, preFrequenciesGroup1);
+        console.log(`   - Zweite Hälfte (Gruppe 0=${targetVariableForLabels}=0, BLAU, UNTEN):`, preFrequenciesGroup0);
+        
+        console.log(`📈 FINALE POST-MATCHING HISTOGRAMM-DATEN:`);
+        console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, postFrequenciesGroup1);
+        console.log(`   - Zweite Hälfte (Gruppe 0=${targetVariableForLabels}=0, BLAU, UNTEN):`, postFrequenciesGroup0);
+        
         console.log(`   - Kategorien:`, allUniqueValues.map(String));
         
         // Kombiniere die Daten: [gruppe1_daten, gruppe0_daten] 
-        // setHistograms macht die zweite Hälfte automatisch negativ
-        const combinedData = [...frequenciesGroup1, ...frequenciesGroup0];
+        const preMatchingData = [...preFrequenciesGroup1, ...preFrequenciesGroup0];
+        const postMatchingDataCombined = [...postFrequenciesGroup1, ...postFrequenciesGroup0];
         
-        // Aktualisiere die Histogramme - verwende gleiche Daten für Pre und Post-Matching vorerst
-        setHistograms(combinedData, combinedData, selectedVariable, allUniqueValues.map(String));
+        // Aktualisiere die Histogramme mit separaten Pre- und Post-Matching Daten
+        setHistograms(preMatchingData, postMatchingDataCombined, selectedVariable, allUniqueValues.map(String));
+        
+        // Setze einheitliche Y-Achse für beide Histogramme
+        setTimeout(() => {
+            try {
+                let chartDom_a = document.getElementById("container_a");
+                let chart_a = Highcharts.charts[Highcharts.attr(chartDom_a, 'data-highcharts-chart')];
+                
+                let chartDom_b = document.getElementById("container_b");
+                let chart_b = Highcharts.charts[Highcharts.attr(chartDom_b, 'data-highcharts-chart')];
+                
+                if (chart_a && chart_b) {
+                    chart_a.yAxis[0].setExtremes(yAxisMin, yAxisMax);
+                    chart_b.yAxis[0].setExtremes(yAxisMin, yAxisMax);
+                    console.log(`✅ Y-Achse für beide Histogramme gesetzt: ${yAxisMin.toFixed(1)}% bis ${yAxisMax.toFixed(1)}%`);
+                }
+            } catch (error) {
+                console.error("❌ Fehler beim Setzen der Y-Achse:", error);
+            }
+        }, 100);
         
         // Aktualisiere State
         setHistogramVariable(selectedVariable);
         setVariableA(selectedVariable);
         
-        console.log(`✅ Histogramme für "${selectedVariable}" erfolgreich generiert!`);
+        console.log(`✅ Pre- und Post-Matching Histogramme für "${selectedVariable}" erfolgreich generiert!`);
     };
 
 
