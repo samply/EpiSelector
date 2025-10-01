@@ -34,7 +34,7 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 function ProfilePage() {
-    const { currentUser, getSavedProcesses, deleteMatchingProcess } = useAuth();
+    const { currentUser, getSavedProcesses, deleteMatchingProcess, getMatchingProcess } = useAuth();
     const [loading, setLoading] = useState(true);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [processToDelete, setProcessToDelete] = useState(null);
@@ -164,9 +164,31 @@ function ProfilePage() {
 
     const handleDownload = async (process) => {
         try {
-            await downloadProcessResults(process.id);
+            console.log('🔄 Download für Prozess:', process.id);
+            
+            // Falls es Backend-Download-Funktionalität gibt, können wir sie hier implementieren
+            // Für jetzt erstellen wir eine einfache JSON-Download-Lösung
+            const result = await getMatchingProcess(process.id);
+            
+            if (result.success && result.process.dataset_json) {
+                // JSON-Daten als Download anbieten
+                const datasetData = JSON.parse(result.process.dataset_json);
+                const blob = new Blob([JSON.stringify(datasetData, null, 2)], { type: 'application/json' });
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `matching_results_${process.id}.json`;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                window.URL.revokeObjectURL(url);
+                
+                console.log('✅ Download erfolgreich');
+            } else {
+                setError('Keine Daten zum Download verfügbar');
+            }
         } catch (error) {
-            console.error('Error downloading results:', error);
+            console.error('❌ Fehler beim Download:', error);
             setError('Download fehlgeschlagen');
         }
     };
