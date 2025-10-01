@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📝 Registrierungsversuch für:', username);
             
-            const response = await fetch(`${API_BASE_URL}/accounts/register/`, {
+            const response = await fetch(`${API_BASE_URL}/api/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('🔑 Anmeldeversuch für:', username);
             
-            const response = await fetch(`${API_BASE_URL}/accounts/login/`, {
+            const response = await fetch(`${API_BASE_URL}/api/login/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ export const AuthProvider = ({ children }) => {
             console.log('🚪 Abmeldeversuch für:', currentUser?.username);
             
             // Backend-Logout (Token löschen)
-            await apiCall('/accounts/logout/', {
+            await apiCall('/api/logout/', {
                 method: 'POST',
             });
 
@@ -167,7 +167,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('💾 Speichere Matching-Prozess:', processData);
             
-            const response = await apiCall('/control_selection/save-request/', {
+            const response = await apiCall('/api/save-request/', {
                 method: 'POST',
                 body: JSON.stringify(processData),
             });
@@ -192,7 +192,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📋 Lade gespeicherte Matching-Prozesse...');
             
-            const response = await apiCall('/control_selection/list-requests/');
+            const response = await apiCall('/api/list-requests/');
             
             if (response.ok) {
                 const data = await response.json();
@@ -213,7 +213,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📄 Lade Matching-Prozess:', processId);
             
-            const response = await apiCall(`/control_selection/get-request/${processId}/`);
+            const response = await apiCall(`/api/get-request/${processId}/`);
             
             if (response.ok) {
                 const data = await response.json();
@@ -234,7 +234,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('🗑️ Lösche Matching-Prozess:', processId);
             
-            const response = await apiCall(`/control_selection/delete-request/${processId}/`, {
+            const response = await apiCall(`/api/delete-request/${processId}/`, {
                 method: 'DELETE',
             });
 
