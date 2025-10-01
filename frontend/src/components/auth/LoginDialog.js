@@ -32,8 +32,9 @@ function TabPanel({ children, value, index, ...other }) {
 
 function LoginDialog({ open, onClose }) {
     const [tabValue, setTabValue] = useState(0);
-    const [loginData, setLoginData] = useState({ email: '', password: '' });
+    const [loginData, setLoginData] = useState({ username: '', password: '' });
     const [registerData, setRegisterData] = useState({ 
+        username: '',
         email: '', 
         password: '', 
         confirmPassword: '', 
@@ -55,19 +56,23 @@ function LoginDialog({ open, onClose }) {
         setError('');
         setLoading(true);
 
-        if (!loginData.email || !loginData.password) {
+        if (!loginData.username || !loginData.password) {
             setError('Bitte füllen Sie alle Felder aus');
             setLoading(false);
             return;
         }
 
-        const result = await login(loginData.email, loginData.password);
+        console.log('🔑 Login attempt for:', loginData.username);
+        
+        const result = await login(loginData.username, loginData.password);
         
         if (result.success) {
+            console.log('✅ Login successful');
             onClose();
-            setLoginData({ email: '', password: '' });
+            setLoginData({ username: '', password: '' });
         } else {
-            setError(result.error || 'Login fehlgeschlagen');
+            console.error('❌ Login failed:', result.message);
+            setError(result.message || 'Login fehlgeschlagen');
         }
         setLoading(false);
     };
@@ -77,7 +82,7 @@ function LoginDialog({ open, onClose }) {
         setError('');
         setLoading(true);
 
-        if (!registerData.email || !registerData.password || !registerData.firstName || !registerData.lastName) {
+        if (!registerData.username || !registerData.email || !registerData.password || !registerData.firstName || !registerData.lastName) {
             setError('Bitte füllen Sie alle Felder aus');
             setLoading(false);
             return;
@@ -95,7 +100,10 @@ function LoginDialog({ open, onClose }) {
             return;
         }
 
+        console.log('📝 Registration attempt for:', registerData.username);
+
         const result = await register(
+            registerData.username,
             registerData.email, 
             registerData.password, 
             registerData.firstName, 
@@ -103,8 +111,10 @@ function LoginDialog({ open, onClose }) {
         );
         
         if (result.success) {
+            console.log('✅ Registration successful');
             onClose();
             setRegisterData({ 
+                username: '',
                 email: '', 
                 password: '', 
                 confirmPassword: '', 
@@ -112,15 +122,17 @@ function LoginDialog({ open, onClose }) {
                 lastName: '' 
             });
         } else {
-            setError(result.error || 'Registrierung fehlgeschlagen');
+            console.error('❌ Registration failed:', result.message);
+            setError(result.message || 'Registrierung fehlgeschlagen');
         }
         setLoading(false);
     };
 
     const handleClose = () => {
         setError('');
-        setLoginData({ email: '', password: '' });
+        setLoginData({ username: '', password: '' });
         setRegisterData({ 
+            username: '',
             email: '', 
             password: '', 
             confirmPassword: '', 
@@ -151,10 +163,9 @@ function LoginDialog({ open, onClose }) {
                     <form onSubmit={handleLogin}>
                         <TextField
                             fullWidth
-                            label="E-Mail"
-                            type="email"
-                            value={loginData.email}
-                            onChange={(e) => setLoginData({ ...loginData, email: e.target.value })}
+                            label="Benutzername"
+                            value={loginData.username}
+                            onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
                             margin="normal"
                             required
                         />
@@ -173,6 +184,23 @@ function LoginDialog({ open, onClose }) {
                 {/* Register Tab */}
                 <TabPanel value={tabValue} index={1}>
                     <form onSubmit={handleRegister}>
+                        <TextField
+                            fullWidth
+                            label="Benutzername"
+                            value={registerData.username}
+                            onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
+                            margin="normal"
+                            required
+                        />
+                        <TextField
+                            fullWidth
+                            label="E-Mail"
+                            type="email"
+                            value={registerData.email}
+                            onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
+                            margin="normal"
+                            required
+                        />
                         <TextField
                             fullWidth
                             label="Vorname"

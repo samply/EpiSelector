@@ -34,30 +34,71 @@ import {
 import { useAuth } from '../context/AuthContext';
 
 function ProfilePage() {
-    const { user, savedProcesses, getSavedProcesses, deleteProcess, downloadProcessResults } = useAuth();
+    const { currentUser, getSavedProcesses, deleteMatchingProcess } = useAuth();
     const [loading, setLoading] = useState(true);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
     const [processToDelete, setProcessToDelete] = useState(null);
     const [selectedProcess, setSelectedProcess] = useState(null);
     const [viewDialogOpen, setViewDialogOpen] = useState(false);
     const [error, setError] = useState('');
+    const [savedProcesses, setSavedProcesses] = useState([]);
 
     // Load saved processes when component mounts
     useEffect(() => {
-        if (user) {
+        if (currentUser) {
             loadSavedProcesses();
         }
-    }, [user]);
+    }, [currentUser]);
 
     const loadSavedProcesses = async () => {
         try {
             setLoading(true);
-            await getSavedProcesses(); // This will load the mock data
+            setError('');
+            console.log('📋 Lade gespeicherte Prozesse...');
+            
+            const result = await getSavedProcesses();
+            
+            if (result.success) {
+                // Transformiere Backend-Daten in Frontend-Format
+                const transformedProcesses = result.processes.map(process => ({
+                    id: process.id,
+                    name: `${process.mmethod || 'Unbekannt'} - ${process.groupindicator || 'Matching'}`,
+                    created_at: process.created_at,
+                    matching_method: process.mmethod || 'Unbekannt',
+                    algorithm: process.mdistance || 'nearest',
+                    target_variable: process.groupindicator || 'Unbekannt',
+                    control_variables: Array.isArray(process.controllvariables) ? process.controllvariables : [],
+                    result_count: estimateResultCount(process),
+                    status: 'completed',
+                    // Rohdaten für Details
+                    rawData: process
+                }));
+                
+                setSavedProcesses(transformedProcesses);
+                console.log('✅ Gespeicherte Prozesse geladen:', transformedProcesses.length);
+            } else {
+                setError(result.message || 'Fehler beim Laden der Prozesse');
+                setSavedProcesses([]);
+            }
         } catch (error) {
-            console.error('Error loading saved processes:', error);
+            console.error('❌ Fehler beim Laden der gespeicherten Prozesse:', error);
             setError('Fehler beim Laden der gespeicherten Prozesse');
+            setSavedProcesses([]);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const estimateResultCount = (process) => {
+        try {
+            if (process.dataset_json) {
+                const dataset = JSON.parse(process.dataset_json);
+                return Array.isArray(dataset) ? dataset.length : 0;
+            }
+            // Fallback-Schätzung
+            return process.mratio ? process.mratio * 50 : 100;
+        } catch {
+            return 0;
         }
     };
 
@@ -96,9 +137,19 @@ function ProfilePage() {
 
     const handleDeleteConfirm = async () => {
         try {
-            await deleteProcess(processToDelete.id);
+            console.log('🗑️ Lösche Prozess:', processToDelete.id);
+            
+            const result = await deleteMatchingProcess(processToDelete.id);
+            
+            if (result.success) {
+                console.log('✅ Prozess erfolgreich gelöscht');
+                // Aktualisiere die Liste
+                await loadSavedProcesses();
+            } else {
+                setError(result.message || 'Fehler beim Löschen des Prozesses');
+            }
         } catch (error) {
-            console.error('Error deleting process:', error);
+            console.error('❌ Fehler beim Löschen des Prozesses:', error);
             setError('Fehler beim Löschen des Prozesses');
         }
         
@@ -120,7 +171,7 @@ function ProfilePage() {
         }
     };
 
-    if (!user) {
+    if (!currentUser) {
         return (
             <Card sx={{ maxWidth: 600, margin: 'auto', mt: 4 }}>
                 <CardContent>
@@ -159,19 +210,19 @@ function ProfilePage() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            {user.first_name} {user.last_name}
+                            {currentUser.first_name} {currentUser.last_name}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Email sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            {user.email}
+                            {currentUser.email}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <DateRange sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            Mitglied seit: {formatDate(user.created_at || new Date())}
+                            Mitglied seit: {formatDate(currentUser.created_at || new Date())}
                         </Typography>
                     </Box>
                 </CardContent>

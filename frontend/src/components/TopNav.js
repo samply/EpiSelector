@@ -11,7 +11,7 @@ import LoginDialog from './auth/LoginDialog';
 function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setScoreMethode, setAlgorithmus,setErsetzung, setÜbereinstimmungswert}) {
     const [loginDialogOpen, setLoginDialogOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const { user, logout, isAuthenticated } = useAuth();
+    const { currentUser, logout, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
     const linkStyle = {
@@ -62,7 +62,7 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
                 {isAuthenticated ? (
                     <>
                         <Typography variant="body2" sx={{ color: 'white', mr: 1 }}>
-                            Willkommen, {user?.first_name || user?.email}
+                            Willkommen, {currentUser?.first_name || currentUser?.username}
                         </Typography>
                         <IconButton
                             onClick={handleMenuOpen}

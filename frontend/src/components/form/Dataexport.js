@@ -188,53 +188,49 @@ function Dataexport() {
         setSaving(true);
         
         try {
-            const processData = {
-                name: processName,
-                matchingMethod: isMatchingMethode,
-                resultCount: isResultData ? isResultData.length : 0
+            // Erstelle Datenstruktur für Django Backend (SavedRRequest Model)
+            const backendData = {
+                // Parameter für das SavedRRequest Model
+                groupindicator: null,
+                controllvariables: [],
+                mmethod: isMatchingMethode || null,
+                mdistance: null,
+                mreplace: false,
+                mratio: null,
+                mcaliper: null,
+                mcalipervariables: null,
+                dataset_json: '',
             };
 
-            // Nur relevante Parameter je nach Matching-Methode hinzufügen
+            // Füllen der Daten je nach Matching-Methode
             if (isMatchingMethode === "Propensity Score") {
                 // Propensity Score Parameter
-                if (isZielvariable && isZielvariable !== "defaultZielvariable") {
-                    processData.targetVariable = isZielvariable;
+                backendData.groupindicator = isZielvariable !== "defaultZielvariable" ? isZielvariable : null;
+                
+                // Kontrollvariablen verarbeiten
+                if (isAllKontrollvariablen && Array.isArray(isAllKontrollvariablen)) {
+                    backendData.controllvariables = isAllKontrollvariablen.map(variable => 
+                        typeof variable === 'object' && variable !== null 
+                            ? variable.var || variable.name || variable.label || variable.text || variable
+                            : variable
+                    ).filter(name => name);
                 }
-                if (isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen") {
-                    // Verwende isAllKontrollvariablen für die tatsächlichen Variablennamen
-                    const variables = isAllKontrollvariablen || isKontrollvariablen;
-                    if (Array.isArray(variables)) {
-                        processData.controlVariables = variables.map(variable => 
-                            typeof variable === 'object' && variable !== null 
-                                ? variable.var || variable.name || variable.label || variable.text || variable
-                                : variable
-                        ).filter(name => name);
-                    } else {
-                        processData.controlVariables = [variables];
-                    }
-                }
-                if (isVerhältnis && isVerhältnis !== "defaultVerhältnis") {
-                    processData.ratio = isVerhältnis;
-                }
-                if (isScoreMethode && isScoreMethode !== "defaultScoreMethode") {
-                    processData.scoreMethod = isScoreMethode;
-                }
-                if (isAlgorithmus && isAlgorithmus !== "defaultAlgo") {
-                    processData.algorithm = isAlgorithmus;
-                }
+                
+                backendData.mdistance = isAlgorithmus !== "defaultAlgo" ? isAlgorithmus : 'nearest';
+                backendData.mreplace = isErsetzung === "TRUE" || isErsetzung === true;
+                backendData.mratio = isVerhältnis !== "defaultVerhältnis" ? parseInt(isVerhältnis) : 1;
+                
+                // Caliper für Propensity Score
                 if (isÜbereinstimmungswert && isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") {
-                    processData.matchValue = isÜbereinstimmungswert;
+                    backendData.mcaliper = parseFloat(isÜbereinstimmungswert);
                 }
-                if (isErsetzung !== undefined) {
-                    processData.replacement = isErsetzung;
-                }
+                
             } else if (isMatchingMethode === "Exaktes Matching") {
                 // Exaktes Matching Parameter
-                if (isFälleKontrollenGruppenindikator) {
-                    processData.groupIndicator = isFälleKontrollenGruppenindikator;
-                }
-                if (isAllMatchingvariablen && isAllMatchingvariablen !== '') {
-                    // Extrahiere die Namen der Matching-Variablen
+                backendData.groupindicator = isFälleKontrollenGruppenindikator || null;
+                
+                // Matching-Variablen als Kontrollvariablen verwenden
+                if (isAllMatchingvariablen) {
                     const extractVariableNames = (variables) => {
                         if (Array.isArray(variables)) {
                             return variables.map(variable => {
@@ -242,38 +238,47 @@ function Dataexport() {
                                     return variable.var || variable.name || variable.label || variable.text || '';
                                 }
                                 return variable;
-                            }).filter(name => name); // Entferne leere Namen
+                            }).filter(name => name);
                         } else if (typeof variables === 'object' && variables !== null) {
                             const name = variables.var || variables.name || variables.label || variables.text || '';
                             return name ? [name] : [];
                         }
                         return [variables];
                     };
-                    
-                    processData.matchingVariables = extractVariableNames(isAllMatchingvariablen);
+                    backendData.controllvariables = extractVariableNames(isAllMatchingvariablen);
                 }
+                
+                backendData.mdistance = 'exact';
+                backendData.mratio = isVerhältnis !== "defaultVerhältnis" ? parseInt(isVerhältnis) : 1;
+                
+                // Toleranz für Exaktes Matching
                 if (isMatchingtoleranz && isMatchingtoleranz !== '') {
-                    processData.matchingTolerance = isMatchingtoleranz;
-                }
-                if (isVerhältnis && isVerhältnis !== "defaultVerhältnis") {
-                    processData.ratio = isVerhältnis;
-                }
-            } else {
-                // Fallback für andere Methoden
-                if (isAlgorithmus && isAlgorithmus !== "defaultAlgo") {
-                    processData.algorithm = isAlgorithmus;
+                    backendData.mcaliper = parseFloat(isMatchingtoleranz);
+                    backendData.mcalipervariables = backendData.controllvariables;
                 }
             }
 
-            const result = await saveMatchingProcess(processData);
+            // Dataset als JSON String speichern (falls verfügbar)
+            if (isResultData && Array.isArray(isResultData)) {
+                backendData.dataset_json = JSON.stringify(isResultData);
+            } else {
+                backendData.dataset_json = JSON.stringify([]);
+            }
+
+            console.log('💾 Sending to Django Backend:', backendData);
+            
+            const result = await saveMatchingProcess(backendData);
             
             if (result.success) {
                 alert('Maske erfolgreich gespeichert!');
                 setSaveDialogOpen(false);
                 setProcessName('');
+                console.log('✅ Matching-Prozess erfolgreich im Backend gespeichert');
+            } else {
+                throw new Error(result.message || 'Fehler beim Speichern');
             }
         } catch (error) {
-            console.error('Fehler beim Speichern:', error);
+            console.error('❌ Fehler beim Speichern:', error);
             alert('Fehler beim Speichern der Maske: ' + error.message);
         } finally {
             setSaving(false);
