@@ -382,11 +382,48 @@ function calculateHistogramDataFromSummary(summaryData, variable, targetVariable
 function calculateBoxplotData(resultData, variable, targetVariable) {
     if (!resultData || !variable) return { pre_matching: {}, post_matching: {} };
     
-    const group0Data = resultData.filter(row => row[targetVariable] == 0).map(row => parseFloat(row[variable]));
-    const group1Data = resultData.filter(row => row[targetVariable] == 1).map(row => parseFloat(row[variable]));
+    console.log(`=== BOXPLOT-BERECHNUNG FÜR VARIABLE: ${variable} ===`);
+    console.log(`Zielvariable: ${targetVariable}`);
+    console.log(`Gesamte Datensätze: ${resultData.length}`);
     
-    function calculateBoxplotStats(data) {
-        if (data.length === 0) return [0, 0, 0, 0, 0];
+    // ========== PRE-MATCHING: Alle Daten ==========
+    const preGroup0Data = resultData
+        .filter(row => row[targetVariable] == 0)
+        .map(row => parseFloat(row[variable]))
+        .filter(val => !isNaN(val));
+    
+    const preGroup1Data = resultData
+        .filter(row => row[targetVariable] == 1)
+        .map(row => parseFloat(row[variable]))
+        .filter(val => !isNaN(val));
+    
+    console.log(`📊 PRE-MATCHING (alle ${resultData.length} Datensätze):`);
+    console.log(`   - Gruppe 0 (${targetVariable}=0): ${preGroup0Data.length} Werte`);
+    console.log(`   - Gruppe 1 (${targetVariable}=1): ${preGroup1Data.length} Werte`);
+    
+    // ========== POST-MATCHING: Nur Matching weight = 1 ==========
+    const postMatchingData = resultData.filter(row => row['Matching weight'] == 1);
+    console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight = 1)`);
+    
+    const postGroup0Data = postMatchingData
+        .filter(row => row[targetVariable] == 0)
+        .map(row => parseFloat(row[variable]))
+        .filter(val => !isNaN(val));
+    
+    const postGroup1Data = postMatchingData
+        .filter(row => row[targetVariable] == 1)
+        .map(row => parseFloat(row[variable]))
+        .filter(val => !isNaN(val));
+    
+    console.log(`📊 POST-MATCHING Datenaufteilung:`);
+    console.log(`   - Gruppe 0 (${targetVariable}=0): ${postGroup0Data.length} Werte`);
+    console.log(`   - Gruppe 1 (${targetVariable}=1): ${postGroup1Data.length} Werte`);
+    
+    function calculateBoxplotStats(data, label) {
+        if (data.length === 0) {
+            console.warn(`⚠️ Keine Daten für ${label} - verwende Nullwerte`);
+            return [0, 0, 0, 0, 0];
+        }
         
         data.sort((a, b) => a - b);
         const q1 = data[Math.floor(data.length * 0.25)];
@@ -395,19 +432,24 @@ function calculateBoxplotData(resultData, variable, targetVariable) {
         const min = data[0];
         const max = data[data.length - 1];
         
+        console.log(`📈 ${label}: Min=${min.toFixed(2)}, Q1=${q1.toFixed(2)}, Median=${median.toFixed(2)}, Q3=${q3.toFixed(2)}, Max=${max.toFixed(2)}`);
+        
         return [min, q1, median, q3, max];
     }
     
-    return {
+    const result = {
         pre_matching: {
-            boxplot_one: calculateBoxplotStats(group0Data),
-            boxplot_two: calculateBoxplotStats(group1Data)
+            boxplot_one: calculateBoxplotStats(preGroup0Data, `PRE Gruppe 0 (${targetVariable}=0)`),
+            boxplot_two: calculateBoxplotStats(preGroup1Data, `PRE Gruppe 1 (${targetVariable}=1)`)
         },
         post_matching: {
-            boxplot_one: calculateBoxplotStats(group0Data),
-            boxplot_two: calculateBoxplotStats(group1Data)
+            boxplot_one: calculateBoxplotStats(postGroup0Data, `POST Gruppe 0 (${targetVariable}=0)`),
+            boxplot_two: calculateBoxplotStats(postGroup1Data, `POST Gruppe 1 (${targetVariable}=1)`)
         }
     };
+    
+    console.log(`✅ Boxplot-Daten erfolgreich berechnet für "${variable}"`);
+    return result;
 }
 
 function calculateBoxplotDataFromSummary(summaryData, variable, targetVariable) {
@@ -754,33 +796,39 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             return;
         }
         
-        // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
-        let boxplotData;
-        if (isSummaryData && Array.isArray(isSummaryData) && isSummaryData.length > 0) {
-            boxplotData = calculateBoxplotDataFromSummary(isSummaryData, selectedVariable, isZielvariable);
-            console.log("Verwende Summary-Daten für Boxplot:", boxplotData);
-        } else if (isResultData && Array.isArray(isResultData) && isResultData.length > 0) {
-            boxplotData = calculateBoxplotData(isResultData, selectedVariable, isZielvariable);
-            console.log("Verwende Result-Daten für Boxplot:", boxplotData);
-        } else {
-            console.log("Keine Daten verfügbar für Boxplot");
+        console.log(`=== BOXPLOT-GENERIERUNG FÜR VARIABLE: ${selectedVariable} ===`);
+        console.log(`Zielvariable: ${targetVariableForLabels}`);
+        
+        // Verwende immer Result-Daten für detaillierte Boxplots (wie bei Histogrammen)
+        if (!isResultData || !Array.isArray(isResultData) || isResultData.length === 0) {
+            console.log("❌ Keine Result-Daten verfügbar für Boxplot-Generierung");
             return;
         }
         
-        console.log("Boxplot-Daten berechnet:", boxplotData);
-        console.log("Pre-matching boxplots:", boxplotData.pre_matching);
-        console.log("Post-matching boxplots:", boxplotData.post_matching);
+        console.log(`✅ Verwende Result-Daten (${isResultData.length} Datensätze)`);
         
+        // Berechne Boxplot-Daten mit korrekter Pre/Post-Matching Unterscheidung
+        const boxplotData = calculateBoxplotData(isResultData, selectedVariable, targetVariableForLabels);
+        
+        console.log("📊 Boxplot-Daten berechnet:", boxplotData);
+        console.log("📊 Pre-matching boxplots:", boxplotData.pre_matching);
+        console.log("📊 Post-matching boxplots:", boxplotData.post_matching);
+        
+        // Setze die Boxplots: [boxplot_one, boxplot_two] für Pre- und Post-Matching
         setBoxplots(
-            selectedVariable, 
-            isZielvariable, 
-            [boxplotData.pre_matching.boxplot_one, boxplotData.pre_matching.boxplot_two], 
-            [], 
-            [boxplotData.post_matching.boxplot_one, boxplotData.post_matching.boxplot_two], 
-            []
+            selectedVariable,                                                    // Y-Achse Label
+            targetVariableForLabels,                                            // X-Achse Label  
+            [boxplotData.pre_matching.boxplot_one, boxplotData.pre_matching.boxplot_two],    // Pre-Matching Boxplots
+            [],                                                                 // Pre-Matching Outliers (leer)
+            [boxplotData.post_matching.boxplot_one, boxplotData.post_matching.boxplot_two], // Post-Matching Boxplots
+            []                                                                  // Post-Matching Outliers (leer)
         );
+        
+        // Aktualisiere State
         setBoxplotVariable(selectedVariable);
         setVariableB(selectedVariable);
+        
+        console.log(`✅ Pre- und Post-Matching Boxplots für "${selectedVariable}" erfolgreich generiert!`);
     };
 
 
