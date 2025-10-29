@@ -167,7 +167,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('💾 Speichere Matching-Prozess:', processData);
             
-            const response = await apiCall('/api/save-request/', {
+            const response = await apiCall('/save-request/', {
                 method: 'POST',
                 body: JSON.stringify(processData),
             });
@@ -192,7 +192,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📋 Lade gespeicherte Matching-Prozesse...');
             
-            const response = await apiCall('/api/list-requests/');
+            const response = await apiCall('/list-requests/');
             
             if (response.ok) {
                 const data = await response.json();
@@ -213,7 +213,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📄 Lade Matching-Prozess:', processId);
             
-            const response = await apiCall(`/api/get-request/${processId}/`);
+            const response = await apiCall(`/get-request/${processId}/`);
             
             if (response.ok) {
                 const data = await response.json();
@@ -234,7 +234,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('🗑️ Lösche Matching-Prozess:', processId);
             
-            const response = await apiCall(`/api/delete-request/${processId}/`, {
+            const response = await apiCall(`/delete-request/${processId}/`, {
                 method: 'DELETE',
             });
 
