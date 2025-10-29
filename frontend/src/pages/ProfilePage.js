@@ -208,18 +208,20 @@ function ProfilePage() {
         <Box sx={{ 
             width: "100%", 
             height: "100vh", 
-            display: "grid",
-            gridTemplateRows: "auto 1fr",  // Erste Row auto, zweite Row nimmt den Rest
+            display: "flex",
+            flexDirection: "column",
             gap: 2,
             padding: 2,
             boxSizing: "border-box",
-            overflow: "hidden"
+            overflow: "auto"
         }}>
             {/* User Info Card */}
             <Card sx={{ 
                 width: "100%", 
                 borderRadius: '10px', 
                 height: "auto",
+                maxHeight: "150px",
+                flexShrink: 0,
                 display: "flex",
                 flexDirection: "column"
             }}>
@@ -248,14 +250,16 @@ function ProfilePage() {
                 </CardContent>
             </Card>
 
-            {/* Saved Processes Card */}
+            {/* Saved Processes Card - FESTE HÖHE */}
             <Card sx={{ 
                 width: "100%", 
                 borderRadius: '10px', 
+                height: "400px",  // FESTE HÖHE
+                maxHeight: "400px",  // ZUSÄTZLICHE SICHERHEIT
+                flexShrink: 0,  // VERHINDERT VERKLEINERUNG
                 display: "flex",
                 flexDirection: "column",
-                overflow: "hidden",
-                minHeight: 0  // Wichtig für Grid-Layout
+                overflow: "hidden"
             }}>
                 <CardHeader
                     title="Gespeicherte Matching-Prozesse"
@@ -265,12 +269,11 @@ function ProfilePage() {
                 <CardContent sx={{ 
                     backgroundColor: "white", 
                     width: "100%", 
-                    flex: 1,
+                    height: "calc(100% - 48px)",  // Header height berücksichtigen
                     overflow: "hidden",
                     display: "flex",
                     flexDirection: "column",
-                    padding: "16px",
-                    minHeight: 0
+                    padding: "16px"
                 }}>
                     {error && (
                         <Alert severity="error" sx={{ mb: 2 }}>
@@ -289,8 +292,8 @@ function ProfilePage() {
                             component={Paper} 
                             sx={{ 
                                 overflow: 'auto', 
-                                flex: 1,
-                                minHeight: 0
+                                height: "300px",  // FESTE HÖHE FÜR TABELLE
+                                maxHeight: "300px"
                             }}
                         >
                             <Table size="small" sx={{ '& .MuiTableCell-root': { padding: '4px 8px' } }}>
@@ -381,6 +384,15 @@ function ProfilePage() {
                     )}
                 </CardContent>
             </Card>
+
+            {/* Platzhalter für Matching-Ergebnisse (falls später hinzugefügt) */}
+            <Box sx={{ 
+                height: "100px", 
+                backgroundColor: "transparent",
+                marginBottom: 2 
+            }}>
+                {/* Dieser Bereich kann später für Matching-Ergebnisse verwendet werden */}
+            </Box>
 
             {/* Delete Confirmation Dialog */}
             <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
