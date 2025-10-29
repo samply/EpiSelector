@@ -254,7 +254,7 @@ function ProfilePage() {
             <Card sx={{ 
                 width: "100%", 
                 borderRadius: '10px', 
-                height: "400px",  // FESTE HÖHE
+                height: "50px",  // FESTE HÖHE
                 maxHeight: "400px",  // ZUSÄTZLICHE SICHERHEIT
                 flexShrink: 0,  // VERHINDERT VERKLEINERUNG
                 display: "flex",

@@ -77,7 +77,7 @@ border-radius: 10px 10px 10px 10px;
     width:100%;
     color: white;
     align-self: flex-end;
-    margin-top: 2.5%;
+    margin-top: 0.5%;  /* Reduziert von 2.5% auf 0.5% */
 }
 
 .InfoBox{

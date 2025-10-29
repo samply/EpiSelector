@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Datenbank
+  db:
+    image: postgres:15
+    container_name: episelector-db-prod
+    environment:
+      POSTGRES_DB: episelector
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_secure_123}
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data
+    networks:
+      - episelector-network
+    restart: unless-stopped
+
+  # R Backend (Plumber API)
+  r-backend:
+    build:
+      context: ./backend/statistic_api
+      dockerfile: Dockerfile
+    container_name: episelector-r-backend-prod
+    networks:
+      - episelector-network
+    restart: unless-stopped
+
+  # Django Backend
+  django-backend:
+    build:
+      context: ./backend/django_backend
+      dockerfile: Dockerfile
+    container_name: episelector-django-backend-prod
+    environment:
+      - DEBUG=0
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-postgres_secure_123}@db:5432/episelector
+      - R_BACKEND_URL=http://r-backend:3420
+      - ALLOWED_HOSTS=localhost,127.0.0.1,${DOMAIN_NAME:-episelector.com}
+    depends_on:
+      - db
+      - r-backend
+    networks:
+      - episelector-network
+    restart: unless-stopped
+
+  # React Frontend (Production Build)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    container_name: episelector-frontend-prod
+    depends_on:
+      - django-backend
+    networks:
+      - episelector-network
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: episelector-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/ssl/certs
+    depends_on:
+      - frontend
+      - django-backend
+    networks:
+      - episelector-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data_prod:
+
+networks:
+  episelector-network:
+    driver: bridge

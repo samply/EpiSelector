@@ -1,0 +1,92 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Datenbank
+  db:
+    image: postgres:15
+    container_name: episelector-db
+    environment:
+      POSTGRES_DB: episelector
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - episelector-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # R Backend (Plumber API)
+  r-backend:
+    build:
+      context: ./backend/statistic_api
+      dockerfile: Dockerfile
+    container_name: episelector-r-backend
+    ports:
+      - "3420:3420"
+    networks:
+      - episelector-network
+    volumes:
+      - ./backend/statistic_api:/app
+    working_dir: /app
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3420/test"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Django Backend
+  django-backend:
+    build:
+      context: ./backend/django_backend
+      dockerfile: Dockerfile
+    container_name: episelector-django-backend
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgresql://postgres:postgres123@db:5432/episelector
+      - R_BACKEND_URL=http://r-backend:3420
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      r-backend:
+        condition: service_healthy
+    networks:
+      - episelector-network
+    volumes:
+      - ./backend/django_backend:/app
+    command: >
+      sh -c "python manage.py migrate &&
+             python manage.py collectstatic --noinput &&
+             python manage.py runserver 0.0.0.0:8000"
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: episelector-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django-backend
+    networks:
+      - episelector-network
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+
+volumes:
+  postgres_data:
+
+networks:
+  episelector-network:
+    driver: bridge
