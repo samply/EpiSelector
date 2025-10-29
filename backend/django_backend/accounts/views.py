@@ -16,26 +16,17 @@ from django.utils.decorators import method_decorator
 class RegisterView(APIView):
     def post(self, request):
         username = request.data.get("username")
-        email = request.data.get("email")
         password = request.data.get("password")
-        first_name = request.data.get("first_name", "")
-        last_name = request.data.get("last_name", "")
 
-        if not username or not password or not email:
-            return Response({"error": "Username, Email und Passwort sind erforderlich."}, status=400)
+        if not username or not password:
+            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
 
         if User.objects.filter(username=username).exists():
             return Response({"error": "Benutzername existiert bereits."}, status=400)
-            
-        if User.objects.filter(email=email).exists():
-            return Response({"error": "Email existiert bereits."}, status=400)
 
         user = User.objects.create_user(
             username=username, 
-            password=password,
-            email=email,
-            first_name=first_name,
-            last_name=last_name
+            password=password
         )
         
         token, _ = Token.objects.get_or_create(user=user)
@@ -46,9 +37,6 @@ class RegisterView(APIView):
             "user": {
                 "id": user.id,
                 "username": user.username,
-                "email": user.email,
-                "first_name": user.first_name,
-                "last_name": user.last_name,
                 "created_at": user.date_joined.isoformat()
             }
         }, status=201)
@@ -70,9 +58,6 @@ class LoginView(APIView):
                 "user": {
                     "id": user.id,
                     "username": user.username,
-                    "email": user.email,
-                    "first_name": user.first_name,
-                    "last_name": user.last_name,
                     "created_at": user.date_joined.isoformat()
                 }
             })
