@@ -208,8 +208,8 @@ function ProfilePage() {
         <Box sx={{ 
             width: "100%", 
             height: "100vh", 
-            display: "flex", 
-            flexDirection: "column", 
+            display: "grid",
+            gridTemplateRows: "auto 1fr",  // Erste Row auto, zweite Row nimmt den Rest
             gap: 2,
             padding: 2,
             boxSizing: "border-box",
@@ -220,8 +220,6 @@ function ProfilePage() {
                 width: "100%", 
                 borderRadius: '10px', 
                 height: "auto",
-                minHeight: "120px",
-                flexShrink: 0,
                 display: "flex",
                 flexDirection: "column"
             }}>
@@ -233,9 +231,7 @@ function ProfilePage() {
                 <CardContent sx={{ 
                     backgroundColor: "white", 
                     width: "100%", 
-                    flex: 1,
-                    padding: "16px",
-                    paddingBottom: "20px"
+                    padding: "16px"
                 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
@@ -256,11 +252,10 @@ function ProfilePage() {
             <Card sx={{ 
                 width: "100%", 
                 borderRadius: '10px', 
-                flex: 1,
                 display: "flex",
                 flexDirection: "column",
-                minHeight: 0,
-                overflow: "hidden"
+                overflow: "hidden",
+                minHeight: 0  // Wichtig für Grid-Layout
             }}>
                 <CardHeader
                     title="Gespeicherte Matching-Prozesse"
@@ -295,8 +290,7 @@ function ProfilePage() {
                             sx={{ 
                                 overflow: 'auto', 
                                 flex: 1,
-                                minHeight: 0,
-                                maxHeight: '100%'
+                                minHeight: 0
                             }}
                         >
                             <Table size="small" sx={{ '& .MuiTableCell-root': { padding: '4px 8px' } }}>
