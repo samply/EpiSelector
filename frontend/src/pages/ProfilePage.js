@@ -28,7 +28,6 @@ import {
     Visibility,
     Analytics,
     Person,
-    Email,
     DateRange
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
@@ -206,14 +205,23 @@ function ProfilePage() {
     }
 
     return (
-        <Box sx={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ 
+            width: "100%", 
+            height: "100vh", 
+            display: "flex", 
+            flexDirection: "column", 
+            gap: 2,
+            padding: 2,
+            boxSizing: "border-box",
+            overflow: "hidden"
+        }}>
             {/* User Info Card */}
             <Card sx={{ 
                 width: "100%", 
-                borderRadius: '10px 10px 10px 10px', 
-                position: 'relative', 
+                borderRadius: '10px', 
                 height: "auto",
-                minHeight: "200px",
+                minHeight: "120px",
+                flexShrink: 0,
                 display: "flex",
                 flexDirection: "column"
             }}>
@@ -232,13 +240,7 @@ function ProfilePage() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            {currentUser.first_name} {currentUser.last_name}
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
-                        <Email sx={{ color: 'primary.main' }} />
-                        <Typography variant="body1">
-                            {currentUser.email}
+                            Benutzername: {currentUser.username}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -253,12 +255,12 @@ function ProfilePage() {
             {/* Saved Processes Card */}
             <Card sx={{ 
                 width: "100%", 
-                borderRadius: '10px 10px 10px 10px', 
-                position: 'relative',
-                height: "calc(100vh - 320px)",
-                minHeight: "400px",
+                borderRadius: '10px', 
+                flex: 1,
                 display: "flex",
-                flexDirection: "column"
+                flexDirection: "column",
+                minHeight: 0,
+                overflow: "hidden"
             }}>
                 <CardHeader
                     title="Gespeicherte Matching-Prozesse"
@@ -267,11 +269,13 @@ function ProfilePage() {
                 />
                 <CardContent sx={{ 
                     backgroundColor: "white", 
-                    width: "97%", 
+                    width: "100%", 
                     flex: 1,
                     overflow: "hidden",
                     display: "flex",
-                    flexDirection: "column"
+                    flexDirection: "column",
+                    padding: "16px",
+                    minHeight: 0
                 }}>
                     {error && (
                         <Alert severity="error" sx={{ mb: 2 }}>
@@ -289,10 +293,10 @@ function ProfilePage() {
                         <TableContainer 
                             component={Paper} 
                             sx={{ 
-                                overflowX: 'auto', 
-                                flex: 1, 
-                                height: '100%',
-                                maxHeight: 'calc(100% - 40px)'
+                                overflow: 'auto', 
+                                flex: 1,
+                                minHeight: 0,
+                                maxHeight: '100%'
                             }}
                         >
                             <Table size="small" sx={{ '& .MuiTableCell-root': { padding: '4px 8px' } }}>
