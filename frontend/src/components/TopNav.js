@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {Link, useNavigate} from 'react-router-dom';
 import '../App.css';
 import Typography from '@mui/material/Typography';
 import { Button, Box, Menu, MenuItem, Avatar, IconButton } from '@mui/material';
 import { Person, AccountCircle } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
+import AppContext from '../AppContext';
 import LoginDialog from './auth/LoginDialog';
 
 
@@ -13,6 +14,9 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
     const [anchorEl, setAnchorEl] = useState(null);
     const { currentUser, logout, isAuthenticated } = useAuth();
     const navigate = useNavigate();
+    
+    // AppContext für fallback falls Props nicht verfügbar sind
+    const appContext = useContext(AppContext);
 
     const linkStyle = {
         textDecoration: "none",
@@ -20,17 +24,33 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
     };
 
     const deleteAllData = () => {
-        setDatenquelle("defaultQuelle");
-        setDatei("defaultQuelle");
-        setMatchingMethode("defaultMethode");
-        setZielvariable("defaultZielvariable");
-        setKontrollvariablen("defaultKontrollvariablen");
-        setVerhältnis("defaultVerhältnis");
-        setScoreMethode("defaultScoreMethode");
-        setAlgorithmus("defaultAlgo");
-        setErsetzung("defaultErsetz");
-        setÜbereinstimmungswert("defaultÜberinstimmungswert");
-        setWorkflow("Startseite");
+        // Verwende Props falls verfügbar, ansonsten AppContext
+        const setters = {
+            setDatenquelle: setDatenquelle || appContext?.setDatenquelle,
+            setDatei: setDatei || appContext?.setDatei,
+            setMatchingMethode: setMatchingMethode || appContext?.setMatchingMethode,
+            setZielvariable: setZielvariable || appContext?.setZielvariable,
+            setKontrollvariablen: setKontrollvariablen || appContext?.setKontrollvariablen,
+            setVerhältnis: setVerhältnis || appContext?.setVerhältnis,
+            setScoreMethode: setScoreMethode || appContext?.setScoreMethode,
+            setAlgorithmus: setAlgorithmus || appContext?.setAlgorithmus,
+            setErsetzung: setErsetzung || appContext?.setErsetzung,
+            setÜbereinstimmungswert: setÜbereinstimmungswert || appContext?.setÜbereinstimmungswert,
+            setWorkflow: setWorkflow || appContext?.setWorkflow
+        };
+
+        // Nur aufrufen wenn verfügbar
+        if (setters.setDatenquelle) setters.setDatenquelle("defaultQuelle");
+        if (setters.setDatei) setters.setDatei("defaultQuelle");
+        if (setters.setMatchingMethode) setters.setMatchingMethode("defaultMethode");
+        if (setters.setZielvariable) setters.setZielvariable("defaultZielvariable");
+        if (setters.setKontrollvariablen) setters.setKontrollvariablen("defaultKontrollvariablen");
+        if (setters.setVerhältnis) setters.setVerhältnis("defaultVerhältnis");
+        if (setters.setScoreMethode) setters.setScoreMethode("defaultScoreMethode");
+        if (setters.setAlgorithmus) setters.setAlgorithmus("defaultAlgo");
+        if (setters.setErsetzung) setters.setErsetzung("defaultErsetz");
+        if (setters.setÜbereinstimmungswert) setters.setÜbereinstimmungswert("defaultÜberinstimmungswert");
+        if (setters.setWorkflow) setters.setWorkflow("Startseite");
     };
 
     const handleMenuOpen = (event) => {
