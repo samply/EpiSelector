@@ -156,47 +156,62 @@ def boxplot(request):
 
 # save R-Call
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-@api_view(['POST'])
 def save_request(request):
-    data = request.data
+    try:
+        data = request.data
+        
+        print(f"💾 DEBUG: Received data keys: {data.keys()}")
+        print(f"💾 DEBUG: Data type: {type(data)}")
 
-    # Wenn ein User im Request ist (aber ohne Token-Validierung), verwende ihn
-    # Ansonsten erstelle/verwende einen Default-User
-    if hasattr(request, 'user') and request.user.is_authenticated:
-        user = request.user
-    else:
-        # Falls kein authentifizierter User, aber User-Info in den Daten
+        # User-Handling ohne Token-Validierung
+        user = None
+        
+        # Falls ein User-ID in den Daten ist, verwende diesen
         user_id = data.get('user_id')
         if user_id:
             try:
                 user = User.objects.get(id=user_id)
+                print(f"💾 DEBUG: Using user from data: {user.username}")
             except User.DoesNotExist:
-                # Falls User nicht existiert, erstelle Default-User
+                print(f"💾 DEBUG: User {user_id} not found, using anonymous")
+                user = None
+        
+        # Falls kein User, verwende authenticated user oder anonymous
+        if not user:
+            if hasattr(request, 'user') and request.user.is_authenticated:
+                user = request.user
+                print(f"💾 DEBUG: Using authenticated user: {user.username}")
+            else:
+                # Erstelle oder hole anonymous user
                 user, created = User.objects.get_or_create(
                     username='anonymous',
-                    defaults={'email': 'anonymous@example.com', 'first_name': 'Anonymous', 'last_name': 'User'}
+                    defaults={'password': 'anonymous123'}  # Vereinfachte defaults
                 )
-        else:
-            # Erstelle oder hole einen Default-User für anonyme Speicherungen
-            user, created = User.objects.get_or_create(
-                username='anonymous',
-                defaults={'email': 'anonymous@example.com', 'first_name': 'Anonymous', 'last_name': 'User'}
-            )
+                print(f"💾 DEBUG: Using anonymous user (created: {created})")
 
-    SavedRRequest.objects.create(
-        user=user,
-        groupindicator=data.get("groupindicator"),
-        controllvariables=data.get("controllvariables"),
-        mmethod=data.get("mmethod"),
-        mdistance=data.get("mdistance"),
-        mreplace=data.get("mreplace", False),
-        mratio=data.get("mratio"),
-        mcaliper=data.get("mcaliper"),
-        mcalipervariables=data.get("mcalipervariables"),
-        dataset_json=data.get("dataset_json"),
-    )
-    return Response({"message": "Request saved."}, status=201)
+        # Erstelle SavedRRequest
+        saved_request = SavedRRequest.objects.create(
+            user=user,
+            groupindicator=data.get("groupindicator"),
+            controllvariables=data.get("controllvariables"),
+            mmethod=data.get("mmethod"),
+            mdistance=data.get("mdistance"),
+            mreplace=data.get("mreplace", False),
+            mratio=data.get("mratio"),
+            mcaliper=data.get("mcaliper"),
+            mcalipervariables=data.get("mcalipervariables"),
+            dataset_json=data.get("dataset_json"),
+        )
+        
+        print(f"💾 DEBUG: Successfully saved request ID: {saved_request.id}")
+        return Response({"message": "Request saved.", "id": saved_request.id}, status=201)
+        
+    except Exception as e:
+        print(f"❌ ERROR in save_request: {str(e)}")
+        print(f"❌ ERROR type: {type(e)}")
+        import traceback
+        traceback.print_exc()
+        return Response({"error": f"Fehler beim Speichern: {str(e)}"}, status=500)
 
 
 # List of saved calls, excluding datasets
