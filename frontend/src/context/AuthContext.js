@@ -71,10 +71,6 @@ export const AuthProvider = ({ children }) => {
                 body: JSON.stringify({
                     username,
                     password,
-                    // Default-Werte für required fields
-                    email: `${username}@example.com`,
-                    first_name: username,
-                    last_name: '',
                 }),
             });
 

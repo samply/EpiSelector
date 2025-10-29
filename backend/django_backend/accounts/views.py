@@ -6,14 +6,78 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+import json
 
 
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def register_view(request):
+    """Registrierung nur mit Username und Passwort"""
+    try:
+        username = request.data.get("username")
+        password = request.data.get("password")
 
+        if not username or not password:
+            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return Response({"error": "Benutzername existiert bereits."}, status=400)
+
+        user = User.objects.create_user(
+            username=username, 
+            password=password
+        )
+        
+        token, _ = Token.objects.get_or_create(user=user)
+        
+        return Response({
+            "message": "Benutzer erfolgreich registriert.",
+            "token": token.key,
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "created_at": user.date_joined.isoformat()
+            }
+        }, status=201)
+    except Exception as e:
+        return Response({"error": f"Registrierung fehlgeschlagen: {str(e)}"}, status=500)
+
+
+@api_view(['POST'])
+@permission_classes([AllowAny])
+def login_view(request):
+    """Login nur mit Username und Passwort"""
+    try:
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({
+                "message": "Anmeldung erfolgreich.",
+                "token": token.key,
+                "user": {
+                    "id": user.id,
+                    "username": user.username,
+                    "created_at": user.date_joined.isoformat()
+                }
+            })
+        else:
+            return Response({"error": "Ungültige Anmeldedaten."}, status=401)
+    except Exception as e:
+        return Response({"error": f"Anmeldung fehlgeschlagen: {str(e)}"}, status=500)
+
+
+# Alte Class-based Views als Backup
 @method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(APIView):
+    permission_classes = [AllowAny]  # Explizit keine Authentifizierung erforderlich
+    
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -44,6 +108,40 @@ class RegisterView(APIView):
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
+    permission_classes = [AllowAny]  # Explizit keine Authentifizierung erforderlich
+    
+    def post(self, request):
+        username = request.data.get("username")
+        password = request.data.get("password")
+
+        if not username or not password:
+            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
+
+        if User.objects.filter(username=username).exists():
+            return Response({"error": "Benutzername existiert bereits."}, status=400)
+
+        user = User.objects.create_user(
+            username=username, 
+            password=password
+        )
+        
+        token, _ = Token.objects.get_or_create(user=user)
+        
+        return Response({
+            "message": "Benutzer erfolgreich registriert.",
+            "token": token.key,
+            "user": {
+                "id": user.id,
+                "username": user.username,
+                "created_at": user.date_joined.isoformat()
+            }
+        }, status=201)
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+class LoginView(APIView):
+    permission_classes = [AllowAny]  # Explizit keine Authentifizierung erforderlich
+    
     def post(self, request):
         username = request.data.get("username")
         password = request.data.get("password")
