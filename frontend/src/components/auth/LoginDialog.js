@@ -35,11 +35,8 @@ function LoginDialog({ open, onClose }) {
     const [loginData, setLoginData] = useState({ username: '', password: '' });
     const [registerData, setRegisterData] = useState({ 
         username: '',
-        email: '', 
         password: '', 
-        confirmPassword: '', 
-        firstName: '', 
-        lastName: '' 
+        confirmPassword: ''
     });
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -82,7 +79,7 @@ function LoginDialog({ open, onClose }) {
         setError('');
         setLoading(true);
 
-        if (!registerData.username || !registerData.email || !registerData.password || !registerData.firstName || !registerData.lastName) {
+        if (!registerData.username || !registerData.password) {
             setError('Bitte füllen Sie alle Felder aus');
             setLoading(false);
             return;
@@ -102,24 +99,15 @@ function LoginDialog({ open, onClose }) {
 
         console.log('📝 Registration attempt for:', registerData.username);
 
-        const result = await register(
-            registerData.username,
-            registerData.email, 
-            registerData.password, 
-            registerData.firstName, 
-            registerData.lastName
-        );
+        const result = await register(registerData.username, registerData.password);
         
         if (result.success) {
             console.log('✅ Registration successful');
             onClose();
             setRegisterData({ 
                 username: '',
-                email: '', 
                 password: '', 
-                confirmPassword: '', 
-                firstName: '', 
-                lastName: '' 
+                confirmPassword: ''
             });
         } else {
             console.error('❌ Registration failed:', result.message);
@@ -133,11 +121,8 @@ function LoginDialog({ open, onClose }) {
         setLoginData({ username: '', password: '' });
         setRegisterData({ 
             username: '',
-            email: '', 
             password: '', 
-            confirmPassword: '', 
-            firstName: '', 
-            lastName: '' 
+            confirmPassword: ''
         });
         onClose();
     };
@@ -189,40 +174,6 @@ function LoginDialog({ open, onClose }) {
                             label="Benutzername"
                             value={registerData.username}
                             onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
-                            margin="normal"
-                            required
-                        />
-                        <TextField
-                            fullWidth
-                            label="E-Mail"
-                            type="email"
-                            value={registerData.email}
-                            onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
-                            margin="normal"
-                            required
-                        />
-                        <TextField
-                            fullWidth
-                            label="Vorname"
-                            value={registerData.firstName}
-                            onChange={(e) => setRegisterData({ ...registerData, firstName: e.target.value })}
-                            margin="normal"
-                            required
-                        />
-                        <TextField
-                            fullWidth
-                            label="Nachname"
-                            value={registerData.lastName}
-                            onChange={(e) => setRegisterData({ ...registerData, lastName: e.target.value })}
-                            margin="normal"
-                            required
-                        />
-                        <TextField
-                            fullWidth
-                            label="E-Mail"
-                            type="email"
-                            value={registerData.email}
-                            onChange={(e) => setRegisterData({ ...registerData, email: e.target.value })}
                             margin="normal"
                             required
                         />

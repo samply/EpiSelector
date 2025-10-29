@@ -10,8 +10,11 @@ export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    // Prüfe beim App-Start ob ein Token vorhanden ist
+    // Prüfe beim App-Start ob ein Token vorhanden ist (nur wenn explizit angemeldet)
     useEffect(() => {
+        // Für jetzt: Kein automatischer Login
+        // Falls später gewünscht, kann man das wieder einkommentieren:
+        /*
         const token = localStorage.getItem('auth_token');
         const userData = localStorage.getItem('user_data');
         
@@ -27,6 +30,7 @@ export const AuthProvider = ({ children }) => {
                 localStorage.removeItem('user_data');
             }
         }
+        */
         setLoading(false);
     }, []);
 
@@ -54,8 +58,8 @@ export const AuthProvider = ({ children }) => {
         return response;
     };
 
-    // Registrierung
-    const register = async (username, email, password, firstName = '', lastName = '') => {
+    // Registrierung (nur Benutzername + Passwort)
+    const register = async (username, password) => {
         try {
             console.log('📝 Registrierungsversuch für:', username);
             
@@ -66,10 +70,11 @@ export const AuthProvider = ({ children }) => {
                 },
                 body: JSON.stringify({
                     username,
-                    email,
                     password,
-                    first_name: firstName,
-                    last_name: lastName,
+                    // Default-Werte für required fields
+                    email: `${username}@example.com`,
+                    first_name: username,
+                    last_name: '',
                 }),
             });
 
@@ -173,7 +178,7 @@ export const AuthProvider = ({ children }) => {
                 processData.user_id = currentUser.id;
             }
             
-            const response = await apiCall('/save-request/', {
+            const response = await apiCall('/control_selection/save-request/', {
                 method: 'POST',
                 body: JSON.stringify(processData),
             });
@@ -198,7 +203,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📋 Lade gespeicherte Matching-Prozesse...');
             
-            const response = await apiCall('/list-requests/');
+            const response = await apiCall('/control_selection/list-requests/');
             
             if (response.ok) {
                 const data = await response.json();
@@ -219,7 +224,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('📄 Lade Matching-Prozess:', processId);
             
-            const response = await apiCall(`/get-request/${processId}/`);
+            const response = await apiCall(`/control_selection/get-request/${processId}/`);
             
             if (response.ok) {
                 const data = await response.json();
@@ -240,7 +245,7 @@ export const AuthProvider = ({ children }) => {
         try {
             console.log('🗑️ Lösche Matching-Prozess:', processId);
             
-            const response = await apiCall(`/delete-request/${processId}/`, {
+            const response = await apiCall(`/control_selection/delete-request/${processId}/`, {
                 method: 'DELETE',
             });
 
