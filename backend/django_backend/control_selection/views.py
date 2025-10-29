@@ -157,11 +157,35 @@ def boxplot(request):
 # save R-Call
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
+@api_view(['POST'])
 def save_request(request):
     data = request.data
 
+    # Wenn ein User im Request ist (aber ohne Token-Validierung), verwende ihn
+    # Ansonsten erstelle/verwende einen Default-User
+    if hasattr(request, 'user') and request.user.is_authenticated:
+        user = request.user
+    else:
+        # Falls kein authentifizierter User, aber User-Info in den Daten
+        user_id = data.get('user_id')
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+            except User.DoesNotExist:
+                # Falls User nicht existiert, erstelle Default-User
+                user, created = User.objects.get_or_create(
+                    username='anonymous',
+                    defaults={'email': 'anonymous@example.com', 'first_name': 'Anonymous', 'last_name': 'User'}
+                )
+        else:
+            # Erstelle oder hole einen Default-User für anonyme Speicherungen
+            user, created = User.objects.get_or_create(
+                username='anonymous',
+                defaults={'email': 'anonymous@example.com', 'first_name': 'Anonymous', 'last_name': 'User'}
+            )
+
     SavedRRequest.objects.create(
-        user=request.user,
+        user=user,
         groupindicator=data.get("groupindicator"),
         controllvariables=data.get("controllvariables"),
         mmethod=data.get("mmethod"),
@@ -177,9 +201,23 @@ def save_request(request):
 
 # List of saved calls, excluding datasets
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def list_requests(request):
-    saved = SavedRRequest.objects.filter(user=request.user).order_by('-created_at')
+    # Wenn ein User im Request ist, verwende ihn, ansonsten alle Requests
+    if hasattr(request, 'user') and request.user.is_authenticated:
+        saved = SavedRRequest.objects.filter(user=request.user).order_by('-created_at')
+    else:
+        # Falls kein authentifizierter User, zeige alle Requests oder filtere nach user_id Parameter
+        user_id = request.GET.get('user_id')
+        if user_id:
+            try:
+                user = User.objects.get(id=user_id)
+                saved = SavedRRequest.objects.filter(user=user).order_by('-created_at')
+            except User.DoesNotExist:
+                saved = SavedRRequest.objects.none()
+        else:
+            # Zeige alle Requests (falls gewünscht) oder nur anonymous
+            saved = SavedRRequest.objects.filter(user__username='anonymous').order_by('-created_at')
+    
     result = [{
         "id": r.id,
         "created_at": r.created_at,
@@ -197,10 +235,14 @@ def list_requests(request):
 
 # Full call including dataset
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
 def get_request(request, request_id):
     try:
-        saved = SavedRRequest.objects.get(id=request_id, user=request.user)
+        # Wenn ein User authentifiziert ist, filtere nach dem User
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            saved = SavedRRequest.objects.get(id=request_id, user=request.user)
+        else:
+            # Ohne Authentifizierung, hole den Request ohne User-Filter
+            saved = SavedRRequest.objects.get(id=request_id)
     except SavedRRequest.DoesNotExist:
         return Response({"error": "Not found"}, status=404)
 
@@ -221,10 +263,15 @@ def get_request(request, request_id):
 
 # Delete R call
 @api_view(['DELETE'])
-@permission_classes([IsAuthenticated])
 def delete_request(request, pk):
     try:
-        r_request = SavedRRequest.objects.get(pk=pk, user=request.user)
+        # Wenn ein User authentifiziert ist, filtere nach dem User
+        if hasattr(request, 'user') and request.user.is_authenticated:
+            r_request = SavedRRequest.objects.get(pk=pk, user=request.user)
+        else:
+            # Ohne Authentifizierung, hole den Request ohne User-Filter
+            r_request = SavedRRequest.objects.get(pk=pk)
+        
         r_request.delete()
         return Response({'message': 'Eintrag erfolgreich gelöscht.'}, status=status.HTTP_200_OK)
     except SavedRRequest.DoesNotExist:

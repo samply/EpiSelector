@@ -30,13 +30,14 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
     }, []);
 
-    // Helper function für API calls mit Token
+    // Helper function für API calls (ohne Token-Requirement)
     const apiCall = async (endpoint, options = {}) => {
         const token = localStorage.getItem('auth_token');
         const defaultHeaders = {
             'Content-Type': 'application/json',
         };
 
+        // Token nur hinzufügen wenn vorhanden (optional)
         if (token) {
             defaultHeaders['Authorization'] = `Token ${token}`;
         }
@@ -166,6 +167,11 @@ export const AuthProvider = ({ children }) => {
     const saveMatchingProcess = async (processData) => {
         try {
             console.log('💾 Speichere Matching-Prozess:', processData);
+            
+            // Füge User-ID hinzu falls ein Benutzer angemeldet ist
+            if (currentUser && currentUser.id) {
+                processData.user_id = currentUser.id;
+            }
             
             const response = await apiCall('/save-request/', {
                 method: 'POST',
