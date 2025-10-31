@@ -11,13 +11,18 @@
 
 library(plumber)
 library(MatchIt)
-library(plumber)
 library(stringr)
 library("jsonlite")
 library("ggplot2")
 library("cobalt")
 library("lmtest") #coeftest
 library("sandwich") #vcovCL
+
+# Health check endpoint
+#* @get /test
+function() {
+  list(status = "OK", message = "R backend is running", timestamp = Sys.time())
+}
 
 
 #* @apiTitle Plumber Example API
