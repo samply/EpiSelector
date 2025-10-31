@@ -1,31 +1,19 @@
 #!/usr/bin/env Rscript
 
-# R API Startup Script
 cat("Starting R Plumber API...\n")
 
-# Check if plumber is available
-if (!requireNamespace("plumber", quietly = TRUE)) {
-  cat("Error: plumber package not found. Installing...\n")
-  install.packages("plumber", repos = "https://cran.rstudio.com/")
+# Einfache Package-Check und Start
+if (!requireNamespace("plumber", quietly = TRUE) || !requireNamespace("jsonlite", quietly = TRUE)) {
+  cat("Required packages are missing. Installing...\n")
+  install.packages(c("plumber", "jsonlite"), dependencies = TRUE)
 }
 
-# Load required packages
-cat("Loading plumber library...\n")
+# Load plumber
 library(plumber)
 
-# Check if plumber.R exists
-if (!file.exists("plumber.R")) {
-  cat("Error: plumber.R file not found in current directory\n")
-  quit(status = 1)
-}
-
-# Create and run the API
+# Lade und starte die API
 cat("Loading plumber.R...\n")
-tryCatch({
-  pr <- plumb("plumber.R")
-  cat("Starting API on host 0.0.0.0, port 3420...\n")
-  pr$run(host = "0.0.0.0", port = 3420, debug = TRUE)
-}, error = function(e) {
-  cat("Error starting API:", e$message, "\n")
-  quit(status = 1)
-})
+pr <- plumb("plumber.R")
+
+cat("Starting API on port 3420...\n")
+pr$run(host = "0.0.0.0", port = 3420)

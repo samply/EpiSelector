@@ -10,13 +10,15 @@
 #
 
 library(plumber)
-library(MatchIt)
+library(jsonlite)
 library(stringr)
-library("jsonlite")
-library("ggplot2")
-library("cobalt")
-library("lmtest") #coeftest
-library("sandwich") #vcovCL
+
+# Optional packages - load if available
+tryCatch(library(MatchIt), error = function(e) cat("MatchIt not available\n"))
+tryCatch(library(ggplot2), error = function(e) cat("ggplot2 not available\n"))
+tryCatch(library(cobalt), error = function(e) cat("cobalt not available\n"))
+tryCatch(library(lmtest), error = function(e) cat("lmtest not available\n"))
+tryCatch(library(sandwich), error = function(e) cat("sandwich not available\n"))
 
 # Health check endpoint
 #* @get /test
