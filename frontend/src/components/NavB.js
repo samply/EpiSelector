@@ -103,20 +103,21 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                         setWorkflow("Datenquelle");
                                     }}>Select data source
                                         <br/>
-                                        <div style={{
-                                            display: "flex",
-                                            paddingLeft: "10%",
-                                            paddingRight: "10%",
-                                            left: "60px",
-                                            backgroundColor: "#B11B18",
-                                            width: "auto",
-                                            height: "42%",
-                                            borderRadius: "15px",
-                                            color: "white",
-                                            justifyContent: "baseline",
-                                            paddingTop: "1%",
-                                            visibility: isDatenquelle === "defaultQuelle" ? "hidden" : "visible",
-                                        }}>{isDatenquelle}</div>
+                                        {isDatenquelle && isDatenquelle !== "defaultQuelle" && (
+                                            <div style={{
+                                                display: "flex",
+                                                paddingLeft: "10%",
+                                                paddingRight: "10%",
+                                                left: "60px",
+                                                backgroundColor: "#B11B18",
+                                                width: "auto",
+                                                height: "42%",
+                                                borderRadius: "15px",
+                                                color: "white",
+                                                justifyContent: "baseline",
+                                                paddingTop: "1%",
+                                            }}>{isDatenquelle}</div>
+                                        )}
                                     </Link>
                                 </TimelineContent>
                             </TimelineItem>
@@ -131,20 +132,21 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                 <TimelineContent>
                                 <Link to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen");  setWorkflow("Datei-hochladen");}} style={linkStyle}>
                                 Upload file<br/>
-                                    <div
-                                        style={{display: "flex",
-                                        paddingLeft: "10%",
-                                        paddingRight: "10%",
-                                        left: "60px",
-                                        backgroundColor: "#B11B18",
-                                        width: "auto",
-                                        height: "42%",
-                                        borderRadius: "15px",
-                                        color: "white",
-                                        justifyContent: "baseline",
-                                        paddingTop:"1%",
-                                        visibility: isDatei === "defaultDatei" ? "hidden" : "visible" ,
-                                    }}> {isDatei}</div>
+                                    {isDatei && isDatei !== "defaultDatei" && (
+                                        <div
+                                            style={{display: "flex",
+                                            paddingLeft: "10%",
+                                            paddingRight: "10%",
+                                            left: "60px",
+                                            backgroundColor: "#B11B18",
+                                            width: "auto",
+                                            height: "42%",
+                                            borderRadius: "15px",
+                                            color: "white",
+                                            justifyContent: "baseline",
+                                            paddingTop:"1%",
+                                        }}> {isDatei}</div>
+                                    )}
                                 </Link>
                                 </TimelineContent>
                                 </TimelineItem>
@@ -157,7 +159,9 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     <TimelineConnector/>
                                 </TimelineSeparator>
                                 <TimelineContent><Link to='/Matching-Methode' onClick={()=>{visitedSite("matchingmethode"); setWorkflow("Matching-Methode")}}
-                                                       style={linkStyle}>Matching method <br/><div style={{  display: "flex",
+                                                       style={linkStyle}>Matching method <br/>
+                                                       {isMatchingMethode && isMatchingMethode !== "defaultMethode" && (
+                                                        <div style={{  display: "flex",
                                     paddingLeft: "10%",
                                     paddingRight: "10%",
                                     left: "60px",
@@ -168,8 +172,9 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                    visibility: isMatchingMethode === "defaultMethode" ? "hidden" : "visible" ,
-                                }}> {isMatchingMethode}</div></Link></TimelineContent>
+                                }}> {isMatchingMethode}</div>
+                                )}
+                                </Link></TimelineContent>
                             </TimelineItem>
 
                              {
