@@ -46,6 +46,8 @@ function ProfilePage() {
     useEffect(() => {
         if (currentUser) {
             loadSavedProcesses();
+        } else {
+            setLoading(false);
         }
     }, [currentUser]);
 
@@ -53,35 +55,45 @@ function ProfilePage() {
         try {
             setLoading(true);
             setError('');
-            console.log('📋 Lade gespeicherte Prozesse...');
+            console.log('📋 Loading saved processes...');
             
             const result = await getSavedProcesses();
             
             if (result.success) {
-                // Transformiere Backend-Daten in Frontend-Format
-                const transformedProcesses = result.processes.map(process => ({
-                    id: process.id,
-                    name: `${process.mmethod || 'Unbekannt'} - ${process.groupindicator || 'Matching'}`,
-                    created_at: process.created_at,
-                    matching_method: process.mmethod || 'Unbekannt',
-                    algorithm: process.mdistance || 'nearest',
-                    target_variable: process.groupindicator || 'Unbekannt',
-                    control_variables: Array.isArray(process.controllvariables) ? process.controllvariables : [],
-                    result_count: estimateResultCount(process),
-                    status: 'completed',
-                    // Rohdaten für Details
-                    rawData: process
-                }));
+                // Prüfe ob es sich um Demo-Daten oder Backend-Daten handelt
+                const transformedProcesses = result.processes.map(process => {
+                    // Wenn bereits transformierte Demo-Daten, nutze sie direkt
+                    if (process.matching_method && process.name) {
+                        return {
+                            ...process,
+                            rawData: process
+                        };
+                    }
+                    
+                    // Transformiere Backend-Daten in Frontend-Format
+                    return {
+                        id: process.id,
+                        name: `${process.mmethod || 'Unknown'} - ${process.groupindicator || 'Matching'}`,
+                        created_at: process.created_at,
+                        matching_method: process.mmethod || 'Unknown',
+                        algorithm: process.mdistance || 'nearest',
+                        target_variable: process.groupindicator || 'Unknown',
+                        control_variables: Array.isArray(process.controllvariables) ? process.controllvariables : [],
+                        result_count: estimateResultCount(process),
+                        status: 'completed',
+                        // Rohdaten für Details
+                        rawData: process
+                    };
+                });
                 
                 setSavedProcesses(transformedProcesses);
-                console.log('✅ Gespeicherte Prozesse geladen:', transformedProcesses.length);
             } else {
-                setError(result.message || 'Fehler beim Laden der Prozesse');
+                setError(result.message || 'Error loading processes');
                 setSavedProcesses([]);
             }
         } catch (error) {
-            console.error('❌ Fehler beim Laden der gespeicherten Prozesse:', error);
-            setError('Fehler beim Laden der gespeicherten Prozesse');
+            console.error('❌ Error loading saved processes:', error);
+            setError('Error loading saved processes');
             setSavedProcesses([]);
         } finally {
             setLoading(false);
@@ -122,10 +134,10 @@ function ProfilePage() {
 
     const getStatusText = (status) => {
         switch (status) {
-            case 'completed': return 'Abgeschlossen';
-            case 'running': return 'Läuft';
-            case 'failed': return 'Fehlgeschlagen';
-            default: return 'Unbekannt';
+            case 'completed': return 'Completed';
+            case 'running': return 'Running';
+            case 'failed': return 'Failed';
+            default: return 'Unknown';
         }
     };
 
@@ -136,19 +148,19 @@ function ProfilePage() {
 
     const handleDeleteConfirm = async () => {
         try {
-            console.log('🗑️ Lösche Prozess:', processToDelete.id);
+            console.log('🗑️ Deleting process:', processToDelete.id);
             
             const result = await deleteMatchingProcess(processToDelete.id);
             
             if (result.success) {
-                console.log('✅ Prozess erfolgreich gelöscht');
+                console.log('✅ Process successfully deleted');
                 // Aktualisiere die Liste
                 await loadSavedProcesses();
             } else {
-                setError(result.message || 'Fehler beim Löschen des Prozesses');
+                setError(result.message || 'Error deleting process');
             }
         } catch (error) {
-            console.error('❌ Fehler beim Löschen des Prozesses:', error);
+            console.error('❌ Error deleting process:', error);
             setError('Fehler beim Löschen des Prozesses');
         }
         
@@ -197,7 +209,7 @@ function ProfilePage() {
             <Card sx={{ maxWidth: 600, margin: 'auto', mt: 4 }}>
                 <CardContent>
                     <Typography variant="h6" color="text.secondary">
-                        Bitte melden Sie sich an, um Ihr Profil zu sehen.
+                        Please log in to view your profile.
                     </Typography>
                 </CardContent>
             </Card>
@@ -226,7 +238,7 @@ function ProfilePage() {
                 flexDirection: "column"
             }}>
                 <CardHeader
-                    title="Mein Profil"
+                    title="My Profile"
                     titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
                     sx={{ backgroundColor: "#E9F0FF", minWidth: "100%", flexShrink: 0 }}
                 />
@@ -238,39 +250,39 @@ function ProfilePage() {
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
                         <Person sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            Benutzername: {currentUser.username}
+                            Username: {currentUser.username}
                         </Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                         <DateRange sx={{ color: 'primary.main' }} />
                         <Typography variant="body1">
-                            Mitglied seit: {formatDate(currentUser.created_at || new Date())}
+                            Member since: {formatDate(currentUser.created_at || new Date())}
                         </Typography>
                     </Box>
                 </CardContent>
             </Card>
 
-            {/* Saved Processes Card - FESTE HÖHE */}
+            {/* Saved Processes Card */}
             <Card sx={{ 
                 width: "100%", 
                 borderRadius: '10px', 
-                height: "50px",  // FESTE HÖHE
-                maxHeight: "400px",  // ZUSÄTZLICHE SICHERHEIT
+                minHeight: "400px",  // Mindesthöhe statt feste Höhe
+                maxHeight: "600px",  // Maximale Höhe
                 flexShrink: 0,  // VERHINDERT VERKLEINERUNG
                 display: "flex",
                 flexDirection: "column",
                 overflow: "hidden"
             }}>
                 <CardHeader
-                    title="Gespeicherte Matching-Prozesse"
+                    title="Saved Matching Processes"
                     titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
                     sx={{ backgroundColor: "#E9F0FF", minWidth: "100%", flexShrink: 0 }}
                 />
                 <CardContent sx={{ 
                     backgroundColor: "white", 
                     width: "100%", 
-                    height: "calc(100% - 48px)",  // Header height berücksichtigen
-                    overflow: "hidden",
+                    flex: 1,  // Nimmt verfügbaren Platz
+                    overflow: "auto",  // Scrollbar bei Bedarf
                     display: "flex",
                     flexDirection: "column",
                     padding: "16px"
@@ -282,11 +294,71 @@ function ProfilePage() {
                     )}
                     
                     {loading ? (
-                        <Typography>Lade gespeicherte Prozesse...</Typography>
+                        <Typography>Loading saved processes...</Typography>
                     ) : savedProcesses.length === 0 ? (
-                        <Typography color="text.secondary">
-                            Noch keine Matching-Prozesse gespeichert.
-                        </Typography>
+                        <Box>
+                            <Typography color="text.secondary" sx={{ mb: 2 }}>
+                                No matching processes saved yet.
+                            </Typography>
+                            {currentUser?.is_demo && (
+                                <Button 
+                                    variant="outlined" 
+                                    onClick={() => {
+                                        // Erstelle neue Demo-Daten für den aktuellen Benutzer
+                                        const existingProcesses = JSON.parse(localStorage.getItem('demo_processes') || '[]');
+                                        const otherUsersProcesses = existingProcesses.filter(p => p.user_id !== currentUser.id);
+                                        
+                                        // Erstelle neue Demo-Daten
+                                        const now = new Date();
+                                        const baseId = currentUser.id === 'demo_demo' ? 1000 : currentUser.id === 'demo_test' ? 2000 : 3000;
+                                        
+                                        const newDemoProcesses = [
+                                            {
+                                                id: baseId + 1,
+                                                user_id: currentUser.id,
+                                                name: 'Propensity Score - Treatment Analysis',
+                                                matching_method: 'Propensity Score',
+                                                target_variable: 'treatment_group',
+                                                control_variables: ['age', 'gender', 'education', 'income'],
+                                                ratio: '1',
+                                                score_method: 'Logistic Regression',
+                                                match_value: '0.1',
+                                                result_count: 245,
+                                                status: 'completed',
+                                                created_at: new Date(now.getTime() - 2 * 24 * 60 * 60 * 1000).toISOString()
+                                            },
+                                            {
+                                                id: baseId + 2,
+                                                user_id: currentUser.id,
+                                                name: 'Exact Matching - Control Study',
+                                                matching_method: 'Exact Matching',
+                                                target_variable: 'control_group',
+                                                result_count: 189,
+                                                status: 'completed',
+                                                created_at: new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000).toISOString()
+                                            },
+                                            {
+                                                id: baseId + 3,
+                                                user_id: currentUser.id,
+                                                name: 'PS Healthcare Access Study',
+                                                matching_method: 'Propensity Score',
+                                                target_variable: 'healthcare_access',
+                                                result_count: 312,
+                                                status: 'running',
+                                                created_at: new Date(now.getTime() - 1 * 24 * 60 * 60 * 1000).toISOString()
+                                            }
+                                        ];
+                                        
+                                        const allProcesses = [...otherUsersProcesses, ...newDemoProcesses];
+                                        localStorage.setItem('demo_processes', JSON.stringify(allProcesses));
+                                        loadSavedProcesses();
+                                    }}
+                                    size="small"
+                                >
+                                    Load Demo Data
+                                </Button>
+                            )}
+                        </Box>
                     ) : (
                         <TableContainer 
                             component={Paper} 
@@ -300,12 +372,12 @@ function ProfilePage() {
                                 <TableHead sx={{ backgroundColor: "#d7d7d7" }}>
                                     <TableRow>
                                         <TableCell sx={{ minWidth: 100, padding: '4px 6px' }}><strong>Name</strong></TableCell>
-                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Erstellt</strong></TableCell>
-                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Methode</strong></TableCell>
-                                        <TableCell sx={{ minWidth: 60, padding: '4px 6px' }}><strong>Zielvar.</strong></TableCell>
-                                        <TableCell sx={{ minWidth: 60, padding: '4px 6px' }}><strong>Erg.</strong></TableCell>
+                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Created</strong></TableCell>
+                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Method</strong></TableCell>
+                                        <TableCell sx={{ minWidth: 60, padding: '4px 6px' }}><strong>Target Var.</strong></TableCell>
+                                        <TableCell sx={{ minWidth: 60, padding: '4px 6px' }}><strong>Results</strong></TableCell>
                                         <TableCell sx={{ minWidth: 60, padding: '4px 6px' }}><strong>Status</strong></TableCell>
-                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Aktionen</strong></TableCell>
+                                        <TableCell sx={{ minWidth: 80, padding: '4px 6px' }}><strong>Actions</strong></TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -399,38 +471,38 @@ function ProfilePage() {
                 <DialogTitle>Prozess löschen</DialogTitle>
                 <DialogContent>
                     <Typography>
-                        Möchten Sie den Prozess "{processToDelete?.name}" wirklich löschen? 
-                        Diese Aktion kann nicht rückgängig gemacht werden.
+                        Do you really want to delete the process "{processToDelete?.name}"? 
+                        This action cannot be undone.
                     </Typography>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setDeleteDialogOpen(false)}>
-                        Abbrechen
+                        Cancel
                     </Button>
                     <Button onClick={handleDeleteConfirm} color="error" variant="contained">
-                        Löschen
+                        Delete
                     </Button>
                 </DialogActions>
             </Dialog>
 
             {/* View Details Dialog */}
             <Dialog open={viewDialogOpen} onClose={() => setViewDialogOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle>Prozess Details: {selectedProcess?.name}</DialogTitle>
+                <DialogTitle>Process Details: {selectedProcess?.name}</DialogTitle>
                 <DialogContent>
                     {selectedProcess && (
                         <Box sx={{ mt: 2 }}>
-                            <Typography variant="h6" gutterBottom>Konfiguration</Typography>
-                            <Typography><strong>Matching-Methode:</strong> {selectedProcess.matching_method || selectedProcess.matchingMethod}</Typography>
+                            <Typography variant="h6" gutterBottom>Configuration</Typography>
+                            <Typography><strong>Matching Method:</strong> {selectedProcess.matching_method || selectedProcess.matchingMethod}</Typography>
                             
                             {/* Zeige Parameter je nach Matching-Methode */}
                             {(selectedProcess.matching_method === "Propensity Score" || selectedProcess.matchingMethod === "Propensity Score") && (
                                 <>
                                     {selectedProcess.target_variable && (
-                                        <Typography><strong>Zielvariable:</strong> {selectedProcess.target_variable}</Typography>
+                                        <Typography><strong>Target Variable:</strong> {selectedProcess.target_variable}</Typography>
                                     )}
                                     {(selectedProcess.control_variables || selectedProcess.controlVariables) && (
                                         <>
-                                            <Typography><strong>Kontrollvariablen:</strong></Typography>
+                                            <Typography><strong>Control Variables:</strong></Typography>
                                             <Box sx={{ ml: 2, mt: 1 }}>
                                                 {(selectedProcess.control_variables || selectedProcess.controlVariables)?.map((variable, index) => (
                                                     <Chip key={index} label={variable} size="small" sx={{ mr: 1, mb: 1 }} />
@@ -439,13 +511,13 @@ function ProfilePage() {
                                         </>
                                     )}
                                     {(selectedProcess.ratio || selectedProcess.ratio) && (
-                                        <Typography><strong>Verhältnis:</strong> 1:{selectedProcess.ratio}</Typography>
+                                        <Typography><strong>Ratio:</strong> 1:{selectedProcess.ratio}</Typography>
                                     )}
                                     {(selectedProcess.score_method || selectedProcess.scoreMethod) && (
-                                        <Typography><strong>Score-Methode:</strong> {selectedProcess.score_method || selectedProcess.scoreMethod}</Typography>
+                                        <Typography><strong>Score Method:</strong> {selectedProcess.score_method || selectedProcess.scoreMethod}</Typography>
                                     )}
                                     {(selectedProcess.match_value || selectedProcess.matchValue) && (
-                                        <Typography><strong>Übereinstimmungswert:</strong> ±{selectedProcess.match_value || selectedProcess.matchValue}</Typography>
+                                        <Typography><strong>Match Value:</strong> ±{selectedProcess.match_value || selectedProcess.matchValue}</Typography>
                                     )}
                                 </>
                             )}
@@ -454,11 +526,11 @@ function ProfilePage() {
                             {(selectedProcess.matching_method === "Exaktes Matching" || selectedProcess.matchingMethod === "Exaktes Matching") && (
                                 <>
                                     {(selectedProcess.groupIndicator) && (
-                                        <Typography><strong>Vergleichsgruppen:</strong> {selectedProcess.groupIndicator}</Typography>
+                                        <Typography><strong>Comparison Groups:</strong> {selectedProcess.groupIndicator}</Typography>
                                     )}
                                     {(selectedProcess.matchingVariables) && (
                                         <>
-                                            <Typography><strong>Matching-Variablen:</strong></Typography>
+                                            <Typography><strong>Matching Variables:</strong></Typography>
                                             <Box sx={{ ml: 2, mt: 1 }}>
                                                 {selectedProcess.matchingVariables?.map((variable, index) => {
                                                     // Extrahiere nur den var-Teil aus dem Objekt
@@ -473,7 +545,7 @@ function ProfilePage() {
                                         </>
                                     )}
                                     {(selectedProcess.matchingTolerance) && (
-                                        <Typography><strong>Matching-Toleranz:</strong> {
+                                        <Typography><strong>Matching Tolerance:</strong> {
                                             Array.isArray(selectedProcess.matchingTolerance)
                                                 ? selectedProcess.matchingTolerance.map(tol => 
                                                     typeof tol === 'string' ? tol.trim() : tol
@@ -484,36 +556,36 @@ function ProfilePage() {
                                         }</Typography>
                                     )}
                                     {(selectedProcess.ratio && selectedProcess.ratio !== "defaultVerhältnis") && (
-                                        <Typography><strong>Matching-Verhältnis:</strong> 1:{selectedProcess.ratio}</Typography>
+                                        <Typography><strong>Matching Ratio:</strong> 1:{selectedProcess.ratio}</Typography>
                                     )}
                                 </>
                             )}
                             
                             {/* Für alle Methoden relevante Parameter */}
                             {(selectedProcess.algorithm && selectedProcess.algorithm !== "defaultAlgo") && (
-                                <Typography><strong>Algorithmus:</strong> {selectedProcess.algorithm}</Typography>
+                                <Typography><strong>Algorithm:</strong> {selectedProcess.algorithm}</Typography>
                             )}
                             
                             {(selectedProcess.replacement !== undefined || selectedProcess.replacement !== undefined) && (
-                                <Typography><strong>Ersetzung:</strong> {
+                                <Typography><strong>Replacement:</strong> {
                                     selectedProcess.replacement === "TRUE" || selectedProcess.replacement === true 
-                                        ? 'Ja' 
-                                        : 'Nein'
+                                        ? 'Yes' 
+                                        : 'No'
                                 }</Typography>
                             )}
                             
                             {(selectedProcess.tolerance !== undefined) && (
-                                <Typography><strong>Toleranz:</strong> {selectedProcess.tolerance}</Typography>
+                                <Typography><strong>Tolerance:</strong> {selectedProcess.tolerance}</Typography>
                             )}
                             
-                            <Typography sx={{ mt: 2 }}><strong>Anzahl Ergebnisse:</strong> {selectedProcess.result_count || selectedProcess.resultCount || 0}</Typography>
-                            <Typography><strong>Erstellt am:</strong> {formatDate(selectedProcess.created_at)}</Typography>
+                            <Typography sx={{ mt: 2 }}><strong>Number of Results:</strong> {selectedProcess.result_count || selectedProcess.resultCount || 0}</Typography>
+                            <Typography><strong>Created on:</strong> {formatDate(selectedProcess.created_at)}</Typography>
                         </Box>
                     )}
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setViewDialogOpen(false)}>
-                        Schließen
+                        Close
                     </Button>
                 </DialogActions>
             </Dialog>

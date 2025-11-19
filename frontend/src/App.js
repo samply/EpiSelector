@@ -26,7 +26,6 @@ import AppContext from './AppContext';
 import DynamicResultsBackup from "./components/DynamicResultsBackup";
 import { AuthProvider } from "./context/AuthContext";
 import ProfilePage from "./pages/ProfilePage";
-import DemoInfo from "./components/DemoInfo";
 
 function App() {
 
@@ -287,9 +286,6 @@ function App() {
                 </div>
             </Router>
             {/*Fußzeile*/}
-            
-            {/* Demo Info Panel */}
-            <DemoInfo />
 
         </div>
         </AppContext.Provider>

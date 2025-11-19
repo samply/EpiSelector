@@ -117,7 +117,7 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
                         onClick={() => setLoginDialogOpen(true)}
                         startIcon={<Person />}
                     >
-                        Anmelden
+                        Login
                     </Button>
                 )}
             </Box>

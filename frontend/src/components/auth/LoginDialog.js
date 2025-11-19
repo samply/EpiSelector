@@ -54,7 +54,7 @@ function LoginDialog({ open, onClose }) {
         setLoading(true);
 
         if (!loginData.username || !loginData.password) {
-            setError('Bitte füllen Sie alle Felder aus');
+            setError('Please fill in all fields');
             setLoading(false);
             return;
         }
@@ -69,7 +69,7 @@ function LoginDialog({ open, onClose }) {
             setLoginData({ username: '', password: '' });
         } else {
             console.error('❌ Login failed:', result.message);
-            setError(result.message || 'Login fehlgeschlagen');
+            setError(result.message || 'Login failed');
         }
         setLoading(false);
     };
@@ -80,19 +80,19 @@ function LoginDialog({ open, onClose }) {
         setLoading(true);
 
         if (!registerData.username || !registerData.password) {
-            setError('Bitte füllen Sie alle Felder aus');
+            setError('Please fill in all fields');
             setLoading(false);
             return;
         }
 
         if (registerData.password !== registerData.confirmPassword) {
-            setError('Passwörter stimmen nicht überein');
+            setError('Passwords do not match');
             setLoading(false);
             return;
         }
 
         if (registerData.password.length < 6) {
-            setError('Passwort muss mindestens 6 Zeichen lang sein');
+            setError('Password must be at least 6 characters long');
             setLoading(false);
             return;
         }
@@ -111,7 +111,7 @@ function LoginDialog({ open, onClose }) {
             });
         } else {
             console.error('❌ Registration failed:', result.message);
-            setError(result.message || 'Registrierung fehlgeschlagen');
+            setError(result.message || 'Registration failed');
         }
         setLoading(false);
     };
@@ -131,8 +131,8 @@ function LoginDialog({ open, onClose }) {
         <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
             <DialogTitle>
                 <Tabs value={tabValue} onChange={handleTabChange} centered>
-                    <Tab label="Anmelden" />
-                    <Tab label="Registrieren" />
+                    <Tab label="Login" />
+                    <Tab label="Register" />
                 </Tabs>
             </DialogTitle>
             
@@ -142,13 +142,21 @@ function LoginDialog({ open, onClose }) {
                         {error}
                     </Alert>
                 )}
+                
+                {/* Demo Login Information */}
+                <Alert severity="info" sx={{ mb: 2 }}>
+                    <strong>Demo Mode Available:</strong><br/>
+                    Username: <code>demo</code> | Password: <code>demo</code><br/>
+                    Username: <code>test</code> | Password: <code>test</code><br/>
+                    Username: <code>admin</code> | Password: <code>admin</code>
+                </Alert>
 
                 {/* Login Tab */}
                 <TabPanel value={tabValue} index={0}>
                     <form onSubmit={handleLogin}>
                         <TextField
                             fullWidth
-                            label="Benutzername"
+                            label="Username"
                             value={loginData.username}
                             onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
                             margin="normal"
@@ -156,7 +164,7 @@ function LoginDialog({ open, onClose }) {
                         />
                         <TextField
                             fullWidth
-                            label="Passwort"
+                            label="Password"
                             type="password"
                             value={loginData.password}
                             onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
@@ -171,7 +179,7 @@ function LoginDialog({ open, onClose }) {
                     <form onSubmit={handleRegister}>
                         <TextField
                             fullWidth
-                            label="Benutzername"
+                            label="Username"
                             value={registerData.username}
                             onChange={(e) => setRegisterData({ ...registerData, username: e.target.value })}
                             margin="normal"
@@ -179,7 +187,7 @@ function LoginDialog({ open, onClose }) {
                         />
                         <TextField
                             fullWidth
-                            label="Passwort"
+                            label="Password"
                             type="password"
                             value={registerData.password}
                             onChange={(e) => setRegisterData({ ...registerData, password: e.target.value })}
@@ -188,7 +196,7 @@ function LoginDialog({ open, onClose }) {
                         />
                         <TextField
                             fullWidth
-                            label="Passwort bestätigen"
+                            label="Confirm Password"
                             type="password"
                             value={registerData.confirmPassword}
                             onChange={(e) => setRegisterData({ ...registerData, confirmPassword: e.target.value })}
@@ -201,7 +209,7 @@ function LoginDialog({ open, onClose }) {
 
             <DialogActions>
                 <Button onClick={handleClose}>
-                    Abbrechen
+                    Cancel
                 </Button>
                 {tabValue === 0 ? (
                     <Button 
@@ -210,7 +218,7 @@ function LoginDialog({ open, onClose }) {
                         disabled={loading}
                         startIcon={loading ? <CircularProgress size={20} /> : null}
                     >
-                        Anmelden
+                        Login
                     </Button>
                 ) : (
                     <Button 
@@ -219,7 +227,7 @@ function LoginDialog({ open, onClose }) {
                         disabled={loading}
                         startIcon={loading ? <CircularProgress size={20} /> : null}
                     >
-                        Registrieren
+                        Register
                     </Button>
                 )}
             </DialogActions>
