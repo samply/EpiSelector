@@ -70,7 +70,7 @@ console.log("zielvariable" + isZielvariable);
 
             <CardContent sx={{backgroundColor: "white", width: "100%", height: "57%"}}>
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "3%"}}>
-                    Zielvariable
+                    Group indicator
                 </Typography>
                 <br/>
                 <DataGrid sx={{
@@ -111,7 +111,7 @@ console.log("zielvariable" + isZielvariable);
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                {/* <Grid item>
                 <Button sx={{
@@ -132,7 +132,7 @@ console.log("zielvariable" + isZielvariable);
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
             </Grid>
             </Grid>
         </Card>

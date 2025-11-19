@@ -60,7 +60,7 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
         data_pre_match_blue[i] = -data_pre_match_blue[i];
     }
 
-    console.log("Pre-Match Histogramm")
+    console.log("Pre-Match Histogram")
     console.log(data_pre_match_red)
     console.log(data_pre_match_blue)
     chart_a.series[0].setData(data_pre_match_red);
@@ -85,13 +85,13 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
     chart_a.redraw();
     chart_b.redraw();
 
-    console.log("Histogramme wurden gemalt.")
+    console.log("Histograms have been rendered.")
 }
 
 
 function clearHistograms() {
 
-    setHistograms([], [], 'Ausgew. Variable', '', '');
+    setHistograms([], [], 'Selected Variable', '', '');
 
 }
 
@@ -155,7 +155,7 @@ function findYAxisValues(a) {
 
 function clearBoxplots() {
 
-    setBoxplots('Ausgewählte Variable', 'Zielvariable', [], [], [], []);
+    setBoxplots('Selected Variable', 'Target Variable', [], [], [], []);
 
 }
 
@@ -200,19 +200,19 @@ function getAvailableVariables(resultData, summaryData) {
 }
 
 function getBinaryVariables(resultData, summaryData, targetVariable) {
-    console.log("getBinaryVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
+    console.log("getBinaryVariables called with:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
     
     // IMMER Result-Daten verwenden für bessere Analyse
     if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
-        console.log("❌ Keine Result-Daten verfügbar für kategoriale Variablen");
+        console.log("❌ No result data available for categorical variables");
         return [];
     }
     
-    console.log("✅ Verwende Result-Daten für kategoriale Variablen (bessere Genauigkeit)");
+    console.log("✅ Using result data for categorical variables (better accuracy)");
     const excludeColumns = ['subclass', 'weights', 'distance', '_id', targetVariable, 'Matching weight', 'MatchingID'];
     const allColumns = Object.keys(resultData[0]);
     
-    console.log("🔍 ANALYSE ALLER SPALTEN FÜR KATEGORIALE VARIABLEN:");
+    console.log("🔍 ANALYZING ALL COLUMNS FOR CATEGORICAL VARIABLES:");
     console.log("Verfügbare Spalten:", allColumns);
     console.log("Ausgeschlossene Spalten:", excludeColumns);
     console.log("Zielvariable (wird ausgeschlossen):", targetVariable);
@@ -610,7 +610,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const selectedVariable = event.target.value;
         
         if (!selectedVariable || selectedVariable === "-") {
-            console.log("Keine Variable ausgewählt oder leerer Eintrag");
+            console.log("No variable selected or empty entry");
             // Leere die Histogramme wenn "-" gewählt wird
             clearHistograms();
             setHistogramVariable('');
@@ -788,7 +788,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const selectedVariable = event.target.value;
         
         if (!selectedVariable || selectedVariable === "-") {
-            console.log("Keine Variable ausgewählt für Boxplot oder leerer Eintrag");
+            console.log("No variable selected for boxplot or empty entry");
             // Leere die Boxplots wenn "-" gewählt wird
             clearBoxplots();
             setBoxplotVariable('');
@@ -874,7 +874,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     description: 'Age (male)'
                 },
                 title: {
-                    text: 'Ausgew. Variable'
+                    text: 'Selected Variable'
                 }
             }],
             yAxis: {
@@ -958,7 +958,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     description: 'Age (male)'
                 },
                 title: {
-                    text: 'Ausgew. Variable'
+                    text: 'Selected Variable'
                 }
             }],
             yAxis: {
@@ -1036,13 +1036,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             xAxis: {
                 categories: ['0', '1'],
                 title: {
-                    text: 'Zielvariable'
+                    text: 'Group Indicator'
                 }
             },
 
             yAxis: {
                 title: {
-                    text: 'Ausgewählte Variable',
+                    text: 'Selected Variable',
                     enabled: false
                 },
                 labels: {
@@ -1108,13 +1108,13 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             xAxis: {
                 categories: ['0', '1'],
                 title: {
-                    text: 'Zielvariable'
+                    text: 'Group Indicator'
                 }
             },
 
             yAxis: {
                 title: {
-                    text: 'Ausgewählte Variable',
+                    text: 'Selected Variable',
                 },
                 labels: {
                 }
@@ -1173,7 +1173,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Anteile der balancierten Kontrollvariablen'
+                text: 'Balance of Covariates after Matching'
             },
             tooltip: {
                 pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -1201,7 +1201,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 }
             },
             series: [{
-                name: 'Anteil',
+                name: 'Proportion',
                 data: [
                     { name: 'ddd', y: 0 },
                     { name: '', y: 0 }
@@ -1244,15 +1244,15 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         setVariableA("");
         setVariableB("")
         const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
-        label_variable_zero.textContent = 'Zielvariable = 0';
+        label_variable_zero.textContent = 'Group Indicator = 0';
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
-        label_variable_one.textContent = 'Zielvariable = 1';
+        label_variable_one.textContent = 'Group Indicator = 1';
     }
 
     return (
         <Card sx={{ width: "100%", minHeight: "100%", borderRadius: '10px 10px 10px 10px' }}>
             <CardHeader
-                title="Matching-Ergebnisse"
+                title="Matching results"
                 titleTypographyProps={{ fontSize: 14, color: "text.secondary" }}
                 sx={{ backgroundColor: "#E9F0FF", minWidth: "100%"  }} style={{paddingBottom:'30px'}}
             />
@@ -1310,9 +1310,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                         }}>
                             <div class="flexbox-container">
                                 <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Zielvariable = 0</Typography></div>
+                                <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Group Indicator = 0</Typography></div>
                                 <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Zielvariable = 1</Typography></div>
+                                <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Group Indicator = 1</Typography></div>
                             </div>
                         </div>
                     </Grid>

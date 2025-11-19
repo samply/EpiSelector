@@ -25,8 +25,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
     function handleClickOptionLR(){
         if(!isActiveLR){
             setIsActiveLR(true);
-            setScoreMethode("Logistische Regression");
-            setScoreMethodeNav("Logistische Regression");
+            setScoreMethode("Logistiische Regression");
+            setScoreMethodeNav("Logistic Regression");
             setIsActiveML(false);
         }
 
@@ -36,7 +36,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
         if(!isActiveML){
             setIsActiveML(true);
             setScoreMethode("Matching Learning Methode");
-            setScoreMethodeNav("Matching Learning Methode");
+            setScoreMethodeNav("Matching Learning Method");
         setIsActiveLR(false);
         }
     }
@@ -58,7 +58,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "8%", paddingLeft: "3%"}}>
-                    Methode der Score-Berechnung
+                    Method for estimation of the PS-score
                 </Typography>
 
                 <div style={{width: "100%", height: "75%"}}>
@@ -75,8 +75,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                             style={{display: "flex", flexFlow: "row", justifyContent: "space-evenly", gap: "100px"}}>
                             <Box onClick={handleClickOptionLR}
                                  style={{
-                                     backgroundColor: isActiveLR || isScoreMethodeNav === "Logistische Regression" ? "#1d4189" : '#E8E9EB',
-                                     color: isActiveLR || isScoreMethodeNav === "Logistische Regression" ? "white" : "#666666",
+                                     backgroundColor: isActiveLR || isScoreMethodeNav === "Logistic Regression" ? "#1d4189" : '#E8E9EB',
+                                     color: isActiveLR || isScoreMethodeNav === "Logistic Regression" ? "white" : "#666666",
                                      fontSize: "large",
                                      display: "flex",
                                      width: "15rem",
@@ -84,9 +84,9 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                                      alignItems: "center",
                                      justifyContent: "space-evenly",
                                      borderRadius: "15px",
-                                     boxShadow: isActiveLR || isScoreMethode === "Logistische Regression" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                     boxShadow: isActiveLR || isScoreMethode === "Logistic Regression" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                                  }}
-                            > Logistische Regression
+                            > Logistic Regression
                             </Box>
                             <Box
                                 style={{
@@ -104,7 +104,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                                     opacity: 1, // Opazität umgekehrt
                                 }}
                             >
-                                Machine Learning Methode
+                                Machine Learning Method
                             </Box>
 
 
@@ -123,7 +123,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                {/* <Grid item>
                 <Button sx={{
@@ -144,7 +144,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
 
             </Grid>

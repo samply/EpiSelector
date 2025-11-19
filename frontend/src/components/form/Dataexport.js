@@ -50,18 +50,18 @@ function Dataexport() {
         
         // Debug: Schaue dir die Struktur der ersten Variable an
         if (isSummaryData.length > 0) {
-            console.log("PDF Export - Erste Variable:", isSummaryData[0]);
-            console.log("PDF Export - Verfügbare Keys:", Object.keys(isSummaryData[0]));
+            console.log("PDF Export - First variable:", isSummaryData[0]);
+            console.log("PDF Export - Available keys:", Object.keys(isSummaryData[0]));
         }
         
         const tableColumn = [
             "Variable",
             columnHeader0,
             columnHeader1,
-            "Differenz",
+            "Difference",
             columnHeader0,
             columnHeader1,
-            "Differenz",
+            "Difference",
             "Balance"
         ];        
         const tableRows = [];
@@ -329,7 +329,7 @@ function Dataexport() {
             <CardContent sx={{ backgroundColor: "white", width: "100%" }}>
 
                 <Typography sx={{ fontSize: 18, paddingTop: "1%", paddingBottom: "4%", paddingLeft: "3%" }}>
-                    Datenexport
+                    Data Export
                 </Typography>
 
                 <div style={{ display: "flex", justifyContent: "center", paddingTop: "5%", paddingBottom: "15%" }}>
@@ -342,10 +342,10 @@ function Dataexport() {
                         justifyContent: "space-evenly"
                     }}>
                         <Button onClick={() => Matchingprotokoll()} style={{ flexFlow: "column" }}>
-                            <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen
+                            <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matching Protocol <br />download
                         </Button>
                         <Button onClick={() => downloadCSV()} style={{ flexFlow: "column" }}>
-                            <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Datensatz <br /> herunterladen
+                            <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Dataset <br /> download
                         </Button>
                         <Button 
                             onClick={handleSaveProcess} 
@@ -355,7 +355,7 @@ function Dataexport() {
                             }}
                             disabled={!isAuthenticated}
                         >
-                            <DashboardIcon sx={{ fontSize: "xxx-large" }} />Maske speichern
+                            <DashboardIcon sx={{ fontSize: "xxx-large" }} />Save Mask
                         </Button>
                     </div>
                 </div>
@@ -370,7 +370,7 @@ function Dataexport() {
                         borderColor: "#1d4189",
                         "&:hover": { backgroundColor: "white", borderColor: "#1d4189" },
                         color: "#1d4189"
-                    }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
+                    }} variant="outlined"><ArrowBackIcon />Back</Button></Link>
                 </Grid>
                 <Grid item>
                     <Link style={{ textDecoration: "none" }} onClick={() => {
@@ -383,7 +383,7 @@ function Dataexport() {
                         border: "none",
                         backgroundColor: "#1d4189",
                         "&:hover": { backgroundColor: "#1d4189" },
-                    }}><DoneAllIcon />Beenden</Button></Link>
+                    }}><DoneAllIcon /> End</Button></Link>
                 </Grid>
             </Grid>
         </Card>

@@ -120,12 +120,12 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "3%"}}>
-                    Bereich der Übereinstimmung der Propensity-Scores (Caliper)
+                    Propensity score caliper
                 </Typography>
 
                 <Typography sx={{fontSize: 15, paddingTop: "5%", paddingLeft: "3%"}}>
-                    Geben Sie einen Wert zwischen 0 und 1 an:
-                </Typography>
+                    Enter a value between 0 and 1: 
+                                    </Typography>
 
                 <div style={{
                     display: "flex",
@@ -136,7 +136,7 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                     paddingBottom: "17.5%"
                 }}>
                     <Typography sx={{fontSize: 25}}>±</Typography>
-                    <TextField label="Übereinstimmungswert" variant="outlined" defaultValue={value}
+                    <TextField label="Caliper" variant="outlined" defaultValue={value}
                                value={value}
                                onChange={(newValue) => {
                                    setValue(newValue.target.value);
@@ -161,7 +161,7 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                 {/*<Grid item>
                 <Button sx={{
@@ -183,7 +183,7 @@ function ÜbereinstimmungPropensityScore({ isAlgorithmus, isErsetzung, isZielvar
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled" onClick={() =>{ setErsetzungToResult('TRUE');}}>Fertig <ArrowForwardIcon/></Button></Link>
+                }} variant="filled" onClick={() =>{ setErsetzungToResult('TRUE');}}>Done <ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>

@@ -77,7 +77,7 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
         selectedRowsData.forEach((row)=>{
             console.log(row.variable);
             setFälleKontrollenGruppenIndikator(row.var);
-            setFKChip("Gruppenindikator: " + row.var);});
+            setFKChip("Group Indicator: " + row.var);});
     };
 
 
@@ -91,10 +91,10 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
             <CardContent sx={{backgroundColor: "white", width: "100%", height: "59%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "2%"}}>
-                   Variable zur  Definition der Vergleichsgruppen auswählen
+Variable for Defining Comparison Groups
                 </Typography>
                 <Typography sx={{fontSize: 14, color: "text.secondary", paddingTop: "1%", paddingLeft: "2%"}}>
-                    Gruppenindikator setzen
+                    Set Group Indicator
                 </Typography>
 
                 <br/>
@@ -137,7 +137,7 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                 {/*<Grid item>
                 <Button sx={{
@@ -158,7 +158,7 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
 
             </Grid>

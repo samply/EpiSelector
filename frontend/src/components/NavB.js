@@ -83,7 +83,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
     return (
             <Card variant="outlined" className="NavBStyle" sx={{borderRadius: '10px 10px 10px 10px', boxShadow: '1' }}>
                 <CardHeader
-                    title="Ablauf"
+                    title="Process"
                     titleTypographyProps={{fontSize:14, color:"text.secondary"}}
                     sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
@@ -337,7 +337,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("übereinstimmung");
                                                  setWorkflow("Übereinstimmung");
                                              }}
-                                                 style={linkStyle}>Übereinstimmung des Prop.-Scores <br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Propensity score caliper <br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",

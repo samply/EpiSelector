@@ -44,7 +44,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
 
         setAllKontrollvariablen(kVarray);
 
-        if (selectedRowsData.length != []) { setKontrollvariablen(selectedRowsData.length + " Kontrollvariablen"); }
+        if (selectedRowsData.length != []) { setKontrollvariablen(selectedRowsData.length + " Covariates"); }
     };
 
     console.log(isAllKontrollvariablen);
@@ -80,7 +80,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
             <CardContent sx={{backgroundColor: "white", width: "100%", height: "57.5%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "2%"}}>
-                    Kontrollvariablen
+                    Covariates
                 </Typography>
                 <br/>
                 <DataGrid id="datagrid" density="compact"
@@ -117,7 +117,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                {/* <Grid item>
                 <Button sx={{
@@ -138,7 +138,7 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
 
             </Grid>

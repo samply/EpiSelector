@@ -55,7 +55,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop:"1%",paddingBottom:"8%", paddingLeft:"3%"}} >
-                    Datenquelle wählen
+                    Select data source
                 </Typography>
                     <div style={{
                         minHeight: "80%",
@@ -106,13 +106,13 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
 
             <Grid container justifyContent="flex-end" sx={{ position: 'absolute', float:'right', bottom: 0, gap:'2%', width: '100%', padding: '8px', backgroundColor: '#f5f5f5' }}>
                 <Grid item>
-                    <Link style={{textDecoration: "none"}} to='/Startseite' onClick={()=>{setWorkflow("Startseite");}}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Startseite' onClick={()=>{setWorkflow("Startseite");}}><Button sx={{height:"100%", width:"auto", borderColor:"#1d4189","&:hover": { backgroundColor: "white", borderColor:"#1d4189" }, color:"#1d4189"}} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                 {/*<Grid item>
                     <Button sx={{width:"auto", borderColor:"#B11B18", color:"#B11B18","&:hover": {backgroundColor: "white", borderColor:"#B11B18" }}} variant="outlined"onClick={löschen}> <DeleteIcon/>Löschen</Button>
                 </Grid>*/}
                 <Grid item>
-                    <Link style={{textDecoration: "none"}} to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen"); setWorkflow("Datei-hochladen");}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                    <Link style={{textDecoration: "none"}} to='/Datei-hochladen' onClick={()=>{visitedSite("dateihochladen"); setWorkflow("Datei-hochladen");}}><Button sx={{height:"100%", width:"auto", color:"white", border:"none",backgroundColor:"#1d4189", "&:hover": { backgroundColor: "#1d4189" }}} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>

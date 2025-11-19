@@ -40,8 +40,8 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 0, hide: true},
-        { field: 'ausgewählteVariablen', headerName: 'Ausgewählte Variable', width: 295},
-        { field: 'toleranzwert', headerName: 'Toleranzwert', width: 290,  renderCell: (params) => (
+        { field: 'ausgewählteVariablen', headerName: 'Selected Variables', width: 295},
+        { field: 'toleranzwert', headerName: 'Tolerance Value', width: 290,  renderCell: (params) => (
                 <span>± {params.value}</span>
             ),
             editable: true,
@@ -94,7 +94,7 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
             <CardContent sx={{backgroundColor: "white", width: "100%", height: "59%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingLeft: "2%"}}>
-                    Matchingtoleranz
+                    Matching Tolerance
                 </Typography>
                 <br/>
 
@@ -129,7 +129,7 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                {/* <Grid item>
                 <Button sx={{
@@ -150,7 +150,7 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>

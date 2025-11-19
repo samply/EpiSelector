@@ -601,13 +601,13 @@ function MatchingErgebnis() {
             <CardContent sx={{ backgroundColor: "white", width: "100%" }}>
                 <div style={{ width: "95%", flexFlow: "row", paddingLeft: "0.5%" }}>
                     <Typography sx={{ fontSize: 18 }}>
-                        Matching-Ergebnisse
+                        Matching results
                     </Typography>
 
                     <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
 
-                        Pre-Matching: 42 Variablen, 3826 Beobachtungen <br />
-                        Post-Matching:{postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
+                        Pre-Matching: 42 Variables, 3826 Observations <br />
+                        Post-Matching:{postVariable()} Variables, {postBeobachtungen()} Observations
                     </Typography>
                 </div>
 
@@ -654,13 +654,13 @@ function MatchingErgebnis() {
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Difference</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader0}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Difference</TableCell>
                                         <TableCell colSpan={2}
                                             sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">Balance</TableCell>
@@ -676,7 +676,7 @@ function MatchingErgebnis() {
                                         {isLoading ? (
                                             <TableRow>
                                                 <TableCell colSpan={9} style={{ textAlign: "center", padding: "20px" }}>
-                                                    Lade Matching-Ergebnisse...
+                                                    Loading matching results...
                                                 </TableCell>
                                             </TableRow>
                                         ) : summaryData && Array.isArray(summaryData) ? (
@@ -729,7 +729,7 @@ function MatchingErgebnis() {
                                         ) : (
                                             <TableRow>
                                                 <TableCell colSpan={9} style={{ textAlign: "center", padding: "20px" }}>
-                                                    Keine Daten verfügbar
+                                                    No data available
                                                 </TableCell>
                                             </TableRow>
                                         )}
@@ -744,8 +744,8 @@ function MatchingErgebnis() {
 
                 <Typography style={{ fontSize: "10px", paddingLeft: "1%" }}>
                     <strong>PS:</strong> Propensity Score<br />
-                    <strong>stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br />
-                    <strong>kategoriale Variablen:</strong> Anteile bzw. rohe Differenz in den Anteilen <br />
+                    <strong>Continuous variables:</strong> Mean or Standardized Mean Difference (SMD) <br />
+                    <strong>Categorical variables:</strong> Proportions or raw difference in proportions <br />
                 </Typography>
 
 
@@ -763,7 +763,7 @@ function MatchingErgebnis() {
                     borderColor: "#1d4189",
                     "&:hover": { backgroundColor: "white", borderColor: "#1d4189" },
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon />Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon />Back</Button></Link>
                 </Grid>
                 {/* <Grid item>
                 <Button sx={{
@@ -784,7 +784,7 @@ function MatchingErgebnis() {
                         border: "none",
                         backgroundColor: "#1d4189",
                         "&:hover": { backgroundColor: "#1d4189" }
-                    }} variant="filled">Weiter<ArrowForwardIcon /></Button></Link>
+                    }} variant="filled">Next<ArrowForwardIcon /></Button></Link>
                 </Grid>
             </Grid>
         </Card>

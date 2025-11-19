@@ -88,7 +88,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
             return (
                 <div style={{ display: "flex", flexDirection: "column", paddingLeft: "5%", paddingBottom: "4%" }}>
                     <Typography style={{ fontSize: 18, fontWeight: "normal", paddingBottom: "1rem" }}>
-                        Selektion der Kontrollen:
+Selection of controls:
                     </Typography>
 
                     <div style={{ display: "flex", alignItems: "center", marginBottom: "1rem" }}>
@@ -103,7 +103,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                             }
                         }} />
                         <label style={{ marginLeft: "0.5rem" }}>
-                            <strong>Ohne Ersetzung</strong>, ein:e Nicht-Behandelte:r kann nur als Nicht-Behandelte:r für eine:n einzige:n Behandelte:n dienen
+                            <strong>Without replacement:</strong> each untreated individual can serve as a control for only one treated individual.
                         </label>
                     </div>
 
@@ -119,7 +119,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                             }
                         }} />
                         <label style={{ marginLeft: "0.5rem" }}>
-                            <strong>Mit Ersetzung</strong>, ein:e Nicht-Behandelte:r kann als Nicht-Behandelte:r für mehrere Behandelte dienen
+                            <strong>With replacement</strong> an untreated individual can serve as a control for multiple treated individuals.
                         </label>
                     </div>
                 </div>
@@ -140,7 +140,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
 
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "3%", paddingLeft: "3%"}}>
-                    Matching-Algorithmus
+                    Matching algorithm
                 </Typography>
                 <div style={{width: "100%", height: "75%"}}>
                     <div style={{
@@ -208,7 +208,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
               {/*  <Grid item>
                 <Link style={{textDecoration: "none"}}><Button sx={{
@@ -216,7 +216,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                     borderColor: "#B11B18",
                     color: "#B11B18",
                     "&:hover": {backgroundColor: "white", borderColor: "#B11B18"}
-                }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button></Link>
+                }} variant="outlined" onClick={löschen}><DeleteIcon/>Delete</Button></Link>
                 </Grid>*/}
                 <Grid item>
                 <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={() => {
@@ -229,7 +229,7 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
 
             </Grid>

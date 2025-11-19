@@ -142,7 +142,7 @@ export default function UploadData() {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
-                    Datei hochladen
+                    Upload File
                 </Typography>{/* File Uploader */}
                 <Collapse in={open}>
                     <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
@@ -160,8 +160,8 @@ export default function UploadData() {
                     }
                            sx={{mb: 2}} severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        Keine Daten — <strong>Sie müssen eine Datei hochladen, um
-                        fortzufahren</strong>
+                        No Data — <strong>You must upload a file to
+                        continue</strong>
                     </Alert>
 
                 </Collapse>
@@ -179,7 +179,7 @@ export default function UploadData() {
                         marginLeft: "5%"
                     }}
                 >
-                    <p>CSV-Datei hier ablegen oder</p>
+                    <p>Drop CSV file here or</p>
                     <input
                         type="file"
                         id="csvFileInput"
@@ -193,7 +193,7 @@ export default function UploadData() {
                             color: "white",
                             "&:hover": {backgroundColor: "#1d4189"}
                         }}>
-                            Datei auswählen
+                            Select File
                         </Button>
                     </label>
                 </div>
@@ -204,13 +204,13 @@ export default function UploadData() {
                     {csvImported && (
                         <>
                             <CheckCircle style={{color: 'green'}} className="checkIcon"/>
-                            <p style={{color: "green", marginLeft: "5px"}}>CSV erfolgreich importiert.</p>
+                            <p style={{color: "green", marginLeft: "5px"}}>CSV successfully imported.</p>
                         </>
                     )}
                     {importFailed && (
                         <>
                             <Cancel style={{color: 'red'}} className="cancelIcon"/>
-                            <p style={{color: "red", marginLeft: "5px"}}>Fehler - Bitte versuchen Sie es erneut.</p>
+                            <p style={{color: "red", marginLeft: "5px"}}>Error - Please try again.</p>
                         </>
                     )}
                 </p>
@@ -226,7 +226,7 @@ export default function UploadData() {
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
               {/*  <Grid item>
 
@@ -253,7 +253,7 @@ export default function UploadData() {
                         border: "none",
                         backgroundColor: "#1d4189",
                         "&:hover": {backgroundColor: "#1d4189"}
-                    }} variant="filled">Weiter <ArrowForwardIcon/></Button>
+                    }} variant="filled">Next <ArrowForwardIcon/></Button>
                 </Link>
                 </Grid>
             </Grid>

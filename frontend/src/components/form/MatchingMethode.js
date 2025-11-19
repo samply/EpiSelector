@@ -87,7 +87,7 @@ function MatchingMethode() {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
-                    Matching Methode
+                    Matching Method
                 </Typography>
                 <Collapse in={open}>
                     <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
@@ -105,8 +105,8 @@ function MatchingMethode() {
                     }
                            sx={{mb: 2}} severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen, um
-                        fortzufahren</strong>
+                        No Matching Method — <strong>You must select a matching method to
+                        continue</strong>
                     </Alert>
 
                 </Collapse>
@@ -137,7 +137,7 @@ function MatchingMethode() {
                                 boxShadow: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
-                        > Exaktes Matching nach <br/> ausgewählten Variablen
+                        > Exact Matching by <br/> selected variables
                         </Box>
 
                         <Box
@@ -174,7 +174,7 @@ function MatchingMethode() {
                             }}
                             // onClick={handleClickOptionZufallsP} <-- Hier wird das onClick-Ereignis entfernt
                         >
-                            Zufallsprinzip
+                            Randomization
                         </Box>
                     </FormGroup>
                 </div>
@@ -190,7 +190,7 @@ function MatchingMethode() {
                     borderColor: "#1d4189",
                     "&:hover": {backgroundColor: "white", borderColor: "#1d4189"},
                     color: "#1d4189"
-                }} variant="outlined"><ArrowBackIcon/>Zurück</Button></Link>
+                }} variant="outlined"><ArrowBackIcon/>Back</Button></Link>
                 </Grid>
                {/* <Grid item>
                 <Button sx={{
@@ -221,7 +221,7 @@ function MatchingMethode() {
                     border: "none",
                     backgroundColor: "#1d4189",
                     "&:hover": {backgroundColor: "#1d4189"}
-                }} variant="filled">Weiter <ArrowForwardIcon/></Button></Link>
+                }} variant="filled">Next <ArrowForwardIcon/></Button></Link>
                 </Grid>
             </Grid>
         </Card>
