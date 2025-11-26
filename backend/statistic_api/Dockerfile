@@ -16,32 +16,16 @@ RUN apt-get update && apt-get install -y \
     libsodium-dev \
     pkg-config \
     build-essential \
+    binutils \
     && rm -rf /var/lib/apt/lists/*
 
 # Installiere nur die absolut nötigen R packages
 RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages(c('R6', 'stringi', 'rlang'), dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages(c('magrittr', 'mime', 'lifecycle'), dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages(c('crayon', 'webutils'), dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages(c('sodium', 'httpuv'), dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages(c('promises', 'swagger'), dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages('plumber', dependencies=FALSE);"
-
-RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
-    install.packages('jsonlite', dependencies=FALSE);"
+    install.packages(c('R6', 'stringi', 'rlang', 'magrittr', 'mime', 'lifecycle', 'crayon', 'webutils', 'sodium', 'httpuv', 'promises', 'swagger', 'jsonlite'), dependencies=FALSE); \
+    install.packages(c('plumber', 'stringr'));"
 
 # R-Code kopieren
-COPY . .
+COPY *.R .
 
 # Start script ausführbar machen
 RUN chmod +x start_api.R

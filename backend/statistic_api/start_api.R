@@ -2,12 +2,6 @@
 
 cat("Starting R Plumber API...\n")
 
-# Einfache Package-Check und Start
-if (!requireNamespace("plumber", quietly = TRUE) || !requireNamespace("jsonlite", quietly = TRUE)) {
-  cat("Required packages are missing. Installing...\n")
-  install.packages(c("plumber", "jsonlite"), dependencies = TRUE)
-}
-
 # Load plumber
 library(plumber)
 
