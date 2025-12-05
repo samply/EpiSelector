@@ -1,3 +1,5 @@
+For englisch Version see branch https://github.com/samply/EpiSelector/tree/englishversion  
+
 Quick Start:
 
 Clone the repository
