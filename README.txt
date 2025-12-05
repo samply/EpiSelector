@@ -1,4 +1,4 @@
-For englisch Version see branch https://github.com/samply/EpiSelector/tree/englishversion  
+For english version see branch https://github.com/samply/EpiSelector/tree/englishversion  
 
 Quick Start:
 
