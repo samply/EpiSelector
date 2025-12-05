@@ -1,21 +1,30 @@
 Quick Start:
 
-Clone the repository
-git clone https://<unsergithublink>.git
-cd EpiSelector
+Start EpiSelector with Docker:
+.\docker.ps1 dev 
 
-Build the Docker image
+Start only Frontend of EpiSelector:
+go to path .\frontend\ 
+then docker-compose up
 
-docker build -t episelector .
+Start EpiSelector Frontend with Code:
+go to path .\frontend
+then npm start
 
-Run the container
-docker run -d -p 8080:80 --name episelector episelector
+Start EpiSelector Backend with Code:
+- 
+-
+-
 
-Once started, the application will be accessible at:
-http://localhost:8080
 
-Stop the container
-docker stop episelector
+Wthat you need to Start EpiSelector:
+Frontend: 
+Node.js
+npm (Node Package Manager) for
+  - React
+  - Material UI
+  - Highcharts
 
-Remove the container
-docker rm episelector
+Backend:
+Django
+R-Studio packages: Plumber and MatchIt
