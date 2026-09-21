@@ -17,6 +17,8 @@ services:
 
   # R Backend (Plumber API)
   r-backend:
+    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./backend/statistic_api
       dockerfile: Dockerfile
@@ -27,6 +29,8 @@ services:
 
   # Django Backend
   django-backend:
+    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./backend/django_backend
       dockerfile: Dockerfile
@@ -45,6 +49,8 @@ services:
 
   # React Frontend (Production Build)
   frontend:
+    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./frontend
       dockerfile: Dockerfile.prod

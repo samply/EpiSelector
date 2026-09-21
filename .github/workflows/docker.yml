@@ -1,0 +1,67 @@
+name: Build and Push EpiSelector German Images
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  django-backend:
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: read
+      security-events: write
+      statuses: read
+    uses: samply/github-workflows/.github/workflows/docker-ci.yml@main
+    with:
+      image-name: "samply/episelector-web-backend"
+      image-tag-suffix: "-de"
+      build-context: "./backend/django_backend"
+      build-file: "./backend/django_backend/Dockerfile"
+      build-platforms: "linux/amd64"
+      push-to: dockerhub
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  statistic-api:
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: read
+      security-events: write
+      statuses: read
+    uses: samply/github-workflows/.github/workflows/docker-ci.yml@main
+    with:
+      image-name: "samply/episelector-statistics-backend"
+      image-tag-suffix: "-de"
+      build-context: "./backend/statistic_api"
+      build-file: "./backend/statistic_api/Dockerfile"
+      build-platforms: "linux/amd64"
+      push-to: dockerhub
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  frontend:
+    permissions:
+      contents: read
+      packages: write
+      pull-requests: read
+      security-events: write
+      statuses: read
+    uses: samply/github-workflows/.github/workflows/docker-ci.yml@main
+    with:
+      image-name: "samply/episelector-frontend"
+      image-tag-suffix: "-de"
+      build-context: "./frontend"
+      build-file: "./frontend/Dockerfile.prod"
+      build-platforms: "linux/amd64"
+      push-to: dockerhub
+    secrets:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
