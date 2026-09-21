@@ -23,6 +23,8 @@ services:
 
   # R Backend (Plumber API)
   r-backend:
+    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./backend/statistic_api
       dockerfile: Dockerfile
@@ -31,8 +33,6 @@ services:
       - "3420:3420"
     networks:
       - episelector-network
-    volumes:
-      - ./backend/statistic_api:/app
     working_dir: /app
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3420/test"]
@@ -42,6 +42,8 @@ services:
 
   # Django Backend
   django-backend:
+    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./backend/django_backend
       dockerfile: Dockerfile
@@ -59,8 +61,6 @@ services:
         condition: service_healthy
     networks:
       - episelector-network
-    volumes:
-      - ./backend/django_backend:/app
     command: >
       sh -c "python manage.py migrate &&
              python manage.py collectstatic --noinput &&
@@ -68,19 +68,18 @@ services:
 
   # React Frontend
   frontend:
+    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    pull_policy: missing
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     container_name: episelector-frontend
     ports:
-      - "3000:3000"
+      - "3000:80"
     depends_on:
       - django-backend
     networks:
       - episelector-network
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     environment:
       - REACT_APP_API_URL=http://localhost:8000
 
