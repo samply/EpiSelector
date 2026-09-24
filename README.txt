@@ -1,20 +1,19 @@
-For english version see branch https://github.com/samply/EpiSelector/tree/englishversion  
+# EpiSelector
 
-# EpiSelector 
+EpiSelector is a browser-based, open-source application for selecting comparison groups in medical and epidemiological research.
+Researchers use EpiSelector to create balanced comparison groups in observational studies with matching methods such as variable-based matching and propensity score matching.
 
-A browser-based open-source application for the selection of comparison groups in medical and epidemiological research.
-EpiSelector supports researchers in creating balanced comparison groups in observational studies using matching methods such as variable-based matching and propensity score matching.
+The default Docker image tag is `master-de`. For the English version of the application, see the [`englishversion`](https://github.com/samply/EpiSelector/tree/englishversion) branch.
 
 ---
 
 ## Overview
 
-Randomized controlled trials (RCTs) are considered the gold standard in medical research because randomization ensures balanced comparison groups. In observational studies, however, random assignment is not possible. In such cases, statistical methods such as matching are used to create comparable groups and reduce confounding effects.
-EpiSelector provides a graphical, no-code interface that helps researchers perform matching procedures in a transparent and reproducible way without requiring programming skills.
-The tool integrates into the data analysis workflow between **data preparation and statistical analysis** and assists users with methodological guidance throughout the matching process.
+Randomized controlled trials (RCTs) are the gold standard in medical research because randomization balances comparison groups. Observational studies cannot assign participants at random. Researchers use statistical matching methods to create comparable groups and reduce confounding.
+
+EpiSelector gives researchers a graphical, no-code interface for matching workflows. It fits between data preparation and statistical analysis and guides users through method selection, balance checks, and export.
 
 ---
-
 
 ## Key Features
 
@@ -27,30 +26,23 @@ The tool integrates into the data analysis workflow between **data preparation a
 
 ### Implemented Matching Methods
 
-- **Variable-based matching**
-- **Propensity score matching**
+- Variable-based matching
+- Propensity score matching
 - Nearest Neighbor Matching (NNM)
 - Optimal Matching (OM)
 
-
 ### Additional Functionality
 
-- Balance diagnostics (standardized mean differences)
+- Balance diagnostics with standardized mean differences
 - Interactive charts and plots
 - Matching configuration templates
+- Export of matched datasets, matching weights, matching IDs, propensity scores, and PDF matching protocols
 
-- Export of:
-  - matched dataset
-  - matching weights
-  - matching IDs
-  - propensity scores
-  - PDF matching protocol
-
---- 
+---
 
 ## Architecture
 
-EpiSelector is implemented using a modular web-based architecture:
+EpiSelector uses a modular web architecture.
 
 **Frontend**
 
@@ -60,138 +52,227 @@ EpiSelector is implemented using a modular web-based architecture:
 
 **Backend**
 
-- Django (Python)
-- SQLite database
+- Django / Python web backend
+- PostgreSQL database in Docker Compose deployments
+- SQLite fallback for local backend development without Docker
 - R statistical environment
-- MatchIt (matching)
-- cobalt (balance diagnostics)
-- plumber (REST API integration) 
+- MatchIt for matching
+- cobalt for balance diagnostics
+- plumber for REST API integration
 
-This architecture allows the integration of statistical methods implemented in different programming languages while maintaining a unified web interface.
+The architecture lets EpiSelector combine web application code with statistical methods from R while keeping one browser interface for users.
 
 ---
-
- 
 
 ## Deployment
 
-EpiSelector is distributed as a **Docker container**, allowing flexible deployment in different environments.
+EpiSelector runs as a Docker Compose application with separate containers for the frontend, Django backend, R backend, and database.
 
-Possible deployment scenarios:
+Supported deployment scenarios include:
 
 1. **Local installation**
 
-   - Run on a single researcher’s computer
-   - Data remains on the local device
+   - Run EpiSelector on a single researcher’s computer.
+   - Keep data on the local device.
 
 2. **Local network deployment**
 
-   - Server installation within an institutional network
-   - Multiple users access via web browser
-   - Data remains inside the protected network
+   - Run EpiSelector on a server inside an institutional network.
+   - Let multiple users access the application through a web browser.
+   - Keep data inside the protected network.
 
-This design supports compliance with data protection requirements.
+This setup helps institutions meet data protection requirements by choosing where the application and data run.
 
 ---
 
- 
+## Getting Started with Docker Compose
+
+Docker Compose is the fastest way to run EpiSelector locally. It starts the React frontend, Django backend, R statistics backend, and PostgreSQL database.
+
+### Prerequisites
+
+Install Docker Desktop or Docker Engine with the Docker Compose plugin.
+
+Check that Docker Compose is available:
+
+```bash
+docker compose version
+```
+
+If your system uses the older standalone command, replace `docker compose` with `docker-compose` in the commands below.
+
+### Start EpiSelector
+
+Clone the repository and start the application:
+
+```bash
+git clone https://github.com/samply/EpiSelector.git
+cd EpiSelector
+docker compose up
+```
+
+On the first startup, Docker pulls or builds the required images. This can take a few minutes.
+
+Open EpiSelector in your browser:
+
+```text
+http://localhost:3000
+```
+
+The backend services are available at:
+
+```text
+Django backend: http://localhost:8000
+R backend:      http://localhost:3420
+```
+
+### Run in the Background
+
+Start the application in detached mode:
+
+```bash
+docker compose up -d
+```
+
+View logs:
+
+```bash
+docker compose logs -f
+```
+
+Stop the application:
+
+```bash
+docker compose down
+```
+
+### Reset Local Data
+
+Docker stores the PostgreSQL database in the `postgres_data` volume. To stop the application and delete the local database state, run:
+
+```bash
+docker compose down -v
+```
+
+Warning: Use this only when you want to remove local EpiSelector data. This will delete the docker volume.
+
+### Optional Helper Scripts
+
+The repository includes helper scripts that wrap common Docker Compose commands.
+
+On macOS or Linux:
+
+```bash
+./docker.sh dev
+```
+
+On Windows PowerShell:
+
+```powershell
+.\docker.ps1 dev
+```
+
+---
+
+## Production Deployment
+
+Use the production Compose file for a server deployment:
+
+```bash
+docker compose -f docker-compose.prod.yml up -d
+```
+
+Set deployment-specific values in your environment before starting the stack:
+
+```bash
+export POSTGRES_PASSWORD="change-this-password"
+export DOMAIN_NAME="episelector.example.org"
+export EPISELECTOR_IMAGE_TAG="master-de"
+```
+
+View production logs:
+
+```bash
+docker compose -f docker-compose.prod.yml logs -f
+```
+
+Stop the production stack:
+
+```bash
+docker compose -f docker-compose.prod.yml down
+```
+
+---
 
 ## Data Requirements
 
-Input data must be provided as a **CSV file** in tabular format.
+Input data must use CSV format with one observation per row and one variable per column.
 
 Requirements:
 
-- rows = observations
-- columns = variables
-- no missing values in matching variables
-- preprocessing must be performed before importing the dataset
+- Rows contain observations.
+- Columns contain variables.
+- Matching variables contain no missing values.
+- You complete preprocessing before importing the dataset.
 
- 
-EpiSelector does **not perform data preprocessing** such as:
-
-- missing value imputation
-- feature engineering
-- data transformation
-
-
-These steps must be completed prior to matching.
+EpiSelector does not perform data preprocessing such as missing value imputation, feature engineering, or data transformation. Complete those steps before matching.
 
 ---
 
- 
 ## Workflow
 
+A typical EpiSelector workflow has these steps:
 
-Typical workflow when using EpiSelector:
-
-1. Data preparation (external tool)
-
-2. Import dataset into EpiSelector
-
-3. Select matching method
-
-4. Configure matching parameters
-
-5. Evaluate balance diagnostics
-
-6. Export matched dataset
-
-7. Perform statistical analysis using external software (e.g., R, SAS, SPSS)
-
- 
+1. Prepare data in an external tool.
+2. Import the dataset into EpiSelector.
+3. Select a matching method.
+4. Configure matching parameters.
+5. Evaluate balance diagnostics.
+6. Export the matched dataset.
+7. Perform statistical analysis in external software such as R, SAS, or SPSS.
 
 ---
-
- 
 
 ## Example Use Case
 
- 
+The EpiSelector team demonstrated the application with the Framingham Heart Study teaching dataset.
 
-The functionality of EpiSelector has been demonstrated using the **Framingham Heart Study teaching dataset**.
-
-Example application:
-
-Selection of a comparison group for patients receiving antihypertensive medication to analyze the association with coronary heart disease.
-
-The example demonstrates how matching can remove confounding effects caused by imbalanced baseline characteristics.
+The example selects a comparison group for patients receiving antihypertensive medication to analyze the association with coronary heart disease. It shows how matching can reduce confounding from imbalanced baseline characteristics.
 
 ---
 
- 
+## Local Development without Docker Compose
 
-## Run Application 
+You can also run individual components during development.
 
+### Frontend only with Docker Compose
 
-Start EpiSelector with Docker:
-.\docker.ps1 dev 
+```bash
+cd frontend
+docker compose up
+```
 
-Start only Frontend of EpiSelector:
-go to path .\frontend\ 
-then docker-compose up
+### Frontend from source
 
-Start EpiSelector Frontend with Code:
-go to path .\frontend
-then npm start
+```bash
+cd frontend
+npm install
+npm start
+```
 
-Start EpiSelector Backend with Code:
-go to path .\backend\django_backend
-then python manage.py runserver
-go to path .\backend\statistic_api
-then R -e "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=8000)" or run using RStudio -> Run API
+### Django backend from source
 
+```bash
+cd backend/django_backend
+python manage.py migrate
+python manage.py runserver
+```
 
+### R statistics backend from source
 
-Wthat you need to Start EpiSelector:
-Frontend: 
-Node.js
-npm (Node Package Manager) for
-  - React
-  - Material UI
-  - Highcharts
+```bash
+cd backend/statistic_api
+R -e "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=3420)"
+```
 
-Remove the container
-docker rm episelector
-Remove the container
-docker rm episelector
+You can also open `backend/statistic_api/plumber.R` in RStudio and run the API from there.
