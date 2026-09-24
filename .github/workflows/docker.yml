@@ -97,6 +97,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: ${{ matrix.repository }}
-          readme: "./README.txt"
+          readme: "./README.md"
           replace_pattern: "](./"
           replace_with: "](https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/"
