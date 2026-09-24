@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   app:
-    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-master-de}
     pull_policy: missing
     build:
       context: .

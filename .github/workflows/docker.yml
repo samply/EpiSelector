@@ -71,3 +71,32 @@ jobs:
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+
+  dockerhub-readme:
+    name: Update Docker Hub README
+    runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
+    needs:
+      - django-backend
+      - statistic-api
+      - frontend
+    strategy:
+      fail-fast: false
+      matrix:
+        repository:
+          - samply/episelector-web-backend
+          - samply/episelector-statistics-backend
+          - samply/episelector-frontend
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Sync README to Docker Hub
+        uses: lablans/sync-dockerhub-readme@feature/replace-patterns
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: ${{ matrix.repository }}
+          readme: "./README.txt"
+          replace_pattern: "](./"
+          replace_with: "](https://raw.githubusercontent.com/${{ github.repository }}/${{ github.ref_name }}/"
