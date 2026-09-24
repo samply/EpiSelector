@@ -23,7 +23,7 @@ services:
 
   # R Backend (Plumber API)
   r-backend:
-    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-master-de}
     pull_policy: missing
     build:
       context: ./backend/statistic_api
@@ -42,7 +42,7 @@ services:
 
   # Django Backend
   django-backend:
-    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-master-de}
     pull_policy: missing
     build:
       context: ./backend/django_backend
@@ -68,7 +68,7 @@ services:
 
   # React Frontend
   frontend:
-    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-latest-de}
+    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-master-de}
     pull_policy: missing
     build:
       context: ./frontend
