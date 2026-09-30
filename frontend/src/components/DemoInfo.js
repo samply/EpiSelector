@@ -17,33 +17,33 @@ function DemoInfo() {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                     <Info color="primary" />
                     <Typography variant="h6" color="primary">
-                        Demo-Modus
+                        Demo mode
                     </Typography>
                 </Box>
                 
                 <Typography variant="body2" sx={{ mb: 2 }}>
-                    Testbenutzer für Demo:
+                    Test user for the demo:
                 </Typography>
                 
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Person fontSize="small" />
                         <Typography variant="body2">
-                            <strong>Benutzername:</strong> testuser
+                            <strong>Username:</strong> testuser
                         </Typography>
                     </Box>
                     
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <Lock fontSize="small" />
                         <Typography variant="body2">
-                            <strong>Passwort:</strong> 123123
+                            <strong>Password:</strong> 123123
                         </Typography>
                     </Box>
                 </Box>
                 
                 <Box sx={{ mt: 2 }}>
                     <Chip 
-                        label="Nur Frontend-Demo" 
+                        label="Frontend-only demo" 
                         size="small" 
                         color="info" 
                         variant="outlined"

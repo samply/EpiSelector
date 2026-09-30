@@ -28,6 +28,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Collapse from '@mui/material/Collapse';
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
+import {matchingMethodLabel} from "../model/matchingMethodLabel";
 import {useState} from "react";
 
 
@@ -172,7 +173,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     color: "white",
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
-                                }}> {isMatchingMethode}</div>
+                                }}> {matchingMethodLabel(isMatchingMethode)}</div>
                                 )}
                                 </Link></TimelineContent>
                             </TimelineItem>
@@ -464,7 +465,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                                  visitedSite("fällekontrollen");
                                                  setWorkflow("VariableFälleKontrolle");
                                              }}
-                                                 style={linkStyle}>Definition der Vergleichsgruppen<br/><div style={{  display: "flex",
+                                                 style={linkStyle}>Definition of comparison groups<br/><div style={{  display: "flex",
                                                  paddingLeft: "10%",
                                                  paddingRight: "10%",
                                                  left: "60px",
@@ -491,7 +492,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                      visitedSite("matchingverhältnis");
                                      setWorkflow("MatchingVerhältnis");
                                  }} style={linkStyle}>
-                                 Matching Verhältnis  <br/><div style={{  display: "flex",
+                                 Matching ratio  <br/><div style={{  display: "flex",
                                  paddingLeft: "10%",
                                  paddingRight: "10%",
                                  left: "60px",

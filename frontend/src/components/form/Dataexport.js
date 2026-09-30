@@ -26,6 +26,7 @@ import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
 import { useAuth } from '../../context/AuthContext';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import {matchingMethodLabel} from "../../model/matchingMethodLabel";
 
 function Dataexport() {
     const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen } = useContext(AppContext);
@@ -42,7 +43,7 @@ function Dataexport() {
     const Matchingprotokoll = () => {
         // Prüfe ob Summary-Daten verfügbar sind
         if (!isSummaryData || !Array.isArray(isSummaryData) || isSummaryData.length === 0) {
-            alert("Fehler: Keine Summary-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            alert("Error: No summary data available. Please run the matching first.");
             return;
         }
         
@@ -100,10 +101,10 @@ function Dataexport() {
         const newDoc = new jsPDF();
         
         newDoc.setFontSize(20);
-        newDoc.text("Matchingprotokoll", 14, 15);
+        newDoc.text("Matching Protocol", 14, 15);
         newDoc.setFontSize(14); 
         newDoc.setTextColor(100);
-        newDoc.text("Matching Ergebnisse", 14, 25);
+        newDoc.text("Matching Results", 14, 25);
         
         // Header-Tabelle mit neuer Syntax
         newDoc.autoTable({
@@ -121,13 +122,13 @@ function Dataexport() {
             theme: 'striped'
         });
         
-        newDoc.save(`matchingprotokoll${dateStr}.pdf`);
+        newDoc.save(`matching_protocol_${dateStr}.pdf`);
     };
 
     const downloadCSV = () => {
         // Prüfe ob Result-Daten verfügbar sind
         if (!isResultData || !Array.isArray(isResultData) || isResultData.length === 0) {
-            alert("Fehler: Keine Result-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            alert("Error: No result data available. Please run the matching first.");
             return;
         }
         
@@ -162,7 +163,7 @@ function Dataexport() {
             
             const date = new Date().toString().split(" ");
             const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
-            link.setAttribute('download', `matching_datensatz_${dateStr}.csv`);
+            link.setAttribute('download', `matching_dataset_${dateStr}.csv`);
             
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
@@ -173,7 +174,7 @@ function Dataexport() {
 
     const handleSaveProcess = () => {
         if (!isAuthenticated) {
-            alert('Sie müssen angemeldet sein, um eine Maske zu speichern.');
+            alert('You must be logged in to save a mask.');
             return;
         }
         setSaveDialogOpen(true);
@@ -181,7 +182,7 @@ function Dataexport() {
 
     const saveCurrentProcess = async () => {
         if (!processName.trim()) {
-            alert('Bitte geben Sie einen Namen für die Maske ein.');
+            alert('Please enter a name for the mask.');
             return;
         }
 
@@ -270,16 +271,16 @@ function Dataexport() {
             const result = await saveMatchingProcess(backendData);
             
             if (result.success) {
-                alert('Maske erfolgreich gespeichert!');
+                alert('Mask saved successfully!');
                 setSaveDialogOpen(false);
                 setProcessName('');
                 console.log('✅ Matching-Prozess erfolgreich im Backend gespeichert');
             } else {
-                throw new Error(result.message || 'Fehler beim Speichern');
+                throw new Error(result.message || 'Error while saving');
             }
         } catch (error) {
             console.error('❌ Fehler beim Speichern:', error);
-            alert('Fehler beim Speichern der Maske: ' + error.message);
+            alert('Error saving mask: ' + error.message);
         } finally {
             setSaving(false);
         }
@@ -390,31 +391,31 @@ function Dataexport() {
 
         {/* Dialog zum Speichern der Maske */}
         <Dialog open={saveDialogOpen} onClose={() => setSaveDialogOpen(false)} maxWidth="sm" fullWidth>
-            <DialogTitle>Maske speichern</DialogTitle>
+            <DialogTitle>Save Mask</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus
                     margin="dense"
-                    label="Name der Maske"
+                    label="Mask name"
                     fullWidth
                     variant="outlined"
                     value={processName}
                     onChange={(e) => setProcessName(e.target.value)}
-                    placeholder="z.B. Herzinsuffizienz Studie 2024"
+                    placeholder="e.g. Heart Failure Study 2024"
                     sx={{ mt: 2 }}
                 />
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-                    Die folgenden Einstellungen werden gespeichert:
+                    The following settings will be saved:
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, pl: 2 }}>
-                    • Matching-Methode: {isMatchingMethode}<br/>
+                    • Matching method: {matchingMethodLabel(isMatchingMethode)}<br/>
                     {isMatchingMethode === "Propensity Score" ? (
                         <>
                             {isZielvariable && isZielvariable !== "defaultZielvariable" && (
-                                <>• Zielvariable: {isZielvariable}<br/></>
+                                <>• Group indicator: {isZielvariable}<br/></>
                             )}
                             {isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen" && isKontrollvariablen.length > 0 && (
-                                <>• Kontrollvariablen: {
+                                <>• Covariates: {
                                     (() => {
                                         // Verwende isAllKontrollvariablen für die tatsächlichen Variablennamen
                                         const variables = isAllKontrollvariablen || isKontrollvariablen;
@@ -429,8 +430,8 @@ function Dataexport() {
                                         }
                                         
                                         // Falls es ein String ist der "X Kontrollvariablen" enthält, zeige Fallback
-                                        if (typeof variables === 'string' && variables.includes('Kontrollvariablen')) {
-                                            return 'Kontrollvariablen ausgewählt (Details nicht verfügbar)';
+                                        if (typeof variables === 'string' && variables.includes('Covariates')) {
+                                            return 'Covariates selected (details not available)';
                                         }
                                         
                                         return variables;
@@ -438,29 +439,29 @@ function Dataexport() {
                                 }<br/></>
                             )}
                             {isVerhältnis && isVerhältnis !== "defaultVerhältnis" && (
-                                <>• Verhältnis: 1:{isVerhältnis}<br/></>
+                                <>• Ratio: 1:{isVerhältnis}<br/></>
                             )}
                             {isScoreMethode && isScoreMethode !== "defaultScoreMethode" && (
-                                <>• Score-Methode: {isScoreMethode}<br/></>
+                                <>• Score method: {isScoreMethode}<br/></>
                             )}
                             {isAlgorithmus && isAlgorithmus !== "defaultAlgo" && (
-                                <>• Algorithmus: {isAlgorithmus}<br/></>
+                                <>• Algorithm: {isAlgorithmus}<br/></>
                             )}
                             {isÜbereinstimmungswert && isÜbereinstimmungswert !== "defaultÜbereinstimmungswert" && (
-                                <>• Übereinstimmungswert: ±{isÜbereinstimmungswert}<br/></>
+                                <>• Caliper: ±{isÜbereinstimmungswert}<br/></>
                             )}
                             {isErsetzung !== undefined && (
-                                <>• Ersetzung: {isErsetzung === "TRUE" || isErsetzung === true ? 'Ja' : 'Nein'}<br/></>
+                                <>• Replacement: {isErsetzung === "TRUE" || isErsetzung === true ? 'Yes' : 'No'}<br/></>
                             )}
                         </>
                     ) : isMatchingMethode === "Exaktes Matching" ? (
                         <>
                             {/* Exaktes Matching Parameter */}
                             {isFälleKontrollenGruppenindikator && (
-                                <>• Vergleichsgruppen: {isFälleKontrollenGruppenindikator}<br/></>
+                                <>• Comparison groups: {isFälleKontrollenGruppenindikator}<br/></>
                             )}
                             {isAllMatchingvariablen && isAllMatchingvariablen !== '' && (
-                                <>• Matching-Variablen: {
+                                <>• Matching variables: {
                                     Array.isArray(isAllMatchingvariablen) 
                                         ? isAllMatchingvariablen.map(variable => 
                                             typeof variable === 'object' && variable !== null 
@@ -473,7 +474,7 @@ function Dataexport() {
                                 }<br/></>
                             )}
                             {isMatchingtoleranz && isMatchingtoleranz !== '' && (
-                                <>• Matching-Toleranz: {
+                                <>• Matching tolerance: {
                                     Array.isArray(isMatchingtoleranz) 
                                         ? isMatchingtoleranz.map(tol => typeof tol === 'string' ? tol.trim() : tol).join(', ')
                                         : (typeof isMatchingtoleranz === 'object' 
@@ -482,17 +483,17 @@ function Dataexport() {
                                 }<br/></>
                             )}
                             {isVerhältnis && isVerhältnis !== "defaultVerhältnis" && (
-                                <>• Matching-Verhältnis: 1:{isVerhältnis}<br/></>
+                                <>• Matching ratio: 1:{isVerhältnis}<br/></>
                             )}
                         </>
                     ) : (
-                        <>• Algorithmus: {isAlgorithmus}<br/></>
+                        <>• Algorithm: {isAlgorithmus}<br/></>
                     )}
                 </Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={() => setSaveDialogOpen(false)} disabled={saving}>
-                    Abbrechen
+                    Cancel
                 </Button>
                 <Button 
                     onClick={saveCurrentProcess} 
@@ -503,7 +504,7 @@ function Dataexport() {
                         "&:hover": { backgroundColor: "#1d4189" }
                     }}
                 >
-                    {saving ? 'Speichern...' : 'Speichern'}
+                    {saving ? 'Saving...' : 'Save'}
                 </Button>
             </DialogActions>
         </Dialog>

@@ -40,7 +40,7 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
 
         setAllMatchingvariablen(kVarray);
 
-        if (selectedRowsData.length != []) { setMatchingvariablen(selectedRowsData.length + " Matchingvariablen"); }
+        if (selectedRowsData.length != []) { setMatchingvariablen(selectedRowsData.length + " matching variables"); }
     };
 
     console.log(isAllMatchingvariablen);

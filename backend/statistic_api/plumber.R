@@ -115,7 +115,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
       }
     } else {
       if (length(mcaliper_numeric) > 1) {
-        stop("Mehrere Caliper-Werte, aber keine Variablennamen angegeben!")
+        stop("Multiple caliper values but no variable names given!")
       }
       mcaliper <- mcaliper_numeric
       print("Using global (unnamed) caliper:")

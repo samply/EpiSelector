@@ -582,7 +582,7 @@ function MatchingErgebnis() {
                 }
                     sx={{ mb: 2 }} severity="error">
                     <AlertTitle> <strong>No Matches</strong></AlertTitle>
-                    Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden.
+                    No pairs could be formed based on your selections.
                 </Alert></div>
         }
     }

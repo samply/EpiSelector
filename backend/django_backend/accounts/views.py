@@ -21,10 +21,10 @@ def register_view(request):
         password = request.data.get("password")
 
         if not username or not password:
-            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
+            return Response({"error": "Username and password are required."}, status=400)
 
         if User.objects.filter(username=username).exists():
-            return Response({"error": "Benutzername existiert bereits."}, status=400)
+            return Response({"error": "Username already exists."}, status=400)
 
         user = User.objects.create_user(
             username=username, 
@@ -34,7 +34,7 @@ def register_view(request):
         token, _ = Token.objects.get_or_create(user=user)
         
         return Response({
-            "message": "Benutzer erfolgreich registriert.",
+            "message": "User registered successfully.",
             "token": token.key,
             "user": {
                 "id": user.id,
@@ -43,7 +43,7 @@ def register_view(request):
             }
         }, status=201)
     except Exception as e:
-        return Response({"error": f"Registrierung fehlgeschlagen: {str(e)}"}, status=500)
+        return Response({"error": f"Registration failed: {str(e)}"}, status=500)
 
 
 @api_view(['POST'])
@@ -59,7 +59,7 @@ def login_view(request):
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             return Response({
-                "message": "Anmeldung erfolgreich.",
+                "message": "Login successful.",
                 "token": token.key,
                 "user": {
                     "id": user.id,
@@ -68,9 +68,9 @@ def login_view(request):
                 }
             })
         else:
-            return Response({"error": "Ungültige Anmeldedaten."}, status=401)
+            return Response({"error": "Invalid credentials."}, status=401)
     except Exception as e:
-        return Response({"error": f"Anmeldung fehlgeschlagen: {str(e)}"}, status=500)
+        return Response({"error": f"Login failed: {str(e)}"}, status=500)
 
 
 # Alte Class-based Views als Backup
@@ -83,10 +83,10 @@ class RegisterView(APIView):
         password = request.data.get("password")
 
         if not username or not password:
-            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
+            return Response({"error": "Username and password are required."}, status=400)
 
         if User.objects.filter(username=username).exists():
-            return Response({"error": "Benutzername existiert bereits."}, status=400)
+            return Response({"error": "Username already exists."}, status=400)
 
         user = User.objects.create_user(
             username=username, 
@@ -96,7 +96,7 @@ class RegisterView(APIView):
         token, _ = Token.objects.get_or_create(user=user)
         
         return Response({
-            "message": "Benutzer erfolgreich registriert.",
+            "message": "User registered successfully.",
             "token": token.key,
             "user": {
                 "id": user.id,
@@ -115,10 +115,10 @@ class LoginView(APIView):
         password = request.data.get("password")
 
         if not username or not password:
-            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
+            return Response({"error": "Username and password are required."}, status=400)
 
         if User.objects.filter(username=username).exists():
-            return Response({"error": "Benutzername existiert bereits."}, status=400)
+            return Response({"error": "Username already exists."}, status=400)
 
         user = User.objects.create_user(
             username=username, 
@@ -128,7 +128,7 @@ class LoginView(APIView):
         token, _ = Token.objects.get_or_create(user=user)
         
         return Response({
-            "message": "Benutzer erfolgreich registriert.",
+            "message": "User registered successfully.",
             "token": token.key,
             "user": {
                 "id": user.id,
@@ -151,7 +151,7 @@ class LoginView(APIView):
         if user is not None:
             token, _ = Token.objects.get_or_create(user=user)
             return Response({
-                "message": "Anmeldung erfolgreich.",
+                "message": "Login successful.",
                 "token": token.key,
                 "user": {
                     "id": user.id,
@@ -160,7 +160,7 @@ class LoginView(APIView):
                 }
             })
         else:
-            return Response({"error": "Ungültige Anmeldedaten."}, status=401)
+            return Response({"error": "Invalid credentials."}, status=401)
 
 
 @api_view(['POST'])
@@ -170,8 +170,8 @@ def logout_view(request):
     try:
         token = Token.objects.get(user=request.user)
         token.delete()
-        return Response({"message": "Erfolgreich abgemeldet."}, status=200)
+        return Response({"message": "Logged out successfully."}, status=200)
     except Token.DoesNotExist:
-        return Response({"message": "Erfolgreich abgemeldet."}, status=200)
+        return Response({"message": "Logged out successfully."}, status=200)
 
 

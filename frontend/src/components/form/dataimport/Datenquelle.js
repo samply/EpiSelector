@@ -67,10 +67,10 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
-                             title="Laden Sie Ihre Daten Local aus Ihrem Rechner hoch."
+                             title="Upload your data locally from your computer."
                              style={{
-                                backgroundColor: isActiveGeraet || isDatenquelle==="Gerät" ? "#1d4189":'#E8E9EB',
-                                color: isActiveGeraet || isDatenquelle==="Gerät" ? "white":"#666666",
+                                backgroundColor: isActiveGeraet || isDatenquelle==="Local" ? "#1d4189":'#E8E9EB',
+                                color: isActiveGeraet || isDatenquelle==="Local" ? "white":"#666666",
                                 fontSize:"large",
                                 display: "flex",
                                 width: "15rem",
@@ -78,7 +78,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                                 alignItems:"center",
                                 justifyContent: "space-evenly",
                                 borderRadius: "15px",
-                                boxShadow: isActiveGeraet || isDatenquelle==="Gerät" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
+                                boxShadow: isActiveGeraet || isDatenquelle==="Local" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                         > Local
                         </Box>

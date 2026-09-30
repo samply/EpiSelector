@@ -25,7 +25,7 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
     function handleClickOptionLR(){
         if(!isActiveLR){
             setIsActiveLR(true);
-            setScoreMethode("Logistiische Regression");
+            setScoreMethode("Logistic Regression");
             setScoreMethodeNav("Logistic Regression");
             setIsActiveML(false);
         }
@@ -35,8 +35,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
     function handleClickOptionML () {
         if(!isActiveML){
             setIsActiveML(true);
-            setScoreMethode("Matching Learning Methode");
-            setScoreMethodeNav("Matching Learning Method");
+            setScoreMethode("Machine Learning Method");
+            setScoreMethodeNav("Machine Learning Method");
         setIsActiveLR(false);
         }
     }

@@ -82,7 +82,7 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
                 {isAuthenticated ? (
                     <>
                         <Typography variant="body2" sx={{ color: 'white', mr: 1 }}>
-                            Willkommen, {currentUser?.first_name || currentUser?.username}
+                            Welcome, {currentUser?.first_name || currentUser?.username}
                         </Typography>
                         <IconButton
                             onClick={handleMenuOpen}
@@ -96,10 +96,10 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
                             onClose={handleMenuClose}
                         >
                             <MenuItem onClick={handleProfileClick}>
-                                Mein Profil
+                                My Profile
                             </MenuItem>
                             <MenuItem onClick={handleLogout}>
-                                Abmelden
+                                Log out
                             </MenuItem>
                         </Menu>
                     </>

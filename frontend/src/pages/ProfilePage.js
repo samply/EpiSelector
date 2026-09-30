@@ -31,6 +31,7 @@ import {
     DateRange
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
+import {matchingMethodLabel} from '../model/matchingMethodLabel';
 
 function ProfilePage() {
     const { currentUser, getSavedProcesses, deleteMatchingProcess, getMatchingProcess } = useAuth();
@@ -73,7 +74,7 @@ function ProfilePage() {
                     // Transformiere Backend-Daten in Frontend-Format
                     return {
                         id: process.id,
-                        name: `${process.mmethod || 'Unknown'} - ${process.groupindicator || 'Matching'}`,
+                        name: `${matchingMethodLabel(process.mmethod) || 'Unknown'} - ${process.groupindicator || 'Matching'}`,
                         created_at: process.created_at,
                         matching_method: process.mmethod || 'Unknown',
                         algorithm: process.mdistance || 'nearest',
@@ -114,7 +115,7 @@ function ProfilePage() {
     };
 
     const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString('de-DE', {
+        return new Date(dateString).toLocaleDateString('en-GB', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
@@ -161,7 +162,7 @@ function ProfilePage() {
             }
         } catch (error) {
             console.error('❌ Error deleting process:', error);
-            setError('Fehler beim Löschen des Prozesses');
+            setError('Error deleting process');
         }
         
         setDeleteDialogOpen(false);
@@ -196,11 +197,11 @@ function ProfilePage() {
                 
                 console.log('✅ Download erfolgreich');
             } else {
-                setError('Keine Daten zum Download verfügbar');
+                setError('No data available for download');
             }
         } catch (error) {
             console.error('❌ Fehler beim Download:', error);
-            setError('Download fehlgeschlagen');
+            setError('Download failed');
         }
     };
 
@@ -330,8 +331,8 @@ function ProfilePage() {
                                             {
                                                 id: baseId + 2,
                                                 user_id: currentUser.id,
-                                                name: 'Exact Matching - Control Study',
-                                                matching_method: 'Exact Matching',
+                                                name: 'Variable Matching - Control Study',
+                                                matching_method: 'Exaktes Matching',
                                                 target_variable: 'control_group',
                                                 result_count: 189,
                                                 status: 'completed',
@@ -389,11 +390,11 @@ function ProfilePage() {
                                                 </Typography>
                                             </TableCell>
                                             <TableCell sx={{ fontSize: '14px', padding: '4px 6px' }}>
-                                                {formatDate(process.created_at).split(' ')[0]}
+                                                {new Date(process.created_at).toLocaleDateString('en-GB')}
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 6px' }}>
                                                 <Chip 
-                                                    label={process.matching_method === 'Propensity Score' ? 'PS' : process.matching_method === 'Exaktes Matching' ? 'EM' : process.matching_method} 
+                                                    label={process.matching_method === 'Propensity Score' ? 'PS' : process.matching_method === 'Exaktes Matching' ? 'EM' : matchingMethodLabel(process.matching_method)} 
                                                     size="small" 
                                                     variant="outlined"
                                                     sx={{ fontSize: '14px', height: 20, minWidth: 30 }}
@@ -420,7 +421,7 @@ function ProfilePage() {
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 4px' }}>
                                                 <Box sx={{ display: 'flex', gap: 0.3 }}>
-                                                    <Tooltip title="Details anzeigen">
+                                                    <Tooltip title="View details">
                                                         <IconButton 
                                                             size="small" 
                                                             onClick={() => handleViewClick(process)}
@@ -428,7 +429,7 @@ function ProfilePage() {
                                                             <Visibility />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip title="Ergebnisse herunterladen">
+                                                    <Tooltip title="Download results">
                                                         <IconButton 
                                                             size="small" 
                                                             onClick={() => handleDownload(process)}
@@ -437,7 +438,7 @@ function ProfilePage() {
                                                             <Download />
                                                         </IconButton>
                                                     </Tooltip>
-                                                    <Tooltip title="Löschen">
+                                                    <Tooltip title="Delete">
                                                         <IconButton 
                                                             size="small" 
                                                             onClick={() => handleDeleteClick(process)}
@@ -468,7 +469,7 @@ function ProfilePage() {
 
             {/* Delete Confirmation Dialog */}
             <Dialog open={deleteDialogOpen} onClose={() => setDeleteDialogOpen(false)}>
-                <DialogTitle>Prozess löschen</DialogTitle>
+                <DialogTitle>Delete process</DialogTitle>
                 <DialogContent>
                     <Typography>
                         Do you really want to delete the process "{processToDelete?.name}"? 
@@ -492,7 +493,7 @@ function ProfilePage() {
                     {selectedProcess && (
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="h6" gutterBottom>Configuration</Typography>
-                            <Typography><strong>Matching Method:</strong> {selectedProcess.matching_method || selectedProcess.matchingMethod}</Typography>
+                            <Typography><strong>Matching Method:</strong> {matchingMethodLabel(selectedProcess.matching_method || selectedProcess.matchingMethod)}</Typography>
                             
                             {/* Zeige Parameter je nach Matching-Methode */}
                             {(selectedProcess.matching_method === "Propensity Score" || selectedProcess.matchingMethod === "Propensity Score") && (

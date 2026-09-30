@@ -211,7 +211,7 @@ def save_request(request):
         print(f"❌ ERROR type: {type(e)}")
         import traceback
         traceback.print_exc()
-        return Response({"error": f"Fehler beim Speichern: {str(e)}"}, status=500)
+        return Response({"error": f"Error while saving: {str(e)}"}, status=500)
 
 
 # List of saved calls, excluding datasets
@@ -288,7 +288,7 @@ def delete_request(request, pk):
             r_request = SavedRRequest.objects.get(pk=pk)
         
         r_request.delete()
-        return Response({'message': 'Eintrag erfolgreich gelöscht.'}, status=status.HTTP_200_OK)
+        return Response({'message': 'Entry deleted successfully.'}, status=status.HTTP_200_OK)
     except SavedRRequest.DoesNotExist:
         return Response({'error': 'Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
@@ -299,7 +299,7 @@ def delete_request(request, pk):
 def get_user_saved_processes(request, user_id):
     """Get all saved matching processes for a specific user"""
     if request.user.id != user_id and not request.user.is_staff:
-        return Response({'error': 'Zugriff verweigert.'}, status=status.HTTP_403_FORBIDDEN)
+        return Response({'error': 'Access denied.'}, status=status.HTTP_403_FORBIDDEN)
     
     try:
         saved_processes = SavedRRequest.objects.filter(user_id=user_id).order_by('-created_at')
@@ -311,9 +311,9 @@ def get_user_saved_processes(request, user_id):
                 'id': process.id,
                 'name': f"{process.mmethod} - {process.groupindicator}" if process.groupindicator else f"Matching {process.id}",
                 'created_at': process.created_at.isoformat() if process.created_at else None,
-                'matching_method': process.mmethod or 'Unbekannt',
+                'matching_method': process.mmethod or 'Unknown',
                 'algorithm': process.mdistance or 'nearest',
-                'target_variable': process.groupindicator or 'Unbekannt',
+                'target_variable': process.groupindicator or 'Unknown',
                 'control_variables': process.controllvariables or [],
                 'result_count': estimate_result_count(process),
                 'status': 'completed'  # For now, assume all saved processes are completed
@@ -323,7 +323,7 @@ def get_user_saved_processes(request, user_id):
         return Response(processes_data, status=status.HTTP_200_OK)
         
     except Exception as e:
-        return Response({'error': f'Fehler beim Laden der Daten: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': f'Error loading data: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 def estimate_result_count(process):
@@ -366,12 +366,12 @@ def save_matching_process(request):
         
         return Response({
             'id': saved_request.id,
-            'message': 'Matching-Prozess erfolgreich gespeichert.'
+            'message': 'Matching process saved successfully.'
         }, status=status.HTTP_201_CREATED)
         
     except Exception as e:
         return Response({
-            'error': f'Fehler beim Speichern: {str(e)}'
+            'error': f'Error while saving: {str(e)}'
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -397,9 +397,9 @@ def download_process_results(request, process_id):
         return response
         
     except SavedRRequest.DoesNotExist:
-        return Response({'error': 'Prozess nicht gefunden.'}, status=status.HTTP_404_NOT_FOUND)
+        return Response({'error': 'Process not found.'}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
-        return Response({'error': f'Download fehlgeschlagen: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        return Response({'error': f'Download failed: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 

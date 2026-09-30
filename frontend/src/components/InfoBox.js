@@ -86,7 +86,7 @@ This is particularly important for studies where outcome data cannot be collecte
             return (<div>In this step, the CSV file is uploaded, with the data from which comparison groups will be formed, i.e., a matching will be carried out.</div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>Exact Matching on Selected Variables</strong>
+            return (<div><strong>Variable Matching</strong>
 <br/>If the comparison groups are to correspond exactly with respect to a specific measurement (e.g., age), and pairs are to be formed consisting of one patient from each comparison group, then exact matching e.g., on age with a 1:1 matching ratio is applied. In this case, for example, a 75-year-old individual from one comparison group is matched with a 75-year-old individual from the other group, thereby forming pairs of two individuals who are exactly the same age.
 It is possible to specify a tolerance range, e.g., ±3 years, which allows a 75-year-old individual to be matched with someone aged between 72 and 78. Such a tolerance range generally serves to enable the formation of pairs with sufficient similarity when strict exact matching yields too few pairs. This can already become necessary if age is recorded not only in years but also by month and day, because in that case, exact age matching would only produce pairs of patients who are identical in age down to the very day.
 Exact matching may also be conducted across several variables. In practice, age is often combined with sex as additional matching criteria.
@@ -150,8 +150,8 @@ Future versions will also include the option of estimating the propensity score 
 
     const content2 = () =>{
         if(isWorkflow === "Startseite"){
-            return (<div>Matching ist eine Technik, bei der Patienten mit und ohne ein interessierendes Outcome (in Fall-Kontroll-Studien) oder Patienten mit und ohne interessierende Exposition (in Kohortenstudien) so ausgewählt werden, dass sie die gleiche oder ähnliche Verteilungen bestimmter Merkmale aufweisen.
-                Diese Technik wird eingesetzt, um die statistische Effizienz und die Kosteneffizienz von Studien zu erhöhen (Iwagami et al. 2022 <a href='https://doi.org/10.37737/ace.22005'>https://doi.org/10.37737/ace.22005</a> ; Stuart et al.2010 <a href='https://doi.org/10.1214%2F09-STS313'>https://doi.org/10.1214%2F09-STS313</a> ).
+            return (<div>Matching is a technique in which patients with and without an outcome of interest (in case-control studies), or patients with and without an exposure of interest (in cohort studies), are selected so that they have the same or similar distributions of certain characteristics.
+                This technique is used to increase the statistical efficiency and cost efficiency of studies (Iwagami et al. 2022 <a href='https://doi.org/10.37737/ace.22005'>https://doi.org/10.37737/ace.22005</a> ; Stuart et al.2010 <a href='https://doi.org/10.1214%2F09-STS313'>https://doi.org/10.1214%2F09-STS313</a> ).
             </div>);
         }
         if(isWorkflow === "Datenquelle"){
@@ -161,7 +161,7 @@ Future versions will also include the option of estimating the propensity score 
             return (<div></div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>Exact Matching</strong> Exact matching on selected variables is a method in which individuals from the treatment group and the comparison group are paired using identical values of predefined covariates (Zhao 2021 <a href='http://dx.doi.org/10.21037/at'></a>http://dx.doi.org/10.21037/at).
+            return (<div><strong>Variable Matching</strong> Variable matching is a method in which individuals from the treatment group and the comparison group are paired using identical values of predefined covariates (Zhao 2021 <a href='http://dx.doi.org/10.21037/at'></a>http://dx.doi.org/10.21037/at).
 <br/><br/>
 The <strong>propensity score</strong> is the probability of receiving treatment, given the observed baseline characteristics. As a balancing score, it ensures that, after matching based on the propensity score, the distribution of the observed covariates included in its calculation will be similar between the treatment and comparison groups (Austin 2011 DOI: <a href='https://doi.org/10.1080/00273171.2011.568786'></a>10.1080/00273171.2011.568786).
 </div>);
@@ -192,9 +192,9 @@ The logistic regression model estimates the probability of a dependent variable 
             </div>);
         }
         if(isWorkflow === "Matching-Algorithmus"){
-            return (<div><strong>Nearest Neighbour Matching (NNM):</strong> In seiner einfachsten Form wählt das 1 : 1 Nearest Neighbor Matching für jedes behandelte Individuum i in einer bestimmten Reihenfolge ein nicht behandeltes individuummit dem geringsten Abstand zum Individuum i. (Stuart et al 2010  10.1214/09-STS313 ; Rubin 1973 <a href='https://doi.org/10.2307/2529684'></a>https://doi.org/10.2307/2529684; )
-               <br/> <strong>Das Optimal Matching (OM)</strong> findet die engste Paarung von Individuen unter Berücksichtigung bestimmter Anforderungen oder Beschränkungen für das Gleichgewicht der Kovariaten (Rosenbaum 2020 <a href='https://dx.doi.org/10.1146/annurev-statistics-031219-041058'>https://dx.doi.org/10.1146/annurev-statistics-031219-041058</a> ).
-               <br/> Das Optimal Matching vermeidet das Problem, dass die Reihenfolge, in der die behandelten Subjekte gematcht werden, die Qualität der Matches verändert, indem es bei der Auswahl der einzelnen Matches die Gesamtheit der Matches berücksichtigt und das globales Abstandsmaß minimiert (Rubin et al 1996 <a href='https://doi.org/10.2307/2533160'>https://doi.org/10.2307/2533160</a> ) (Stuart et al 2010 <a href='https://doi.org/10.1214%2F09-STS313'>https://doi.org/10.1214%2F09-STS313</a> )
+            return (<div><strong>Nearest Neighbor Matching (NNM):</strong> In its simplest form, 1:1 nearest neighbor matching selects, for each treated individual i in a given order, the untreated individual with the smallest distance to individual i. (Stuart et al 2010  10.1214/09-STS313 ; Rubin 1973 <a href='https://doi.org/10.2307/2529684'></a>https://doi.org/10.2307/2529684; )
+               <br/> <strong>Optimal Matching (OM)</strong> finds the closest pairing of individuals subject to certain requirements or constraints on covariate balance (Rosenbaum 2020 <a href='https://dx.doi.org/10.1146/annurev-statistics-031219-041058'>https://dx.doi.org/10.1146/annurev-statistics-031219-041058</a> ).
+               <br/> Optimal matching avoids the problem that the order in which treated subjects are matched affects the quality of the matches: it considers all matches jointly when selecting each individual match and minimizes a global distance measure (Rubin et al 1996 <a href='https://doi.org/10.2307/2533160'>https://doi.org/10.2307/2533160</a> ) (Stuart et al 2010 <a href='https://doi.org/10.1214%2F09-STS313'>https://doi.org/10.1214%2F09-STS313</a> )
             </div>);
         }
         if(isWorkflow === "Übereinstimmung"){
@@ -243,18 +243,16 @@ Please note that your data must be in CSV format, with variables arranged in col
  </div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>Exact matching on selected variables</strong> is suitable when only a few covariates influence treatment assignment.
+            return (<div><strong>Variable matching</strong> is suitable when only a few covariates influence treatment assignment.
 <br/>As the number of covariates increases, the number of possible exact matches grows exponentially, even when all covariates are binary, often resulting in poor matching quality (Zhao 2021 <a href='http://dx.doi.org/10.21037/at'></a>http://dx.doi.org/10.21037/at).
 <br/>In such cases, <strong>propensity score matching</strong> is the more appropriate method.
  </div>);
         }
         /* EXAKTES MATCHING */
         if(isWorkflow === "Matchingvariablen"){
-            return (<div>Die Auswahl der Matching-Variablen sollte auf theoretischen Überlegungen und Fachkenntnissen basieren, um sicherzustellen, dass wichtige Einflussfaktoren berücksichtigt werden. Die Matching-Variablen sollten als wichtige Einflussfaktoren auf die Behandlungszuweisung betrachtet werden.
-<br/>
-                Sie können mehrere Variablen auswählen, nach denen die Behandelten und die Nichtbehandelten gematcht werden sollen.
-                Bitte beachten Sie, dass bei diesem Matching-Verfahren der Ausgleich zwischen den Vergleichsgruppen umso schwieriger wird, je mehr Variablen Sie auswählen und je mehr Ausprägungen die Matching-Variablen haben.
-                Metrische Variablen (z.B. Alter, bestimmte medizinische Parameter) sind daher für dieses Matching-Verfahren nur dann geeignet, wenn eine entsprechende Matching-Toleranz angegeben wird.
+            return (<div>The <strong>selection of matching variables</strong> should be based on theoretical considerations and expert knowledge to ensure that all relevant determinants are taken into account. Matching variables should be regarded as <strong>key determinants of treatment assignment</strong>.
+<br/>You may select multiple variables on which treated and untreated individuals are to be matched. However, keep in mind that the more variables you include, and the more categories these variables have, the harder it becomes to achieve balance between comparison groups.
+<br/>Metric variables (e.g., age, specific medical parameters) are therefore only suitable for this matching method if a corresponding <strong>matching tolerance (caliper)</strong> is specified.
             </div>);
         }
         if(isWorkflow === "Matchingtoleranz"){

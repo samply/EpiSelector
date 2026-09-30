@@ -166,7 +166,7 @@ function setPiechart(balanced_var_count, non_balanced_var_count, delete_text) {
     console.log("chartDom_e: " +chartDom_e);
     let chart_e = Highcharts.charts[Highcharts.attr(chartDom_e, 'data-highcharts-chart')];
 
-    let char_text = balanced_var_count + ' von ' + (balanced_var_count + non_balanced_var_count) + ' Variablen';
+    let char_text = balanced_var_count + ' of ' + (balanced_var_count + non_balanced_var_count) + ' variables';
 
     if (delete_text == true) {
         char_text = '';
@@ -568,8 +568,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     }, [isResultData, isSummaryData, categoricalVariables, numericVariables, targetVariableForLabels]);
 
     // Verwende echte Variablennamen anstatt statischer Listen
-    let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
-    let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["Keine numerischen Variablen verfügbar"];
+    let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["No categorical variables available"];
+    let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["No numeric variables available"];
 
 
     // Update variable selectors when data changes - use separate effect
@@ -1065,7 +1065,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     headerFormat: ''
                 }
             }, {
-                name: 'Ausreißer',
+                name: 'Outliers',
                 lineColor: 'black',
                 type: 'scatter',
                 data: [ // x, y positions where 0 is the first category
@@ -1077,7 +1077,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     lineColor: '#555'
                 },
                 tooltip: {
-                    pointFormat: 'Wert: {point.y}'
+                    pointFormat: 'Value: {point.y}'
                 }
             }]
 
@@ -1135,7 +1135,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     headerFormat: ''
                 }
             }, {
-                name: 'Ausreißer',
+                name: 'Outliers',
                 lineColor: 'black',
                 type: 'scatter',
                 data: [ // x, y positions where 0 is the first category
@@ -1147,7 +1147,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     lineColor: '#555'
                 },
                 tooltip: {
-                    pointFormat: 'Wert: {point.y}'
+                    pointFormat: 'Value: {point.y}'
                 }
             }]
 

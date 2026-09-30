@@ -137,7 +137,7 @@ function MatchingMethode() {
                                 boxShadow: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
-                        > Exact Matching by <br/> selected variables
+                        > Variable matching
                         </Box>
 
                         <Box

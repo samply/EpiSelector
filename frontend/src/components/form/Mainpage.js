@@ -86,19 +86,19 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
 
                 <br/>
                 <Typography variant="h4">
-                    Willkommen beim EpiSelector, <br/>
-                   Ihrem Beobachtungsstudien-Assistenten
+                    Welcome to EpiSelector, <br/>
+                   your observational study assistant
                 </Typography>
                 <br/><br/>
                 <Typography variant="h6">
-                    Mithilfe des Beobachtungsstudien-Assistenten können Sie aus Ihrem Datensatz anhand festzulegender Kriterien Vergleichsgruppen bilden. Der EpiSelector stellt hierfür verschiedene Methoden zur Verfügung.
+                    The observational study assistant helps you build comparison groups from your dataset based on criteria you define. EpiSelector offers several methods for this.
                 </Typography><br/>
-                <Typography>
-                    <strong>Bitte beachten Sie:</strong> <br/>
-                    Mit Behandelten oder der Behandlungsgruppe meinen wir je nach Studiendesign auch
-                   <ui>
-                       <li>Fälle und</li>
-                    <li>Exponierte</li></ui></Typography>
+                <Typography component="div">
+                    <strong>Please note:</strong> <br/>
+                    Depending on the study design, by treated individuals or the treatment group we also mean
+                   <ul>
+                       <li>cases and</li>
+                    <li>exposed individuals</li></ul></Typography>
 
                 <br/>
                 <div>
@@ -114,17 +114,16 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                         </BootstrapDialogTitle>
                         <DialogContent dividers>
                             <Typography textAlign={"justify"}>
-                                Dieser Beobachtungsstudienassistent wurde mit größtmöglicher Sorgfalt erstellt. Der
-                                Anbieter dieser Applikation übernimmt jedoch keine Gewähr für die Richtigkeit und
-                                Aktualität der bereitgestellten Matching-Prozeduren und dazugehörigen Inhalte und
-                                Informationen. Die Nutzung dieser Applikation erfolgt auf eigene Gefahr und ersetzt
-                                nicht die Konsultation einer Statistikerin/eines Statistikers bzw. einer
-                                Epidemiologin/eines Epidemiologen.
+                                This observational study assistant was created with the greatest possible care.
+                                However, the provider of this application accepts no liability for the correctness
+                                and currency of the matching procedures provided or the associated content and
+                                information. Use of this application is at your own risk and does not replace
+                                consulting a statistician or epidemiologist.
                                 <br/><br/>
-                                Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R
-                                Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket
-                                (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket
-                                (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
+                                The study assistant is based on the free and openly available software R (R Core
+                                Team, 2022) and R packages. Matching is performed with the “MatchIt” package
+                                (Ho, 2011), covariate balance is assessed with the “cobalt” package (Greifer, 2022),
+                                and graphics are created with the “ggplot2” package.
                             </Typography>
                             <br/>
                             <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>
@@ -156,7 +155,7 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                                 backgroundColor: "#1d4189",
                                 "&:hover": {backgroundColor: "#1d4189"}
                             }} variant="filled" autoFocus onClick={handleClose}>
-                                Verstanden
+                                Understood
                             </Button>
                         </DialogActions>
                     </BootstrapDialog>

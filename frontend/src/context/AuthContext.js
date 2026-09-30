@@ -164,8 +164,8 @@ export const AuthProvider = ({ children }) => {
             {
                 id: baseId + 2,
                 user_id: userId,
-                name: 'Exact Matching - Control Study',
-                matching_method: 'Exact Matching',
+                name: 'Variable Matching - Control Study',
+                matching_method: 'Exaktes Matching',
                 target_variable: 'control_group',
                 groupIndicator: 'control_group',
                 matchingVariables: [
@@ -343,7 +343,7 @@ export const AuthProvider = ({ children }) => {
             setIsAuthenticated(false);
             
             console.log('✅ Erfolgreich abgemeldet');
-            return { success: true, message: 'Erfolgreich abgemeldet' };
+            return { success: true, message: 'Successfully logged out' };
         } catch (error) {
             console.error('❌ Abmeldung Netzwerkfehler:', error);
             // Auch bei Fehlern lokale Daten löschen
@@ -351,7 +351,7 @@ export const AuthProvider = ({ children }) => {
             localStorage.removeItem('user_data');
             setCurrentUser(null);
             setIsAuthenticated(false);
-            return { success: true, message: 'Abgemeldet (mit Fehlern)' };
+            return { success: true, message: 'Logged out (with errors)' };
         }
     };
 
