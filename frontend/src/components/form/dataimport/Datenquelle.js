@@ -67,7 +67,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
-                             title="Laden Sie Ihre Daten Local aus Ihrem Rechner hoch."
+                             title="Laden Sie Ihre Daten von Ihrem lokalen Rechner hoch."
                              style={{
                                 backgroundColor: isActiveGeraet || isDatenquelle==="Local" ? "#1d4189":'#E8E9EB',
                                 color: isActiveGeraet || isDatenquelle==="Local" ? "white":"#666666",

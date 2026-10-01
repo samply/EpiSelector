@@ -743,7 +743,7 @@ function MatchingErgebnis() {
 
                 <Typography style={{ fontSize: "10px", paddingLeft: "1%" }}>
                     <strong>PS:</strong> Propensity Score<br />
-                    <strong>stetige Variablen:</strong> Mittelwert bzw. Standardisierte Mittelswertsdifferenz (SMD)) <br />
+                    <strong>stetige Variablen:</strong> Mittelwert bzw. standardisierte Mittelwertsdifferenz (SMD) <br />
                     <strong>kategoriale Variablen:</strong> Anteile bzw. rohe Differenz in den Anteilen <br />
                 </Typography>
 

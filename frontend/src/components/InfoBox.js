@@ -67,7 +67,7 @@ function InfoBox({isWorkflow}) {
                 Erfahrung und Expertise bei der Auswahl und Bildung von geeigneten Vergleichsgruppen. Die
                 Vergleichsgruppen bestehen dabei in der Regel aus Gruppen von einzelnen Patienten. Der besondere
                 Schwerpunkt des EpiSelectors liegt in der Unterstützung bei der Anwendung von Verfahren zur Zuordnung
-                ähnlicher Beobachtungen, dem sog. Matching).
+                ähnlicher Beobachtungen (dem sog. Matching).
                 Auch in großen Datenbeständen können so valide Vergleichsgruppen reproduzierbar und zeitsparend
                 selektiert und gematcht werden.
                 Auch wenn der EpiSelector mit größter Sorgfalt erstellt wurde, übernehmen wir keine Gewähr.
@@ -79,21 +79,21 @@ function InfoBox({isWorkflow}) {
                 Dies ist besonders wichtig für Studien, bei denen aus Kostengründen keine Outcome-Daten für die gesamte
                 Vergleichsgruppe erhoben werden können.<br/>
                 2. Es liegen bereits alle Outcome-Daten vor, und das Ziel des Matchings besteht darin, Verzerrungen, die
-                aus Unterschieden, z.B. im Alter. zwischen den Vergleichsgruppen resultieren könnten, bei der Schätzung
+                aus Unterschieden, z. B. im Alter, zwischen den Vergleichsgruppen resultieren könnten, bei der Schätzung
                 des Behandlungseffekts zu verringern. (Stuart 2010 <a>https://doi.org/10.1214%2F09-STS313</a> )
 
             </div>);
         }
         if(isWorkflow === "Datenquelle"){
-            return (<div>Es ist möglich, Daten, die lokal auf Ihrem Rechner abgespeichert sind, oder Daten, die im DRE (Digital Reearch Environment) abrufbar sind, hochzuladen und mit dem EpiSelector zu bearbeiten. </div>);
+            return (<div>Es ist möglich, Daten, die lokal auf Ihrem Rechner abgespeichert sind, oder Daten, die im DRE (Digital Research Environment) abrufbar sind, hochzuladen und mit dem EpiSelector zu bearbeiten. </div>);
         }
         if(isWorkflow === "Datei-hochladen"){
             return (<div>In diesem Schritt wird die csv-Datei hochgeladen, mit deren Daten Vergleichsgruppen gebildet werden sollen, also ein Matching durchgeführt werden soll.</div>);
         }
         if(isWorkflow === "Matching-Methode"){
             return (<div><strong>Variablen Matching:</strong><br/>
-                Sollen die Vergleichsgruppen exakt hinsichtlich einer Messgröße, zB des Alters, übereinstimmen, und Paare mit jeweils einem Patienten aus beiden Vergleichsgruppen gebildet werden, wird ein exaktes Matching nach Alter mit einem Matching-Verhältnis von 1:1 durchgeführt. Bei diesem Matching wird dann beispielsweise eine 75-jährigen Person aus der einen Vergleichsgruppe mit einer 75-jährigen Person aus der anderen Gruppe gematcht, also Paare mit jeweils zwei Personen gebildet, die exakt gleich alt sind.
-                Die Angabe eines Toleranzbereiches, z.B. +- 3 Jahre, ermöglicht ein Matching von einer 75-jährigen Person mit einer Person im Alter von 72 bis 78 Jahren. In der Regel dient ein Toleranzbereich dazu, die Bildung von Paaren mit ausreichender Ähnlichkeit zu ermöglichen, wenn ein exaktes Matching zu wenige Paare ergibt. Dies könnte schon dadurch erforderlich werden, dass das Alter nicht in Jahren, sondern auch auf Monat und Tag genau bekannt ist, weil beim exakten Matching nach Alter in diesem Fall nur Paare mit Patienten, die auf den Tag genau gleichem alt sind, gebildet werden.
+                Sollen die Vergleichsgruppen exakt hinsichtlich einer Messgröße, z. B. des Alters, übereinstimmen, und Paare mit jeweils einem Patienten aus beiden Vergleichsgruppen gebildet werden, wird ein exaktes Matching nach Alter mit einem Matching-Verhältnis von 1:1 durchgeführt. Bei diesem Matching wird dann beispielsweise eine 75-jährige Person aus der einen Vergleichsgruppe mit einer 75-jährigen Person aus der anderen Gruppe gematcht, also Paare mit jeweils zwei Personen gebildet, die exakt gleich alt sind.
+                Die Angabe eines Toleranzbereiches, z.B. +- 3 Jahre, ermöglicht ein Matching von einer 75-jährigen Person mit einer Person im Alter von 72 bis 78 Jahren. In der Regel dient ein Toleranzbereich dazu, die Bildung von Paaren mit ausreichender Ähnlichkeit zu ermöglichen, wenn ein exaktes Matching zu wenige Paare ergibt. Dies könnte schon dadurch erforderlich werden, dass das Alter nicht in Jahren, sondern auch auf Monat und Tag genau bekannt ist, weil beim exakten Matching nach Alter in diesem Fall nur Paare mit Patienten, die auf den Tag genau gleich alt sind, gebildet werden.
                 Variablen Matching kann auch hinsichtlich mehrerer Messgrößen durchgeführt werden, häufig wird neben dem Alter auch nach Geschlecht gematcht.
                 <br/><br/>
                 <strong>"Propensity Score Matching"</strong><br/>
@@ -107,7 +107,7 @@ function InfoBox({isWorkflow}) {
             return (<div>Anhand der Matching-Variablen sollen Unterschiede in den Vergleichsgruppen so gut wie möglich ausgeglichen werden, um mögliche Verzerrungen in den Analysen zu reduzieren. Typische Matching-Variablen können beispielsweise Alter, Geschlecht und der allgemeine Gesundheitszustand, bzw. Vorerkrankungen sein.</div>);
         }
         if(isWorkflow === "Matchingtoleranz"){
-            return (<div>Die Matchingtoleranz erlaubt es, dass z.B. das Matching nach Alter auch dann durchgeführt werden kann, wenn keine bzw. nicht immer exakte Übereinstimmungen hinsichtlich des Altersvorliegen. Z.B. kann bei Angabe einer Matchingtoleranz von +- 5 Jahren eine 70jährige Person mit einer 75jährigen Person gematcht werden.  </div>);
+            return (<div>Die Matchingtoleranz erlaubt es, dass z.B. das Matching nach Alter auch dann durchgeführt werden kann, wenn keine bzw. nicht immer exakte Übereinstimmungen hinsichtlich des Alters vorliegen. Z.B. kann bei Angabe einer Matchingtoleranz von +- 5 Jahren eine 70-jährige Person mit einer 75-jährigen Person gematcht werden.  </div>);
         }
         if(isWorkflow === "VariableFälleKontrolle"){
             return (<div>Zum Durchführen des Matchings müssen die Gruppen, aus denen Personen gematcht werden sollen, definiert werden. Die Variable, anhand derer die beiden Gruppen definiert werden, muss binär sein und wird hier "Gruppenindikator" genannt.</div>);
@@ -119,7 +119,7 @@ function InfoBox({isWorkflow}) {
             </div>);
         }
         if(isWorkflow === "Kontrollvariablen"){
-            return (<div>Es ist wichtig, alle Variablen in das Matchingverfahren einzubeziehen, von denen bekannt ist, dass sie sowohl mit der Behandlungszuweisung als auch mit dem Zielgröße der Studie (Outcome) zusammenhängen. Hintergrund dafür ist, die Annahme des Prinzips der ignorierbaren Behandlungszuweisung zu erfüllen.
+            return (<div>Es ist wichtig, alle Variablen in das Matchingverfahren einzubeziehen, von denen bekannt ist, dass sie sowohl mit der Behandlungszuweisung als auch mit der Zielgröße der Studie (Outcome) zusammenhängen. Hintergrund dafür ist, die Annahme des Prinzips der ignorierbaren Behandlungszuweisung zu erfüllen.
                 Der Entscheidung, welche Kovariaten in den Matching-Prozess einbezogen werden sollen, liegt das Prinzip der strikten Ignoranz zu Grunde. Das bedeutet, dass Matching-Methoden und die meisten nicht-experimentellen Studienmethoden auf Ignoranz beruhen, d. h. auf der <strong>Annahme, dass es keine unbeobachteten Unterschiede zwischen den Vergleichsgruppen gibt</strong>, in Abhängigkeit von den beobachteten Kovariaten.
                 (Rubin et al. 1996 <a>https://doi.org/10.2307/2533160</a> ; Stuart et al. 2010 <a>https://doi.org/10.1214%2F09-STS313</a>).
             </div>);
@@ -130,7 +130,7 @@ function InfoBox({isWorkflow}) {
             </div>);
         }
         if(isWorkflow === "Matching-Algorithmus"){
-            return (<div>Propensity-Score-Matching-Schätzer unterscheiden sich nicht nur in der Art und Weise, anhand welches Matching-Algorithmus die behandelten Individuen mit den Nicht-Behandelten gematched werden, sondern auch in Bezug auf die Angabe eines <strong>Calipers</strong>, des <strong>Matching-Ratios</strong> und der <strong>möglichen Mehrfachverwendung</strong> einer Kontrolle (Calinendo et al. 2008 <a>https://doi.org/10.1111/j.1467-6419.2007.00527.x</a> ).</div>);
+            return (<div>Propensity-Score-Matching-Schätzer unterscheiden sich nicht nur in der Art und Weise, anhand welches Matching-Algorithmus die behandelten Individuen mit den Nicht-Behandelten gematcht werden, sondern auch in Bezug auf die Angabe eines <strong>Calipers</strong>, des <strong>Matching-Ratios</strong> und der <strong>möglichen Mehrfachverwendung</strong> einer Kontrolle (Calinendo et al. 2008 <a>https://doi.org/10.1111/j.1467-6419.2007.00527.x</a> ).</div>);
         }
         if(isWorkflow === "Übereinstimmung"){
             return (<div>In diesem Schritt geht es darum festzulegen, wie ähnlich die Propensity Scores einer behandelten Person und einer nicht behandelten Person sein sollen, damit diese gematcht werden.
@@ -139,7 +139,7 @@ function InfoBox({isWorkflow}) {
         }
         /* GEMEINSAME SCHRITTE & ENDE */
         if(isWorkflow === "MatchingVerhältnis"){
-            return (<div>Hier geht es darum, das Verhältnis zwischen Behandelten und Nichtbehandelten festzulegen, d.h. ob z.B. eine behandelte Personmit jeweils einer nicht behandelten Person oder mit mehreren Unbehandelten gematcht werden sollen.</div>);
+            return (<div>Hier geht es darum, das Verhältnis zwischen Behandelten und Nichtbehandelten festzulegen, d.h. ob z.B. eine behandelte Person mit jeweils einer nicht behandelten Person oder mit mehreren Unbehandelten gematcht werden soll.</div>);
         }
         if(isWorkflow === "MatchingErgebnis"){
             return (<div>At the end of the matching process, the dataset used for matching is described with respect to a pre- and post-matching comparison—specifically in terms of the number of variables and observations, as well as the number of treated and untreated units. On one hand, a table presents how and to what extent the matching has balanced the comparison groups regarding the covariates, by showing means and standardized mean differences (for continuous variables), as well as proportions and raw proportion differences (for categorical variables). On the other hand, the covariate balance is also illustrated graphically. Boxplots are used for continuous variables, while mirrored histograms are used for categorical variables, allowing for a visual assessment of the balance achieved through matching.</div>);
@@ -163,15 +163,15 @@ function InfoBox({isWorkflow}) {
             return (<div></div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>"Exaktes Matching nach ausgewählten Variablen" </strong> ist eine Methode, bei der Personen der Behandlungsgruppe und Personen der Vergleichsgruppe unter Verwendung der exakt gleichen Werte von im Vorhinein festgelegten Kovariaten einander zugeordnet ("gematched") werden (Zhao 2021  <a>http://dx.doi.org/10.21037/at</a> ).
+            return (<div><strong>"Variablen Matching" </strong> ist eine Methode, bei der Personen der Behandlungsgruppe und Personen der Vergleichsgruppe unter Verwendung der exakt gleichen Werte von im Vorhinein festgelegten Kovariaten einander zugeordnet ("gematcht") werden (Zhao 2021  <a>http://dx.doi.org/10.21037/at</a> ).
 <br/><br/>
                 Der <strong>"Propensity Score" </strong> ist die Wahrscheinlichkeit der Behandlung in Abhängigkeit von den beobachteten Ausgangsmerkmalen.
-                Der Propensity Score ist ein ausgleichender Score. Bedingt durch das Matching basierend auf dem Propensity Score wird die Verteilung der beobachteten Ausgangskovariaten, die in die Berechnung des Propensity Score einfließen, zwischen den beiden Vergleichgruppen ähnlich sein (Austin 2011 DOI: 10.1080/00273171.2011.568786).
+                Der Propensity Score ist ein ausgleichender Score. Bedingt durch das Matching basierend auf dem Propensity Score wird die Verteilung der beobachteten Ausgangskovariaten, die in die Berechnung des Propensity Score einfließen, zwischen den beiden Vergleichsgruppen ähnlich sein (Austin 2011 DOI: 10.1080/00273171.2011.568786).
             </div>);
         }
         /* EXAKTES MATCHING */
         if(isWorkflow === "Matchingvariablen"){
-            return (<div><strong>Matching-Variablen</strong> sind die Merkmale oder Variablen, die bei einem Matching-Prozess verwendet werden, um ähnliche Paare bzw. Vergleichgruppen zu bilden.</div>);
+            return (<div><strong>Matching-Variablen</strong> sind die Merkmale oder Variablen, die bei einem Matching-Prozess verwendet werden, um ähnliche Paare bzw. Vergleichsgruppen zu bilden.</div>);
         }
         if(isWorkflow === "Matchingtoleranz"){
             return (<div>Die <strong>Matchingtoleranz</strong> bestimmt, was als genaue Übereinstimmung gilt (<a>https://cran.r-project.org/web/packages/MatchIt/MatchIt.pdf</a> ).</div>);
@@ -181,8 +181,8 @@ function InfoBox({isWorkflow}) {
         }
         /* PROPENSITY SCORE MATCHING */
         if(isWorkflow === "Zielvariable"){
-            return (<div>Die <strong>Zielvariable des Propensity Scores</strong> ist die abhängige binäre - Variable, die in dem Modell zur Berechnung des Propensity Scores verwendet wird und angibt, ob eine Person der Behandlungs- oder der Vergleichsgruppe zuzuordnen ist.
-                Die Zielvariable dient der Schätzung derWahrscheinlichkeit für alle Patienten, die Behandlung zu erhalten (also des individuellen Propensity Scores).
+            return (<div>Die <strong>Zielvariable des Propensity Scores</strong> ist die abhängige binäre Variable, die in dem Modell zur Berechnung des Propensity Scores verwendet wird und angibt, ob eine Person der Behandlungs- oder der Vergleichsgruppe zuzuordnen ist.
+                Die Zielvariable dient der Schätzung der Wahrscheinlichkeit für alle Patienten, die Behandlung zu erhalten (also des individuellen Propensity Scores).
             </div>);
         }
         if(isWorkflow === "Kontrollvariablen"){
@@ -190,17 +190,17 @@ function InfoBox({isWorkflow}) {
         }
         if(isWorkflow === "ScoreBerechnung"){
             return (<div>Der <strong>Propensity Score </strong> wird durch Anpassung eines logistischen Regressionsmodells mit der Behandlung als abhängige Variable berechnet.
-                Das <strong>logistisches Regressionsmodell </strong> misst die Veränderung der Wahrscheinlichkeit einer bestimmten abhängigen Variable bei einer Reihe unabhängiger Variablen und ist die allgemein am gebräuchlichste Methode, um den Propenisty Score zu berechnen (Inacio et al. 2015 <a>https://doi.org/10.1007/s11999-015-4239-4</a> ) (Rubin et al. 1996 <a>https://doi.org/10.2307/2533160</a> ) (Austin 2011 <a>https://doi.org/10.1080/00273171.2011.568786</a> ).
+                Das <strong>logistische Regressionsmodell </strong> misst die Veränderung der Wahrscheinlichkeit einer bestimmten abhängigen Variable bei einer Reihe unabhängiger Variablen und ist die allgemein gebräuchlichste Methode, um den Propensity Score zu berechnen (Inacio et al. 2015 <a>https://doi.org/10.1007/s11999-015-4239-4</a> ) (Rubin et al. 1996 <a>https://doi.org/10.2307/2533160</a> ) (Austin 2011 <a>https://doi.org/10.1080/00273171.2011.568786</a> ).
             </div>);
         }
         if(isWorkflow === "Matching-Algorithmus"){
-            return (<div><strong>Nearest Neighbour Matching (NNM):</strong> In seiner einfachsten Form wählt das 1 : 1 Nearest Neighbor Matching für jedes behandelte Individuum i in einer bestimmten Reihenfolge ein nicht behandeltes individuummit dem geringsten Abstand zum Individuum i. (Stuart et al 2010  10.1214/09-STS313 ; Rubin 1973 https://doi.org/10.2307/2529684; )
+            return (<div><strong>Nearest Neighbour Matching (NNM):</strong> In seiner einfachsten Form wählt das 1 : 1 Nearest Neighbour Matching für jedes behandelte Individuum i in einer bestimmten Reihenfolge ein nicht behandeltes Individuum mit dem geringsten Abstand zum Individuum i. (Stuart et al 2010  10.1214/09-STS313 ; Rubin 1973 https://doi.org/10.2307/2529684; )
                 <strong>Das Optimal Matching (OM)</strong> findet die engste Paarung von Individuen unter Berücksichtigung bestimmter Anforderungen oder Beschränkungen für das Gleichgewicht der Kovariaten (Rosenbaum 2020 <a>https://dx.doi.org/10.1146/annurev-statistics-031219-041058</a> ).
-                Das Optimal Matching vermeidet das Problem, dass die Reihenfolge, in der die behandelten Subjekte gematcht werden, die Qualität der Matches verändert, indem es bei der Auswahl der einzelnen Matches die Gesamtheit der Matches berücksichtigt und das globales Abstandsmaß minimiert (Rubin et al 1996 <a>https://doi.org/10.2307/2533160</a> ) (Stuart et al 2010 <a>https://doi.org/10.1214%2F09-STS313</a> )
+                Das Optimal Matching vermeidet das Problem, dass die Reihenfolge, in der die behandelten Subjekte gematcht werden, die Qualität der Matches verändert, indem es bei der Auswahl der einzelnen Matches die Gesamtheit der Matches berücksichtigt und das globale Abstandsmaß minimiert (Rubin et al 1996 <a>https://doi.org/10.2307/2533160</a> ) (Stuart et al 2010 <a>https://doi.org/10.1214%2F09-STS313</a> )
             </div>);
         }
         if(isWorkflow === "Übereinstimmung"){
-            return (<div>Wenn sich die Verteilung der Propensity Scores zwischen der Behandlungs- und der Vergleichsgruppe stark unterscheidet, kann der Abstand zwischen den Propensity Scores eines gematchten Paares sehr groß sein. In diesem Fall ist es ratsam, beim Matching ein Caliper hinzuzufügen. Auf diese Weise können für jeden Fall nur Kontrollen mit einem PS innerhalb eines begrenzten Bereichs gematcht werden. Wenn keine passende nicht behandelte Person gefunden werden kann, sollte diesebehandelte Person verworfen werden (Zhao 2021 <a>http://dx.doi.org/10.21037/atm-20-3998</a> ). </div>);
+            return (<div>Wenn sich die Verteilung der Propensity Scores zwischen der Behandlungs- und der Vergleichsgruppe stark unterscheidet, kann der Abstand zwischen den Propensity Scores eines gematchten Paares sehr groß sein. In diesem Fall ist es ratsam, beim Matching einen Caliper hinzuzufügen. Auf diese Weise können für jeden Fall nur Kontrollen mit einem PS innerhalb eines begrenzten Bereichs gematcht werden. Wenn keine passende nicht behandelte Person gefunden werden kann, sollte diese behandelte Person verworfen werden (Zhao 2021 <a>http://dx.doi.org/10.21037/atm-20-3998</a> ). </div>);
         }
         /* GEMEINSAME SCHRITTE & ENDE */
         if(isWorkflow === "MatchingVerhältnis"){
@@ -217,19 +217,19 @@ function InfoBox({isWorkflow}) {
 
     const content3 = () =>{
         if(isWorkflow === "Startseite"){
-            return (<div>Bevor Sie den EpiSelector mit dem Klicken auf "Start"-Button starten, lesen und bestätigen Sie bitte den Hinweis.
+            return (<div>Bevor Sie den EpiSelector mit einem Klick auf den „Start“-Button starten, lesen und bestätigen Sie bitte den Hinweis.
 <br/><br/>
-                Bitte beachten Sie folgendes:
+                Bitte beachten Sie Folgendes:
                 -	Ihre Daten müssen im csv-Format vorliegen. Die Variablen müssen sich in den Spalten, die Beobachtungen in den Zeilen befinden.
                 -	Der EpiSelector unterstützt den vollständigen Matching-Prozess, nicht jedoch die vorangehende Datenanalyse zur Identifikation der Kontrollvariablen, deren Ausgeglichenheit zwischen Behandelten und Nichtbehandelten Ziel des Matchings ist.
-                -	Wenn Sie bereits Eingabe-Masken aus vorherigen Matching-Sitzungen gespeichert habe, haben Sie die Möglichkeit, eine Ihrer Masken mit Ihren spezifischen Matching-Angaben aufzurufen und für den Matching-Prozess dieser Sitzung anzuwenden. Wählen Sie dazu Ihre Maske aus und klicken Sie dann auf "Start".
+                -	Wenn Sie bereits Eingabe-Masken aus vorherigen Matching-Sitzungen gespeichert haben, haben Sie die Möglichkeit, eine Ihrer Masken mit Ihren spezifischen Matching-Angaben aufzurufen und für den Matching-Prozess dieser Sitzung anzuwenden. Wählen Sie dazu Ihre Maske aus und klicken Sie dann auf "Start".
             </div>);
         }
         if(isWorkflow === "Datenquelle"){
             return (<div>Wählen Sie eine Datenquelle aus, aus der Sie Ihre Beobachtungen hochladen möchten.
                 Sie können Ihre Daten lokal von Ihrem Gerät hochladen oder aus dem DRE (Digital Research Environment).
 <br/>
-                Für das Hochladen aus dem der (Digital Research Environment) müssen Sie bereits im DRE registriert sein.
+                Für das Hochladen aus dem DRE (Digital Research Environment) müssen Sie bereits im DRE registriert sein.
 <br/>
                 Bitte beachten Sie, dass Ihre Daten im csv-Format vorliegen müssen. Die Variablen müssen sich in den Spalten, die Beobachtungen in den Zeilen befinden.
             </div>);
@@ -240,12 +240,12 @@ function InfoBox({isWorkflow}) {
                 Sie haben hierzu zwei Möglichkeiten: <br/>
                 -	Sie ziehen Ihre csv-Datei aus dem Explorer in die vorgegebene eingerahmte Fläche
                <br/> ODER<br/>
-                -	Sie klicken auf diese vergebene eingerahmte Fläche, damit sich der Explorer automatisch öffnet. Wählen Sie nun Ihre csv-Datei aus, die Sie für den Matching-Prozess verwenden möchten.
+                -	Sie klicken auf diese vorgegebene eingerahmte Fläche, damit sich der Explorer automatisch öffnet. Wählen Sie nun Ihre csv-Datei aus, die Sie für den Matching-Prozess verwenden möchten.
             </div>);
         }
         if(isWorkflow === "Matching-Methode"){
             return (<div><strong>Variablen Matching:</strong> Diese Methode ist anwendbar, wenn nur wenige Kovariaten die Behandlungszuweisung beeinflussen können.
-                Wenn die Anzahl der Kovariablen zunimmt, steigt die Anzahl der möglichen Übereinstimmungen exponentiell an, auch wenn alle Kovariablen binär sind, was zu einem schlechten Übereinstimmungsergebnis führt (Zhao 2021  http://dx.doi.org/10.21037/at).
+                Wenn die Anzahl der Kovariaten zunimmt, steigt die Anzahl der möglichen Übereinstimmungen exponentiell an, auch wenn alle Kovariaten binär sind, was zu einem schlechten Übereinstimmungsergebnis führt (Zhao 2021  http://dx.doi.org/10.21037/at).
                 In diesem Fall ist dann das "Propensity Score Matching" geeigneter.
             </div>);
         }
@@ -269,7 +269,7 @@ function InfoBox({isWorkflow}) {
             return (<div>Wählen Sie hier die Variable aus, die die Information enthält, ob ein:e Patient:in eine Behandlung erhalten hat oder nicht. Diese Variable ist im Propensity Score-Berechnungsmodell die abhängige Variable. Sie können nur eine einzige und binäre Variable auswählen.</div>);
         }
         if(isWorkflow === "Kontrollvariablen"){
-            return (<div>Wählen Sie hier die Variablen aus, die in die Berechnung des Propensity Scores einfließen sollen und nach den die Behandlungs- und Vergleichsgruppe durch das Matching ausgeglichen werden sollen. Mehrfachnennungen, d.h. die Auswahl mehrerer Variablen, sind möglich.</div>);
+            return (<div>Wählen Sie hier die Variablen aus, die in die Berechnung des Propensity Scores einfließen sollen und nach denen die Behandlungs- und Vergleichsgruppe durch das Matching ausgeglichen werden sollen. Mehrfachnennungen, d.h. die Auswahl mehrerer Variablen, sind möglich.</div>);
         }
         if(isWorkflow === "ScoreBerechnung"){
             return (<div>Aktuell steht Ihnen ausschließlich die logistische Regression zur Berechnung des Propensity Scores zur Verfügung.
@@ -278,7 +278,7 @@ function InfoBox({isWorkflow}) {
         }
         if(isWorkflow === "Matching-Algorithmus"){
             return (<div>Beim Matching mit Ersetzung besteht ein Kompromiss zwischen Verzerrung und Varianz. Wenn wir die Ersetzung zulassen, steigt die durchschnittliche Qualität des Abgleichs und die Verzerrung nimmt ab.
-                Dies ist von besonderem Interesse bei Daten, bei denen die Propensity-Score-Verteilung in der in der Behandlungs- und in der Vergleichsgruppe sehr unterschiedlich ist (Caliendo 2008 https://doi.org/10.1111/j.1467-6419.2007.00527.x )(Iwagami et al. 2022  https://doi.org/10.37737/ace.22005 ).
+                Dies ist von besonderem Interesse bei Daten, bei denen die Propensity-Score-Verteilung in der Behandlungs- und in der Vergleichsgruppe sehr unterschiedlich ist (Caliendo 2008 https://doi.org/10.1111/j.1467-6419.2007.00527.x )(Iwagami et al. 2022  https://doi.org/10.37737/ace.22005 ).
             </div>);
         }
         if(isWorkflow === "Übereinstimmung"){
@@ -298,12 +298,12 @@ function InfoBox({isWorkflow}) {
         /* GEMEINSAME SCHRITTE & ENDE */
         if(isWorkflow === "MatchingVerhältnis"){
             return (<div>Bitte geben Sie hier das Verhältnis zwischen Behandelten und Nichtbehandelten an, in dem das Matching durchgeführt werden soll.
-                Es kann vorkommen, dass einer behandelten Personnicht die vorgegebene Anzahl an Nichtbehandelten zugeordnet werden kann.
-                Beispiel: in einer Fall-Kontroll-Studie mit einem Matchingfaktor von 1:4 können einige Fälle weniger als die geplanten vier Kontrollen finden. Es ist jedoch nicht notwendig, diese Paare auszuschließen, wenn die Matching-Faktoren oder die gematchten Datensätze von Fällen und Kontrollen in der Analyse geschichtet werden. Das Mischen von Paaren mit unterschiedlichen Matching-Faktoren führt nicht zu einer verzerrten Schätzung, solange eine angemessene Anpassung der Matching-Faktoren vorgenommen wird (Iwagami et al. 2022  https://doi.org/10.37737/ace.22005).
+                Es kann vorkommen, dass einer behandelten Person nicht die vorgegebene Anzahl an Nichtbehandelten zugeordnet werden kann.
+                Beispiel: In einer Fall-Kontroll-Studie mit einem Matchingfaktor von 1:4 können einige Fälle weniger als die geplanten vier Kontrollen finden. Es ist jedoch nicht notwendig, diese Paare auszuschließen, wenn die Matching-Faktoren oder die gematchten Datensätze von Fällen und Kontrollen in der Analyse geschichtet werden. Das Mischen von Paaren mit unterschiedlichen Matching-Faktoren führt nicht zu einer verzerrten Schätzung, solange eine angemessene Anpassung der Matching-Faktoren vorgenommen wird (Iwagami et al. 2022  https://doi.org/10.37737/ace.22005).
             </div>);
         }
         if(isWorkflow === "MatchingErgebnis"){
-            return (<div>Hier erhalten Sie tabellarisch und graphisch ihr Matching-Ergebnis und können die Balancierung der von Ihnen ausgewählten Kovariaten überprüfen.</div>);
+            return (<div>Hier erhalten Sie tabellarisch und graphisch Ihr Matching-Ergebnis und können die Balancierung der von Ihnen ausgewählten Kovariaten überprüfen.</div>);
         }
         if(isWorkflow === "Datenexport"){
             return (<div>Hier erhalten Sie die Möglichkeit, folgende Daten lokal zu speichern: <br/>
@@ -314,7 +314,7 @@ function InfoBox({isWorkflow}) {
                 Matching-Ergebnisse enthalten.
                 <br/> 2. Ihren gematchten Datensatz: Ihr gematchter Datensatz enthält nur noch die gematchten Paare.
                 Personen
-                der Behandlungsgruppe, für die keine passende nichtbehandelte Person gefunden werden konnten, oder
+                der Behandlungsgruppe, für die keine passende nichtbehandelte Person gefunden werden konnte, oder
                 Nichtbehandelte, die nicht zum Matching benötigt wurden, sind nicht mehr im gematchten Datensatz
                 enthalten.
                 <br/> 3. Ihre Eingabemaske: optional können Sie Ihre getroffenen Angaben im Matching-Prozess für weitere

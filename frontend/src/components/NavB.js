@@ -487,7 +487,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                      visitedSite("matchingverhältnis");
                                      setWorkflow("MatchingVerhältnis");
                                  }} style={linkStyle}>
-                                 Matching Verhältnis  <br/><div style={{  display: "flex",
+                                 Matching-Verhältnis  <br/><div style={{  display: "flex",
                                  paddingLeft: "10%",
                                  paddingRight: "10%",
                                  left: "60px",

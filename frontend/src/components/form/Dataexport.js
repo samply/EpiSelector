@@ -104,7 +104,7 @@ function Dataexport() {
         newDoc.text("Matchingprotokoll", 14, 15);
         newDoc.setFontSize(14); 
         newDoc.setTextColor(100);
-        newDoc.text("Matching Ergebnisse", 14, 25);
+        newDoc.text("Matching-Ergebnisse", 14, 25);
         
         // Header-Tabelle mit neuer Syntax
         newDoc.autoTable({
@@ -401,7 +401,7 @@ function Dataexport() {
                     variant="outlined"
                     value={processName}
                     onChange={(e) => setProcessName(e.target.value)}
-                    placeholder="z.B. Herzinsuffizienz Studie 2024"
+                    placeholder="z. B. Herzinsuffizienz-Studie 2024"
                     sx={{ mt: 2 }}
                 />
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>

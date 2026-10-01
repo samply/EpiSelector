@@ -87,7 +87,7 @@ function MatchingMethode() {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
-                    Matching Methode
+                    Matching-Methode
                 </Typography>
                 <Collapse in={open}>
                     <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
@@ -105,7 +105,7 @@ function MatchingMethode() {
                     }
                            sx={{mb: 2}} severity="error">
                         <AlertTitle>Error</AlertTitle>
-                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen, um
+                        Keine Matching-Methode — <strong>Sie müssen eine Matching-Methode auswählen, um
                         fortzufahren</strong>
                     </Alert>
 
