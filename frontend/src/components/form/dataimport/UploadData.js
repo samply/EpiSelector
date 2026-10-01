@@ -159,7 +159,7 @@ export default function UploadData() {
                         </IconButton>
                     }
                            sx={{mb: 2}} severity="error">
-                        <AlertTitle>Error</AlertTitle>
+                        <AlertTitle>Fehler</AlertTitle>
                         Keine Daten — <strong>Sie müssen eine Datei hochladen, um
                         fortzufahren</strong>
                     </Alert>

@@ -856,7 +856,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Pre Matching'
+                text: 'Prä-Matching'
             },
             accessibility: {
                 point: {
@@ -887,7 +887,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     enabled: false
                 },
                 accessibility: {
-                    description: 'Percentage population',
+                    description: 'Anteil der Population',
                     rangeDescription: 'Range: 0 to 5%'
                 }
             },
@@ -940,7 +940,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Post Matching'
+                text: 'Post-Matching'
             },
             accessibility: {
                 point: {
@@ -970,7 +970,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     },
                 },
                 accessibility: {
-                    description: 'Percentage population',
+                    description: 'Anteil der Population',
                     rangeDescription: 'Range: 0 to 5%'
                 }
             },
@@ -1025,7 +1025,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Pre Matching'
+                text: 'Prä-Matching'
             },
 
             legend: {
@@ -1097,7 +1097,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Post Matching'
+                text: 'Post-Matching'
             },
 
             legend: {
@@ -1375,14 +1375,14 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanciert</Typography></div>
 
                                             </div>
 
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Nicht balanciert</Typography></div>
                                             </div>
                                         </div>
                                     </div>

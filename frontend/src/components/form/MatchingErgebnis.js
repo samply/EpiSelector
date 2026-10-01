@@ -75,49 +75,18 @@ function MatchingErgebnis() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const postPSMOE = '260';
-    const postPSMME = '215';
-    const postEMOT = '256';
-    const postEMMT = '256';
+    // Datensatzbeschreibung vor und nach dem Matching, aus den hochgeladenen und den gematchten Daten berechnet.
+    // Unbenannte Spalten (z. B. die Zeilennummer von R's write.csv) zählen nicht als Variable; R benennt sie im
+    // Ergebnis um (z. B. "X1.3826"), deshalb wird ihre Anzahl abgezogen statt nach Namen gefiltert.
+    const spaltenNamen = Array.isArray(isDateiSpaltenNamen) ? isDateiSpaltenNamen : [];
+    const unbenannteSpalten = spaltenNamen.filter((name) => name.trim() === "").length;
+    const preVariablen = spaltenNamen.length - unbenannteSpalten;
 
-    const variablePSMOE = '45';
-    const variablePSMME = '18';
-    const variableEMOT = '44';
-    const variableEMMT = '44';
+    const postBeobachtungen = () =>
+        Array.isArray(resultData) ? resultData.filter((row) => row['Matching weight'] > 0).length : 0;
 
-
-    const postBeobachtungen = () => {
-        if (isMatchingMethode === "Propensity Score") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return postPSMOE;
-
-        } else if (isMatchingMethode === "Exaktes Matching") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return postEMMT;
-        }
-    };
-
-    const postVariable = () => {
-        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return variablePSMOE;
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return variablePSMME;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return variableEMOT;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return variableEMMT;
-        }
-    };
+    const postVariable = () =>
+        Array.isArray(resultData) && resultData.length > 0 ? Object.keys(resultData[0]).length - unbenannteSpalten : 0;
 
 
     useEffect(() => {
@@ -580,7 +549,7 @@ function MatchingErgebnis() {
                     </IconButton>
                 }
                     sx={{ mb: 2 }} severity="error">
-                    <AlertTitle> <strong>No Matches</strong></AlertTitle>
+                    <AlertTitle> <strong>Keine Paare gefunden</strong></AlertTitle>
                     Aufgrund Ihrer gemachten Angaben konnten keine Paare gebildet werden.
                 </Alert></div>
         }
@@ -605,8 +574,8 @@ function MatchingErgebnis() {
 
                     <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
 
-                        Pre-Matching: 42 Variablen, 3826 Beobachtungen <br />
-                        Post-Matching:{postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
+                        Prä-Matching: {preVariablen} Variablen, {isBeobachtungen} Beobachtungen <br />
+                        Post-Matching: {postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
                     </Typography>
                 </div>
 
@@ -632,7 +601,7 @@ function MatchingErgebnis() {
                                             fontSize: "medium",
                                             padding: "4px"
                                         }}>
-                                            PreMatching
+                                            Prä-Matching
                                         </TableCell>
                                         <TableCell align="center" colSpan={5} sx={{
                                             border: 'solid 2px',
@@ -642,7 +611,7 @@ function MatchingErgebnis() {
                                             padding: "4px",
                                             borderLeft: "solid 1px white"
                                         }}>
-                                            PostMatching
+                                            Post-Matching
                                         </TableCell>
                                     </TableRow>
                                     <TableRow sx={{ height: '30px' }}>

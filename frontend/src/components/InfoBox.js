@@ -142,7 +142,10 @@ function InfoBox({isWorkflow}) {
             return (<div>Hier geht es darum, das Verhältnis zwischen Behandelten und Nichtbehandelten festzulegen, d.h. ob z.B. eine behandelte Person mit jeweils einer nicht behandelten Person oder mit mehreren Unbehandelten gematcht werden soll.</div>);
         }
         if(isWorkflow === "MatchingErgebnis"){
-            return (<div>At the end of the matching process, the dataset used for matching is described with respect to a pre- and post-matching comparison—specifically in terms of the number of variables and observations, as well as the number of treated and untreated units. On one hand, a table presents how and to what extent the matching has balanced the comparison groups regarding the covariates, by showing means and standardized mean differences (for continuous variables), as well as proportions and raw proportion differences (for categorical variables). On the other hand, the covariate balance is also illustrated graphically. Boxplots are used for continuous variables, while mirrored histograms are used for categorical variables, allowing for a visual assessment of the balance achieved through matching.</div>);
+            return (<div>Am Ende des Matching-Prozesses wird der für das Matching verwendete Datensatz im Hinblick auf einen <strong>Prä-Post-Matching-Vergleich</strong> beschrieben, d. h. im Hinblick auf die Anzahl der Variablen und Beobachtungen sowie die Anzahl der Behandelten und Nichtbehandelten.
+                Zum einen wird <strong>tabellarisch</strong> dargestellt, wie und ob das Matching die Mittelwerte bzw. die <strong>standardisierte Mittelwertsdifferenz </strong>(bei kontinuierlichen Variablen) und <strong>die Anteile bzw. die rohe Anteilsdifferenz</strong> (bei kategorialen Variablen) zwischen den Vergleichsgruppen hinsichtlich der zu balancierenden Variablen angeglichen hat.
+                Zum anderen wird die Ausgewogenheit der Kontrollvariablen durch grafische Darstellungen verdeutlicht. Für die kontinuierlichen Variablen werden <strong>Boxplots</strong> verwendet und für die kategorialen Variablen <strong> gespiegelte Histogramme</strong>, um die Balancierung durch das Matching visuell darzustellen.
+            </div>);
         }
         if(isWorkflow === "Datenexport"){
             return (<div>Hier haben Sie die Möglichkeit, die gematchten Daten für Ihre weiteren Analysen zu speichern, das Matching-Protokoll für Ihre Publikationen herunterzuladen und die Eingabemaske für weitere Matching-Prozesse zu speichern.</div>);
@@ -163,7 +166,7 @@ function InfoBox({isWorkflow}) {
             return (<div></div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>"Variablen Matching" </strong> ist eine Methode, bei der Personen der Behandlungsgruppe und Personen der Vergleichsgruppe unter Verwendung der exakt gleichen Werte von im Vorhinein festgelegten Kovariaten einander zugeordnet ("gematcht") werden (Zhao 2021  <a>http://dx.doi.org/10.21037/at</a> ).
+            return (<div><strong>"Variablen Matching" </strong> ist eine Methode, bei der Personen der Behandlungsgruppe und Personen der Vergleichsgruppe unter Verwendung der gleichen Werte innerhalb einer definierten Umgebung von im Vorhinein festgelegten Kovariaten einander zugeordnet ("gematcht") werden (Zhao 2021  <a>http://dx.doi.org/10.21037/at</a> ).
 <br/><br/>
                 Der <strong>"Propensity Score" </strong> ist die Wahrscheinlichkeit der Behandlung in Abhängigkeit von den beobachteten Ausgangsmerkmalen.
                 Der Propensity Score ist ein ausgleichender Score. Bedingt durch das Matching basierend auf dem Propensity Score wird die Verteilung der beobachteten Ausgangskovariaten, die in die Berechnung des Propensity Score einfließen, zwischen den beiden Vergleichsgruppen ähnlich sein (Austin 2011 DOI: 10.1080/00273171.2011.568786).
