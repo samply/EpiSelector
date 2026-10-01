@@ -65,3 +65,6 @@ staticfiles/
 
 # JetBrains module files
 *.iml
+
+# Deployment-specific Django overrides
+config/django/local_settings.prod.py

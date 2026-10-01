@@ -108,8 +108,12 @@ Clone the repository and start the application:
 ```bash
 git clone https://github.com/samply/EpiSelector.git
 cd EpiSelector
+cp .env.example .env
+# set POSTGRES_PASSWORD in .env, e.g. to the output of: openssl rand -hex 24
 docker compose up
 ```
+
+Django reads its development overrides (debug mode, allowed hosts) from `config/django/local_settings.dev.py`, which Docker Compose mounts into the container.
 
 On the first startup, Docker pulls or builds the required images. This can take a few minutes.
 
@@ -119,12 +123,7 @@ Open EpiSelector in your browser:
 http://localhost:3000
 ```
 
-The backend services are available at:
-
-```text
-Django backend: http://localhost:8000
-R backend:      http://localhost:3420
-```
+Only the frontend is published on the host. The frontend's nginx forwards `/api/` and `/control_selection/` to the Django backend; Django, the R backend and PostgreSQL are reachable only inside the Docker network.
 
 ### Run in the Background
 
@@ -176,31 +175,19 @@ On Windows PowerShell:
 
 ## Production Deployment
 
-Use the production Compose file for a server deployment:
+A deployment uses the same `docker-compose.yml`; Django runs under gunicorn in both cases. What differs is the Django settings file and the database password. Before the first start, create the two deployment-specific files:
+
+1. `.env`: copy `.env.example`, set `POSTGRES_PASSWORD` (letters and digits only, e.g. `openssl rand -hex 24`), and uncomment `DJANGO_LOCAL_SETTINGS=./config/django/local_settings.prod.py`.
+2. `config/django/local_settings.prod.py`: copy `config/django/local_settings.prod.example.py` and set `SECRET_KEY`, `ALLOWED_HOSTS` and `CSRF_TRUSTED_ORIGINS` for your domain. The file is gitignored and is mounted into the Django container, where it overrides the built-in settings. `config/django/local_settings.example.py` shows further override patterns, such as extending lists from `settings.py` instead of copying them.
 
 ```bash
-docker compose -f docker-compose.prod.yml up -d
+cp .env.example .env
+cp config/django/local_settings.prod.example.py config/django/local_settings.prod.py
+# edit both files, then:
+docker compose up -d
 ```
 
-Set deployment-specific values in your environment before starting the stack:
-
-```bash
-export POSTGRES_PASSWORD="change-this-password"
-export DOMAIN_NAME="episelector.example.org"
-export EPISELECTOR_IMAGE_TAG="master-de"
-```
-
-View production logs:
-
-```bash
-docker compose -f docker-compose.prod.yml logs -f
-```
-
-Stop the production stack:
-
-```bash
-docker compose -f docker-compose.prod.yml down
-```
+Create `local_settings.prod.py` before starting the stack: if the file is missing, Docker creates an empty directory in its place.
 
 ---
 

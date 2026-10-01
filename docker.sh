@@ -11,14 +11,9 @@ case "$1" in
         echo "🚀 Starte Development-Umgebung im Hintergrund..."
         docker-compose up -d --build
         ;;
-    "prod")
-        echo "🚀 Starte Production-Umgebung..."
-        docker-compose -f docker-compose.prod.yml up -d --build
-        ;;
     "stop")
         echo "⏹️ Stoppe alle Container..."
         docker-compose down
-        docker-compose -f docker-compose.prod.yml down
         ;;
     "clean")
         echo "🧹 Bereinige Docker (Container, Images, Volumes)..."
@@ -43,7 +38,6 @@ case "$1" in
         echo "Verfügbare Befehle:"
         echo "  dev              - Starte Development-Umgebung"
         echo "  dev-detached     - Starte Development im Hintergrund"
-        echo "  prod             - Starte Production-Umgebung"
         echo "  stop             - Stoppe alle Container"
         echo "  clean            - Bereinige Docker komplett"
         echo "  logs             - Zeige Container-Logs"
