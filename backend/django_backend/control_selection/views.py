@@ -5,7 +5,7 @@ from rest_framework import status
 from django.db import models
 from django.contrib.auth.models import User
 import requests as r
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import SavedRRequest
 from django.http import JsonResponse
@@ -17,11 +17,15 @@ import os
 # Specify IP and Port for R Backend (docker-compose sets R_BACKEND_URL=http://r-backend:3420)
 ip_address = os.environ.get("R_BACKEND_URL", "http://127.0.0.1:3420").removeprefix("http://")
 
+# The views that only forward to the R backend are public and use @authentication_classes([]),
+# so a stale or unknown token in the request cannot turn them into 401s.
+
 
 @api_view(['GET'])
 def index(request):
     print("Here I am: " + request.method)
 
+@authentication_classes([])
     if request.method == 'GET':
         print("looking for you")
         name = request.query_params.get('name', None)
@@ -51,6 +55,7 @@ def boolean_columns(request):
     body = request.data
     base_url = "http://" + ip_address + "/boolean_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
+@authentication_classes([])
     data = req.json()
     print(data)
     return Response(data)
@@ -62,6 +67,7 @@ def numeric_columns(request):
     base_url = "http://" + ip_address + "/numeric_columns"
     req = r.get(base_url, proxies = {'http': '','https': '',}, json=body)
     data = req.json()
+@authentication_classes([])
     print(data)
     return Response(data)
 
@@ -73,6 +79,7 @@ def histogram(request):
     controllvariables = request.query_params.get("controllvariables")
     print(f"Controllvariables {controllvariables}")
     mmethod = request.query_params.get("mmethod")
+@authentication_classes([])
     mdistance = request.query_params.get("mdistance")
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
@@ -94,6 +101,7 @@ def pie_chart(request):
     mdistance = request.query_params.get("mdistance")
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
+@authentication_classes([])
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
     base_url = "http://" + ip_address + "/pie_chart"
@@ -113,6 +121,7 @@ def summary(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+@authentication_classes([])
     base_url = "http://" + ip_address + "/summary"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
@@ -131,6 +140,7 @@ def result_data(request):
     mcalipervariables = request.query_params.get("mcalipervariables")
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
     base_url = "http://" + ip_address + "/result_data"
+@authentication_classes([])
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
@@ -149,6 +159,7 @@ def boxplot(request):
 
     params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'controllvariable':controllvariable, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
     base_url = "http://" + ip_address + "/boxplot"
+@authentication_classes([])
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     print(data)

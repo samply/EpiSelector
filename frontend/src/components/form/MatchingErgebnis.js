@@ -306,8 +306,7 @@ function MatchingErgebnis() {
             fetch(fullUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Token dd6d5f6aff9c4228b9f6c19db94f9408ddf91bc3"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(bodyData)
             })
@@ -479,8 +478,7 @@ function MatchingErgebnis() {
             fetch(fullUrl, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": "Token dd6d5f6aff9c4228b9f6c19db94f9408ddf91bc3"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(bodyData)
             })
