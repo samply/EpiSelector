@@ -9,7 +9,7 @@ import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Grid from '@mui/material/Grid';
@@ -19,12 +19,13 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
 
     console.log(isDateiSpaltenNamen);
 
-   // const filteredArray = isDateiSpaltenNamen.filter(item => item !== isZielvariable);
-   // console.log('filteredArray' + filteredArray);
-
+    // The group indicator cannot be a covariate, and unnamed columns (e.g. the row number column
+    // that R's write.csv adds) cannot be selected. Row ids stay the column index, so saved
+    // selections keep pointing at the same columns.
     let resultArray = [];
 
     for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+        if (isDateiSpaltenNamen[i] === isZielvariable || isDateiSpaltenNamen[i].trim() === "") { continue; }
         const tempObj = {
             id: i,
             var: isDateiSpaltenNamen[i]
@@ -56,7 +57,16 @@ function Kontrollvariablen({ setKontrollvariablen, setAllKontrollvariablen, isDa
         }
     });*/
 
-    const [selectionModel, setSelectionModel] = useState(()=> {let tmpArray=[]; for(let i =0; i<isAllKontrollvariablen.length; i++){ tmpArray.push(isAllKontrollvariablen[i].id); } return tmpArray});
+    const [selectionModel, setSelectionModel] = useState(()=> {let tmpArray=[]; for(let i =0; i<isAllKontrollvariablen.length; i++){ if (isAllKontrollvariablen[i].var !== isZielvariable) { tmpArray.push(isAllKontrollvariablen[i].id); } } return tmpArray});
+
+    // Drop the group indicator from covariates chosen before it was picked as group indicator
+    useEffect(() => {
+        if (Array.isArray(isAllKontrollvariablen) && isAllKontrollvariablen.some((row) => row.var === isZielvariable)) {
+            const remaining = isAllKontrollvariablen.filter((row) => row.var !== isZielvariable);
+            setAllKontrollvariablen(remaining);
+            setKontrollvariablen(remaining.length > 0 ? remaining.length + " Kontrollvariablen" : 'defaultKontrollvariablen');
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     const columns = [
         { field: 'id', headerName: 'ID', width: 70, hide: true },

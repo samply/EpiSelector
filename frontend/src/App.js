@@ -152,6 +152,7 @@ function App() {
                                         setAllKontrollvariablen={setAllKontrollvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isAllKontrollvariablen={isAllKontrollvariablen}
+                                        isZielvariable={isZielvariable}
                                         setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Matchingvariablen"
