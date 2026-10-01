@@ -401,9 +401,9 @@ function calculateBoxplotData(resultData, variable, targetVariable) {
     console.log(`   - Gruppe 0 (${targetVariable}=0): ${preGroup0Data.length} Werte`);
     console.log(`   - Gruppe 1 (${targetVariable}=1): ${preGroup1Data.length} Werte`);
     
-    // ========== POST-MATCHING: Nur Matching weight = 1 ==========
-    const postMatchingData = resultData.filter(row => row['Matching weight'] == 1);
-    console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight = 1)`);
+    // ========== POST-MATCHING: Nur Matching weight > 0 ==========
+    const postMatchingData = resultData.filter(row => row['Matching weight'] > 0);
+    console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight > 0)`);
     
     const postGroup0Data = postMatchingData
         .filter(row => row[targetVariable] == 0)
@@ -516,8 +516,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
     const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
-    const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
-    const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
+    const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
+    const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
     
     // Chart selection states
     const [histogramVariable, setHistogramVariable] = useState('');
@@ -640,9 +640,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${preDataGroup0.length} Datensätze`);
         console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${preDataGroup1.length} Datensätze`);
         
-        // ========== POST-MATCHING DATEN (nur Matching weight = 1) ==========
-        const postMatchingData = isResultData.filter(row => row['Matching weight'] == 1);
-        console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight = 1)`);
+        // ========== POST-MATCHING DATEN (nur Matching weight > 0) ==========
+        const postMatchingData = isResultData.filter(row => row['Matching weight'] > 0);
+        console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight > 0)`);
         
         // Filtere Post-Matching Daten nach Zielvariable = 0 und = 1
         const postDataGroup0 = postMatchingData.filter(row => row[targetVariableForLabels] == 0);
