@@ -114,38 +114,6 @@ class LoginView(APIView):
         username = request.data.get("username")
         password = request.data.get("password")
 
-        if not username or not password:
-            return Response({"error": "Username und Passwort sind erforderlich."}, status=400)
-
-        if User.objects.filter(username=username).exists():
-            return Response({"error": "Benutzername existiert bereits."}, status=400)
-
-        user = User.objects.create_user(
-            username=username, 
-            password=password
-        )
-        
-        token, _ = Token.objects.get_or_create(user=user)
-        
-        return Response({
-            "message": "Benutzer erfolgreich registriert.",
-            "token": token.key,
-            "user": {
-                "id": user.id,
-                "username": user.username,
-                "created_at": user.date_joined.isoformat()
-            }
-        }, status=201)
-
-
-@method_decorator(csrf_exempt, name='dispatch')
-class LoginView(APIView):
-    permission_classes = [AllowAny]  # Explizit keine Authentifizierung erforderlich
-    
-    def post(self, request):
-        username = request.data.get("username")
-        password = request.data.get("password")
-
         user = authenticate(username=username, password=password)
 
         if user is not None:

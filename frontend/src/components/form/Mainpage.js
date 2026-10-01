@@ -93,12 +93,12 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                 <Typography variant="h6">
                     Mithilfe des Beobachtungsstudien-Assistenten können Sie aus Ihrem Datensatz anhand festzulegender Kriterien Vergleichsgruppen bilden. Der EpiSelector stellt hierfür verschiedene Methoden zur Verfügung.
                 </Typography><br/>
-                <Typography>
+                <Typography component="div">
                     <strong>Bitte beachten Sie:</strong> <br/>
                     Mit Behandelten oder der Behandlungsgruppe meinen wir je nach Studiendesign auch
-                   <ui>
+                   <ul>
                        <li>Fälle und</li>
-                    <li>Exponierte</li></ui></Typography>
+                    <li>Exponierte</li></ul></Typography>
 
                 <br/>
                 <div>
