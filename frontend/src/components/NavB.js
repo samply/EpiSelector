@@ -88,7 +88,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                     sx={{backgroundColor:"#E9F0FF", minWidth:"100%"}}/>
 
                     <CardContent>
-                        <Timeline position="right" sx={{align:"left", flex:0.1, marginTop:"-7px", marginLeft:"-20px"}}>
+                        <Timeline position="right" sx={{flex:0.1, marginTop:"-7px", marginLeft:"-20px"}}>
 
                            <TimelineItem>
                                 <TimelineOppositeContent sx={{flex: 0}} color="textSecondary">

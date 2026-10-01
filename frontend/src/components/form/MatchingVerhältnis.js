@@ -181,7 +181,7 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
                     Matching Verhältnis
                 </Typography>
 
-                <div style={{paddingLeft: "35%", align: "center"}}>
+                <div style={{paddingLeft: "35%"}}>
                     <div style={{display: "flex", flexFlow: "row", gap: "100px", paddingBottom: "5%"}}>
 
                         <Box
