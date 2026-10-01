@@ -80,8 +80,6 @@ services:
       - django-backend
     networks:
       - episelector-network
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
 
 volumes:
   postgres_data:

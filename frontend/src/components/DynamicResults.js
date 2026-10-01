@@ -27,7 +27,6 @@ HighchartsMore(Highcharts);
 
 var json_test_data = require('../assets/test_data.json');
 
-let ip_django = "127.0.0.1:8000";
 
 
 
