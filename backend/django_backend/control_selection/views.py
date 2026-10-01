@@ -10,11 +10,12 @@ from rest_framework.permissions import IsAuthenticated
 from .models import SavedRRequest
 from django.http import JsonResponse
 from datetime import datetime
+import os
 
 
 
-# Specify IP and Port for R Backend
-ip_address = "127.0.0.1:3420"
+# Specify IP and Port for R Backend (docker-compose sets R_BACKEND_URL=http://r-backend:3420)
+ip_address = os.environ.get("R_BACKEND_URL", "http://127.0.0.1:3420").removeprefix("http://")
 
 
 @api_view(['GET'])
