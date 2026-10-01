@@ -331,7 +331,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                              }}>{isAlgorithmusNav} </div></Link></TimelineContent> 
                                          </TimelineItem>
 
-                                         <TimelineItem>
+                                         <TimelineItem sx={{display: isAlgorithmus === "Optimal Matching" ? "none" : undefined}}>
                                              <TimelineOppositeContent sx={{ flex: 0 }} color="textSecondary">
 
                                              </TimelineOppositeContent>

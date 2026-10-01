@@ -214,6 +214,7 @@ function App() {
                                                                   isErsetzungNav={isErsetzungNav}
                                                                   setErsetzungNav={setErsetzungNav}
                                                                   setWorkflow={setWorkflow}
+                                                                  setÜbereinstimmungswert={setÜbereinstimmungswert}
                                                                  />}
                                 />
                                 <Route path="/ÜbereinstimmungPropensityScore"
