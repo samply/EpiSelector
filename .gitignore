@@ -61,3 +61,7 @@ node_modules/
 .Rhistory
 .RData
 .Ruserdata
+staticfiles/
+
+# JetBrains module files
+*.iml
