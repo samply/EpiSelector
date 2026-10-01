@@ -17,7 +17,7 @@ function VariableRadioList({variables, value, onChange, height, ariaLabel}) {
             paddingLeft: "8px"
         }}>
             <RadioGroup aria-label={ariaLabel} value={value ?? ""} onChange={(event) => onChange(event.target.value)}>
-                {variables.filter((variable) => variable !== "").map((variable) => (
+                {variables.filter((variable) => variable.trim() !== "").map((variable) => (
                     <FormControlLabel key={variable} value={variable} label={variable}
                                       control={<Radio size="small" sx={{"&.Mui-checked": {color: "#1d4189"}}}/>}/>
                 ))}

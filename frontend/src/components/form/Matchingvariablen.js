@@ -23,6 +23,8 @@ function Matchingvariablen({ setMatchingvariablen, setAllMatchingvariablen, isDa
     let resultArray = [];
 
     for (let i = 0; i < isDateiSpaltenNamen.length; i++) {
+        // Skip unnamed columns (e.g. the row number column that R's write.csv adds); ids stay the column index
+        if (isDateiSpaltenNamen[i].trim() === "") { continue; }
         const tempObj = {
             id: i,
             var: isDateiSpaltenNamen[i]
