@@ -79,49 +79,20 @@ function MatchingErgebnis() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const postPSMOE = '260';
-    const postPSMME = '215';
-    const postEMOT = '256';
-    const postEMMT = '256';
+    // Derive the dataset descriptions from the uploaded and matched data.
+    // Unnamed CSV columns are not variables. R renames them in the result
+    // (for example, to "X1.3826"), so subtract their original count.
+    const columnNames = Array.isArray(isDateiSpaltenNamen) ? isDateiSpaltenNamen : [];
+    const unnamedColumnCount = columnNames.filter((name) => name.trim() === "").length;
+    const preMatchingVariableCount = columnNames.length - unnamedColumnCount;
 
-    const variablePSMOE = '45';
-    const variablePSMME = '18';
-    const variableEMOT = '44';
-    const variableEMMT = '44';
+    const postBeobachtungen = () =>
+        Array.isArray(resultData) ? resultData.filter((row) => row['Matching weight'] > 0).length : 0;
 
-
-    const postBeobachtungen = () => {
-        if (isMatchingMethode === "Propensity Score") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return postPSMOE;
-
-        } else if (isMatchingMethode === "Exaktes Matching") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return postEMMT;
-        }
-    };
-
-    const postVariable = () => {
-        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return variablePSMOE;
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isErsetzung);
-            return variablePSMME;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return variableEMOT;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-            console.log(isMatchingMethode);
-            console.log(isToleranzBereichSet);
-            return variableEMMT;
-        }
-    };
+    const postVariable = () =>
+        Array.isArray(resultData) && resultData.length > 0
+            ? Object.keys(resultData[0]).length - unnamedColumnCount
+            : 0;
 
 
     useEffect(() => {
@@ -610,8 +581,8 @@ function MatchingErgebnis() {
 
                     <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
 
-                        Pre-Matching: 42 Variables, 3826 Observations <br />
-                        Post-Matching:{postVariable()} Variables, {postBeobachtungen()} Observations
+                        Pre-Matching: {preMatchingVariableCount} Variables, {isBeobachtungen} Observations <br />
+                        Post-Matching: {postVariable()} Variables, {postBeobachtungen()} Observations
                     </Typography>
                 </div>
 
