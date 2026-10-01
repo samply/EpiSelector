@@ -4,12 +4,11 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import {Link} from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DataGrid } from '@mui/x-data-grid';
 import {visitedSite} from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import {useState} from "react";
+import VariableRadioList from './VariableRadioList';
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
 import Grid from '@mui/material/Grid';
@@ -22,43 +21,8 @@ function Zielvariable({setZielvariable, isDateiSpaltenNamen, isZielvariable, isM
     console.log("BinarySpalten: " +isOnlyBinaryColumns.length);
     console.log(isMatchingMethode)
 
-    let resultArray = [];
-
-    for (let i = 0; i < isOnlyBinaryColumns.length; i++) {
-        const tempObj = {
-            id: i,
-            variable: isOnlyBinaryColumns[i]
-        };
-
-        resultArray.push(tempObj);
-    }
-
-    console.log(resultArray);
-
-    const [selectionModel, setSelectionModel] = useState(() =>
-        resultArray.filter((r) => r.variable === isZielvariable).map((r) => r.id),
-    );
-
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 70, hide: true},
-        { field: 'variable', headerName: 'Variable', width: 130 },
-    ];
-
-    const onRowsSelectionHandler = (ids) => {
-        const selectedRowsData = ids.map((id) => resultArray.find((row) => row.id === id));
-        console.log(selectedRowsData);
-        selectedRowsData.forEach((row)=>{console.log(row.variable); setZielvariable(row.variable);});
-    };
-console.log("zielvariable" + isZielvariable);
-
-    function funcselectionModel(){
-        if(!isZielvariable==="defaultZielvariable"){setSelectionModel(Zielvariable); return selectionModel}else{return selectionModel}
-    }
-
     function löschen(){
         setZielvariable('defaultZielvariable');
-        setSelectionModel('');
-        onRowsSelectionHandler([]);
     }
 
     return (
@@ -73,31 +37,11 @@ console.log("zielvariable" + isZielvariable);
                     Zielvariable
                 </Typography>
                 <br/>
-                <DataGrid sx={{
-                    overflow: 'auto',
-                    display: "flex",
-                    width: "55%",
-                    height: "100%",
-                    alignSelf: "center",
-                    marginLeft: "23%",
-                    marginBottom: "1.5%"
-                }}
-                          rows={resultArray}
-                          columns={columns}
-                          hideFooterPagination={true}
-                          hideFooter={true}
-                          checkboxSelection
-                          hideColumnsHeader
-                          headerHeight={0}
-                          density="compact"
-                          onSelectionModelChange={(newSelectionModel) => {
-                              onRowsSelectionHandler(newSelectionModel);
-                              setSelectionModel((prevModel) =>
-                                  newSelectionModel.filter((newId) => !prevModel.includes(newId))
-                              );
-                          }}
-                          selectionModel={selectionModel}
-                />
+                <VariableRadioList variables={isOnlyBinaryColumns}
+                                   value={isZielvariable}
+                                   onChange={setZielvariable}
+                                   height="100%"
+                                   ariaLabel="Gruppenindikator"/>
                 <br/>
 
 
