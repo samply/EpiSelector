@@ -3,7 +3,7 @@
 EpiSelector is a browser-based, open-source application for selecting comparison groups in medical and epidemiological research.
 Researchers use EpiSelector to create balanced comparison groups in observational studies with matching methods such as variable-based matching and propensity score matching.
 
-The default Docker image tag is `englishversion-en`. For the German version of the application, see the [`master`](https://github.com/samply/EpiSelector/tree/master) branch.
+The default Docker image tag is `englishversion-en` (English user interface). For the German user interface, built from this `master` branch, set `EPISELECTOR_IMAGE_TAG=master-de`. The English version is developed on the [`englishversion`](https://github.com/samply/EpiSelector/tree/englishversion) branch.
 
 ---
 
