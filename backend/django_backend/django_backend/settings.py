@@ -159,3 +159,14 @@ REST_FRAMEWORK = {
     ]
 }
 
+
+# Datasets are sent as the JSON request body; Django's default limit is 2.5 MB.
+# Matches client_max_body_size in frontend/nginx/default.conf.
+DATA_UPLOAD_MAX_MEMORY_SIZE = 200 * 1024 * 1024
+
+# Site-specific overrides (secret key, debug, hosts), mounted into the container by docker-compose.
+# docker-compose.yml mounts $DJANGO_LOCAL_SETTINGS, by default config/django/local_settings.dev.py.
+try:
+    from .local_settings import *  # noqa: F401,F403
+except ImportError:
+    pass
