@@ -275,7 +275,8 @@ function App() {
                                                isÜbereinstimmungswert={isÜbereinstimmungswert}
                                                isToleranzBereichSet={isToleranzBereichSet}
                                                isToleranzBereichSetToResult={isToleranzBereichSetToResult}
-                                               isErsetzungToResult={isErsetzungToResult}/>
+                                               isErsetzungToResult={isErsetzungToResult}
+                                               isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}/>
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}
