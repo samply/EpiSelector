@@ -4,15 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { Link } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { DataGrid } from '@mui/x-data-grid';
 import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import {CardHeader, Checkbox} from "@mui/material";
+import {CardHeader} from "@mui/material";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
-import {useState} from "react";
+import VariableRadioList from './VariableRadioList';
 import Grid from '@mui/material/Grid';
 
 
@@ -40,12 +39,6 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
               ), },
       ];*/
 
-    const columns = [
-        { field: 'id', headerName: 'ID', width: 0, hide: true},
-        { field: 'var', headerName: 'Variable', width: 270, disableClickEventBubbling: true},
-        // { field: 'gruppenindikator', headerName: 'Gruppenindikator', width: 300,  disableClickEventBubbling: true,},
-        // { field: 'fallID', headerName: 'Fall-ID',     headerClassName: 'super-app-theme--header', width: 165 }, renderCell: renderDetailsButton, disableClickEventBubbling: true,
-    ];
 
     let filteredArray;
 
@@ -57,27 +50,9 @@ function FälleKontrollen({ setFälleKontrollenGruppenIndikator, setFKChip, isAl
         filteredArray = isDateiSpaltenNamen.slice();     }    console.log('filteredArray' + filteredArray);
 
 
-        let rows=[];
-    for (let i = 0; i < filteredArray.length; i++) {
-        const tempObj = {
-            id: i,
-            var: filteredArray[i],
-        };
-        rows.push(tempObj);
-    }
-    console.log(rows);
-
-    const [selectionModel, setSelectionModel] = useState(() =>
-        rows.filter((r) => r.var === isFälleKontrollenGruppenindikator).map((r) => r.id),
-    );
-
-    const onRowsSelectionHandler = (ids) => {
-        const selectedRowsData = ids.map((id) => rows.find((row) => row.id === id));
-        console.log(selectedRowsData);
-        selectedRowsData.forEach((row)=>{
-            console.log(row.variable);
-            setFälleKontrollenGruppenIndikator(row.var);
-            setFKChip("Group Indicator: " + row.var);});
+    const selectGruppenindikator = (variable) => {
+        setFälleKontrollenGruppenIndikator(variable);
+        setFKChip("Group Indicator: " + variable);
     };
 
 
@@ -98,31 +73,11 @@ Variable for Defining Comparison Groups
                 </Typography>
 
                 <br/>
-                <DataGrid sx={{
-                    overflow: 'auto',
-                    display: "flex",
-                    width: "55%",
-                    height: "86%",
-                    alignSelf: "center",
-                    marginLeft: "23%",
-                    marginBottom: "1.5%"
-                }}
-                          rows={rows}
-                          columns={columns}
-                          hideFooterPagination={true}
-                          hideFooter={true}
-                          checkboxSelection
-                          hideColumnsHeader
-                          headerHeight={0}
-                          density="compact"
-                          onSelectionModelChange={(newSelectionModel) => {
-                              onRowsSelectionHandler(newSelectionModel);
-                              setSelectionModel((prevModel) =>
-                                  newSelectionModel.filter((newId) => !prevModel.includes(newId))
-                              );
-                          }}
-                          selectionModel={selectionModel}
-                />
+                <VariableRadioList variables={filteredArray}
+                                   value={isFälleKontrollenGruppenindikator}
+                                   onChange={selectGruppenindikator}
+                                   height="86%"
+                                   ariaLabel="Group indicator"/>
 
                 <br/>
 
