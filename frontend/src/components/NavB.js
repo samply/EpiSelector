@@ -29,6 +29,7 @@ import Collapse from '@mui/material/Collapse';
 import styled from "@emotion/styled";
 import IconButton from "@mui/material/IconButton";
 import {useState} from "react";
+import {matchingMethodLabel} from "../model/matchingMethodLabel";
 
 
 export function visitedSite(icon){
@@ -169,7 +170,7 @@ function NavB({ isClickedMV, setClickedMV, isClickedKV, setClickedKV, setWorkflo
                                     justifyContent: "baseline",
                                     paddingTop:"1%",
                                     visibility: isMatchingMethode === "defaultMethode" ? "hidden" : "visible" ,
-                                }}> {isMatchingMethode}</div></Link></TimelineContent>
+                                }}> {matchingMethodLabel(isMatchingMethode)}</div></Link></TimelineContent>
                             </TimelineItem>
 
                              {

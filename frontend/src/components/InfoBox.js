@@ -91,10 +91,10 @@ function InfoBox({isWorkflow}) {
             return (<div>In diesem Schritt wird die csv-Datei hochgeladen, mit deren Daten Vergleichsgruppen gebildet werden sollen, also ein Matching durchgeführt werden soll.</div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div><strong>"Exaktes matching nach ausgewählten Variablen":</strong><br/>
+            return (<div><strong>Variablen Matching:</strong><br/>
                 Sollen die Vergleichsgruppen exakt hinsichtlich einer Messgröße, zB des Alters, übereinstimmen, und Paare mit jeweils einem Patienten aus beiden Vergleichsgruppen gebildet werden, wird ein exaktes Matching nach Alter mit einem Matching-Verhältnis von 1:1 durchgeführt. Bei diesem Matching wird dann beispielsweise eine 75-jährigen Person aus der einen Vergleichsgruppe mit einer 75-jährigen Person aus der anderen Gruppe gematcht, also Paare mit jeweils zwei Personen gebildet, die exakt gleich alt sind.
                 Die Angabe eines Toleranzbereiches, z.B. +- 3 Jahre, ermöglicht ein Matching von einer 75-jährigen Person mit einer Person im Alter von 72 bis 78 Jahren. In der Regel dient ein Toleranzbereich dazu, die Bildung von Paaren mit ausreichender Ähnlichkeit zu ermöglichen, wenn ein exaktes Matching zu wenige Paare ergibt. Dies könnte schon dadurch erforderlich werden, dass das Alter nicht in Jahren, sondern auch auf Monat und Tag genau bekannt ist, weil beim exakten Matching nach Alter in diesem Fall nur Paare mit Patienten, die auf den Tag genau gleichem alt sind, gebildet werden.
-                Exaktes Matching kann auch hinsichtlich mehrerer Messgrößen durchgeführt werden, häufig wird neben dem Alter auch nach Geschlecht gematcht.
+                Variablen Matching kann auch hinsichtlich mehrerer Messgrößen durchgeführt werden, häufig wird neben dem Alter auch nach Geschlecht gematcht.
                 <br/><br/>
                 <strong>"Propensity Score Matching"</strong><br/>
                 Alle Kovariaten, die als Confounder zwischen Behandlungs- und Vergleichsgruppe auszugleichen sind, werden zu einem einzigen Propensity Score pro Proband zusammengefasst und zum Matching verwendet.
@@ -244,7 +244,7 @@ function InfoBox({isWorkflow}) {
             </div>);
         }
         if(isWorkflow === "Matching-Methode"){
-            return (<div>"Exaktes Matching nach ausgewählten Variablen": Diese Methode ist anwendbar, wenn nur wenige Kovariaten die Behandlungszuweisung beeinflussen können.
+            return (<div><strong>Variablen Matching:</strong> Diese Methode ist anwendbar, wenn nur wenige Kovariaten die Behandlungszuweisung beeinflussen können.
                 Wenn die Anzahl der Kovariablen zunimmt, steigt die Anzahl der möglichen Übereinstimmungen exponentiell an, auch wenn alle Kovariablen binär sind, was zu einem schlechten Übereinstimmungsergebnis führt (Zhao 2021  http://dx.doi.org/10.21037/at).
                 In diesem Fall ist dann das "Propensity Score Matching" geeigneter.
             </div>);
