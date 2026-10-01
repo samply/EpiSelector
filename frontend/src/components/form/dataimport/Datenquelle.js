@@ -67,7 +67,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                     }}>
                         <FormGroup style={{display:"flex", flexFlow:"row", justifyContent:"space-evenly", gap:"100px"}}>
                         <Box onClick={handleClickOptionGeraet}
-                             title="Laden Sie Ihre Daten Local aus Ihrem Rechner hoch."
+                             title="Laden Sie Ihre Daten von Ihrem lokalen Rechner hoch."
                              style={{
                                 backgroundColor: isActiveGeraet || isDatenquelle==="Local" ? "#1d4189":'#E8E9EB',
                                 color: isActiveGeraet || isDatenquelle==="Local" ? "white":"#666666",
@@ -80,7 +80,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                                 borderRadius: "15px",
                                 boxShadow: isActiveGeraet || isDatenquelle==="Local" ?"#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
-                        > Local
+                        > Lokal
                         </Box>
                             <Box style={{
                                 backgroundColor: isActiveDRE || isDatenquelle === "DRE" ? "#1d4189" : '#E8E9EB',
@@ -97,7 +97,7 @@ function Datenquelle({setDatenquelle, isDatenquelle, setWorkflow}) {
                                 opacity: isActiveDRE || isDatenquelle === "DRE" ? 1 : 0.5,
                             }}
                         >
-                            External source
+                            Externe Quelle
                         </Box>
 
                         </FormGroup>

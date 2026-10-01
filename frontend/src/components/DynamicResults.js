@@ -27,7 +27,6 @@ HighchartsMore(Highcharts);
 
 var json_test_data = require('../assets/test_data.json');
 
-let ip_django = "127.0.0.1:8000";
 
 
 
@@ -401,9 +400,9 @@ function calculateBoxplotData(resultData, variable, targetVariable) {
     console.log(`   - Gruppe 0 (${targetVariable}=0): ${preGroup0Data.length} Werte`);
     console.log(`   - Gruppe 1 (${targetVariable}=1): ${preGroup1Data.length} Werte`);
     
-    // ========== POST-MATCHING: Nur Matching weight = 1 ==========
-    const postMatchingData = resultData.filter(row => row['Matching weight'] == 1);
-    console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight = 1)`);
+    // ========== POST-MATCHING: Nur Matching weight > 0 ==========
+    const postMatchingData = resultData.filter(row => row['Matching weight'] > 0);
+    console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight > 0)`);
     
     const postGroup0Data = postMatchingData
         .filter(row => row[targetVariable] == 0)
@@ -516,8 +515,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
     const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
-    const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
-    const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, isZielvariable), [isResultData, isSummaryData, isZielvariable]);
+    const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
+    const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
     
     // Chart selection states
     const [histogramVariable, setHistogramVariable] = useState('');
@@ -640,9 +639,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${preDataGroup0.length} Datensätze`);
         console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${preDataGroup1.length} Datensätze`);
         
-        // ========== POST-MATCHING DATEN (nur Matching weight = 1) ==========
-        const postMatchingData = isResultData.filter(row => row['Matching weight'] == 1);
-        console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight = 1)`);
+        // ========== POST-MATCHING DATEN (nur Matching weight > 0) ==========
+        const postMatchingData = isResultData.filter(row => row['Matching weight'] > 0);
+        console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight > 0)`);
         
         // Filtere Post-Matching Daten nach Zielvariable = 0 und = 1
         const postDataGroup0 = postMatchingData.filter(row => row[targetVariableForLabels] == 0);
@@ -857,7 +856,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Pre Matching'
+                text: 'Prä-Matching'
             },
             accessibility: {
                 point: {
@@ -888,7 +887,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     enabled: false
                 },
                 accessibility: {
-                    description: 'Percentage population',
+                    description: 'Anteil der Population',
                     rangeDescription: 'Range: 0 to 5%'
                 }
             },
@@ -941,7 +940,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Post Matching'
+                text: 'Post-Matching'
             },
             accessibility: {
                 point: {
@@ -971,7 +970,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     },
                 },
                 accessibility: {
-                    description: 'Percentage population',
+                    description: 'Anteil der Population',
                     rangeDescription: 'Range: 0 to 5%'
                 }
             },
@@ -1026,7 +1025,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Pre Matching'
+                text: 'Prä-Matching'
             },
 
             legend: {
@@ -1098,7 +1097,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: ''
             },
             subtitle: {
-                text: 'Post Matching'
+                text: 'Post-Matching'
             },
 
             legend: {
@@ -1376,14 +1375,14 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanced</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Balanciert</Typography></div>
 
                                             </div>
 
                                             <div class="flexbox-container">
 
                                                 <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Not balanced</Typography></div>
+                                                <div><Typography sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Nicht balanciert</Typography></div>
                                             </div>
                                         </div>
                                     </div>

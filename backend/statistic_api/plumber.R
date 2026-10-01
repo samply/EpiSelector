@@ -115,7 +115,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
       }
     } else {
       if (length(mcaliper_numeric) > 1) {
-        stop("Mehrere Caliper-Werte, aber keine Variablennamen angegeben!")
+        stop("Multiple caliper values but no variable names given!")
       }
       mcaliper <- mcaliper_numeric
       print("Using global (unnamed) caliper:")
@@ -128,9 +128,10 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
   
   # Matching durchführen
   if (mmethod == "exact") {
-    exact_vars <- paste(controllvariables, collapse = "+")
-    exact_form <- as.formula(paste("~", exact_vars))
-    
+    # Tolerance 0 = exact match; variables with a tolerance > 0 are matched within +- caliper instead
+    exact_vars <- setdiff(controllvariables, names(mcaliper))
+    exact_form <- if (length(exact_vars) > 0) as.formula(paste("~", paste(exact_vars, collapse = "+"))) else NULL
+
     a <- matchit(form, data = body,
                  distance = mdistance,
                  replace = mreplace,

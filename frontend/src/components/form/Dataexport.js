@@ -26,6 +26,7 @@ import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
 import { useAuth } from '../../context/AuthContext';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
+import {matchingMethodLabel} from "../../model/matchingMethodLabel";
 
 function Dataexport() {
     const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen } = useContext(AppContext);
@@ -103,7 +104,7 @@ function Dataexport() {
         newDoc.text("Matchingprotokoll", 14, 15);
         newDoc.setFontSize(14); 
         newDoc.setTextColor(100);
-        newDoc.text("Matching Ergebnisse", 14, 25);
+        newDoc.text("Matching-Ergebnisse", 14, 25);
         
         // Header-Tabelle mit neuer Syntax
         newDoc.autoTable({
@@ -400,14 +401,14 @@ function Dataexport() {
                     variant="outlined"
                     value={processName}
                     onChange={(e) => setProcessName(e.target.value)}
-                    placeholder="z.B. Herzinsuffizienz Studie 2024"
+                    placeholder="z. B. Herzinsuffizienz-Studie 2024"
                     sx={{ mt: 2 }}
                 />
                 <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
                     Die folgenden Einstellungen werden gespeichert:
                 </Typography>
                 <Typography variant="body2" sx={{ mt: 1, pl: 2 }}>
-                    • Matching-Methode: {isMatchingMethode}<br/>
+                    • Matching-Methode: {matchingMethodLabel(isMatchingMethode)}<br/>
                     {isMatchingMethode === "Propensity Score" ? (
                         <>
                             {isZielvariable && isZielvariable !== "defaultZielvariable" && (

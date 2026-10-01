@@ -87,7 +87,7 @@ function MatchingMethode() {
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "1%", paddingLeft: "3%"}}>
-                    Matching Methode
+                    Matching-Methode
                 </Typography>
                 <Collapse in={open}>
                     <Alert style={{maxWidth: "82%", marginLeft: "7%"}} action={
@@ -104,8 +104,8 @@ function MatchingMethode() {
                         </IconButton>
                     }
                            sx={{mb: 2}} severity="error">
-                        <AlertTitle>Error</AlertTitle>
-                        Keine Matching Methode — <strong>Sie müssen eine Matching-Methode auswählen, um
+                        <AlertTitle>Fehler</AlertTitle>
+                        Keine Matching-Methode — <strong>Sie müssen eine Matching-Methode auswählen, um
                         fortzufahren</strong>
                     </Alert>
 
@@ -137,7 +137,7 @@ function MatchingMethode() {
                                 boxShadow: isActiveAusgVar || isMatchingMethode === "Exaktes Matching" ? "#1d4189 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px" : "",
                             }}
                             onClick={handleClickOptionAusgVar}
-                        > Exaktes Matching nach <br/> ausgewählten Variablen
+                        > Variablen <br/> Matching
                         </Box>
 
                         <Box

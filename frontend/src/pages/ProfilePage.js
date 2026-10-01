@@ -31,6 +31,7 @@ import {
     DateRange
 } from '@mui/icons-material';
 import { useAuth } from '../context/AuthContext';
+import { matchingMethodLabel } from '../model/matchingMethodLabel';
 
 function ProfilePage() {
     const { currentUser, getSavedProcesses, deleteMatchingProcess, getMatchingProcess } = useAuth();
@@ -61,7 +62,7 @@ function ProfilePage() {
                 // Transformiere Backend-Daten in Frontend-Format
                 const transformedProcesses = result.processes.map(process => ({
                     id: process.id,
-                    name: `${process.mmethod || 'Unbekannt'} - ${process.groupindicator || 'Matching'}`,
+                    name: `${matchingMethodLabel(process.mmethod) || 'Unbekannt'} - ${process.groupindicator || 'Matching'}`,
                     created_at: process.created_at,
                     matching_method: process.mmethod || 'Unbekannt',
                     algorithm: process.mdistance || 'nearest',
@@ -321,7 +322,7 @@ function ProfilePage() {
                                             </TableCell>
                                             <TableCell sx={{ padding: '4px 6px' }}>
                                                 <Chip 
-                                                    label={process.matching_method === 'Propensity Score' ? 'PS' : process.matching_method === 'Exaktes Matching' ? 'EM' : process.matching_method} 
+                                                    label={process.matching_method === 'Propensity Score' ? 'PS' : process.matching_method === 'Exaktes Matching' ? 'VM' : matchingMethodLabel(process.matching_method)} 
                                                     size="small" 
                                                     variant="outlined"
                                                     sx={{ fontSize: '14px', height: 20, minWidth: 30 }}
@@ -420,7 +421,7 @@ function ProfilePage() {
                     {selectedProcess && (
                         <Box sx={{ mt: 2 }}>
                             <Typography variant="h6" gutterBottom>Konfiguration</Typography>
-                            <Typography><strong>Matching-Methode:</strong> {selectedProcess.matching_method || selectedProcess.matchingMethod}</Typography>
+                            <Typography><strong>Matching-Methode:</strong> {matchingMethodLabel(selectedProcess.matching_method || selectedProcess.matchingMethod)}</Typography>
                             
                             {/* Zeige Parameter je nach Matching-Methode */}
                             {(selectedProcess.matching_method === "Propensity Score" || selectedProcess.matchingMethod === "Propensity Score") && (
