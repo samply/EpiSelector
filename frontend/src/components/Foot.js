@@ -9,7 +9,7 @@ function Foot() {
         <div className="Foot">
             <img src={DKFZLogo} alt="DKFZ Logo" className="imgDKFZLogo" />
             <img src={UMMLogo} alt="UMM Logo" className ="imgUMMLogo"/>
-            <img src={MFLogo} alt="Medizinische Fakulktät Logo" className="imgMFLogo"/>
+            <img src={MFLogo} alt="Medizinische Fakultät Logo" className="imgMFLogo"/>
         </div>
     );
 }

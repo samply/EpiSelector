@@ -41,7 +41,7 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
 
         // Nur aufrufen wenn verfügbar
         if (setters.setDatenquelle) setters.setDatenquelle("defaultQuelle");
-        if (setters.setDatei) setters.setDatei("defaultQuelle");
+        if (setters.setDatei) setters.setDatei("defaultDatei");
         if (setters.setMatchingMethode) setters.setMatchingMethode("defaultMethode");
         if (setters.setZielvariable) setters.setZielvariable("defaultZielvariable");
         if (setters.setKontrollvariablen) setters.setKontrollvariablen("defaultKontrollvariablen");
@@ -49,7 +49,7 @@ function TopNav({setWorkflow, setDatenquelle, setDatei, setMatchingMethode, setZ
         if (setters.setScoreMethode) setters.setScoreMethode("defaultScoreMethode");
         if (setters.setAlgorithmus) setters.setAlgorithmus("defaultAlgo");
         if (setters.setErsetzung) setters.setErsetzung("defaultErsetz");
-        if (setters.setÜbereinstimmungswert) setters.setÜbereinstimmungswert("defaultÜberinstimmungswert");
+        if (setters.setÜbereinstimmungswert) setters.setÜbereinstimmungswert("defaultÜbereinstimmungswert");
         if (setters.setWorkflow) setters.setWorkflow("Startseite");
     };
 

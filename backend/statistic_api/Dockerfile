@@ -24,6 +24,15 @@ RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
     install.packages(c('R6', 'stringi', 'rlang', 'magrittr', 'mime', 'lifecycle', 'crayon', 'webutils', 'sodium', 'httpuv', 'promises', 'swagger', 'jsonlite'), dependencies=FALSE); \
     install.packages(c('plumber', 'stringr'));"
 
+# Analyse-Pakete für Matching, Balance und Grafiken (optmatch wird für MatchIt's optimal matching benötigt)
+RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
+    install.packages(c('MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'));"
+
+# Build abbrechen, falls ein Paket fehlt (install.packages() warnt nur bei Fehlern)
+RUN R -e "pkgs <- c('plumber', 'jsonlite', 'stringr', 'MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'); \
+    missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; \
+    if (length(missing) > 0) stop('Missing R packages: ', paste(missing, collapse = ', '))"
+
 # R-Code kopieren
 COPY *.R .
 
