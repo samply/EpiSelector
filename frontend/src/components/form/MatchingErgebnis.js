@@ -26,6 +26,7 @@ import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 import { AlertTitle } from "@mui/lab";
 import Zielvariable from './Zielvariable';
+import { API_BASE_URL } from '../../apiBaseUrl';
 
 
 function MatchingErgebnis() {
@@ -268,7 +269,7 @@ function MatchingErgebnis() {
 
 
             // Parameter als Variablen definieren
-            const baseUrl = "http://127.0.0.1:8000/control_selection/result_data";
+            const baseUrl = `${API_BASE_URL}/control_selection/result_data`;
             const params = {
                 groupindicator: realGroupIndicator,
                 controllvariables: realControlVariables,
@@ -441,7 +442,7 @@ function MatchingErgebnis() {
 
 
             // Parameter als Variablen definieren
-            const baseUrl = "http://127.0.0.1:8000/control_selection/summary";
+            const baseUrl = `${API_BASE_URL}/control_selection/summary`;
             const params = {
                 groupindicator: realGroupIndicator,
                 controllvariables: realControlVariables,
