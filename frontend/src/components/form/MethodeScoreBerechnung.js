@@ -35,8 +35,8 @@ function MethodeScoreBerechnung({setScoreMethode, isScoreMethode, isScoreMethode
     function handleClickOptionML () {
         if(!isActiveML){
             setIsActiveML(true);
-            setScoreMethode("Matching Learning Methode");
-            setScoreMethodeNav("Matching Learning Methode");
+            setScoreMethode("Machine Learning Methode");
+            setScoreMethodeNav("Machine Learning Methode");
         setIsActiveLR(false);
         }
     }

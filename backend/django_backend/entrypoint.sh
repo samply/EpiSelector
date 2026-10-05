@@ -14,5 +14,6 @@ python manage.py migrate
 echo "Sammle statische Dateien..."
 python manage.py collectstatic --noinput
 
-echo "Starte Django-Server..."
-exec python manage.py runserver 0.0.0.0:8000
+# Startbefehl kommt aus CMD (Dockerfile) bzw. "command:" (docker-compose.yml)
+echo "Starte Django-Server: $*"
+exec "$@"

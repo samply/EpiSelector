@@ -178,10 +178,10 @@ function MatchingVerhältnis({verhältnisEdit, setVerhältnisEdit, setVerhältni
             <CardContent sx={{backgroundColor: "white", width: "100%"}}>
 
                 <Typography sx={{fontSize: 18, paddingTop: "1%", paddingBottom: "3%", paddingLeft: "3%"}}>
-                    Matching Verhältnis
+                    Matching-Verhältnis
                 </Typography>
 
-                <div style={{paddingLeft: "35%", align: "center"}}>
+                <div style={{paddingLeft: "35%"}}>
                     <div style={{display: "flex", flexFlow: "row", gap: "100px", paddingBottom: "5%"}}>
 
                         <Box

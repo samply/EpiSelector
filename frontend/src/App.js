@@ -152,6 +152,7 @@ function App() {
                                         setAllKontrollvariablen={setAllKontrollvariablen}
                                         isDateiSpaltenNamen={isDateiSpaltenNamen}
                                         isAllKontrollvariablen={isAllKontrollvariablen}
+                                        isZielvariable={isZielvariable}
                                         setWorkflow={setWorkflow}/>}
                                 />
                                 <Route path="/Matchingvariablen"
@@ -215,6 +216,7 @@ function App() {
                                                                   isErsetzungNav={isErsetzungNav}
                                                                   setErsetzungNav={setErsetzungNav}
                                                                   setWorkflow={setWorkflow}
+                                                                  setÜbereinstimmungswert={setÜbereinstimmungswert}
                                                                  />}
                                 />
                                 <Route path="/ÜbereinstimmungPropensityScore"
@@ -275,7 +277,8 @@ function App() {
                                                isÜbereinstimmungswert={isÜbereinstimmungswert}
                                                isToleranzBereichSet={isToleranzBereichSet}
                                                isToleranzBereichSetToResult={isToleranzBereichSetToResult}
-                                               isErsetzungToResult={isErsetzungToResult}/>
+                                               isErsetzungToResult={isErsetzungToResult}
+                                               isFälleKontrollenGruppenindikator={isFälleKontrollenGruppenindikator}/>
                         </div>
                     </div>
                     {/*Infobox in einem Container*/}

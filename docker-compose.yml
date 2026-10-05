@@ -8,11 +8,9 @@ services:
     environment:
       POSTGRES_DB: episelector
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres123
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     networks:
       - episelector-network
     healthcheck:
@@ -23,14 +21,12 @@ services:
 
   # R Backend (Plumber API)
   r-backend:
-    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-master-de}
+    image: samply/episelector-statistics-backend:${EPISELECTOR_IMAGE_TAG:-englishversion-en}
     pull_policy: missing
     build:
       context: ./backend/statistic_api
       dockerfile: Dockerfile
     container_name: episelector-r-backend
-    ports:
-      - "3420:3420"
     networks:
       - episelector-network
     working_dir: /app
@@ -42,18 +38,17 @@ services:
 
   # Django Backend
   django-backend:
-    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-master-de}
+    image: samply/episelector-web-backend:${EPISELECTOR_IMAGE_TAG:-englishversion-en}
     pull_policy: missing
     build:
       context: ./backend/django_backend
       dockerfile: Dockerfile
     container_name: episelector-django-backend
     environment:
-      - DEBUG=1
-      - DATABASE_URL=postgresql://postgres:postgres123@db:5432/episelector
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db:5432/episelector
       - R_BACKEND_URL=http://r-backend:3420
-    ports:
-      - "8000:8000"
+    volumes:
+      - ${DJANGO_LOCAL_SETTINGS:-./config/django/local_settings.dev.py}:/app/django_backend/local_settings.py:ro
     depends_on:
       db:
         condition: service_healthy
@@ -61,14 +56,17 @@ services:
         condition: service_healthy
     networks:
       - episelector-network
+    # entrypoint.sh waits for the database, runs migrate and collectstatic, then starts this command
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
-             python manage.py runserver 0.0.0.0:8000"
+      gunicorn django_backend.wsgi:application
+      --bind 0.0.0.0:8000
+      --workers 3
+      --timeout 300
+      --access-logfile -
 
   # React Frontend
   frontend:
-    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-master-de}
+    image: samply/episelector-frontend:${EPISELECTOR_IMAGE_TAG:-englishversion-en}
     pull_policy: missing
     build:
       context: ./frontend
@@ -80,8 +78,6 @@ services:
       - django-backend
     networks:
       - episelector-network
-    environment:
-      - REACT_APP_API_URL=http://localhost:8000
 
 volumes:
   postgres_data:

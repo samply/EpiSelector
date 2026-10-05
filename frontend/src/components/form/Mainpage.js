@@ -124,7 +124,7 @@ function Mainpage({setMatchingStart, isDisclaimer, setWorkflow}) {
                                 Der Studienassistent basiert auf der kostenlosen und frei zugänglichen Software R (R
                                 Core Team, 2022) und Software-Paketen in R. Das Matching wurde mit dem „MatchIt“-Paket
                                 (Ho, 2011) durchgeführt, die Ausgewogenheit der Kovariaten wurde mit dem „Cobalt“-Paket
-                                (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt..
+                                (Greifer, 2022) bewertet und die Graphiken mit dem Paket „ggplot2“ erstellt.
                             </Typography>
                             <br/>
                             <Typography textAlign={"justify"} fontSize={"x-small"} gutterBottom>

@@ -5,19 +5,24 @@ from rest_framework import status
 from django.db import models
 from django.contrib.auth.models import User
 import requests as r
-from rest_framework.decorators import permission_classes
+from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import SavedRRequest
 from django.http import JsonResponse
 from datetime import datetime
+import os
 
 
 
-# Specify IP and Port for R Backend
-ip_address = "127.0.0.1:3420"
+# Specify IP and Port for R Backend (docker-compose sets R_BACKEND_URL=http://r-backend:3420)
+ip_address = os.environ.get("R_BACKEND_URL", "http://127.0.0.1:3420").removeprefix("http://")
+
+# The views that only forward to the R backend are public and use @authentication_classes([]),
+# so a stale or unknown token in the request cannot turn them into 401s.
 
 
 @api_view(['GET'])
+@authentication_classes([])
 def index(request):
     print("Here I am: " + request.method)
 
@@ -46,6 +51,7 @@ def vote(request):
     return HttpResponse("You're voting on question.")
 
 @api_view(['POST'])
+@authentication_classes([])
 def boolean_columns(request):
     body = request.data
     base_url = "http://" + ip_address + "/boolean_columns"
@@ -56,6 +62,7 @@ def boolean_columns(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def numeric_columns(request):
     body = request.data
     base_url = "http://" + ip_address + "/numeric_columns"
@@ -66,6 +73,7 @@ def numeric_columns(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def histogram(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
@@ -76,8 +84,9 @@ def histogram(request):
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
+    mcalipervariables = request.query_params.get("mcalipervariables")
     controllvariable = request.query_params.get("controllvariable")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'controllvariable':controllvariable}
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables, 'controllvariable':controllvariable}
     base_url = "http://" + ip_address + "/histogram"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
@@ -85,6 +94,7 @@ def histogram(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def pie_chart(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
@@ -94,7 +104,8 @@ def pie_chart(request):
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+    mcalipervariables = request.query_params.get("mcalipervariables")
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
     base_url = "http://" + ip_address + "/pie_chart"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
@@ -102,6 +113,7 @@ def pie_chart(request):
 
 
 @api_view(['POST'])
+@authentication_classes([])
 def summary(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
@@ -111,13 +123,15 @@ def summary(request):
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+    mcalipervariables = request.query_params.get("mcalipervariables")
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
     base_url = "http://" + ip_address + "/summary"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
     return Response(data)
 
 @api_view(['POST'])
+@authentication_classes([])
 def result_data(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
@@ -135,6 +149,7 @@ def result_data(request):
     return Response(data)
 
 @api_view(['POST'])
+@authentication_classes([])
 def boxplot(request):
     body = request.data
     groupindicator = request.query_params.get("groupindicator")
@@ -145,8 +160,9 @@ def boxplot(request):
     mreplace = request.query_params.get("mreplace")
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
+    mcalipervariables = request.query_params.get("mcalipervariables")
 
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'controllvariable':controllvariable, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio}
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'controllvariable':controllvariable, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
     base_url = "http://" + ip_address + "/boxplot"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()

@@ -17,7 +17,7 @@ import Grid from '@mui/material/Grid';
 
 
 
-function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmus, setErsetzung, isErsetzung, setErsetzungNav, isErsetzungNav, setWorkflow}) {
+function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmus, setErsetzung, isErsetzung, setErsetzungNav, isErsetzungNav, setWorkflow, setÜbereinstimmungswert}) {
 
     const [isActiveOM, setIsActiveOM] = useState(false);
     const [isActiveNNM, setIsActiveNNM] = useState(false);
@@ -53,10 +53,15 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
             setIsActiveOM(true);
             setAlgorithmus("Optimal Matching");
             setAlgorithmusNav("Optimal Matching");
+            // Optimal Matching takes no caliper and no replacement: clear both and skip the caliper step
+            setÜbereinstimmungswert('defaultÜbereinstimmungswert');
+            setErsetzung('FALSE');
 
         }
         setIsActiveNNM(false);
     }
+
+    const isOptimal = isActiveOM || isAlgorithmusNav === "Optimal Matching";
 
     function löschen(){
         setAlgorithmus('defaultAlgo');
@@ -219,9 +224,15 @@ function MatchingAlgorithmus({setAlgorithmusNav, isAlgorithmusNav, setAlgorithmu
                 }} variant="outlined" onClick={löschen}><DeleteIcon/>Löschen</Button></Link>
                 </Grid>*/}
                 <Grid item>
-                <Link style={{textDecoration: "none"}} to='/ÜbereinstimmungPropensityScore' onClick={() => {
-                    visitedSite("übereinstimmung");
-                    setWorkflow("Übereinstimmung"); if(isErsetzung === ''){setErsetzung('FALSE');}
+                <Link style={{textDecoration: "none"}} to={isOptimal ? '/Matching-Ergebnis' : '/ÜbereinstimmungPropensityScore'} onClick={() => {
+                    if (isOptimal) {
+                        visitedSite("ergebnisse");
+                        setWorkflow("MatchingErgebnis");
+                    } else {
+                        visitedSite("übereinstimmung");
+                        setWorkflow("Übereinstimmung");
+                    }
+                    if(isErsetzung === ''){setErsetzung('FALSE');}
                 }}><Button sx={{
                     height: "100%",
                     width: "auto",
