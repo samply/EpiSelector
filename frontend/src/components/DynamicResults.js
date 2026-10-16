@@ -882,7 +882,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 },
                 labels: {
                     formatter: function () {
-                        return Math.abs(this.value) + '%';
+                        return Highcharts.numberFormat(Math.abs(this.value), 2) + '%';
                     },
                     enabled: false
                 },
@@ -905,7 +905,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
             tooltip: {
                 formatter: function () {
-                    return Highcharts.numberFormat(Math.abs(this.point.y), 1) + ' %';
+                    return Highcharts.numberFormat(Math.abs(this.point.y), 2) + ' %';
                 }
             },
 
@@ -966,7 +966,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 },
                 labels: {
                     formatter: function () {
-                        return Math.abs(this.value) + '%';
+                        return Highcharts.numberFormat(Math.abs(this.value), 2) + '%';
                     },
                 },
                 accessibility: {
@@ -988,7 +988,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
             tooltip: {
                 formatter: function () {
-                    return Highcharts.numberFormat(Math.abs(this.point.y), 1) + ' %';
+                    return Highcharts.numberFormat(Math.abs(this.point.y), 2) + ' %';
                 }
             },
 
@@ -1061,7 +1061,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
 
                 ],
                 tooltip: {
-                    headerFormat: ''
+                    headerFormat: '',
+                    valueDecimals: 2
                 }
             }, {
                 name: 'Outliers',
@@ -1076,7 +1077,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     lineColor: '#555'
                 },
                 tooltip: {
-                    pointFormat: 'Value: {point.y}'
+                    pointFormat: 'Value: {point.y:.2f}'
                 }
             }]
 
@@ -1116,6 +1117,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     text: 'Selected Variable',
                 },
                 labels: {
+                    format: '{value:.2f}'
                 }
             },
 
@@ -1131,7 +1133,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 data: [
                 ],
                 tooltip: {
-                    headerFormat: ''
+                    headerFormat: '',
+                    valueDecimals: 2
                 }
             }, {
                 name: 'Outliers',
@@ -1146,7 +1149,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                     lineColor: '#555'
                 },
                 tooltip: {
-                    pointFormat: 'Value: {point.y}'
+                    pointFormat: 'Value: {point.y:.2f}'
                 }
             }]
 
@@ -1175,7 +1178,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 text: 'Balance of Covariates after Matching'
             },
             tooltip: {
-                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                pointFormat: '{series.name}: <b>{point.percentage:.2f}%</b>'
             },
             accessibility: {
                 point: {
