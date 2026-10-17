@@ -16,11 +16,6 @@ import axios from "axios";
 import {useContext, useEffect, useState} from "react";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import summary from '../../assets/summary.json';
-import FHSPSOE from '../../assets/FHS_PS_OE.json';
-import FHSPSME from '../../assets/FHS_PS_ME.json';
-import FHSEMMT from '../../assets/FHS_EM_MT.json';
-import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import AppContext from '../../AppContext';
 import {visitedSite} from "../NavB";
 import Grid from '@mui/material/Grid';
@@ -31,8 +26,6 @@ import {matchingMethodLabel} from "../../model/matchingMethodLabel";
 function Dataexport() {
     const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, isToleranzBereichSet, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen } = useContext(AppContext);
     const { user, isAuthenticated, saveMatchingProcess } = useAuth();
-    const [results, setResults] = useState([]);
-    const [resultData, setResultData] = useState([]);
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
     const [processName, setProcessName] = useState('');
     const [saving, setSaving] = useState(false);
@@ -287,23 +280,8 @@ function Dataexport() {
     };
 
     useEffect(() => {
-        let data;
-
-        if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-            data = FHSPSOE;
-        } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-            data = FHSPSME;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-            data = FHSEMOT;
-        } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-            data = FHSEMMT;
-        }
-        setResults(data);
-
-        // Setze Disclaimer im useEffect, nicht im Render
         setDisclaimer(false);
-
-    }, [isMatchingMethode, isErsetzung, isToleranzBereichSet, setDisclaimer]);
+    }, [setDisclaimer]);
 
     function deleteAllData() {
         setDatenquelle("defaultQuelle");

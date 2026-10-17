@@ -105,7 +105,8 @@ def pie_chart(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     mcalipervariables = request.query_params.get("mcalipervariables")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
+    balance_threshold = request.query_params.get("balance_threshold")
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables, 'balance_threshold': balance_threshold}
     base_url = "http://" + ip_address + "/pie_chart"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()
@@ -124,7 +125,8 @@ def summary(request):
     mcaliper = request.query_params.get("mcaliper")
     mratio = request.query_params.get("mratio")
     mcalipervariables = request.query_params.get("mcalipervariables")
-    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables}
+    balance_threshold = request.query_params.get("balance_threshold")
+    params = {'groupindicator':groupindicator, 'controllvariables':controllvariables, 'mmethod':mmethod, 'mdistance':mdistance, 'mreplace':mreplace, 'mcaliper':mcaliper, 'mratio':mratio, 'mcalipervariables': mcalipervariables, 'balance_threshold': balance_threshold}
     base_url = "http://" + ip_address + "/summary"
     req = r.post(base_url, proxies = {'http': '','https': '',}, json=body, params=params)
     data = req.json()

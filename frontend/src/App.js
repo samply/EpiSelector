@@ -23,7 +23,6 @@ import * as React from 'react';
 import { useState } from "react";
 import Foot from "./components/Foot";
 import AppContext from './AppContext';
-import DynamicResultsBackup from "./components/DynamicResultsBackup";
 import { AuthProvider } from "./context/AuthContext";
 import ProfilePage from "./pages/ProfilePage";
 
