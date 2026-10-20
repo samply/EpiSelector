@@ -29,6 +29,10 @@ import Zielvariable from './Zielvariable';
 import { API_BASE_URL } from '../../apiBaseUrl';
 
 
+const formatDisplayedResult = (value) =>
+    typeof value === 'number' && Number.isFinite(value) ? value.toFixed(2) : value;
+
+
 function MatchingErgebnis() {
     const { setErgebnisse, setSummaryData: setGlobalSummaryData, setResultData: setGlobalResultData, isDatei, isVollständigeDatei, isAllKontrollvariablen, isKontrollvariablen, isMatchingMethode, isDateiSpaltenNamen, isBeobachtungen, isFälleKontrollenGruppenindikator, isZielvariable, setWorkflow, isErsetzung, isToleranzBereichSet, isVerhältnis, isÜbereinstimmungswert, isToleranzBereich, isAlgorithmus, isScoreMethode, isMatchingtoleranz, isMatchingvariablen, isAllMatchingvariablen } = useContext(AppContext);
 
@@ -686,7 +690,7 @@ function MatchingErgebnis() {
                                                             } else {
                                                                 return (
                                                                     <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
-                                                                        {val}
+                                                                        {formatDisplayedResult(val)}
                                                                     </TableCell>
                                                                 );
                                                             }
