@@ -561,6 +561,7 @@ function MatchingErgebnis() {
 
     const columnHeader0 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
+    const resultTableNeedsScroll = Array.isArray(summaryData) && summaryData.length > 6;
 
 
     return (
@@ -626,13 +627,13 @@ function MatchingErgebnis() {
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Differenz/SMD</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader0}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Differenz/SMD</TableCell>
                                         <TableCell colSpan={2}
                                             sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">Balance</TableCell>
@@ -640,7 +641,11 @@ function MatchingErgebnis() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <div style={{ maxHeight: "210px", overflowY: "auto", overflowX: "none" }}>
+                        <div style={{
+                            maxHeight: resultTableNeedsScroll ? "300px" : "none",
+                            overflowY: resultTableNeedsScroll ? "auto" : "visible",
+                            overflowX: "hidden"
+                        }}>
                             <TableContainer component={Paper} style={{ overflowX: "none" }}>
                                 <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small"
                                     aria-label="a dense table">
