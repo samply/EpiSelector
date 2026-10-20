@@ -20,6 +20,18 @@ tryCatch(library(cobalt), error = function(e) cat("cobalt not available\n"))
 tryCatch(library(lmtest), error = function(e) cat("lmtest not available\n"))
 tryCatch(library(sandwich), error = function(e) cat("sandwich not available\n"))
 
+DEFAULT_BALANCE_THRESHOLD <- 0.1
+
+parse_balance_threshold <- function(value = DEFAULT_BALANCE_THRESHOLD) {
+  threshold <- suppressWarnings(as.numeric(value))
+
+  if (length(threshold) != 1 || !is.finite(threshold) || threshold <= 0) {
+    stop("balance_threshold must be a positive number")
+  }
+
+  threshold
+}
+
 # Health check endpoint
 #* @get /test
 function() {
@@ -388,6 +400,7 @@ function(req, res,
 #* @param mcaliper Caliper width(s)
 #* @param mratio Matching ratio
 #* @param mcalipervariables Variable names for caliper (optional)
+#* @param balance_threshold Maximum absolute mean difference considered balanced
 #* @tag plotting
 #* @post /pie_chart
 function(req, res,
@@ -398,9 +411,11 @@ function(req, res,
          mreplace = "",
          mcaliper = "",
          mratio,
-         mcalipervariables = "") {
+         mcalipervariables = "",
+         balance_threshold = DEFAULT_BALANCE_THRESHOLD) {
   
   body <- req$body
+  threshold <- parse_balance_threshold(balance_threshold)
   
   # Matching durchführen
   a <- perform_matching(
@@ -421,7 +436,7 @@ function(req, res,
     disp = c("means"),
     un = TRUE,
     stats = c("m"),
-    thresholds = c(m = 0.1)
+    thresholds = c(m = threshold)
   )
   
   # Daten auslesen für das Pie Chart
@@ -460,6 +475,7 @@ covariate_balance <- function(matching, balance) {
 #* @param mcaliper Matching caliper
 #* @param mratio Matching ratio
 #* @param mcalipervariables Variable names for caliper (optional)
+#* @param balance_threshold Maximum absolute mean difference considered balanced
 #* @post /summary
 function(req, res,
          groupindicator,
@@ -469,9 +485,11 @@ function(req, res,
          mreplace = "",
          mcaliper = "",
          mratio,
-         mcalipervariables = "") {
+         mcalipervariables = "",
+         balance_threshold = DEFAULT_BALANCE_THRESHOLD) {
   
   body <- req$body
+  threshold <- parse_balance_threshold(balance_threshold)
   
   # 1. Matching durchführen
   a <- perform_matching(
@@ -496,12 +514,16 @@ function(req, res,
                                include.s.weights = TRUE,
                                drop.unmatched = TRUE)
   
-  # 3. Case/Control Counts vor/nach Matching
-  prematch_cases <- sum(body[[groupindicator]] == 1)
-  prematch_controls <- sum(body[[groupindicator]] == 0)
-  
-  postmatch_cases <- sum(result_dataset[[groupindicator]] == 1)
-  postmatch_controls <- sum(result_dataset[[groupindicator]] == 0)
+  # 3. Case/control counts from MatchIt's normalized treatment indicator.
+  # MatchIt uses 0 for controls and 1 for treated cases regardless of the
+  # original group-indicator labels.
+  treatment_indicator <- as.integer(a$treat)
+  matching_weights <- as.numeric(a$weights)
+
+  prematch_cases <- sum(treatment_indicator == 1L)
+  prematch_controls <- sum(treatment_indicator == 0L)
+  postmatch_cases <- sum(treatment_indicator == 1L & matching_weights > 0)
+  postmatch_controls <- sum(treatment_indicator == 0L & matching_weights > 0)
   
   # 4. Balance Summary berechnen
   sum <- cobalt::bal.tab(
@@ -509,7 +531,7 @@ function(req, res,
     disp = c("means"),
     un = TRUE,
     stats = c("m"),
-    thresholds = c(m = 0.1)
+    thresholds = c(m = threshold)
   )
   
   # 5. Extract balance statistics. Propensity-score matching adds a synthetic

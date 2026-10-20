@@ -27,6 +27,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { AlertTitle } from "@mui/lab";
 import Zielvariable from './Zielvariable';
 import { API_BASE_URL } from '../../apiBaseUrl';
+import { BALANCE_THRESHOLD } from '../../matchingConfig';
 
 
 const formatDisplayedResult = (value) =>
@@ -86,11 +87,19 @@ function MatchingErgebnis() {
     const unbenannteSpalten = spaltenNamen.filter((name) => name.trim() === "").length;
     const preVariablen = spaltenNamen.length - unbenannteSpalten;
 
+    const preMatchingObservationCount = Array.isArray(resultData)
+        ? resultData.length
+        : isBeobachtungen;
+
     const postBeobachtungen = () =>
         Array.isArray(resultData) ? resultData.filter((row) => row['Matching weight'] > 0).length : 0;
 
-    const postVariable = () =>
-        Array.isArray(resultData) && resultData.length > 0 ? Object.keys(resultData[0]).length - unbenannteSpalten : 0;
+    // Zeige die Variablen des Datensatzes plus die für Nutzende sichtbaren Matching-Spalten an.
+    // Umbenannte leere CSV-Spalten und interne Metadaten werden nicht mitgezählt.
+    const matchingColumnCount = isMatchingMethode === "Exaktes Matching" ? 2 : 3;
+    const postMatchingVariableCount = Array.isArray(resultData)
+        ? preVariablen + matchingColumnCount
+        : 0;
 
 
     useEffect(() => {
@@ -424,6 +433,7 @@ function MatchingErgebnis() {
                 mratio: isVerhältnis,
                 mcaliper: caliperValuesString,
                 mcalipervariables: caliperVariablesString,
+                balanceThreshold: BALANCE_THRESHOLD,
                 dataset: isVollständigeDatei
             };
 
@@ -437,7 +447,8 @@ function MatchingErgebnis() {
                 mreplace: params.mreplace,
                 mratio: params.mratio,
                 mcaliper: Array.isArray(params.mcaliper) ? params.mcaliper.join(',') : params.mcaliper,
-                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables
+                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables,
+                balance_threshold: params.balanceThreshold
             }).toString();
 
             // Kompletten URL zusammenbauen
@@ -579,8 +590,8 @@ function MatchingErgebnis() {
 
                     <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
 
-                        Prä-Matching: {preVariablen} Variablen, {isBeobachtungen} Beobachtungen <br />
-                        Post-Matching: {postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
+                        Prä-Matching: {preVariablen} Variablen, {preMatchingObservationCount} Beobachtungen <br />
+                        Post-Matching: {postMatchingVariableCount} Variablen, {postBeobachtungen()} Beobachtungen
                     </Typography>
                 </div>
 
