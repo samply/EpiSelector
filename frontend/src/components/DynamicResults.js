@@ -23,6 +23,7 @@ import FHSPSME from "../assets/FHS_PS_ME.json";
 import FHSEMOT from "../assets/FHS_EM_OT.json";
 import FHSEMMT from "../assets/FHS_EM_MT.json";
 import AppContext from '../AppContext';
+import { MAX_CATEGORICAL_LEVELS, MIN_CATEGORICAL_LEVELS } from '../matchingConfig';
 HighchartsMore(Highcharts);
 
 var json_test_data = require('../assets/test_data.json');
@@ -30,7 +31,7 @@ var json_test_data = require('../assets/test_data.json');
 
 
 
-function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categories) {
+function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categories, group_labels = []) {
 
     let chartDom_a = document.getElementById("container_a");
     let chart_a = Highcharts.charts[Highcharts.attr(chartDom_a, 'data-highcharts-chart')];
@@ -38,15 +39,10 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
     let chartDom_b = document.getElementById("container_b");
     let chart_b = Highcharts.charts[Highcharts.attr(chartDom_b, 'data-highcharts-chart')];
 
-    chart_a.xAxis[0].axisTitle.attr({
-        text: x_axis_label
-    });
-    chart_b.xAxis[0].axisTitle.attr({
-        text: x_axis_label
-    });
-
-    chart_a.xAxis[0].categories = x_categories;
-    chart_b.xAxis[0].categories = x_categories;
+    chart_a.xAxis[0].setTitle({ text: x_axis_label }, false);
+    chart_b.xAxis[0].setTitle({ text: x_axis_label }, false);
+    chart_a.xAxis[0].setCategories(x_categories, false);
+    chart_b.xAxis[0].setCategories(x_categories, false);
 
     // split data_pre_match into two arrays
     var length = data_pre_match.length;
@@ -62,8 +58,12 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
     console.log("Pre-Match Histogramm")
     console.log(data_pre_match_red)
     console.log(data_pre_match_blue)
-    chart_a.series[0].setData(data_pre_match_red);
-    chart_a.series[1].setData(data_pre_match_blue);
+    chart_a.series[0].setData(data_pre_match_red, false);
+    chart_a.series[1].setData(data_pre_match_blue, false);
+    if (group_labels.length === 2) {
+        chart_a.series[0].update({ name: group_labels[0] }, false);
+        chart_a.series[1].update({ name: group_labels[1] }, false);
+    }
 
     // split data_post_match into two arrays
     var length = data_post_match.length;
@@ -76,8 +76,12 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
         data_post_match_blue[i] = -data_post_match_blue[i];
     }
 
-    chart_b.series[0].setData(data_post_match_red);
-    chart_b.series[1].setData(data_post_match_blue);
+    chart_b.series[0].setData(data_post_match_red, false);
+    chart_b.series[1].setData(data_post_match_blue, false);
+    if (group_labels.length === 2) {
+        chart_b.series[0].update({ name: group_labels[0] }, false);
+        chart_b.series[1].update({ name: group_labels[1] }, false);
+    }
 
     // chart_a.yAxis[0].setExtremes(0, 100000);
 
@@ -90,12 +94,12 @@ function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categori
 
 function clearHistograms() {
 
-    setHistograms([], [], 'Ausgew. Variable', '', '');
+    setHistograms([], [], 'Ausgew. Variable', [], []);
 
 }
 
 
-function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matching_outliers, post_matching_boxplots, post_matching_outliers) {
+function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matching_outliers, post_matching_boxplots, post_matching_outliers, x_categories = []) {
 
     let chartDom_c = document.getElementById("container_c");
     let chart_c = Highcharts.charts[Highcharts.attr(chartDom_c, 'data-highcharts-chart')];
@@ -109,17 +113,12 @@ function setBoxplots(y_axis_label, x_axis_label, pre_matching_boxplots, pre_matc
     chart_d.series[0].setData(post_matching_boxplots);
     chart_d.series[1].setData(post_matching_outliers);
 
-    chart_c.xAxis[0].axisTitle.attr({
-        text: x_axis_label
-    });
-
-    chart_d.xAxis[0].axisTitle.attr({
-        text: x_axis_label
-    });
-
-    chart_d.yAxis[0].axisTitle.attr({
-        text: y_axis_label
-    });
+    chart_c.xAxis[0].setCategories(x_categories, false);
+    chart_d.xAxis[0].setCategories(x_categories, false);
+    chart_c.xAxis[0].setTitle({ text: x_axis_label }, false);
+    chart_d.xAxis[0].setTitle({ text: x_axis_label }, false);
+    chart_c.yAxis[0].setTitle({ text: y_axis_label }, false);
+    chart_d.yAxis[0].setTitle({ text: y_axis_label }, false);
 
     if (pre_matching_boxplots != null && post_matching_boxplots[0] != null) {
         var combinedArray = pre_matching_boxplots[0].concat(pre_matching_boxplots[1], post_matching_boxplots[0], post_matching_boxplots[1]);
@@ -218,7 +217,7 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
     
     const categoricalVars = [];
     
-    // Prüfe jede Spalte: kategoriale Variable = 2-16 einzigartige Ausprägungen
+    // Prüfe jede Spalte anhand des konfigurierten Bereichs für kategoriale Variablen.
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
             // Filtere null/undefined Werte heraus
@@ -230,12 +229,12 @@ function getBinaryVariables(resultData, summaryData, targetVariable) {
             console.log(`   - Beispielwerte:`, uniqueValues.slice(0, 10));
             console.log(`   - Ausgeschlossen wegen Zielvariable? ${col === targetVariable}`);
             
-            // Kategoriale Variable: mindestens 2 und höchstens 16 Ausprägungen
-            if (uniqueValues.length >= 2 && uniqueValues.length <= 16) {
+            // Kategoriale Variablen müssen innerhalb des konfigurierten Wertebereichs liegen.
+            if (uniqueValues.length >= MIN_CATEGORICAL_LEVELS && uniqueValues.length <= MAX_CATEGORICAL_LEVELS) {
                 categoricalVars.push(col);
                 console.log(`   ✅ "${col}" als kategoriale Variable hinzugefügt (${uniqueValues.length} Ausprägungen)`);
             } else {
-                console.log(`   ❌ "${col}" NICHT kategoriale Variable: ${uniqueValues.length} Ausprägungen (außerhalb 2-16)`);
+                console.log(`   ❌ "${col}" ist nicht kategorial: ${uniqueValues.length} Ausprägungen (erwartet ${MIN_CATEGORICAL_LEVELS}-${MAX_CATEGORICAL_LEVELS})`);
             }
         } else {
             console.log(`📋 Spalte "${col}": ⏭️ Übersprungen (ausgeschlossen)`);
@@ -275,7 +274,7 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
     
     const numericVars = [];
     
-    // Prüfe jede Spalte: numerische Variable = >16 Ausprägungen UND nur numerische Werte
+    // Numerische Variablen überschreiten den konfigurierten kategorialen Bereich.
     allColumns.forEach(col => {
         if (!excludeColumns.includes(col)) {
             // Filtere null/undefined Werte heraus
@@ -291,12 +290,12 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
             console.log(`   - Beispielwerte:`, validValues.slice(0, 5));
             console.log(`   - Ausgeschlossen wegen Zielvariable? ${col === targetVariable}`);
             
-            // Numerische Variable: mehr als 16 Ausprägungen UND alle Werte sind numerisch
-            if (uniqueValues.length > 16 && allNumeric) {
+            // Numerische Variablen müssen mehr Ausprägungen als das konfigurierte Maximum haben.
+            if (uniqueValues.length > MAX_CATEGORICAL_LEVELS && allNumeric) {
                 numericVars.push(col);
                 console.log(`   ✅ "${col}" als numerische Variable hinzugefügt (${uniqueValues.length} Ausprägungen, alle numerisch)`);
             } else {
-                console.log(`   ❌ "${col}" NICHT numerische Variable: ${uniqueValues.length} Ausprägungen (≤16) oder nicht alle numerisch (${allNumeric})`);
+                console.log(`   ❌ "${col}" ist nicht numerisch: ${uniqueValues.length} Ausprägungen (muss ${MAX_CATEGORICAL_LEVELS} überschreiten) oder nicht alle Werte sind numerisch (${allNumeric})`);
             }
         } else {
             console.log(`📋 Spalte "${col}": ⏭️ Übersprungen (ausgeschlossen)`);
@@ -322,7 +321,7 @@ function calculateHistogramData(resultData, variable, targetVariable) {
     
     // Für Histogramme brauchen wir kategoriale Daten - finde die Ausprägungen
     const uniqueValues = [...new Set(resultData.map(row => row[variable]))].sort();
-    if (uniqueValues.length < 2 || uniqueValues.length > 10) {
+    if (uniqueValues.length < MIN_CATEGORICAL_LEVELS || uniqueValues.length > MAX_CATEGORICAL_LEVELS) {
         console.warn(`Variable ${variable} ist nicht für Histogramm geeignet - hat ${uniqueValues.length} Ausprägungen`);
         return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
     }
@@ -378,8 +377,10 @@ function calculateHistogramDataFromSummary(summaryData, variable, targetVariable
     };
 }
 
-function calculateBoxplotData(resultData, variable, targetVariable) {
-    if (!resultData || !variable) return { pre_matching: {}, post_matching: {} };
+function calculateBoxplotData(resultData, variable, targetVariable, targetValues) {
+    if (!resultData || !variable || targetValues.length !== 2) return { pre_matching: {}, post_matching: {} };
+
+    const [firstTargetValue, secondTargetValue] = targetValues;
     
     console.log(`=== BOXPLOT-BERECHNUNG FÜR VARIABLE: ${variable} ===`);
     console.log(`Zielvariable: ${targetVariable}`);
@@ -387,36 +388,36 @@ function calculateBoxplotData(resultData, variable, targetVariable) {
     
     // ========== PRE-MATCHING: Alle Daten ==========
     const preGroup0Data = resultData
-        .filter(row => row[targetVariable] == 0)
+        .filter(row => row[targetVariable] == firstTargetValue)
         .map(row => parseFloat(row[variable]))
         .filter(val => !isNaN(val));
     
     const preGroup1Data = resultData
-        .filter(row => row[targetVariable] == 1)
+        .filter(row => row[targetVariable] == secondTargetValue)
         .map(row => parseFloat(row[variable]))
         .filter(val => !isNaN(val));
     
     console.log(`📊 PRE-MATCHING (alle ${resultData.length} Datensätze):`);
-    console.log(`   - Gruppe 0 (${targetVariable}=0): ${preGroup0Data.length} Werte`);
-    console.log(`   - Gruppe 1 (${targetVariable}=1): ${preGroup1Data.length} Werte`);
+    console.log(`   - Gruppe 1 (${targetVariable}=${firstTargetValue}): ${preGroup0Data.length} Werte`);
+    console.log(`   - Gruppe 2 (${targetVariable}=${secondTargetValue}): ${preGroup1Data.length} Werte`);
     
     // ========== POST-MATCHING: Nur Matching weight > 0 ==========
     const postMatchingData = resultData.filter(row => row['Matching weight'] > 0);
     console.log(`📊 POST-MATCHING: ${postMatchingData.length} Datensätze (Matching weight > 0)`);
     
     const postGroup0Data = postMatchingData
-        .filter(row => row[targetVariable] == 0)
+        .filter(row => row[targetVariable] == firstTargetValue)
         .map(row => parseFloat(row[variable]))
         .filter(val => !isNaN(val));
     
     const postGroup1Data = postMatchingData
-        .filter(row => row[targetVariable] == 1)
+        .filter(row => row[targetVariable] == secondTargetValue)
         .map(row => parseFloat(row[variable]))
         .filter(val => !isNaN(val));
     
     console.log(`📊 POST-MATCHING Datenaufteilung:`);
-    console.log(`   - Gruppe 0 (${targetVariable}=0): ${postGroup0Data.length} Werte`);
-    console.log(`   - Gruppe 1 (${targetVariable}=1): ${postGroup1Data.length} Werte`);
+    console.log(`   - Gruppe 1 (${targetVariable}=${firstTargetValue}): ${postGroup0Data.length} Werte`);
+    console.log(`   - Gruppe 2 (${targetVariable}=${secondTargetValue}): ${postGroup1Data.length} Werte`);
     
     function calculateBoxplotStats(data, label) {
         if (data.length === 0) {
@@ -438,12 +439,12 @@ function calculateBoxplotData(resultData, variable, targetVariable) {
     
     const result = {
         pre_matching: {
-            boxplot_one: calculateBoxplotStats(preGroup0Data, `PRE Gruppe 0 (${targetVariable}=0)`),
-            boxplot_two: calculateBoxplotStats(preGroup1Data, `PRE Gruppe 1 (${targetVariable}=1)`)
+            boxplot_one: calculateBoxplotStats(preGroup0Data, `PRE Gruppe 1 (${targetVariable}=${firstTargetValue})`),
+            boxplot_two: calculateBoxplotStats(preGroup1Data, `PRE Gruppe 2 (${targetVariable}=${secondTargetValue})`)
         },
         post_matching: {
-            boxplot_one: calculateBoxplotStats(postGroup0Data, `POST Gruppe 0 (${targetVariable}=0)`),
-            boxplot_two: calculateBoxplotStats(postGroup1Data, `POST Gruppe 1 (${targetVariable}=1)`)
+            boxplot_one: calculateBoxplotStats(postGroup0Data, `POST Gruppe 1 (${targetVariable}=${firstTargetValue})`),
+            boxplot_two: calculateBoxplotStats(postGroup1Data, `POST Gruppe 2 (${targetVariable}=${secondTargetValue})`)
         }
     };
     
@@ -512,6 +513,15 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     };
     
     const targetVariableForLabels = getTargetVariableForLabels();
+    const targetValues = useMemo(() => {
+        if (!Array.isArray(isResultData) || !targetVariableForLabels) return [];
+
+        return [...new Set(
+            isResultData
+                .map((row) => row[targetVariableForLabels])
+                .filter((value) => value !== null && value !== undefined && value !== '')
+        )].sort((left, right) => String(left).localeCompare(String(right), undefined, { numeric: true }));
+    }, [isResultData, targetVariableForLabels]);
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
     const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
@@ -561,10 +571,10 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             // Aktualisiere die Achsenbeschriftungen
             updateAxisLabels();
             
-            // Aktiviere Variable Selektoren
-            setDisableVarSelect(false);
+            // Diagramme benötigen genau zwei beobachtete Gruppenwerte.
+            setDisableVarSelect(targetValues.length !== 2);
         }
-    }, [isResultData, isSummaryData, categoricalVariables, numericVariables, targetVariableForLabels]);
+    }, [isResultData, isSummaryData, categoricalVariables, numericVariables, targetVariableForLabels, targetValues]);
 
     // Verwende echte Variablennamen anstatt statischer Listen
     let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
@@ -600,8 +610,12 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
         
         if (label_variable_zero && label_variable_one) {
-            label_variable_zero.textContent = `${targetVariableForLabels} = 0`;
-            label_variable_one.textContent = `${targetVariableForLabels} = 1`;
+            label_variable_zero.textContent = targetValues.length === 2
+                ? `${targetVariableForLabels} = ${targetValues[0]}`
+                : 'Gruppe 1';
+            label_variable_one.textContent = targetValues.length === 2
+                ? `${targetVariableForLabels} = ${targetValues[1]}`
+                : 'Gruppe 2';
         }
     };
 
@@ -627,29 +641,36 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         }
         
         console.log(`✅ Verwende Result-Daten (${isResultData.length} Datensätze)`);
+
+        if (targetValues.length !== 2) {
+            console.error('Der Gruppenindikator muss genau zwei Werte enthalten.');
+            return;
+        }
+
+        const [firstTargetValue, secondTargetValue] = targetValues;
         
         // ========== PRE-MATCHING DATEN (alle Datensätze) ==========
         console.log(`📊 PRE-MATCHING: Verwende alle ${isResultData.length} Datensätze`);
         
-        // Filtere Pre-Matching Daten nach Zielvariable = 0 und = 1
-        const preDataGroup0 = isResultData.filter(row => row[targetVariableForLabels] == 0);
-        const preDataGroup1 = isResultData.filter(row => row[targetVariableForLabels] == 1);
+        // Teile Prä-Matching-Daten anhand der beobachteten Gruppenwerte auf.
+        const preDataGroup0 = isResultData.filter(row => row[targetVariableForLabels] == firstTargetValue);
+        const preDataGroup1 = isResultData.filter(row => row[targetVariableForLabels] == secondTargetValue);
         
         console.log(`📊 PRE-MATCHING Datenaufteilung:`);
-        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${preDataGroup0.length} Datensätze`);
-        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${preDataGroup1.length} Datensätze`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=${firstTargetValue}): ${preDataGroup0.length} Datensätze`);
+        console.log(`   - Gruppe 2 (${targetVariableForLabels}=${secondTargetValue}): ${preDataGroup1.length} Datensätze`);
         
         // ========== POST-MATCHING DATEN (nur Matching weight > 0) ==========
         const postMatchingData = isResultData.filter(row => row['Matching weight'] > 0);
         console.log(`📊 POST-MATCHING: Verwende ${postMatchingData.length} Datensätze (Matching weight > 0)`);
         
-        // Filtere Post-Matching Daten nach Zielvariable = 0 und = 1
-        const postDataGroup0 = postMatchingData.filter(row => row[targetVariableForLabels] == 0);
-        const postDataGroup1 = postMatchingData.filter(row => row[targetVariableForLabels] == 1);
+        // Teile Post-Matching-Daten anhand der beobachteten Gruppenwerte auf.
+        const postDataGroup0 = postMatchingData.filter(row => row[targetVariableForLabels] == firstTargetValue);
+        const postDataGroup1 = postMatchingData.filter(row => row[targetVariableForLabels] == secondTargetValue);
         
         console.log(`📊 POST-MATCHING Datenaufteilung:`);
-        console.log(`   - Gruppe 0 (${targetVariableForLabels}=0): ${postDataGroup0.length} Datensätze`);
-        console.log(`   - Gruppe 1 (${targetVariableForLabels}=1): ${postDataGroup1.length} Datensätze`);
+        console.log(`   - Gruppe 1 (${targetVariableForLabels}=${firstTargetValue}): ${postDataGroup0.length} Datensätze`);
+        console.log(`   - Gruppe 2 (${targetVariableForLabels}=${secondTargetValue}): ${postDataGroup1.length} Datensätze`);
         
         // Extrahiere Werte der ausgewählten Variable für PRE-MATCHING Gruppen
         const preValuesGroup0 = preDataGroup0.map(row => row[selectedVariable]).filter(val => val !== null && val !== undefined);
@@ -671,7 +692,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         const allUniqueValues = [...new Set([...preValuesGroup0, ...preValuesGroup1, ...postValuesGroup0, ...postValuesGroup1])].sort();
         console.log(`🏷️ Kategorien der Variable "${selectedVariable}":`, allUniqueValues);
         
-        if (allUniqueValues.length < 2 || allUniqueValues.length > 16) {
+        if (allUniqueValues.length < MIN_CATEGORICAL_LEVELS || allUniqueValues.length > MAX_CATEGORICAL_LEVELS) {
             console.warn(`⚠️ Variable "${selectedVariable}" hat ${allUniqueValues.length} Kategorien - möglicherweise nicht optimal für Histogramm`);
         }
         
@@ -740,21 +761,22 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         console.log(`   - Y-Achse (symmetrisch): ${yAxisMin.toFixed(1)}% bis ${yAxisMax.toFixed(1)}%`);
         
         console.log(`📈 FINALE PRE-MATCHING HISTOGRAMM-DATEN:`);
-        console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, preFrequenciesGroup1);
-        console.log(`   - Zweite Hälfte (Gruppe 0=${targetVariableForLabels}=0, BLAU, UNTEN):`, preFrequenciesGroup0);
+        console.log(`   - Erste Hälfte (${targetVariableForLabels}=${firstTargetValue}, rot, oben):`, preFrequenciesGroup0);
+        console.log(`   - Zweite Hälfte (${targetVariableForLabels}=${secondTargetValue}, blau, unten):`, preFrequenciesGroup1);
         
         console.log(`📈 FINALE POST-MATCHING HISTOGRAMM-DATEN:`);
-        console.log(`   - Erste Hälfte (Gruppe 1=${targetVariableForLabels}=1, ROT, OBEN):`, postFrequenciesGroup1);
-        console.log(`   - Zweite Hälfte (Gruppe 0=${targetVariableForLabels}=0, BLAU, UNTEN):`, postFrequenciesGroup0);
+        console.log(`   - Erste Hälfte (${targetVariableForLabels}=${firstTargetValue}, rot, oben):`, postFrequenciesGroup0);
+        console.log(`   - Zweite Hälfte (${targetVariableForLabels}=${secondTargetValue}, blau, unten):`, postFrequenciesGroup1);
         
         console.log(`   - Kategorien:`, allUniqueValues.map(String));
         
-        // Kombiniere die Daten: [gruppe1_daten, gruppe0_daten] 
-        const preMatchingData = [...preFrequenciesGroup1, ...preFrequenciesGroup0];
-        const postMatchingDataCombined = [...postFrequenciesGroup1, ...postFrequenciesGroup0];
+        // Kombiniere die Daten in derselben Reihenfolge wie Beschriftungen und Farben.
+        const preMatchingData = [...preFrequenciesGroup0, ...preFrequenciesGroup1];
+        const postMatchingDataCombined = [...postFrequenciesGroup0, ...postFrequenciesGroup1];
         
         // Aktualisiere die Histogramme mit separaten Pre- und Post-Matching Daten
-        setHistograms(preMatchingData, postMatchingDataCombined, selectedVariable, allUniqueValues.map(String));
+        const groupLabels = targetValues.map((value) => `${targetVariableForLabels} = ${value}`);
+        setHistograms(preMatchingData, postMatchingDataCombined, selectedVariable, allUniqueValues.map(String), groupLabels);
         
         // Setze einheitliche Y-Achse für beide Histogramme
         setTimeout(() => {
@@ -805,9 +827,14 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         }
         
         console.log(`✅ Verwende Result-Daten (${isResultData.length} Datensätze)`);
+
+        if (targetValues.length !== 2) {
+            console.error('Der Gruppenindikator muss genau zwei Werte enthalten.');
+            return;
+        }
         
         // Berechne Boxplot-Daten mit korrekter Pre/Post-Matching Unterscheidung
-        const boxplotData = calculateBoxplotData(isResultData, selectedVariable, targetVariableForLabels);
+        const boxplotData = calculateBoxplotData(isResultData, selectedVariable, targetVariableForLabels, targetValues);
         
         console.log("📊 Boxplot-Daten berechnet:", boxplotData);
         console.log("📊 Pre-matching boxplots:", boxplotData.pre_matching);
@@ -820,7 +847,8 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             [boxplotData.pre_matching.boxplot_one, boxplotData.pre_matching.boxplot_two],    // Pre-Matching Boxplots
             [],                                                                 // Pre-Matching Outliers (leer)
             [boxplotData.post_matching.boxplot_one, boxplotData.post_matching.boxplot_two], // Post-Matching Boxplots
-            []                                                                  // Post-Matching Outliers (leer)
+            [],                                                                 // Post-Matching Outliers (leer)
+            targetValues.map(String)                                            // Gruppenbeschriftungen
         );
         
         // Aktualisiere State
@@ -860,17 +888,17 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
             accessibility: {
                 point: {
-                    valueDescriptionFormat: '{index}. Age {xDescription}, {value}%.'
+                    valueDescriptionFormat: '{index}. {xDescription}, {value}%.'
                 }
             },
             xAxis: [{
-                categories: [0, 1],
+                categories: [],
                 reversed: false,
                 labels: {
                     step: 1
                 },
                 accessibility: {
-                    description: 'Age (male)'
+                    description: 'Kategorien der ausgewählten Variable'
                 },
                 title: {
                     text: 'Ausgew. Variable'
@@ -888,7 +916,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 },
                 accessibility: {
                     description: 'Anteil der Population',
-                    rangeDescription: 'Range: 0 to 5%'
+                    rangeDescription: 'Prozentanteil innerhalb der Gruppe'
                 }
             },
 
@@ -916,11 +944,11 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
 
             series: [{
-                name: 'ICU_MORT = 0',
+                name: 'Gruppe 1',
                 data: [],
                 color: '#b11b18'
             }, {
-                name: 'ICU_MORT = 1',
+                name: 'Gruppe 2',
                 data: [],
                 color: '#1c4189'
             }]
@@ -944,17 +972,17 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
             accessibility: {
                 point: {
-                    valueDescriptionFormat: '{index}. Age {xDescription}, {value}%.'
+                    valueDescriptionFormat: '{index}. {xDescription}, {value}%.'
                 }
             },
             xAxis: [{
-                categories: [0, 1],
+                categories: [],
                 reversed: false,
                 labels: {
                     step: 1
                 },
                 accessibility: {
-                    description: 'Age (male)'
+                    description: 'Kategorien der ausgewählten Variable'
                 },
                 title: {
                     text: 'Ausgew. Variable'
@@ -971,7 +999,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                 },
                 accessibility: {
                     description: 'Anteil der Population',
-                    rangeDescription: 'Range: 0 to 5%'
+                    rangeDescription: 'Prozentanteil innerhalb der Gruppe'
                 }
             },
 
@@ -999,11 +1027,11 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
 
             series: [{
-                name: 'ICU_MORT = 0',
+                name: 'Gruppe 1',
                 data: [],
                 color: '#b11b18'
             }, {
-                name: 'ICU_MORT = 1',
+                name: 'Gruppe 2',
                 data: [],
                 color: '#1c4189'
             }]
@@ -1033,7 +1061,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
 
             xAxis: {
-                categories: ['0', '1'],
+                categories: [],
                 title: {
                     text: 'Zielvariable'
                 }
@@ -1106,7 +1134,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
 
             xAxis: {
-                categories: ['0', '1'],
+                categories: [],
                 title: {
                     text: 'Zielvariable'
                 }
@@ -1228,11 +1256,15 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         // setPiechart(json[0].count, json[1].count, false);
 
         const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
-        label_variable_zero.textContent = `${targetVariableForLabels} = 0`;
+        label_variable_zero.textContent = targetValues.length === 2
+            ? `${targetVariableForLabels} = ${targetValues[0]}`
+            : 'Gruppe 1';
 
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
-        label_variable_one.textContent = `${targetVariableForLabels} = 1`;
-        setDisableVarSelect(false);
+        label_variable_one.textContent = targetValues.length === 2
+            ? `${targetVariableForLabels} = ${targetValues[1]}`
+            : 'Gruppe 2';
+        setDisableVarSelect(targetValues.length !== 2);
 
     };
 
@@ -1246,9 +1278,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
         setVariableA("");
         setVariableB("")
         const label_variable_zero = document.getElementById('binary_target_variable_legend_text_zero');
-        label_variable_zero.textContent = 'Zielvariable = 0';
+        label_variable_zero.textContent = 'Gruppe 1';
         const label_variable_one = document.getElementById('binary_target_variable_legend_text_one');
-        label_variable_one.textContent = 'Zielvariable = 1';
+        label_variable_one.textContent = 'Gruppe 2';
     }
 
     return (
@@ -1312,9 +1344,9 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
                         }}>
                             <div class="flexbox-container">
                                 <div><Box sx={{ width: 14, height: 14, background: "#B11B18", borderRadius: 50 }}></Box></div>
-                                <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Zielvariable = 0</Typography></div>
+                                <div><Typography id="binary_target_variable_legend_text_zero" sx={{ fontSize: 11, pl: 1, pr: 1, fontWeight: 'bold' }}>Gruppe 1</Typography></div>
                                 <div><Box sx={{ width: 14, height: 14, background: "#1C4189", borderRadius: 50 }}></Box></div>
-                                <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Zielvariable = 1</Typography></div>
+                                <div><Typography id="binary_target_variable_legend_text_one" sx={{ fontSize: 11, pl: 1, fontWeight: 'bold' }}>Gruppe 2</Typography></div>
                             </div>
                         </div>
                     </Grid>
