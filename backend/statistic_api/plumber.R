@@ -137,6 +137,10 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
     mcaliper <- NULL
     print("No caliper will be used.")
   }
+
+  # Caliper für Propensity-Score Nearest-Neighbour Matching standardisieren.
+  # Toleranzen des Variablen-Matchings bleiben in den ursprünglichen Einheiten.
+  standardize_caliper <- identical(mmethod, "nearest")
   
   # Matching durchführen
   if (mmethod == "exact") {
@@ -149,7 +153,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
                  replace = mreplace,
                  ratio = mratio,
                  caliper = mcaliper,
-                 std.caliper = FALSE,
+                 std.caliper = standardize_caliper,
                  exact = exact_form)
     
   } else if (mmethod == "nearest") {
@@ -161,7 +165,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
                  replace = mreplace,
                  ratio = mratio,
                  caliper = mcaliper,
-                 std.caliper = FALSE)
+                 std.caliper = standardize_caliper)
     print("after matching")
     
   } else {
