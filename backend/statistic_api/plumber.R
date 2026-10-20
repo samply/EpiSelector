@@ -437,6 +437,19 @@ function(req, res,
 
 
 
+covariate_balance <- function(matching, balance) {
+  has_distance_row <- !is.null(matching$distance) &&
+    nrow(balance) > 0 &&
+    identical(rownames(balance)[1], "distance")
+
+  if (has_distance_row) {
+    return(balance[-1, , drop = FALSE])
+  }
+
+  balance
+}
+
+
 #* Generate summary statistics for matched data
 #* @tag "statistical information"
 #* @param groupindicator Grouping variable (outcome)
@@ -499,19 +512,21 @@ function(req, res,
     thresholds = c(m = 0.1)
   )
   
-  # 5. Extract balance statistics
-  row_names <- rownames(sum$Balance)[-1]
+  # 5. Extract balance statistics. Propensity-score matching adds a synthetic
+  # "distance" row; exact matching does not, so it must not be dropped blindly.
+  balance <- covariate_balance(a, sum$Balance)
+  row_names <- rownames(balance)
   
-  unadjusted_means_treated <- sum$Balance$M.0.Un[-1]
-  unadjusted_means_control <- sum$Balance$M.1.Un[-1]
-  unadjusted_mean_diff <- sum$Balance$Diff.Un[-1]
+  unadjusted_means_treated <- balance$M.0.Un
+  unadjusted_means_control <- balance$M.1.Un
+  unadjusted_mean_diff <- balance$Diff.Un
   
-  adjusted_means_treated <- sum$Balance$M.0.Adj[-1]
-  adjusted_means_control <- sum$Balance$M.1.Adj[-1]
-  adjusted_mean_diff <- sum$Balance$Diff.Adj[-1]
+  adjusted_means_treated <- balance$M.0.Adj
+  adjusted_means_control <- balance$M.1.Adj
+  adjusted_mean_diff <- balance$Diff.Adj
   
   # Balance status und thresholds nach Matching extrahieren
-  balance_info <- strsplit(sum$Balance$M.Threshold[-1], ", ", fixed = TRUE)
+  balance_info <- strsplit(balance$M.Threshold, ", ", fixed = TRUE)
   balance_covariats_post_matching <- sapply(balance_info, `[`, 1)
   balance_thresholds_post_matching <- sapply(balance_info, `[`, 2)
   
