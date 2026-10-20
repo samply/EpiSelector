@@ -48,7 +48,7 @@ export default function UploadData() {
         const reader = new FileReader();
         reader.onload = (event) => {
             const csv = event.target.result;
-            const parsed = Papa.parse(csv);
+            const parsed = Papa.parse(csv, { skipEmptyLines: true });
             const headers = parsed.data[0];
             const rows = parsed.data.slice(1);
 
@@ -97,9 +97,9 @@ export default function UploadData() {
             setDateiSpaltenNamen(headers);
             setOnlyBinaryColumns(headers);
             setVollständigeDatei(jsonData);
-            setBeobachtungen(rows.length-1);
+            setBeobachtungen(rows.length);
 
-            console.log(rows.length-1);
+            console.log(rows.length);
             console.log("Dateiname:", file.name);
             console.log(headers);
             console.log(isBeobachtungen);
