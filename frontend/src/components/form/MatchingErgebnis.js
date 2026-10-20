@@ -10,11 +10,6 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import summary from '../../assets/summary.json';
-import FHSPSOE from '../../assets/FHS_PS_OE_V2.json';
-import FHSPSME from '../../assets/FHS_PS_ME_V2.json';
-import FHSEMMT from '../../assets/FHS_EM_MT_V2.json';
-import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import { Paper, Table, TableBody } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -25,8 +20,12 @@ import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 import { AlertTitle } from "@mui/lab";
-import Zielvariable from './Zielvariable';
 import { API_BASE_URL } from '../../apiBaseUrl';
+import { BALANCE_THRESHOLD } from '../../matchingConfig';
+
+
+const formatDisplayedResult = (value) =>
+    typeof value === 'number' && Number.isFinite(value) ? value.toFixed(2) : value;
 
 
 function MatchingErgebnis() {
@@ -62,14 +61,7 @@ function MatchingErgebnis() {
     }
     
 
-    function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
-        return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
-    }
-
-    const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState(null);
-
-    const [summary, setSummary] = useState([]);
     const [summaryData, setSummaryData] = useState(null);
 
 
@@ -82,11 +74,19 @@ function MatchingErgebnis() {
     const unbenannteSpalten = spaltenNamen.filter((name) => name.trim() === "").length;
     const preVariablen = spaltenNamen.length - unbenannteSpalten;
 
+    const preMatchingObservationCount = Array.isArray(resultData)
+        ? resultData.length
+        : isBeobachtungen;
+
     const postBeobachtungen = () =>
         Array.isArray(resultData) ? resultData.filter((row) => row['Matching weight'] > 0).length : 0;
 
-    const postVariable = () =>
-        Array.isArray(resultData) && resultData.length > 0 ? Object.keys(resultData[0]).length - unbenannteSpalten : 0;
+    // Zeige die Variablen des Datensatzes plus die für Nutzende sichtbaren Matching-Spalten an.
+    // Umbenannte leere CSV-Spalten und interne Metadaten werden nicht mitgezählt.
+    const matchingColumnCount = isMatchingMethode === "Exaktes Matching" ? 2 : 3;
+    const postMatchingVariableCount = Array.isArray(resultData)
+        ? preVariablen + matchingColumnCount
+        : 0;
 
 
     useEffect(() => {
@@ -123,8 +123,7 @@ function MatchingErgebnis() {
 
         } catch (error) {
             console.error("Error in useEffect:", error);
-            console.log("Fallback: Setting empty results array");
-            setResults([]);
+            console.log("Fallback: Matching-Konfiguration konnte nicht protokolliert werden");
         }
 
     }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
@@ -420,6 +419,7 @@ function MatchingErgebnis() {
                 mratio: isVerhältnis,
                 mcaliper: caliperValuesString,
                 mcalipervariables: caliperVariablesString,
+                balanceThreshold: BALANCE_THRESHOLD,
                 dataset: isVollständigeDatei
             };
 
@@ -433,7 +433,8 @@ function MatchingErgebnis() {
                 mreplace: params.mreplace,
                 mratio: params.mratio,
                 mcaliper: Array.isArray(params.mcaliper) ? params.mcaliper.join(',') : params.mcaliper,
-                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables
+                mcalipervariables: Array.isArray(params.mcalipervariables) ? params.mcalipervariables.join(',') : params.mcalipervariables,
+                balance_threshold: params.balanceThreshold
             }).toString();
 
             // Kompletten URL zusammenbauen
@@ -496,32 +497,6 @@ function MatchingErgebnis() {
         receivedSummary("start");
     }, []); // Empty dependency array means this runs only once on mount
 
-    /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSOE)
-           results = FHSPSOE;
-       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSME)
-           results = FHSPSME;
-       }/* else if (MatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMOT)
-           return FHSEMOT;
-       } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMMT)
-           return FHSEMMT;
-       }*/
-
     let backFunction = () => {
         if (isMatchingMethode === "Exaktes Matching") {
             return "/Matching-Verhältnis";
@@ -557,6 +532,7 @@ function MatchingErgebnis() {
 
     const columnHeader0 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
+    const resultTableNeedsScroll = Array.isArray(summaryData) && summaryData.length > 6;
 
 
     return (
@@ -574,8 +550,8 @@ function MatchingErgebnis() {
 
                     <Typography style={{ fontSize: "10px", fontWeight: "bold", float: "right" }}>
 
-                        Prä-Matching: {preVariablen} Variablen, {isBeobachtungen} Beobachtungen <br />
-                        Post-Matching: {postVariable()} Variablen, {postBeobachtungen()} Beobachtungen
+                        Prä-Matching: {preVariablen} Variablen, {preMatchingObservationCount} Beobachtungen <br />
+                        Post-Matching: {postMatchingVariableCount} Variablen, {postBeobachtungen()} Beobachtungen
                     </Typography>
                 </div>
 
@@ -622,13 +598,13 @@ function MatchingErgebnis() {
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Differenz/SMD</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader0}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">{columnHeader1}</TableCell>
                                         <TableCell sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
-                                            align="center">Differenz</TableCell>
+                                            align="center">Differenz/SMD</TableCell>
                                         <TableCell colSpan={2}
                                             sx={{ backgroundColor: "#E8E9EB", fontSize: "small", padding: "4px" }}
                                             align="center">Balance</TableCell>
@@ -636,7 +612,11 @@ function MatchingErgebnis() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <div style={{ maxHeight: "210px", overflowY: "auto", overflowX: "none" }}>
+                        <div style={{
+                            maxHeight: resultTableNeedsScroll ? "300px" : "none",
+                            overflowY: resultTableNeedsScroll ? "auto" : "visible",
+                            overflowX: "hidden"
+                        }}>
                             <TableContainer component={Paper} style={{ overflowX: "none" }}>
                                 <Table sx={{ fontSize: "small", border: '1px solid #ddd' }} size="small"
                                     aria-label="a dense table">
@@ -686,7 +666,7 @@ function MatchingErgebnis() {
                                                             } else {
                                                                 return (
                                                                     <TableCell key={index} style={{ textAlign: "center", paddingRight: "70px", padding: "8px" }}>
-                                                                        {val}
+                                                                        {formatDisplayedResult(val)}
                                                                     </TableCell>
                                                                 );
                                                             }

@@ -20,6 +20,18 @@ tryCatch(library(cobalt), error = function(e) cat("cobalt not available\n"))
 tryCatch(library(lmtest), error = function(e) cat("lmtest not available\n"))
 tryCatch(library(sandwich), error = function(e) cat("sandwich not available\n"))
 
+DEFAULT_BALANCE_THRESHOLD <- 0.1
+
+parse_balance_threshold <- function(value = DEFAULT_BALANCE_THRESHOLD) {
+  threshold <- suppressWarnings(as.numeric(value))
+
+  if (length(threshold) != 1 || !is.finite(threshold) || threshold <= 0) {
+    stop("balance_threshold must be a positive number")
+  }
+
+  threshold
+}
+
 # Health check endpoint
 #* @get /test
 function() {
@@ -125,6 +137,10 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
     mcaliper <- NULL
     print("No caliper will be used.")
   }
+
+  # Caliper für Propensity-Score Nearest-Neighbour Matching standardisieren.
+  # Toleranzen des Variablen-Matchings bleiben in den ursprünglichen Einheiten.
+  standardize_caliper <- identical(mmethod, "nearest")
   
   # Matching durchführen
   if (mmethod == "exact") {
@@ -137,7 +153,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
                  replace = mreplace,
                  ratio = mratio,
                  caliper = mcaliper,
-                 std.caliper = FALSE,
+                 std.caliper = standardize_caliper,
                  exact = exact_form)
     
   } else if (mmethod == "nearest") {
@@ -149,7 +165,7 @@ perform_matching <- function(req, groupindicator, controllvariables, mdistance, 
                  replace = mreplace,
                  ratio = mratio,
                  caliper = mcaliper,
-                 std.caliper = FALSE)
+                 std.caliper = standardize_caliper)
     print("after matching")
     
   } else {
@@ -388,6 +404,7 @@ function(req, res,
 #* @param mcaliper Caliper width(s)
 #* @param mratio Matching ratio
 #* @param mcalipervariables Variable names for caliper (optional)
+#* @param balance_threshold Maximum absolute mean difference considered balanced
 #* @tag plotting
 #* @post /pie_chart
 function(req, res,
@@ -398,9 +415,11 @@ function(req, res,
          mreplace = "",
          mcaliper = "",
          mratio,
-         mcalipervariables = "") {
+         mcalipervariables = "",
+         balance_threshold = DEFAULT_BALANCE_THRESHOLD) {
   
   body <- req$body
+  threshold <- parse_balance_threshold(balance_threshold)
   
   # Matching durchführen
   a <- perform_matching(
@@ -421,7 +440,7 @@ function(req, res,
     disp = c("means"),
     un = TRUE,
     stats = c("m"),
-    thresholds = c(m = 0.1)
+    thresholds = c(m = threshold)
   )
   
   # Daten auslesen für das Pie Chart
@@ -437,6 +456,19 @@ function(req, res,
 
 
 
+covariate_balance <- function(matching, balance) {
+  has_distance_row <- !is.null(matching$distance) &&
+    nrow(balance) > 0 &&
+    identical(rownames(balance)[1], "distance")
+
+  if (has_distance_row) {
+    return(balance[-1, , drop = FALSE])
+  }
+
+  balance
+}
+
+
 #* Generate summary statistics for matched data
 #* @tag "statistical information"
 #* @param groupindicator Grouping variable (outcome)
@@ -447,6 +479,7 @@ function(req, res,
 #* @param mcaliper Matching caliper
 #* @param mratio Matching ratio
 #* @param mcalipervariables Variable names for caliper (optional)
+#* @param balance_threshold Maximum absolute mean difference considered balanced
 #* @post /summary
 function(req, res,
          groupindicator,
@@ -456,9 +489,11 @@ function(req, res,
          mreplace = "",
          mcaliper = "",
          mratio,
-         mcalipervariables = "") {
+         mcalipervariables = "",
+         balance_threshold = DEFAULT_BALANCE_THRESHOLD) {
   
   body <- req$body
+  threshold <- parse_balance_threshold(balance_threshold)
   
   # 1. Matching durchführen
   a <- perform_matching(
@@ -483,12 +518,16 @@ function(req, res,
                                include.s.weights = TRUE,
                                drop.unmatched = TRUE)
   
-  # 3. Case/Control Counts vor/nach Matching
-  prematch_cases <- sum(body[[groupindicator]] == 1)
-  prematch_controls <- sum(body[[groupindicator]] == 0)
-  
-  postmatch_cases <- sum(result_dataset[[groupindicator]] == 1)
-  postmatch_controls <- sum(result_dataset[[groupindicator]] == 0)
+  # 3. Case/control counts from MatchIt's normalized treatment indicator.
+  # MatchIt uses 0 for controls and 1 for treated cases regardless of the
+  # original group-indicator labels.
+  treatment_indicator <- as.integer(a$treat)
+  matching_weights <- as.numeric(a$weights)
+
+  prematch_cases <- sum(treatment_indicator == 1L)
+  prematch_controls <- sum(treatment_indicator == 0L)
+  postmatch_cases <- sum(treatment_indicator == 1L & matching_weights > 0)
+  postmatch_controls <- sum(treatment_indicator == 0L & matching_weights > 0)
   
   # 4. Balance Summary berechnen
   sum <- cobalt::bal.tab(
@@ -496,22 +535,24 @@ function(req, res,
     disp = c("means"),
     un = TRUE,
     stats = c("m"),
-    thresholds = c(m = 0.1)
+    thresholds = c(m = threshold)
   )
   
-  # 5. Extract balance statistics
-  row_names <- rownames(sum$Balance)[-1]
+  # 5. Extract balance statistics. Propensity-score matching adds a synthetic
+  # "distance" row; exact matching does not, so it must not be dropped blindly.
+  balance <- covariate_balance(a, sum$Balance)
+  row_names <- rownames(balance)
   
-  unadjusted_means_treated <- sum$Balance$M.0.Un[-1]
-  unadjusted_means_control <- sum$Balance$M.1.Un[-1]
-  unadjusted_mean_diff <- sum$Balance$Diff.Un[-1]
+  unadjusted_means_treated <- balance$M.0.Un
+  unadjusted_means_control <- balance$M.1.Un
+  unadjusted_mean_diff <- balance$Diff.Un
   
-  adjusted_means_treated <- sum$Balance$M.0.Adj[-1]
-  adjusted_means_control <- sum$Balance$M.1.Adj[-1]
-  adjusted_mean_diff <- sum$Balance$Diff.Adj[-1]
+  adjusted_means_treated <- balance$M.0.Adj
+  adjusted_means_control <- balance$M.1.Adj
+  adjusted_mean_diff <- balance$Diff.Adj
   
   # Balance status und thresholds nach Matching extrahieren
-  balance_info <- strsplit(sum$Balance$M.Threshold[-1], ", ", fixed = TRUE)
+  balance_info <- strsplit(balance$M.Threshold, ", ", fixed = TRUE)
   balance_covariats_post_matching <- sapply(balance_info, `[`, 1)
   balance_thresholds_post_matching <- sapply(balance_info, `[`, 2)
   

@@ -9,7 +9,7 @@ import { visitedSite } from "../NavB";
 import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useState} from "react";
+import { useEffect, useState } from "react";
 import { CardHeader } from "@mui/material";
 import Card from "@mui/material/Card";
 import Box from "@mui/material/Box";
@@ -72,7 +72,14 @@ function Matchingtoleranz({setToleranzBereichSet, setMatchingtoleranzChip, setMa
         settoleranzwert(tmpArray);
         console.log("Finale tmpArray:", tmpArray);
     }
-    setMatchingtoleranzChip(isMatchingtoleranz.length +" Toleranzwerte")
+    useEffect(() => {
+        const nonZeroToleranceCount = toleranzwert.filter((value) => {
+            const numericValue = Number(typeof value === 'string' ? value.trim() : value );
+            return Number.isFinite(numericValue) && numericValue !== 0;
+            }).length;
+
+            setMatchingtoleranzChip(`${nonZeroToleranceCount} Toleranzwerte`);
+        }, [toleranzwert, setMatchingtoleranzChip]);
 
     console.log(tableArray);
 

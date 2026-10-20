@@ -14,7 +14,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
-import test_data from "../../../assets/test_data.json"
 import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the appropriate icon components from Material-UI
 import AppContext from '../../../AppContext';
 import CardActions from "@mui/material/CardActions";
@@ -48,7 +47,7 @@ export default function UploadData() {
         const reader = new FileReader();
         reader.onload = (event) => {
             const csv = event.target.result;
-            const parsed = Papa.parse(csv);
+            const parsed = Papa.parse(csv, { skipEmptyLines: true });
             const headers = parsed.data[0];
             const rows = parsed.data.slice(1);
 
@@ -97,9 +96,9 @@ export default function UploadData() {
             setDateiSpaltenNamen(headers);
             setOnlyBinaryColumns(headers);
             setVollständigeDatei(jsonData);
-            setBeobachtungen(rows.length-1);
+            setBeobachtungen(rows.length);
 
-            console.log(rows.length-1);
+            console.log(rows.length);
             console.log("Dateiname:", file.name);
             console.log(headers);
             console.log(isBeobachtungen);
