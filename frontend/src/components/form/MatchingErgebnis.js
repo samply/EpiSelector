@@ -10,11 +10,6 @@ import Button from "@mui/material/Button";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { CardHeader, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
-import summary from '../../assets/summary.json';
-import FHSPSOE from '../../assets/FHS_PS_OE_V2.json';
-import FHSPSME from '../../assets/FHS_PS_ME_V2.json';
-import FHSEMMT from '../../assets/FHS_EM_MT_V2.json';
-import FHSEMOT from '../../assets/FHS_EM_OT.json';
 import { Paper, Table, TableBody } from "@material-ui/core";
 import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -25,7 +20,6 @@ import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
 import CloseIcon from "@mui/icons-material/Close";
 import { AlertTitle } from "@mui/lab";
-import Zielvariable from './Zielvariable';
 import { API_BASE_URL } from '../../apiBaseUrl';
 import { BALANCE_THRESHOLD } from '../../matchingConfig';
 
@@ -67,14 +61,7 @@ function MatchingErgebnis() {
     }
     
 
-    function createData(variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat) {
-        return { variable, preMatchingIcu_mort0, preMatchingIcu_mort1, preMatchingDif, postMatchingIcu_mort0, postMatchingIcu_mort1, postMatchingDif, balancePostMat };
-    }
-
-    const [results, setResults] = useState([]);
     const [resultData, setResultData] = useState(null);
-
-    const [summary, setSummary] = useState([]);
     const [summaryData, setSummaryData] = useState(null);
 
 
@@ -136,8 +123,7 @@ function MatchingErgebnis() {
 
         } catch (error) {
             console.error("Error in useEffect:", error);
-            console.log("Fallback: Setting empty results array");
-            setResults([]);
+            console.log("Fallback: Matching-Konfiguration konnte nicht protokolliert werden");
         }
 
     }, [isMatchingMethode, isErsetzung, isToleranzBereichSet]);
@@ -510,32 +496,6 @@ function MatchingErgebnis() {
         receivedResults("start");
         receivedSummary("start");
     }, []); // Empty dependency array means this runs only once on mount
-
-    /*   if (isMatchingMethode === "Propensity Score" && isErsetzung === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSOE)
-           results = FHSPSOE;
-       } else if (isMatchingMethode === "Propensity Score" && isErsetzung === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSPSME)
-           results = FHSPSME;
-       }/* else if (MatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "FALSE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMOT)
-           return FHSEMOT;
-       } else if (isMatchingMethode === "Exaktes Matching" && isToleranzBereichSet === "TRUE") {
-           console.log(isMatchingMethode);
-           console.log(isErsetzung);
-           console.log(isToleranzBereichSet);
-           console.log(FHSEMMT)
-           return FHSEMMT;
-       }*/
 
     let backFunction = () => {
         if (isMatchingMethode === "Exaktes Matching") {

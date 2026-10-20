@@ -14,7 +14,6 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import Card from "@mui/material/Card";
 import {CardHeader} from "@mui/material";
-import test_data from "../../../assets/test_data.json"
 import { CheckCircle, Cancel } from "@mui/icons-material"; // Replace with the appropriate icon components from Material-UI
 import AppContext from '../../../AppContext';
 import CardActions from "@mui/material/CardActions";

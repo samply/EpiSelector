@@ -18,17 +18,9 @@ import InputLabel from '@mui/material/InputLabel';
 import {useEffect, useState, useContext, useMemo} from 'react';
 import { Panorama, TurnedIn } from '@mui/icons-material';
 import { CardHeader } from "@mui/material";
-import FHSPSOE from "../assets/FHS_PS_OE.json";
-import FHSPSME from "../assets/FHS_PS_ME.json";
-import FHSEMOT from "../assets/FHS_EM_OT.json";
-import FHSEMMT from "../assets/FHS_EM_MT.json";
 import AppContext from '../AppContext';
 import { MAX_CATEGORICAL_LEVELS, MIN_CATEGORICAL_LEVELS } from '../matchingConfig';
 HighchartsMore(Highcharts);
-
-var json_test_data = require('../assets/test_data.json');
-
-
 
 
 function setHistograms(data_pre_match, data_post_match, x_axis_label, x_categories, group_labels = []) {
@@ -180,23 +172,6 @@ function clearPieChart() {
 }
 
 // Hilfsfunktionen für die Datenverarbeitung
-function getAvailableVariables(resultData, summaryData) {
-    // Verwende Summary-Daten wenn verfügbar, sonst Result-Daten
-    if (summaryData && Array.isArray(summaryData) && summaryData.length > 0) {
-        return summaryData.map(row => row.variable).filter(variable => variable);
-    }
-    
-    if (!resultData || !Array.isArray(resultData) || resultData.length === 0) {
-        return [];
-    }
-    
-    // Extrahiere alle Spaltennamen außer Zielvariable und Matching-spezifischen Spalten
-    const excludeColumns = ['subclass', 'weights', 'distance', '_id'];
-    const allColumns = Object.keys(resultData[0]);
-    
-    return allColumns.filter(col => !excludeColumns.includes(col));
-}
-
 function getBinaryVariables(resultData, summaryData, targetVariable) {
     console.log("getBinaryVariables aufgerufen mit:", { resultData: resultData?.length, summaryData: summaryData?.length, targetVariable });
     
@@ -316,67 +291,6 @@ function getNumericVariables(resultData, summaryData, targetVariable) {
     return numericVars;
 }
 
-function calculateHistogramData(resultData, variable, targetVariable) {
-    if (!resultData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
-    
-    // Für Histogramme brauchen wir kategoriale Daten - finde die Ausprägungen
-    const uniqueValues = [...new Set(resultData.map(row => row[variable]))].sort();
-    if (uniqueValues.length < MIN_CATEGORICAL_LEVELS || uniqueValues.length > MAX_CATEGORICAL_LEVELS) {
-        console.warn(`Variable ${variable} ist nicht für Histogramm geeignet - hat ${uniqueValues.length} Ausprägungen`);
-        return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
-    }
-    
-    const targetValues = [...new Set(resultData.map(row => row[targetVariable]))].sort();
-    
-    // Berechne Häufigkeiten für jede Kombination von Zielvariable und ausgewählter Variable
-    const pre_match_data = [];
-    
-    targetValues.forEach(targetVal => {
-        const targetGroup = resultData.filter(row => row[targetVariable] == targetVal);
-        const totalInGroup = targetGroup.length;
-        
-        uniqueValues.forEach(val => {
-            const count = targetGroup.filter(row => row[variable] == val).length;
-            const percentage = totalInGroup > 0 ? (count / totalInGroup) * 100 : 0;
-            
-            if (targetVal == targetValues[0]) {
-                pre_match_data.push(percentage);
-            } else {
-                pre_match_data.push(-percentage); // Negative für zweite Gruppe (unteres Histogramm)
-            }
-        });
-    });
-    
-    // Für Post-Matching verwenden wir die gleichen Daten (da es bereits gematcht ist)
-    const post_match_data = [...pre_match_data];
-    
-    return {
-        pre_match_data,
-        post_match_data,
-        x_axis_labels: uniqueValues.map(String)
-    };
-}
-
-function calculateHistogramDataFromSummary(summaryData, variable, targetVariable) {
-    if (!summaryData || !variable) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
-    
-    // Finde die Zeile für die gewählte Variable
-    const variableRow = summaryData.find(row => row.variable === variable);
-    if (!variableRow) return { pre_match_data: [], post_match_data: [], x_axis_labels: [] };
-    
-    // Extrahiere Pre- und Post-Matching Werte für beide Gruppen
-    const preGroup0 = parseFloat(variableRow.pre_matching_group_0 || 0) * 100;
-    const preGroup1 = parseFloat(variableRow.pre_matching_group_1 || 0) * 100;
-    const postGroup0 = parseFloat(variableRow.post_matching_group_0 || 0) * 100;
-    const postGroup1 = parseFloat(variableRow.post_matching_group_1 || 0) * 100;
-    
-    return {
-        pre_match_data: [100 - preGroup0, preGroup0, 100 - preGroup1, preGroup1],
-        post_match_data: [100 - postGroup0, postGroup0, 100 - postGroup1, postGroup1],
-        x_axis_labels: ['0', '1']
-    };
-}
-
 function calculateBoxplotData(resultData, variable, targetVariable, targetValues) {
     if (!resultData || !variable || targetValues.length !== 2) return { pre_matching: {}, post_matching: {} };
 
@@ -452,34 +366,6 @@ function calculateBoxplotData(resultData, variable, targetVariable, targetValues
     return result;
 }
 
-function calculateBoxplotDataFromSummary(summaryData, variable, targetVariable) {
-    if (!summaryData || !variable) return { pre_matching: {}, post_matching: {} };
-    
-    // Finde die Zeile für die gewählte Variable
-    const variableRow = summaryData.find(row => row.variable === variable);
-    if (!variableRow) return { pre_matching: {}, post_matching: {} };
-    
-    // Extrahiere Mittelwerte (für vereinfachte Boxplots verwenden wir Mittelwert als Median)
-    const preGroup0Mean = parseFloat(variableRow.pre_matching_group_0 || 0);
-    const preGroup1Mean = parseFloat(variableRow.pre_matching_group_1 || 0);
-    const postGroup0Mean = parseFloat(variableRow.post_matching_group_0 || 0);
-    const postGroup1Mean = parseFloat(variableRow.post_matching_group_1 || 0);
-    
-    // Vereinfachte Boxplot-Daten mit Mittelwert als alle Quartile (da wir keine Rohdaten haben)
-    const createSimpleBoxplot = (mean) => [mean * 0.9, mean * 0.95, mean, mean * 1.05, mean * 1.1];
-    
-    return {
-        pre_matching: {
-            boxplot_one: createSimpleBoxplot(preGroup0Mean),
-            boxplot_two: createSimpleBoxplot(preGroup1Mean)
-        },
-        post_matching: {
-            boxplot_one: createSimpleBoxplot(postGroup0Mean),
-            boxplot_two: createSimpleBoxplot(postGroup1Mean)
-        }
-    };
-}
-
 function calculateBalanceData(summaryData) {
     if (!summaryData || !Array.isArray(summaryData)) return { balanced: 0, notBalanced: 0 };
     
@@ -499,7 +385,6 @@ function calculateBalanceData(summaryData) {
 
 function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontrollvariablen, isScoreMethode, isMatchingMethode, isVollständigeDatei, isVerhältnis, isJsonPackage, isÜbereinstimmungswert, isToleranzBereichSetToResult, isToleranzBereichSet, isErsetzungToResult, isFälleKontrollenGruppenindikator }) {
     const { isResultData, isSummaryData } = useContext(AppContext);
-    const [results, setResults] = useState([]);
     
     // Bestimme die Zielvariable für Achsenbeschriftung basierend auf Matching-Methode
     const getTargetVariableForLabels = () => {
@@ -524,7 +409,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
     }, [isResultData, targetVariableForLabels]);
     
     // Memoize Variablenlisten um endlose Schleifen zu vermeiden
-    const availableVariables = useMemo(() => getAvailableVariables(isResultData, isSummaryData), [isResultData, isSummaryData]);
     const categoricalVariables = useMemo(() => getBinaryVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
     const numericVariables = useMemo(() => getNumericVariables(isResultData, isSummaryData, targetVariableForLabels), [isResultData, isSummaryData, targetVariableForLabels]);
     
@@ -575,11 +459,6 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             setDisableVarSelect(targetValues.length !== 2);
         }
     }, [isResultData, isSummaryData, categoricalVariables, numericVariables, targetVariableForLabels, targetValues]);
-
-    // Verwende echte Variablennamen anstatt statischer Listen
-    let variablesNamesA = categoricalVariables.length > 0 ? categoricalVariables : ["Keine kategorialen Variablen verfügbar"];
-    let variablesNamesB = numericVariables.length > 0 ? numericVariables : ["Keine numerischen Variablen verfügbar"];
-
 
     // Update variable selectors when data changes - use separate effect
     useEffect(() => {
@@ -1232,10 +1111,7 @@ function DynamicResults({ isAlgorithmus, isErsetzung, isZielvariable, isAllKontr
             },
             series: [{
                 name: 'Anteil',
-                data: [
-                    { name: 'ddd', y: 0 },
-                    { name: '', y: 0 }
-                ]
+                data: []
             }]
         });
     });
