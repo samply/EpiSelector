@@ -202,7 +202,21 @@ function MatchingErgebnis() {
             console.log("DEBUG - isMatchingtoleranz Array:", isMatchingtoleranz);
             console.log("DEBUG - isAllMatchingvariablen Array:", isAllMatchingvariablen);
 
-            if (Array.isArray(isMatchingtoleranz) && Array.isArray(isAllMatchingvariablen)) {
+            if (isMatchingMethode === "Propensity Score" && isAlgorithmus === "nearest") {
+                const caliperValue = Number(
+                    typeof isÜbereinstimmungswert === 'string'
+                        ? isÜbereinstimmungswert.trim()
+                        : isÜbereinstimmungswert
+                );
+
+                if (Number.isFinite(caliperValue) && caliperValue > 0) {
+                    caliperValues.push(String(caliperValue));
+                }
+            } else if (
+                isMatchingMethode === "Exaktes Matching" &&
+                Array.isArray(isMatchingtoleranz) &&
+                Array.isArray(isAllMatchingvariablen)
+            ) {
                 console.log("DEBUG - Both arrays are valid, length:", isMatchingtoleranz.length, isAllMatchingvariablen.length);
 
                 for (let i = 0; i < isMatchingtoleranz.length; i++) {
@@ -374,7 +388,21 @@ function MatchingErgebnis() {
             console.log("DEBUG - isMatchingtoleranz Array:", isMatchingtoleranz);
             console.log("DEBUG - isAllMatchingvariablen Array:", isAllMatchingvariablen);
 
-            if (Array.isArray(isMatchingtoleranz) && Array.isArray(isAllMatchingvariablen)) {
+            if (isMatchingMethode === "Propensity Score" && isAlgorithmus === "nearest") {
+                const caliperValue = Number(
+                    typeof isÜbereinstimmungswert === 'string'
+                        ? isÜbereinstimmungswert.trim()
+                        : isÜbereinstimmungswert
+                );
+
+                if (Number.isFinite(caliperValue) && caliperValue > 0) {
+                    caliperValues.push(String(caliperValue));
+                }
+            } else if (
+                isMatchingMethode === "Exaktes Matching" &&
+                Array.isArray(isMatchingtoleranz) &&
+                Array.isArray(isAllMatchingvariablen)
+            ) {
                 console.log("DEBUG - Both arrays are valid, length:", isMatchingtoleranz.length, isAllMatchingvariablen.length);
 
                 for (let i = 0; i < isMatchingtoleranz.length; i++) {
