@@ -245,7 +245,7 @@ docker compose up
 
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps
 npm start
 ```
 
@@ -253,6 +253,7 @@ npm start
 
 ```bash
 cd backend/django_backend
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
@@ -261,6 +262,7 @@ python manage.py runserver
 
 ```bash
 cd backend/statistic_api
+R -e "install.packages(c('plumber', 'jsonlite', 'stringr', 'MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'))"
 R -e "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=3420)"
 ```
 
