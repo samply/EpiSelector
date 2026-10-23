@@ -189,6 +189,8 @@ docker compose up -d
 
 Create `local_settings.prod.py` before starting the stack: if the file is missing, Docker creates an empty directory in its place.
 
+The frontend listens on `127.0.0.1:3000` only. Put a reverse proxy on the host in front of it that terminates HTTPS, and uncomment `SECURE_PROXY_SSL_HEADER` in `local_settings.prod.py`.
+
 ---
 
 ## Data Requirements
