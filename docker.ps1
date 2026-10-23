@@ -4,19 +4,19 @@ param([string]$Command)
 
 if ($Command -eq "dev") {
     Write-Host "Starte Development-Umgebung..."
-    docker-compose up --build
+    docker compose up --build
 }
 elseif ($Command -eq "dev-detached") {
     Write-Host "Starte Development im Hintergrund..."
-    docker-compose up -d --build
+    docker compose up -d --build
 }
 elseif ($Command -eq "stop") {
     Write-Host "Stoppe alle Container..."
-    docker-compose down
+    docker compose down
 }
 elseif ($Command -eq "logs") {
     Write-Host "Zeige Logs..."
-    docker-compose logs -f
+    docker compose logs -f
 }
 else {
     Write-Host "Verfügbare Befehle:"

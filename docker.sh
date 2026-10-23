@@ -5,32 +5,32 @@
 case "$1" in
     "dev")
         echo "🚀 Starte Development-Umgebung..."
-        docker-compose up --build
+        docker compose up --build
         ;;
     "dev-detached")
         echo "🚀 Starte Development-Umgebung im Hintergrund..."
-        docker-compose up -d --build
+        docker compose up -d --build
         ;;
     "stop")
         echo "⏹️ Stoppe alle Container..."
-        docker-compose down
+        docker compose down
         ;;
     "clean")
         echo "🧹 Bereinige Docker (Container, Images, Volumes)..."
-        docker-compose down -v --rmi all
+        docker compose down -v --rmi all
         docker system prune -f
         ;;
     "logs")
         echo "📋 Zeige Logs..."
-        docker-compose logs -f
+        docker compose logs -f
         ;;
     "shell-django")
         echo "🔧 Django Shell..."
-        docker-compose exec django-backend python manage.py shell
+        docker compose exec django-backend python manage.py shell
         ;;
     "migrate")
         echo "📦 Führe Django Migrationen aus..."
-        docker-compose exec django-backend python manage.py migrate
+        docker compose exec django-backend python manage.py migrate
         ;;
     *)
         echo "EpiSelector Docker Management"
