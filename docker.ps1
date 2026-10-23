@@ -3,27 +3,27 @@
 param([string]$Command)
 
 if ($Command -eq "dev") {
-    Write-Host "Starte Development-Umgebung..."
+    Write-Host "Starting development environment..."
     docker compose up --build
 }
 elseif ($Command -eq "dev-detached") {
-    Write-Host "Starte Development im Hintergrund..."
+    Write-Host "Starting development environment in the background..."
     docker compose up -d --build
 }
 elseif ($Command -eq "stop") {
-    Write-Host "Stoppe alle Container..."
+    Write-Host "Stopping all containers..."
     docker compose down
 }
 elseif ($Command -eq "logs") {
-    Write-Host "Zeige Logs..."
+    Write-Host "Showing logs..."
     docker compose logs -f
 }
 else {
-    Write-Host "Verfügbare Befehle:"
-    Write-Host "  dev              - Starte Development-Umgebung"
-    Write-Host "  dev-detached     - Starte Development im Hintergrund"
-    Write-Host "  stop             - Stoppe alle Container"
-    Write-Host "  logs             - Zeige Container-Logs"
+    Write-Host "Available commands:"
+    Write-Host "  dev              - Start development environment"
+    Write-Host "  dev-detached     - Start development environment in the background"
+    Write-Host "  stop             - Stop all containers"
+    Write-Host "  logs             - Show container logs"
     Write-Host ""
-    Write-Host "Beispiel: .\docker.ps1 dev"
+    Write-Host "Example: .\docker.ps1 dev"
 }

@@ -9,20 +9,20 @@ if [ ! -f /app/django_backend/local_settings.py ]; then
   exit 1
 fi
 
-# Warte auf Datenbank
-echo "Warte auf PostgreSQL..."
+# Wait for database
+echo "Waiting for PostgreSQL..."
 while ! nc -z db 5432; do
   sleep 0.1
 done
-echo "PostgreSQL ist bereit!"
+echo "PostgreSQL is ready!"
 
-# Führe Django-Befehle aus
-echo "Führe Migrationen aus..."
+# Run Django commands
+echo "Running migrations..."
 python manage.py migrate
 
-echo "Sammle statische Dateien..."
+echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Startbefehl kommt aus CMD (Dockerfile) bzw. "command:" (docker-compose.yml)
-echo "Starte Django-Server: $*"
+# Start command comes from CMD (Dockerfile) or "command:" (docker-compose.yml)
+echo "Starting Django server: $*"
 exec "$@"
