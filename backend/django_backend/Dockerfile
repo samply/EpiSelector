@@ -2,7 +2,7 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# System-Dependencies installieren
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     postgresql-client \
@@ -11,17 +11,17 @@ RUN apt-get update && apt-get install -y \
     netcat-traditional \
     && rm -rf /var/lib/apt/lists/*
 
-# Python-Dependencies kopieren und installieren
+# Copy and install Python dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Django-Code kopieren
+# Copy Django code
 COPY . .
 
-# Port für Django freigeben
+# Expose port for Django
 EXPOSE 8000
 
-# Entrypoint-Script
+# Entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
