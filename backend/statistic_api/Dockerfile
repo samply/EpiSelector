@@ -2,7 +2,7 @@ FROM r-base:4.3.1
 
 WORKDIR /app
 
-# System-Dependencies installieren (erweitert für alle R Package Dependencies)
+# Install system dependencies (extended for all R package dependencies)
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -19,28 +19,28 @@ RUN apt-get update && apt-get install -y \
     binutils \
     && rm -rf /var/lib/apt/lists/*
 
-# Installiere nur die absolut nötigen R packages
+# Install only the absolutely necessary R packages
 RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
     install.packages(c('R6', 'stringi', 'rlang', 'magrittr', 'mime', 'lifecycle', 'crayon', 'webutils', 'sodium', 'httpuv', 'promises', 'swagger', 'jsonlite'), dependencies=FALSE); \
     install.packages(c('plumber', 'stringr'));"
 
-# Analyse-Pakete für Matching, Balance und Grafiken (optmatch wird für MatchIt's optimal matching benötigt)
+# Analysis packages for matching, balance and plots (optmatch is required for MatchIt's optimal matching)
 RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); \
     install.packages(c('MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'));"
 
-# Build abbrechen, falls ein Paket fehlt (install.packages() warnt nur bei Fehlern)
+# Abort the build if a package is missing (install.packages() only warns on errors)
 RUN R -e "pkgs <- c('plumber', 'jsonlite', 'stringr', 'MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'); \
     missing <- pkgs[!vapply(pkgs, requireNamespace, logical(1), quietly = TRUE)]; \
     if (length(missing) > 0) stop('Missing R packages: ', paste(missing, collapse = ', '))"
 
-# R-Code kopieren
+# Copy R code
 COPY *.R .
 
-# Start script ausführbar machen
+# Make start script executable
 RUN chmod +x start_api.R
 
-# Port für Plumber API freigeben
+# Expose port for Plumber API
 EXPOSE 3420
 
-# Plumber API starten mit unserem Startup-Script
+# Start Plumber API with our startup script
 CMD ["Rscript", "start_api.R"]

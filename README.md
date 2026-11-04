@@ -189,6 +189,8 @@ docker compose up -d
 
 Create `local_settings.prod.py` before starting the stack: if the file is missing, Docker creates an empty directory in its place.
 
+The frontend listens on `127.0.0.1:3000` only. Put a reverse proxy on the host in front of it that terminates HTTPS, and uncomment `SECURE_PROXY_SSL_HEADER` in `local_settings.prod.py`.
+
 ---
 
 ## Data Requirements
@@ -243,7 +245,7 @@ docker compose up
 
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps
 npm start
 ```
 
@@ -251,6 +253,7 @@ npm start
 
 ```bash
 cd backend/django_backend
+pip install -r requirements.txt
 python manage.py migrate
 python manage.py runserver
 ```
@@ -259,6 +262,7 @@ python manage.py runserver
 
 ```bash
 cd backend/statistic_api
+R -e "install.packages(c('plumber', 'jsonlite', 'stringr', 'MatchIt', 'optmatch', 'cobalt', 'ggplot2', 'lmtest', 'sandwich'))"
 R -e "pr <- plumber::plumb('plumber.R'); pr$run(host='0.0.0.0', port=3420)"
 ```
 

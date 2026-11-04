@@ -4,46 +4,46 @@
 
 case "$1" in
     "dev")
-        echo "🚀 Starte Development-Umgebung..."
-        docker-compose up --build
+        echo "🚀 Starting development environment..."
+        docker compose up --build
         ;;
     "dev-detached")
-        echo "🚀 Starte Development-Umgebung im Hintergrund..."
-        docker-compose up -d --build
+        echo "🚀 Starting development environment in the background..."
+        docker compose up -d --build
         ;;
     "stop")
-        echo "⏹️ Stoppe alle Container..."
-        docker-compose down
+        echo "⏹️ Stopping all containers..."
+        docker compose down
         ;;
     "clean")
-        echo "🧹 Bereinige Docker (Container, Images, Volumes)..."
-        docker-compose down -v --rmi all
+        echo "🧹 Cleaning up Docker (containers, images, volumes)..."
+        docker compose down -v --rmi all
         docker system prune -f
         ;;
     "logs")
-        echo "📋 Zeige Logs..."
-        docker-compose logs -f
+        echo "📋 Showing logs..."
+        docker compose logs -f
         ;;
     "shell-django")
         echo "🔧 Django Shell..."
-        docker-compose exec django-backend python manage.py shell
+        docker compose exec django-backend python manage.py shell
         ;;
     "migrate")
-        echo "📦 Führe Django Migrationen aus..."
-        docker-compose exec django-backend python manage.py migrate
+        echo "📦 Running Django migrations..."
+        docker compose exec django-backend python manage.py migrate
         ;;
     *)
         echo "EpiSelector Docker Management"
         echo ""
-        echo "Verfügbare Befehle:"
-        echo "  dev              - Starte Development-Umgebung"
-        echo "  dev-detached     - Starte Development im Hintergrund"
-        echo "  stop             - Stoppe alle Container"
-        echo "  clean            - Bereinige Docker komplett"
-        echo "  logs             - Zeige Container-Logs"
-        echo "  shell-django     - Django Shell öffnen"
-        echo "  migrate          - Django Migrationen ausführen"
+        echo "Available commands:"
+        echo "  dev              - Start development environment"
+        echo "  dev-detached     - Start development environment in the background"
+        echo "  stop             - Stop all containers"
+        echo "  clean            - Clean up Docker completely"
+        echo "  logs             - Show container logs"
+        echo "  shell-django     - Open Django shell"
+        echo "  migrate          - Run Django migrations"
         echo ""
-        echo "Beispiel: ./docker.sh dev"
+        echo "Example: ./docker.sh dev"
         ;;
 esac

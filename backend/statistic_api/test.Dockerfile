@@ -2,7 +2,7 @@ FROM r-base:4.3.1
 
 WORKDIR /app
 
-# System-Dependencies installieren
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \

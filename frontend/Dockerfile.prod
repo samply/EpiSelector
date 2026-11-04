@@ -1,23 +1,23 @@
-# Multi-stage build für Production
+# Multi-stage build for production
 FROM node:18-alpine AS build
 
 WORKDIR /app
 
-# Dependencies installieren
+# Install dependencies
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
-# App bauen
+# Build the app
 COPY . .
 RUN npm run build
 
-# Production stage mit nginx
+# Production stage with nginx
 FROM nginx:alpine
 
-# Build-Dateien kopieren
+# Copy build files
 COPY --from=build /app/build /usr/share/nginx/html
 
-# Nginx-Konfiguration
+# Nginx configuration
 COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
