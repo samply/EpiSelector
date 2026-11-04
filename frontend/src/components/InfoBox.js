@@ -222,7 +222,10 @@ Before starting the EpiSelector, please read and confirm the following notice by
 <strong>Please note the following:</strong>
 <ul>
 <li>Your data must be in CSV format. The variables must be in the columns, and the observations must be in the rows.</li>
+<li>EpiSelector does not perform data preparation or handle missing data. Users are responsible for assessing missingness and choosing an appropriate strategy, such as multiple imputation or complete-case analysis, as this may affect bias, sample size, and generalizability (<a href="https://doi.org/10.1093/ije/dyz032">Hughes et al. 2019</a>; <a href="https://doi.org/10.1136/bmj.b2393">Sterne et al. 2009</a>; <a href="https://doi.org/10.1002/sim.3944">White et al. 2010</a>).</li>
 <li>EpiSelector supports the complete matching process, but not the preliminary data analysis required to identify control variables, the balance of which between treated and untreated groups is the goal of the matching process.</li>
+<li>EpiSelector supports the selection of comparison groups but does not perform subsequent statistical analyses. Users are responsible for applying analytical methods appropriate to the matching design (e.g., 1:n matching, matching with replacement, matching sets, matching weights, and dependencies between observations); failure to account for these characteristics may lead to inaccurate standard errors and statistical inference (<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Abadie et al. 2006</a>; <a href="https://doi.org/10.1080/01621459.2020.1840383">Abadie et al. 2022</a>; <a href="https://doi.org/10.1080/00273171.2011.568786">Austin 2011</a>; <a href="https://doi.org/10.1002/sim.8502">Austin et al. 2020</a>; <a href="https://stat.ethz.ch/CRAN/web/packages/MatchIt/vignettes/estimating-effects.html">Greifer 2026</a>; <a href="https://doi.org/10.1002/sim.4200">Austin 2011</a>).
+                </li>
 <li>If you have saved input templates from previous matching sessions, you can reuse and select one of these templates with your specific matching settings and apply it to this current session's matching process. To do so, select your template and click Start.</li>
 </ul>
 </div>);
@@ -232,6 +235,7 @@ Before starting the EpiSelector, please read and confirm the following notice by
 You can either upload your data locally from your device or from the Digital Research Environment (DRE).
 To upload from the DRE, you must already be registered there.
 Please note that your data must be in CSV format, with variables arranged in columns and observations in rows.
+<br />EpiSelector does not perform data preparation or handle missing data. Users are responsible for assessing missingness and choosing an appropriate strategy, such as multiple imputation or complete-case analysis, as this may affect bias, sample size, and generalizability (<a href="https://doi.org/10.1093/ije/dyz032">Hughes et al. 2019</a>; <a href="https://doi.org/10.1136/bmj.b2393">Sterne et al. 2009</a>; <a href="https://doi.org/10.1002/sim.3944">White et al. 2010</a>).
 </div>);
         }
         if(isWorkflow === "Datei-hochladen"){
@@ -315,6 +319,7 @@ The matched dataset contains only the matched pairs. Individuals from the treatm
 Optionally, you can save the input settings from the matching process as a template for future matching sessions.</li>
 </ol>
 
+EpiSelector supports the selection of comparison groups but does not perform subsequent statistical analyses. Users are responsible for applying analytical methods appropriate to the matching design (e.g., 1:n matching, matching with replacement, matching sets, matching weights, and dependencies between observations); failure to account for these characteristics may lead to inaccurate standard errors and statistical inference (<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Abadie et al. 2006</a>; <a href="https://doi.org/10.1080/01621459.2020.1840383">Abadie et al. 2022</a>; <a href="https://doi.org/10.1080/00273171.2011.568786">Austin 2011</a>; <a href="https://doi.org/10.1002/sim.8502">Austin et al. 2020</a>; <a href="https://stat.ethz.ch/CRAN/web/packages/MatchIt/vignettes/estimating-effects.html">Greifer 2026</a>; <a href="https://doi.org/10.1002/sim.4200">Austin 2011</a>).
             </div>);
         }
 
