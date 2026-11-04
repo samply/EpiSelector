@@ -224,7 +224,9 @@ function InfoBox({isWorkflow}) {
 <br/><br/>
                 Bitte beachten Sie Folgendes:
                 -	Ihre Daten müssen im csv-Format vorliegen. Die Variablen müssen sich in den Spalten, die Beobachtungen in den Zeilen befinden.
+                -   EpiSelector führt keine Datenaufbereitung oder Behandlung fehlender Daten durch. Nutzer sind dafür verantwortlich, das Ausmaß fehlender Daten zu beurteilen und eine geeignete Strategie, wie beispielsweise multiple Imputation oder Complete-Case-Analyse, zu wählen, da dies Verzerrungen, die Stichprobengröße und die Generalisierbarkeit der Ergebnisse beeinflussen kann (<a href="https://doi.org/10.1093/ije/dyz032">Hughes et al. 2019</a>; <a href="https://doi.org/10.1136/bmj.b2393">Sterne et al. 2009</a>; <a href ="https://doi.org/10.1002/sim.3944">White et al. 2010</a>).
                 -	Der EpiSelector unterstützt den vollständigen Matching-Prozess, nicht jedoch die vorangehende Datenanalyse zur Identifikation der Kontrollvariablen, deren Ausgeglichenheit zwischen Behandelten und Nichtbehandelten Ziel des Matchings ist.
+                -   EpiSelector unterstützt die Auswahl von Vergleichsgruppen, führt jedoch keine anschließenden statistischen Analysen durch. Nutzer sind dafür verantwortlich, Analysemethoden anzuwenden, die für das jeweilige Matching-Design geeignet sind (z. B. 1:n Matching, Matching mit Zurücklegen, Matching-Sets, Matching-Gewichte und Abhängigkeiten zwischen Beobachtungen). Werden diese Eigenschaften nicht angemessen berücksichtigt, kann dies zu ungenauen Standardfehlern und fehlerhaften statistischen Schlussfolgerungen führen (<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Abadie et al. 2006</a>; <a href="https://doi.org/10.1080/01621459.2020.1840383">Abadie et al. 2022</a>; <a href="https://doi.org/10.1080/00273171.2011.568786">Austin 2011</a>; <a href="https://doi.org/10.1002/sim.8502">Austin et al. 2020</a>; <a href="https://stat.ethz.ch/CRAN/web/packages/MatchIt/vignettes/estimating-effects.html">Greifer 2026</a>; <a href="https://doi.org/10.1002/sim.4200">Austin 2011</a>).
                 -	Wenn Sie bereits Eingabe-Masken aus vorherigen Matching-Sitzungen gespeichert haben, haben Sie die Möglichkeit, eine Ihrer Masken mit Ihren spezifischen Matching-Angaben aufzurufen und für den Matching-Prozess dieser Sitzung anzuwenden. Wählen Sie dazu Ihre Maske aus und klicken Sie dann auf "Start".
             </div>);
         }
@@ -235,6 +237,8 @@ function InfoBox({isWorkflow}) {
                 Für das Hochladen aus dem DRE (Digital Research Environment) müssen Sie bereits im DRE registriert sein.
 <br/>
                 Bitte beachten Sie, dass Ihre Daten im csv-Format vorliegen müssen. Die Variablen müssen sich in den Spalten, die Beobachtungen in den Zeilen befinden.
+<br/>
+                EpiSelector führt keine Datenaufbereitung oder Behandlung fehlender Daten durch. Nutzer sind dafür verantwortlich, das Ausmaß fehlender Daten zu beurteilen und eine geeignete Strategie, wie beispielsweise multiple Imputation oder Complete-Case-Analyse, zu wählen, da dies Verzerrungen, die Stichprobengröße und die Generalisierbarkeit der Ergebnisse beeinflussen kann (<a href="https://doi.org/10.1093/ije/dyz032">Hughes et al. 2019</a>; <a href="https://doi.org/10.1136/bmj.b2393">Sterne et al. 2009</a>; <a href ="https://doi.org/10.1002/sim.3944">White et al. 2010</a>).
             </div>);
         }
         if(isWorkflow === "Datei-hochladen"){
@@ -322,6 +326,8 @@ function InfoBox({isWorkflow}) {
                 enthalten.
                 <br/> 3. Ihre Eingabemaske: optional können Sie Ihre getroffenen Angaben im Matching-Prozess für weitere
                 Matching-Vorgänge als Maske speichern.
+                <br/>
+                EpiSelector unterstützt die Auswahl von Vergleichsgruppen, führt jedoch keine anschließenden statistischen Analysen durch. Nutzer sind dafür verantwortlich, Analysemethoden anzuwenden, die für das jeweilige Matching-Design geeignet sind (z. B. 1:n Matching, Matching mit Zurücklegen, Matching-Sets, Matching-Gewichte und Abhängigkeiten zwischen Beobachtungen). Werden diese Eigenschaften nicht angemessen berücksichtigt, kann dies zu ungenauen Standardfehlern und fehlerhaften statistischen Schlussfolgerungen führen (<a href="https://doi.org/10.1111/j.1468-0262.2006.00655.x">Abadie et al. 2006</a>; <a href="https://doi.org/10.1080/01621459.2020.1840383">Abadie et al. 2022</a>; <a href="https://doi.org/10.1080/00273171.2011.568786">Austin 2011</a>; <a href="https://doi.org/10.1002/sim.8502">Austin et al. 2020</a>; <a href="https://stat.ethz.ch/CRAN/web/packages/MatchIt/vignettes/estimating-effects.html">Greifer 2026</a>; <a href="https://doi.org/10.1002/sim.4200">Austin 2011</a>).
             </div>);
         }
 
