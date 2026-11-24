@@ -22,9 +22,22 @@ import Grid from '@mui/material/Grid';
 import { useAuth } from '../../context/AuthContext';
 import { TextField, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import {matchingMethodLabel} from "../../model/matchingMethodLabel";
+import {buildMatchingParameterRows} from "../../model/matchingParameters";
+import {datensatzUmfang} from "../../model/datensatzUmfang";
+import {buildMatchingProtokollMarkdown} from "../../model/protokollMarkdown";
+import ArticleIcon from '@mui/icons-material/Article';
+
+// EpiSelector color scheme (mirrors App.css and component color values)
+const PDF_FARBEN = {
+    primaer: [29, 65, 137],        // #1d4189 – primary blue (top nav, buttons)
+    akzent: [177, 27, 24],         // #b11b18 – accent red (delete actions)
+    primaerHell: [233, 240, 255],  // #e9f0ff – light blue (card heads)
+    linien: [203, 214, 235],       // light blue for table grid
+    textMuted: [102, 102, 102],    // #666666 – secondary text
+};
 
 function Dataexport() {
-    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen } = useContext(AppContext);
+    const { isSummaryData, isResultData, isMatchingMethode, isErsetzung, setDatenquelle, setDatei, setMatchingMethode, setZielvariable, setKontrollvariablen, setVerhältnis, setVerhältnisNav, setScoreMethode, setAlgorithmus, setErsetzung, setÜbereinstimmungswert, setDisclaimer, setWorkflow, setVollständigedatei, isZielvariable, isFälleKontrollenGruppenindikator, isErgebnisse, isKontrollvariablen, isVerhältnis, isScoreMethode, isAlgorithmus, isÜbereinstimmungswert, isToleranzBereich, isMatchingvariablen, isAllMatchingvariablen, isMatchingtoleranz, isAllKontrollvariablen, isDateiSpaltenNamen } = useContext(AppContext);
     const { user, isAuthenticated, saveMatchingProcess } = useAuth();
     const [saveDialogOpen, setSaveDialogOpen] = useState(false);
     const [processName, setProcessName] = useState('');
@@ -33,21 +46,8 @@ function Dataexport() {
     const columnHeader0 = isZielvariable === 'defaultZielvariable'? `${isFälleKontrollenGruppenindikator}=0` : `${isZielvariable}=0`;
     const columnHeader1 = isZielvariable === 'defaultZielvariable' ? `${isFälleKontrollenGruppenindikator}=1` : `${isZielvariable}=1`;
 
-    const Matchingprotokoll = () => {
-        // Prüfe ob Summary-Daten verfügbar sind
-        if (!isSummaryData || !Array.isArray(isSummaryData) || isSummaryData.length === 0) {
-            alert("Fehler: Keine Summary-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
-            return;
-        }
-        
-        console.log("PDF Export - isSummaryData:", isSummaryData);
-        
-        // Debug: Schaue dir die Struktur der ersten Variable an
-        if (isSummaryData.length > 0) {
-            console.log("PDF Export - Erste Variable:", isSummaryData[0]);
-            console.log("PDF Export - Verfügbare Keys:", Object.keys(isSummaryData[0]));
-        }
-        
+    // Shared data preparation for the PDF and Markdown exports of the matching protocol
+    const protokollDaten = () => {
         const tableColumn = [
             "Variable",
             columnHeader0,
@@ -60,33 +60,74 @@ function Dataexport() {
         ];        
         const tableRows = [];
 
+        // Fixed 4 decimals so the decimal points line up; non-numbers (e.g. "Balanced") pass through
+        const formatiereZahl = (wert) => {
+            if (wert === null || wert === undefined || wert === '') return '';
+            const zahl = typeof wert === 'number' ? wert : Number(String(wert).trim());
+            return Number.isFinite(zahl) ? zahl.toFixed(4) : String(wert);
+        };
+
+        // No || here: a legitimate 0 would be skipped as falsy
+        const ersterWert = (...werte) => werte.find(w => w !== null && w !== undefined) ?? '';
+
         isSummaryData.forEach((variable, index) => {
-            console.log(`PDF Export - Variable ${index}:`, variable);
-            
-            // Alle Variablen verarbeiten, aber nur die gewünschten Eigenschaften verwenden
-            // Ignoriere die Meta-Eigenschaften beim Erstellen der Tabelle
+            console.log(`Protokoll Export - Variable ${index}:`, variable);
             
             const ticketData = [
                 variable.row_names || variable.Variable || "",
-                variable.unadjusted_means_treated || variable.preMatchingIcu_mort0 || variable.prematch_mean_treated || "",
-                variable.unadjusted_means_control || variable.preMatchingIcu_mort1 || variable.prematch_mean_control || "",
-                variable.unadjusted_mean_diff || variable.preMatchingDif || variable.prematch_mean_diff || "",
-                variable.adjusted_means_treated || variable.postMatchingIcu_mort0 || variable.postmatch_mean_treated || "",
-                variable.adjusted_means_control || variable.postMatchingIcu_mort1 || variable.postmatch_mean_control || "",
-                variable.adjusted_mean_diff || variable.postMatchingDif || variable.postmatch_mean_diff || "",
+                formatiereZahl(ersterWert(variable.unadjusted_means_treated, variable.preMatchingIcu_mort0, variable.prematch_mean_treated)),
+                formatiereZahl(ersterWert(variable.unadjusted_means_control, variable.preMatchingIcu_mort1, variable.prematch_mean_control)),
+                formatiereZahl(ersterWert(variable.unadjusted_mean_diff, variable.preMatchingDif, variable.prematch_mean_diff)),
+                formatiereZahl(ersterWert(variable.adjusted_means_treated, variable.postMatchingIcu_mort0, variable.postmatch_mean_treated)),
+                formatiereZahl(ersterWert(variable.adjusted_means_control, variable.postMatchingIcu_mort1, variable.postmatch_mean_control)),
+                formatiereZahl(ersterWert(variable.adjusted_mean_diff, variable.postMatchingDif, variable.postmatch_mean_diff)),
                 variable.balance_covariats_post_matching || variable.balancePostMat || variable.balance_post_matching || "Balanced",
             ];
             
-            console.log(`PDF Export - Processed ticketData for variable ${index}:`, ticketData);
+            console.log(`Protokoll Export - Processed ticketData for variable ${index}:`, ticketData);
             tableRows.push(ticketData);
         });
 
-        console.log("PDF Export - Final tableRows:", tableRows);
+        const parameterRows = buildMatchingParameterRows({
+            isMatchingMethode,
+            isZielvariable,
+            isFälleKontrollenGruppenindikator,
+            isAllKontrollvariablen,
+            isAllMatchingvariablen,
+            isVerhältnis,
+            isScoreMethode,
+            isAlgorithmus,
+            isErsetzung,
+            isÜbereinstimmungswert,
+            isMatchingtoleranz,
+        });
 
-        // Neue autoTable Syntax (nicht deprecated)
-        const tableColumn1 = [
-            ["", "Pre-Matching", "", "", "", "Post-Matching", "", "", ""]
-        ];
+        // Same source as the results screen (datensatzUmfang) so the export cannot diverge; the result-key union
+        // would undercount because jsonlite drops keys that are NA in every row
+        const umfang = datensatzUmfang(isDateiSpaltenNamen, isMatchingMethode);
+        const ersteZeile = isSummaryData[0] || {};
+        const vorFall = Number(ersteZeile.prematch_cases);
+        const vorKontrolle = Number(ersteZeile.prematch_controls);
+        const nachFall = Number(ersteZeile.postmatch_cases);
+        const nachKontrolle = Number(ersteZeile.postmatch_controls);
+        const counts = umfang.preVariablen > 0 && [vorFall, vorKontrolle, nachFall, nachKontrolle].every(Number.isFinite)
+            ? {
+                variablenPre: umfang.preVariablen,
+                variablenPost: umfang.postVariablen,
+                vorFall, vorKontrolle, nachFall, nachKontrolle,
+            }
+            : null;
+
+        return { tableColumn, tableRows, parameterRows, counts };
+    };
+
+    const Matchingprotokoll = () => {
+        if (!isSummaryData || !Array.isArray(isSummaryData) || isSummaryData.length === 0) {
+            alert("Fehler: Keine Summary-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            return;
+        }
+        
+        const { tableColumn, tableRows, parameterRows, counts } = protokollDaten();
 
         const date = new Date().toString().split(" ");
         const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
@@ -94,32 +135,108 @@ function Dataexport() {
         const newDoc = new jsPDF();
         
         newDoc.setFontSize(20);
-        newDoc.text("Matchingprotokoll", 14, 15);
-        newDoc.setFontSize(14); 
-        newDoc.setTextColor(100);
-        newDoc.text("Matching-Ergebnisse", 14, 25);
+        newDoc.setTextColor(...PDF_FARBEN.primaer);
+        newDoc.setFont('helvetica', 'bold');
+        newDoc.text("Matching Protokoll", 14, 15);
+        newDoc.setFont('helvetica', 'normal');
         
-        // Header-Tabelle mit neuer Syntax
-        newDoc.autoTable({
-            head: tableColumn1,
-            body: [],
-            startY: 30,
-            theme: 'grid'
-        });
+        let startY = 25;
+        if (parameterRows.length > 0) {
+            newDoc.autoTable({
+                head: [["Matching-Parameter", "Einstellung"]],
+                body: parameterRows,
+                startY: startY,
+                theme: 'grid',
+                styles: { lineColor: PDF_FARBEN.linien },
+                columnStyles: { 0: { cellWidth: 55, fontStyle: 'bold' } },
+                headStyles: { fillColor: PDF_FARBEN.primaer, textColor: 255 },
+                alternateRowStyles: { fillColor: PDF_FARBEN.primaerHell }
+            });
+            startY = newDoc.lastAutoTable.finalY + 10;
+        }
         
-        // Haupt-Tabelle mit neuer Syntax
+        // Break heading + counts + table to a new page when space runs out
+        if (startY > 250) {
+            newDoc.addPage();
+            startY = 15;
+        }
+        // "Matching Ergebnisse" as a level-1 heading, same style as the document title
+        newDoc.setFontSize(20);
+        newDoc.setTextColor(...PDF_FARBEN.primaer);
+        newDoc.setFont('helvetica', 'bold');
+        newDoc.text("Matching Ergebnisse", 14, startY);
+        newDoc.setFont('helvetica', 'normal');
+        startY += 10;
+        
+        if (counts) {
+            const { variablenPre, variablenPost, vorFall, vorKontrolle, nachFall, nachKontrolle } = counts;
+            newDoc.setFontSize(9);
+            newDoc.setTextColor(...PDF_FARBEN.akzent);
+            newDoc.text(`Pre-Matching: ${variablenPre} Variablen, ${vorFall + vorKontrolle} Beobachtungen`, 14, startY);
+            newDoc.setTextColor(...PDF_FARBEN.primaer);
+            newDoc.text(`Post-Matching: ${variablenPost} Variablen, ${nachFall + nachKontrolle} Beobachtungen`, 14, startY + 5);
+            startY += 5 + 4;
+        }
+        
+        // Columns 1-6 (means/differences) right-aligned so the decimal points line up exactly
+        const spaltenAusrichtung = ['left', 'right', 'right', 'right', 'right', 'right', 'right', 'center'];
+        const kopfZellen = tableColumn.map((titel, index) => ({
+            content: titel,
+            styles: { halign: spaltenAusrichtung[index] },
+        }));
+        
+        // Pre/Post band spans the column groups via colSpan (instead of a separate 9-column table)
+        const vorkopfZellen = [
+            { content: "", styles: { fillColor: PDF_FARBEN.primaerHell } },
+            {
+                content: "Pre-Matching",
+                colSpan: 3,
+                styles: { fillColor: PDF_FARBEN.akzent, textColor: 255, halign: 'center', fontStyle: 'bold' },
+            },
+            {
+                content: "Post-Matching",
+                colSpan: 3,
+                styles: { fillColor: PDF_FARBEN.primaer, textColor: 255, halign: 'center', fontStyle: 'bold' },
+            },
+            { content: "", styles: { fillColor: PDF_FARBEN.primaerHell } },
+        ];
+        
         newDoc.autoTable({
-            head: [tableColumn],
+            head: [vorkopfZellen, kopfZellen],
             body: tableRows,
-            startY: 38,
-            theme: 'striped'
+            startY: startY,
+            theme: 'striped',
+            styles: { lineColor: PDF_FARBEN.linien },
+            headStyles: { fillColor: PDF_FARBEN.primaer, textColor: 255 },
+            alternateRowStyles: { fillColor: PDF_FARBEN.primaerHell },
+            columnStyles: {
+                0: { halign: 'left' },
+                1: { halign: 'right' },
+                2: { halign: 'right' },
+                3: { halign: 'right' },
+                4: { halign: 'right' },
+                5: { halign: 'right' },
+                6: { halign: 'right' },
+                7: { halign: 'center' },
+            },
         });
+        
+        // Break legend to a new page when space runs out
+        let legendenY = newDoc.lastAutoTable.finalY + 6;
+        if (legendenY > 270) {
+            newDoc.addPage();
+            legendenY = 15;
+        }
+        newDoc.setFontSize(8);
+        newDoc.setTextColor(...PDF_FARBEN.textMuted);
+        newDoc.text("PS: Propensity Score", 14, legendenY);
+        newDoc.text("stetige Variablen: Mittelwert bzw. standardisierte Mittelwertsdifferenz (SMD)", 14, legendenY + 4);
+        newDoc.text("kategoriale Variablen: Anteile bzw. rohe Differenz in den Anteilen", 14, legendenY + 8);
         
         newDoc.save(`matchingprotokoll${dateStr}.pdf`);
     };
 
     const downloadCSV = () => {
-        // Prüfe ob Result-Daten verfügbar sind
         if (!isResultData || !Array.isArray(isResultData) || isResultData.length === 0) {
             alert("Fehler: Keine Result-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
             return;
@@ -127,17 +244,37 @@ function Dataexport() {
         
         console.log("CSV Export - isResultData:", isResultData);
         
-        // CSV Header erstellen - verwende die Keys der ersten Zeile
-        const headers = Object.keys(isResultData[0]);
+        // Header: named dataset columns first (all-NA columns survive jsonlite's omission of NA keys), leftover result keys appended
+        const datensatzSpalten = (Array.isArray(isDateiSpaltenNamen) ? isDateiSpaltenNamen : [])
+            .filter(name => typeof name === 'string' && name.trim() !== '');
+        const allKeys = [...new Set(isResultData.flatMap(row => Object.keys(row)))];
+        const firstRowKeys = Object.keys(isResultData[0]);
+        const headers = datensatzSpalten.length > 0
+            ? datensatzSpalten.concat(allKeys.filter(key => !datensatzSpalten.includes(key)))
+            : firstRowKeys.concat(allKeys.filter(key => !firstRowKeys.includes(key)));
         
-        // CSV Content erstellen
+        // With replacement, MatchIt assigns no pair IDs (one control can serve several pairs) and match.data() drops the MatchingID column entirely
+        const hasMatchingID = isResultData.some(
+            row => Object.prototype.hasOwnProperty.call(row, 'MatchingID')
+        );
+        if (!hasMatchingID) {
+            alert(
+                'Hinweis: Der exportierte Datensatz enthält keine Spalte "MatchingID".\n\n' +
+                'Bei Matching mit Zurücklegen (Ersetzung) vergibt MatchIt keine Paar-IDs, da dieselbe ' +
+                'Kontrolleinheit mehreren Paaren zugehören kann. Die Spalte erscheint bei Matching ohne ' +
+                'Zurücklegen sowie bei Exaktem und Optimalem Matching.'
+            );
+        }
+        
         let csvContent = headers.join(',') + '\n';
         
-        // Datenzeilen hinzufügen
         isResultData.forEach(row => {
             const values = headers.map(header => {
                 let value = row[header];
-                // Handle special characters and quotes in CSV
+                // Rows without this key (e.g. MatchingID of unmatched units) export as empty cells
+                if (value === undefined || value === null) {
+                    return '';
+                }
                 if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
                     value = '"' + value.replace(/"/g, '""') + '"';
                 }
@@ -146,7 +283,6 @@ function Dataexport() {
             csvContent += values.join(',') + '\n';
         });
         
-        // CSV-Datei erstellen und herunterladen
         const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         
@@ -158,6 +294,33 @@ function Dataexport() {
             const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
             link.setAttribute('download', `matching_datensatz_${dateStr}.csv`);
             
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    };
+
+    // Markdown export of the matching protocol: same content as the PDF, formatting in model/protokollMarkdown.js
+    const downloadMarkdown = () => {
+        if (!isSummaryData || !Array.isArray(isSummaryData) || isSummaryData.length === 0) {
+            alert("Fehler: Keine Summary-Daten verfügbar. Bitte führen Sie zuerst das Matching durch.");
+            return;
+        }
+
+        const markdown = buildMatchingProtokollMarkdown(protokollDaten());
+
+        const blob = new Blob([markdown], { type: 'text/markdown;charset=utf-8;' });
+        const link = document.createElement('a');
+
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+
+            const date = new Date().toString().split(" ");
+            const dateStr = date[0] + date[1] + date[2] + date[3] + date[4];
+            link.setAttribute('download', `matchingprotokoll${dateStr}.md`);
+
             link.style.visibility = 'hidden';
             document.body.appendChild(link);
             link.click();
@@ -182,13 +345,12 @@ function Dataexport() {
         setSaving(true);
         
         try {
-            // Erstelle Datenstruktur für Django Backend (SavedRRequest Model)
             const backendData = {
-                // Parameter für das SavedRRequest Model
                 groupindicator: null,
                 controllvariables: [],
                 mmethod: isMatchingMethode || null,
                 mdistance: null,
+                mscoremethod: null,
                 mreplace: false,
                 mratio: null,
                 mcaliper: null,
@@ -196,12 +358,14 @@ function Dataexport() {
                 dataset_json: '',
             };
 
-            // Füllen der Daten je nach Matching-Methode
             if (isMatchingMethode === "Propensity Score") {
-                // Propensity Score Parameter
-                backendData.groupindicator = isZielvariable !== "defaultZielvariable" ? isZielvariable : null;
+                // Effective group indicator: target variable if set, otherwise the chosen group indicator (mirrors the protocol column heads)
+                backendData.groupindicator = isZielvariable !== "defaultZielvariable"
+                    ? isZielvariable
+                    : (isFälleKontrollenGruppenindikator && isFälleKontrollenGruppenindikator !== 'defaultFälleKontrollenGruppenindikator'
+                        ? isFälleKontrollenGruppenindikator
+                        : null);
                 
-                // Kontrollvariablen verarbeiten
                 if (isAllKontrollvariablen && Array.isArray(isAllKontrollvariablen)) {
                     backendData.controllvariables = isAllKontrollvariablen.map(variable => 
                         typeof variable === 'object' && variable !== null 
@@ -211,19 +375,19 @@ function Dataexport() {
                 }
                 
                 backendData.mdistance = isAlgorithmus !== "defaultAlgo" ? isAlgorithmus : 'nearest';
+                
+                backendData.mscoremethod = isScoreMethode && isScoreMethode !== "defaultScoreMethode" ? isScoreMethode : null;
+                
                 backendData.mreplace = isErsetzung === "TRUE" || isErsetzung === true;
                 backendData.mratio = isVerhältnis !== "defaultVerhältnis" ? parseInt(isVerhältnis) : 1;
                 
-                // Caliper für Propensity Score
                 if (isÜbereinstimmungswert && isÜbereinstimmungswert !== "defaultÜbereinstimmungswert") {
                     backendData.mcaliper = parseFloat(isÜbereinstimmungswert);
                 }
                 
             } else if (isMatchingMethode === "Exaktes Matching") {
-                // Exaktes Matching Parameter
                 backendData.groupindicator = isFälleKontrollenGruppenindikator || null;
                 
-                // Matching-Variablen als Kontrollvariablen verwenden
                 if (isAllMatchingvariablen) {
                     const extractVariableNames = (variables) => {
                         if (Array.isArray(variables)) {
@@ -245,14 +409,22 @@ function Dataexport() {
                 backendData.mdistance = 'exact';
                 backendData.mratio = isVerhältnis !== "defaultVerhältnis" ? parseInt(isVerhältnis) : 1;
                 
-                // Toleranz für Exaktes Matching
+                // Tolerances stored per-variable so each entry maps to mcalipervariables (parseFloat on the whole array would only take the first value)
                 if (isMatchingtoleranz && isMatchingtoleranz !== '') {
-                    backendData.mcaliper = parseFloat(isMatchingtoleranz);
+                    backendData.mcaliper = Array.isArray(isMatchingtoleranz)
+                        ? isMatchingtoleranz.map(toleranz => {
+                            if (typeof toleranz === 'number') return Number.isFinite(toleranz) ? toleranz : null;
+                            if (typeof toleranz === 'string' && toleranz.trim() !== '') {
+                                const wert = parseFloat(toleranz.trim());
+                                return Number.isFinite(wert) ? wert : null;
+                            }
+                            return null;
+                        })
+                        : parseFloat(isMatchingtoleranz);
                     backendData.mcalipervariables = backendData.controllvariables;
                 }
             }
 
-            // Dataset als JSON String speichern (falls verfügbar)
             if (isResultData && Array.isArray(isResultData)) {
                 backendData.dataset_json = JSON.stringify(isResultData);
             } else {
@@ -321,7 +493,10 @@ function Dataexport() {
                         justifyContent: "space-evenly"
                     }}>
                         <Button onClick={() => Matchingprotokoll()} style={{ flexFlow: "column" }}>
-                            <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen
+                            <SimCardDownloadIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen (PDF)
+                        </Button>
+                        <Button onClick={() => downloadMarkdown()} style={{ flexFlow: "column" }}>
+                            <ArticleIcon sx={{ fontSize: "xxx-large" }} /> Matchingprotokoll <br />herunterladen (Markdown)
                         </Button>
                         <Button onClick={() => downloadCSV()} style={{ flexFlow: "column" }}>
                             <CollectionsBookmarkIcon sx={{ fontSize: "xxx-large" }} /> Datensatz <br /> herunterladen
@@ -367,7 +542,6 @@ function Dataexport() {
             </Grid>
         </Card>
 
-        {/* Dialog zum Speichern der Maske */}
         <Dialog open={saveDialogOpen} onClose={() => setSaveDialogOpen(false)} maxWidth="sm" fullWidth>
             <DialogTitle>Maske speichern</DialogTitle>
             <DialogContent>
@@ -395,7 +569,7 @@ function Dataexport() {
                             {isKontrollvariablen && isKontrollvariablen !== "defaultKontrollvariablen" && isKontrollvariablen.length > 0 && (
                                 <>• Kontrollvariablen: {
                                     (() => {
-                                        // Verwende isAllKontrollvariablen für die tatsächlichen Variablennamen
+                                        // isAllKontrollvariablen holds the actual variable names; isKontrollvariablen may hold a display string
                                         const variables = isAllKontrollvariablen || isKontrollvariablen;
                                         console.log('DEBUG variables:', variables, 'Type:', typeof variables, 'IsArray:', Array.isArray(variables));
                                         
@@ -407,7 +581,6 @@ function Dataexport() {
                                             ).filter(name => name).join(', ');
                                         }
                                         
-                                        // Falls es ein String ist der "X Kontrollvariablen" enthält, zeige Fallback
                                         if (typeof variables === 'string' && variables.includes('Kontrollvariablen')) {
                                             return 'Kontrollvariablen ausgewählt (Details nicht verfügbar)';
                                         }
@@ -434,7 +607,6 @@ function Dataexport() {
                         </>
                     ) : isMatchingMethode === "Exaktes Matching" ? (
                         <>
-                            {/* Exaktes Matching Parameter */}
                             {isFälleKontrollenGruppenindikator && (
                                 <>• Vergleichsgruppen: {isFälleKontrollenGruppenindikator}<br/></>
                             )}
