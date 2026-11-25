@@ -14,11 +14,10 @@ import os
 
 
 
-# Specify IP and Port for R Backend (docker-compose sets R_BACKEND_URL=http://r-backend:3420)
+# R backend endpoint; docker-compose sets R_BACKEND_URL=http://r-backend:3420
 ip_address = os.environ.get("R_BACKEND_URL", "http://127.0.0.1:3420").removeprefix("http://")
 
-# The views that only forward to the R backend are public and use @authentication_classes([]),
-# so a stale or unknown token in the request cannot turn them into 401s.
+# Views that only forward to the R backend are public (@authentication_classes([])) so a stale/unknown token cannot turn them into 401s.
 
 
 @api_view(['GET'])
@@ -172,19 +171,16 @@ def boxplot(request):
     return Response(data)
 
 
-# save R-Call
 @api_view(['POST'])
 def save_request(request):
     try:
         data = request.data
-        
+
         print(f"💾 DEBUG: Received data keys: {data.keys()}")
         print(f"💾 DEBUG: Data type: {type(data)}")
 
-        # User-Handling ohne Token-Validierung
         user = None
-        
-        # Falls ein User-ID in den Daten ist, verwende diesen
+
         user_id = data.get('user_id')
         if user_id:
             try:
@@ -194,26 +190,24 @@ def save_request(request):
                 print(f"💾 DEBUG: User {user_id} not found, using anonymous")
                 user = None
         
-        # Falls kein User, verwende authenticated user oder anonymous
         if not user:
             if hasattr(request, 'user') and request.user.is_authenticated:
                 user = request.user
                 print(f"💾 DEBUG: Using authenticated user: {user.username}")
             else:
-                # Erstelle oder hole anonymous user
                 user, created = User.objects.get_or_create(
                     username='anonymous',
-                    defaults={'password': 'anonymous123'}  # Vereinfachte defaults
+                    defaults={'password': 'anonymous123'}
                 )
                 print(f"💾 DEBUG: Using anonymous user (created: {created})")
 
-        # Erstelle SavedRRequest
         saved_request = SavedRRequest.objects.create(
             user=user,
             groupindicator=data.get("groupindicator"),
             controllvariables=data.get("controllvariables"),
             mmethod=data.get("mmethod"),
             mdistance=data.get("mdistance"),
+            mscoremethod=data.get("mscoremethod"),
             mreplace=data.get("mreplace", False),
             mratio=data.get("mratio"),
             mcaliper=data.get("mcaliper"),
@@ -232,14 +226,11 @@ def save_request(request):
         return Response({"error": f"Fehler beim Speichern: {str(e)}"}, status=500)
 
 
-# List of saved calls, excluding datasets
 @api_view(['GET'])
 def list_requests(request):
-    # Wenn ein User im Request ist, verwende ihn, ansonsten alle Requests
     if hasattr(request, 'user') and request.user.is_authenticated:
         saved = SavedRRequest.objects.filter(user=request.user).order_by('-created_at')
     else:
-        # Falls kein authentifizierter User, zeige alle Requests oder filtere nach user_id Parameter
         user_id = request.GET.get('user_id')
         if user_id:
             try:
@@ -248,7 +239,6 @@ def list_requests(request):
             except User.DoesNotExist:
                 saved = SavedRRequest.objects.none()
         else:
-            # Zeige alle Requests (falls gewünscht) oder nur anonymous
             saved = SavedRRequest.objects.filter(user__username='anonymous').order_by('-created_at')
     
     result = [{
@@ -258,6 +248,7 @@ def list_requests(request):
         "controllvariables": r.controllvariables,
         "mmethod": r.mmethod,
         "mdistance": r.mdistance,
+        "mscoremethod": r.mscoremethod,
         "mreplace": r.mreplace,
         "mratio": r.mratio,
         "mcaliper": r.mcaliper,
@@ -266,15 +257,12 @@ def list_requests(request):
     return Response(result)
 
 
-# Full call including dataset
 @api_view(['GET'])
 def get_request(request, request_id):
     try:
-        # Wenn ein User authentifiziert ist, filtere nach dem User
         if hasattr(request, 'user') and request.user.is_authenticated:
             saved = SavedRRequest.objects.get(id=request_id, user=request.user)
         else:
-            # Ohne Authentifizierung, hole den Request ohne User-Filter
             saved = SavedRRequest.objects.get(id=request_id)
     except SavedRRequest.DoesNotExist:
         return Response({"error": "Not found"}, status=404)
@@ -286,6 +274,7 @@ def get_request(request, request_id):
         "controllvariables": saved.controllvariables,
         "mmethod": saved.mmethod,
         "mdistance": saved.mdistance,
+        "mscoremethod": saved.mscoremethod,
         "mreplace": saved.mreplace,
         "mratio": saved.mratio,
         "mcaliper": saved.mcaliper,
@@ -294,15 +283,12 @@ def get_request(request, request_id):
     })
 
 
-# Delete R call
 @api_view(['DELETE'])
 def delete_request(request, pk):
     try:
-        # Wenn ein User authentifiziert ist, filtere nach dem User
         if hasattr(request, 'user') and request.user.is_authenticated:
             r_request = SavedRRequest.objects.get(pk=pk, user=request.user)
         else:
-            # Ohne Authentifizierung, hole den Request ohne User-Filter
             r_request = SavedRRequest.objects.get(pk=pk)
         
         r_request.delete()
@@ -311,7 +297,6 @@ def delete_request(request, pk):
         return Response({'error': 'Request not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
-# Get user's saved processes for profile page
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_user_saved_processes(request, user_id):
@@ -324,7 +309,6 @@ def get_user_saved_processes(request, user_id):
         
         processes_data = []
         for process in saved_processes:
-            # Convert model data to the format expected by frontend
             process_data = {
                 'id': process.id,
                 'name': f"{process.mmethod} - {process.groupindicator}" if process.groupindicator else f"Matching {process.id}",
@@ -347,10 +331,8 @@ def get_user_saved_processes(request, user_id):
 def estimate_result_count(process):
     """Estimate result count based on saved data"""
     try:
-        # This is a simple estimation - in a real implementation you might parse the dataset_json
-        # or store the actual result count as a separate field
+        # Deliberately crude estimate; real counts would require parsing dataset_json or a dedicated result-count field
         if process.dataset_json:
-            # Simple estimation based on ratio and method
             base_count = 100
             if process.mratio:
                 base_count *= process.mratio
@@ -360,21 +342,20 @@ def estimate_result_count(process):
         return 0
 
 
-# Save a new matching process
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def save_matching_process(request):
     """Save a new matching process with results"""
     try:
         data = request.data
-        
-        # Create new SavedRRequest
+
         saved_request = SavedRRequest.objects.create(
             user=request.user,
             groupindicator=data.get('groupindicator'),
             controllvariables=data.get('controllvariables', []),
             mmethod=data.get('mmethod'),
             mdistance=data.get('mdistance'),
+            mscoremethod=data.get('mscoremethod'),
             mreplace=data.get('mreplace', False),
             mratio=data.get('mratio', 1),
             mcaliper=data.get('mcaliper'),
@@ -393,22 +374,19 @@ def save_matching_process(request):
         }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-# Download results for a saved process
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def download_process_results(request, process_id):
     """Download results for a saved process as CSV"""
     try:
         saved_process = SavedRRequest.objects.get(id=process_id, user=request.user)
-        
-        # In a real implementation, you would generate/retrieve the actual CSV data
-        # For now, return a placeholder response
+
+        # Placeholder: real CSV generation from the stored dataset is not implemented yet
         response = HttpResponse(
             content_type='text/csv',
             headers={'Content-Disposition': f'attachment; filename="matching_results_{process_id}.csv"'},
         )
-        
-        # Placeholder CSV content
+
         csv_content = "ID,Group,Variable1,Variable2\n1,Treatment,Value1,Value2\n2,Control,Value3,Value4\n"
         response.write(csv_content)
         

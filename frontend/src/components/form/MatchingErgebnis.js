@@ -15,6 +15,7 @@ import Card from "@mui/material/Card";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Cancel from '@mui/icons-material/Cancel';
 import AppContext from '../../AppContext';
+import { datensatzUmfang } from '../../model/datensatzUmfang';
 import Grid from '@mui/material/Grid';
 import IconButton from "@mui/material/IconButton";
 import Alert from "@mui/material/Alert";
@@ -67,12 +68,9 @@ function MatchingErgebnis() {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    // Datensatzbeschreibung vor und nach dem Matching, aus den hochgeladenen und den gematchten Daten berechnet.
-    // Unbenannte Spalten (z. B. die Zeilennummer von R's write.csv) zählen nicht als Variable; R benennt sie im
-    // Ergebnis um (z. B. "X1.3826"), deshalb wird ihre Anzahl abgezogen statt nach Namen gefiltert.
-    const spaltenNamen = Array.isArray(isDateiSpaltenNamen) ? isDateiSpaltenNamen : [];
-    const unbenannteSpalten = spaltenNamen.filter((name) => name.trim() === "").length;
-    const preVariablen = spaltenNamen.length - unbenannteSpalten;
+    // Datensatzbeschreibung vor und nach dem Matching, aus den hochgeladenen Daten berechnet (geteilter Helfer,
+    // damit der Protokoll-Export dieselben Zahlen zeigt)
+    const { preVariablen, postVariablen } = datensatzUmfang(isDateiSpaltenNamen, isMatchingMethode);
 
     const preMatchingObservationCount = Array.isArray(resultData)
         ? resultData.length
@@ -81,12 +79,7 @@ function MatchingErgebnis() {
     const postBeobachtungen = () =>
         Array.isArray(resultData) ? resultData.filter((row) => row['Matching weight'] > 0).length : 0;
 
-    // Zeige die Variablen des Datensatzes plus die für Nutzende sichtbaren Matching-Spalten an.
-    // Umbenannte leere CSV-Spalten und interne Metadaten werden nicht mitgezählt.
-    const matchingColumnCount = isMatchingMethode === "Exaktes Matching" ? 2 : 3;
-    const postMatchingVariableCount = Array.isArray(resultData)
-        ? preVariablen + matchingColumnCount
-        : 0;
+    const postMatchingVariableCount = Array.isArray(resultData) ? postVariablen : 0;
 
 
     useEffect(() => {

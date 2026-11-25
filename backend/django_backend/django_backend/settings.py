@@ -12,23 +12,14 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Insecure dev defaults; production values must come from local_settings.py
 SECRET_KEY = 'django-insecure-rkm&2&l7!bv$-=qdu5#cx)9zin8%0eahgd^n50izi%e&i#1$uz'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'corsheaders',
@@ -87,19 +78,14 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
 import os
 
-# Docker/PostgreSQL Konfiguration
 if os.environ.get('DATABASE_URL'):
     import dj_database_url
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
 else:
-    # Fallback für lokale Entwicklung
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -107,9 +93,6 @@ else:
         }
     }
 
-
-# Password validation
-# https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -127,9 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -139,14 +119,8 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -160,12 +134,13 @@ REST_FRAMEWORK = {
 }
 
 
-# Datasets are sent as the JSON request body; Django's default limit is 2.5 MB.
-# Matches client_max_body_size in frontend/nginx/default.conf.
+# Datasets are sent as the JSON request body; Django's default limit is 2.5 MB. Must match client_max_body_size in frontend/nginx/default.conf.
 DATA_UPLOAD_MAX_MEMORY_SIZE = 200 * 1024 * 1024
 
-# Site-specific overrides (secret key, debug, hosts), mounted into the container by docker-compose.
-# docker-compose.yml mounts $DJANGO_LOCAL_SETTINGS, by default config/django/local_settings.dev.py.
+# Demo mode: seeds demo credentials (testuser) via create_testuser on startup. Never enable on a productive system.
+DEMO_MODE = False
+
+# Site-specific overrides (secret key, debug, hosts); docker-compose mounts $DJANGO_LOCAL_SETTINGS here, by default config/django/local_settings.dev.py.
 try:
     from .local_settings import *  # noqa: F401,F403
 except ImportError:

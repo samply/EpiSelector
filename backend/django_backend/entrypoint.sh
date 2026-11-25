@@ -9,20 +9,22 @@ if [ ! -f /app/django_backend/local_settings.py ]; then
   exit 1
 fi
 
-# Wait for database
 echo "Waiting for PostgreSQL..."
 while ! nc -z db 5432; do
   sleep 0.1
 done
 echo "PostgreSQL is ready!"
 
-# Run Django commands
 echo "Running migrations..."
 python manage.py migrate
+
+# Only takes effect when DEMO_MODE is enabled in the mounted local_settings.py; the command itself refuses otherwise.
+echo "Seeding demo credentials (no-op unless DEMO_MODE is enabled)..."
+python manage.py create_testuser
 
 echo "Collecting static files..."
 python manage.py collectstatic --noinput
 
-# Start command comes from CMD (Dockerfile) or "command:" (docker-compose.yml)
+# Start command comes from CMD (Dockerfile) or "command:" (docker-compose.yml), not from this script
 echo "Starting Django server: $*"
 exec "$@"
